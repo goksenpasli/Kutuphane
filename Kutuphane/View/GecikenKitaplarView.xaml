@@ -10,6 +10,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}" />
     </UserControl.Resources>
     <GroupBox Header="GECİKEN KİTAPLAR">
         <Grid>
@@ -50,7 +51,7 @@
             </ListView>
             <GroupBox Header="DURUM"
                 Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
-                <ListView ItemsSource="{Binding ElementName=Lv, Path=SelectedItem.İşlem}">
+                <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
@@ -72,6 +73,9 @@
                         <Style TargetType="{x:Type ListViewItem}">
                             <Setter Property="Background" Value="Green" />
                             <Style.Triggers>
+                                <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true" />

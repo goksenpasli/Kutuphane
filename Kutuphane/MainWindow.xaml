@@ -43,6 +43,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -62,6 +63,7 @@
                                 </HeaderedContentControl>
                                 <CheckBox Content="KİŞİ GİRİŞ AKTARMA YAP" IsChecked="{Binding Path=Aktarma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kayıtlı TC Bulunduğunda Kitap Ver Ekranına Yönlendirir. İşaretli Kalması Önerilir." />
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />
+                                <CheckBox Content="KİŞİ GİRİŞ EKRANI" IsChecked="{Binding Path=KişiGirişEkranıVarsayılan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Program Açılışında Kişi Giriş Ekranı Açılır." />
                                 <Button Content="AYARLARI SIFIRLA" Command="{Binding AyarlarıSıfırla}" />
                             </StackPanel>
                         </GroupBox>
@@ -222,7 +224,7 @@
                         <RibbonMenuButton.SmallImageSource>
                             <Binding Converter="{StaticResource FilePathToIconConverter}" Source=".csv" />
                         </RibbonMenuButton.SmallImageSource>
-                        <RibbonMenuItem Header="KİTAP LİSTESİ RAPORU" Command="{Binding ReportViewModel.KitapListesiRaporu, Mode=OneWay}"/>
+                        <RibbonMenuItem Header="KİTAP LİSTESİ RAPORU" Command="{Binding ReportViewModel.KitapListesiRaporu, Mode=OneWay}" />
                     </RibbonMenuButton>
                 </RibbonGroup>
             </RibbonTab>

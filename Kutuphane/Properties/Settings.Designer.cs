@@ -82,5 +82,17 @@ namespace Kutuphane.Properties {
                 this["KitapResimGöster"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool KişiGirişEkranıVarsayılan {
+            get {
+                return ((bool)(this["KişiGirişEkranıVarsayılan"]));
+            }
+            set {
+                this["KişiGirişEkranıVarsayılan"] = value;
+            }
+        }
     }
 }

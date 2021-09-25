@@ -10,6 +10,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}" />
     </UserControl.Resources>
     <GroupBox Header="KİTAP GERİ AL">
         <Grid>
@@ -58,7 +59,7 @@
             </ListView>
             <ListView x:Name="listViewİşlem"
                 Grid.Column="1" Grid.RowSpan="2"
-                ItemsSource="{Binding SelectedItem.İşlem, ElementName=listViewKişi}">
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
@@ -78,10 +79,11 @@
                                 <DataTemplate>
                                     <ComboBox IsEnabled="False"
                                         ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
+                                        Style="{StaticResource KitapTemplate}"
                                         DisplayMemberPath="Ad"
                                         SelectedItem="{Binding SeçiliKitap}"
                                         SelectedValue="{Binding KitapId}"
-                                        SelectedValuePath="Id" Style="{StaticResource KitapTemplate}" />
+                                        SelectedValuePath="Id" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

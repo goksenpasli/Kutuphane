@@ -24,6 +24,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
         <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}" />
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP VER">
@@ -102,122 +103,120 @@
                     </ListView>
                 </GroupBox>
                 <GroupBox Header="KİŞİLER" Grid.Column="1">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="300" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="KİŞİ&#xA;ADI" />
-                                                <TextBox Text="{Binding Kişi.KişiAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
-                                            </StackPanel>
-                                        </GridViewColumn>
-                                        <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                                <TextBox Text="{Binding Kişi.KişiSoyadArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
-                                            </StackPanel>
-                                        </GridViewColumn>
-                                        <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="KİŞİ&#xA;TC" />
-                                                <TextBox Text="{Binding Kişi.KişiTcArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="85" VerticalContentAlignment="Center" />
-                                            </StackPanel>
-                                        </GridViewColumn>
-                                        <GridViewColumn>
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ProgressBar Width="48"
-                                                        Foreground="Red" Background="Green" BorderBrush="Transparent"
-                                                        Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
-                                                        Maximum="{Binding İşlem.Count, Mode=OneWay}"
-                                                        Value="{Binding KitapCezasıAdeti}" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <ListView x:Name="listViewİşlem"
-                                Grid.Column="1" Grid.RowSpan="2"
-                                ItemsSource="{Binding SelectedItem.İşlem, ElementName=listViewKişi}">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
-                                                <Setter Property="Background" Value="Red" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox IsEnabled="False"
-                                                        ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                                        Style="{DynamicResource KitapTemplate}"
-                                                        DisplayMemberPath="Ad"
-                                                        SelectedValue="{Binding KitapId}"
-                                                        SelectedValuePath="Id" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="CEZA" extensions:GridViewSort.PropertyName="Ceza">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox IsEnabled="False" IsChecked="{Binding Ceza}" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="GÜN" extensions:GridViewSort.PropertyName="KitapGün" DisplayMemberBinding="{Binding KitapGün}" />
-                                        <GridViewColumn Header="GERİ GETİRME" extensions:GridViewSort.PropertyName="GeriGetirmeTarihi" DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}" />
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <GroupBox Header="İŞLEM" Grid.Row="1">
-                                <StackPanel>
-                                    <HeaderedContentControl Header="GÜN SAYISI">
-                                        <extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1"
-                                            Value="{Binding İşlem.KitapGün}" />
-                                    </HeaderedContentControl>
-                                    <HeaderedContentControl Header="BAŞLANGIÇ TARİHİ">
-                                        <DatePicker DisplayDateStart="{Binding Mode=OneWay, Source={x:Static System:DateTime.Today}}" SelectedDate="{Binding İşlem.BaşlangıçTarihi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </HeaderedContentControl>
-                                    <TextBlock Foreground="Red" FontSize="16"><Run Text="GETİRME TARİHİ" /><Run Text=" " /><Run Text="{Binding İşlem.GeriGetirmeTarihi, StringFormat=\{0:D\}}" Language="tr-tr" /></TextBlock>
-                                    <Button Command="{Binding KitapVer, Mode=OneWay}">
-                                        <Button.CommandParameter>
-                                            <MultiBinding Converter="{StaticResource CloneConverter}">
-                                                <Binding ElementName="listViewKişi" Path="SelectedItem" />
-                                                <Binding ElementName="listViewKitap" Path="SelectedItem" />
-                                            </MultiBinding>
-                                        </Button.CommandParameter>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="165.6" />
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
                                         <StackPanel Orientation="Horizontal">
-                                            <Image>
-                                                <Image.Source>
-                                                    <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                        <Binding Source="Shell32.dll" />
-                                                        <Binding Source="28" />
-                                                    </MultiBinding>
-                                                </Image.Source>
-                                            </Image>
-                                            <TextBlock Text="KİTAP VER" VerticalAlignment="Center" />
+                                            <TextBlock Text="KİŞİ&#xA;ADI" />
+                                            <TextBox Text="{Binding Kişi.KişiAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                         </StackPanel>
-                                    </Button>
-                                </StackPanel>
-                            </GroupBox>
-                        </Grid>
-                    </ScrollViewer>
+                                    </GridViewColumn>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="KİŞİ&#xA;SOYADI" />
+                                            <TextBox Text="{Binding Kişi.KişiSoyadArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                        </StackPanel>
+                                    </GridViewColumn>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="KİŞİ&#xA;TC" />
+                                            <TextBox Text="{Binding Kişi.KişiTcArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="85" VerticalContentAlignment="Center" />
+                                        </StackPanel>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ProgressBar Width="48"
+                                                    Foreground="Red" Background="Green" BorderBrush="Transparent"
+                                                    Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
+                                                    Maximum="{Binding İşlem.Count, Mode=OneWay}"
+                                                    Value="{Binding KitapCezasıAdeti}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView x:Name="listViewİşlem"
+                            Grid.Column="1" Grid.RowSpan="2"
+                            ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
+                                            <Setter Property="Background" Value="Red" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox IsEnabled="False"
+                                                    ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
+                                                    Style="{DynamicResource KitapTemplate}"
+                                                    DisplayMemberPath="Ad"
+                                                    SelectedValue="{Binding KitapId}"
+                                                    SelectedValuePath="Id" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="CEZA" extensions:GridViewSort.PropertyName="Ceza">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsEnabled="False" IsChecked="{Binding Ceza}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="GÜN" extensions:GridViewSort.PropertyName="KitapGün" DisplayMemberBinding="{Binding KitapGün}" />
+                                    <GridViewColumn Header="GERİ GETİRME" extensions:GridViewSort.PropertyName="GeriGetirmeTarihi" DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <GroupBox Header="İŞLEM" Grid.Row="1" Grid.Column="0">
+                            <StackPanel>
+                                <HeaderedContentControl Header="GÜN SAYISI">
+                                    <extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1"
+                                        Value="{Binding İşlem.KitapGün}" />
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="BAŞLANGIÇ TARİHİ">
+                                    <DatePicker DisplayDateStart="{Binding Mode=OneWay, Source={x:Static System:DateTime.Today}}" SelectedDate="{Binding İşlem.BaşlangıçTarihi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </HeaderedContentControl>
+                                <TextBlock Foreground="Red" FontSize="16"><Run Text="GETİRME TARİHİ" /><Run Text=" " /><Run Text="{Binding İşlem.GeriGetirmeTarihi, StringFormat=\{0:D\}}" Language="tr-tr" /></TextBlock>
+                                <Button Command="{Binding KitapVer, Mode=OneWay}">
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                                            <Binding ElementName="listViewKişi" Path="SelectedItem" />
+                                            <Binding ElementName="listViewKitap" Path="SelectedItem" />
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image>
+                                            <Image.Source>
+                                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                    <Binding Source="Shell32.dll" />
+                                                    <Binding Source="28" />
+                                                </MultiBinding>
+                                            </Image.Source>
+                                        </Image>
+                                        <TextBlock Text="KİTAP VER" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
                 </GroupBox>
             </Grid>
         </GroupBox>

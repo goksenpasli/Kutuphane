@@ -8,7 +8,7 @@ namespace Kutuphane
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is DateTime gerigetirmetarihi)
+            if (value is DateTime gerigetirmetarihi && gerigetirmetarihi != DateTime.MinValue)
             {
                 var günfarkı = DateTime.Today - gerigetirmetarihi;
                 return günfarkı.TotalDays > 0 ? (günfarkı.TotalDays * Properties.Settings.Default.GünlükGecikmeBedeli).ToString("C") : "CEZA YOK";

@@ -86,6 +86,11 @@ namespace Kutuphane.ViewModel
                 }
             });
 
+            if (Properties.Settings.Default.KişiGirişEkranıVarsayılan)
+            {
+                CurrentView = KişiGirişViewModel;
+            }
+
             AyarlarıSıfırla = new RelayCommand<object>(parameter => Properties.Settings.Default.Reset());
 
             Properties.Settings.Default.PropertyChanged += (s, e) => Properties.Settings.Default.Save();
