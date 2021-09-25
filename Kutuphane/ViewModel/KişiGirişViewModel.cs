@@ -18,6 +18,11 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is MainViewModel mainViewModel)
                 {
+                    if (!Kişi.TC.TcGeçerli())
+                    {
+                        _ = MessageBox.Show("Bu TC Yanlıştır.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
                     if (mainViewModel.Kütüphane.Kişiler.Any(z => z.TC == Kişi.TC))
                     {
                         if (Properties.Settings.Default.Aktarma)
@@ -78,6 +83,6 @@ namespace Kutuphane.ViewModel
             Kişi.Adres = null;
             Kişi.Cinsiyet = -1;
             Kişi.AktarmaTC = null;
-        }
+        }  
     }
 }
