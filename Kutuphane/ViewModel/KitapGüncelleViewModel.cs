@@ -15,9 +15,9 @@ namespace Kutuphane.ViewModel
         {
             KitapGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter =>
             {
-                if (parameter is ObservableCollection<Kitap> kitaplar)
+                if (parameter is ObservableCollection<Kitap> kitaplar && kitaplar.Any())
                 {
-                    foreach (var item in kitaplar.Where(item => item.KitapDurumId == (int)KitapDurumu.Kütüphanede || item.KitapDurumId == (int)KitapDurumu.Okuyucuda))
+                    foreach (var item in kitaplar.Where(item => item.KitapDurumId is ((int)KitapDurumu.Kütüphanede) or ((int)KitapDurumu.Okuyucuda)))
                     {
                         item.KitapDurum = false;
                     }

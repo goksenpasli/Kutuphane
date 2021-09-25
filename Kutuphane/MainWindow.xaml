@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="22.4" />
         </Grid.RowDefinitions>
         <Ribbon Margin="0,-22,0,0">
             <Ribbon.ApplicationMenu>
@@ -44,6 +45,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -58,8 +60,13 @@
                                         Value="{Binding Path=GünlükGecikmeBedeli, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
                                 <HeaderedContentControl Header="HIZLI KİTAP İŞLEMİ VARSAYILAN GÜN">
-                                    <Extensions:NumericUpDownControl Maximum="365" Minimum="1" ToolTip="Hızlı Kitap Verme İşleminde Uygulanacak Gün Süresi"
+                                    <Extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1" ToolTip="Hızlı Kitap Verme İşleminde Uygulanacak Gün Süresi"
                                         Value="{Binding Path=HızlıKitapGirişGünSüresi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="ETKİNLİKLERİ ÖNCEDEN GÖSTERME GÜN SAYISI">
+                                    <Extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1"
+                                        ToolTip="Durum Çubuğunda Yaklaşan Etkinliklerin Kaç Gün Öncesine Kadar Olacağını Gösterir"
+                                        Value="{Binding Path=YaklaşanİşlemlerGünSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
                                 <CheckBox Content="KİŞİ GİRİŞ AKTARMA YAP" IsChecked="{Binding Path=Aktarma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kayıtlı TC Bulunduğunda Kitap Ver Ekranına Yönlendirir. İşaretli Kalması Önerilir." />
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />
@@ -229,8 +236,33 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Grid Grid.Row="1">
-            <ContentPresenter Content="{Binding CurrentView}" />
-        </Grid>
+        <ContentPresenter Content="{Binding CurrentView}" Grid.Row="1" />
+        <StatusBar Grid.Row="2">
+            <StatusBarItem DataContext="{Binding KitapGeriAlViewModel}">
+                <StackPanel Visibility="{Binding Yaklaşanİşlemler, Converter={StaticResource NullToVisibilityConverter}}" Orientation="Horizontal">
+                    <Image Width="16" Height="16">
+                        <Image.Source>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="239" />
+                            </MultiBinding>
+                        </Image.Source>
+                        <Image.ToolTip>
+                            <ListView ItemsSource="{Binding Yaklaşanİşlemler}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="AD" DisplayMemberBinding="{Binding Ad}" />
+                                        <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
+                                        <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
+                                        <GridViewColumn Header="GERİ GETİRME TARİHİ" DisplayMemberBinding="{Binding İşlem/GeriGetirmeTarihi, StringFormat=\{0:d\}}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Image.ToolTip>
+                    </Image>
+                    <TextBlock Text="SÜRESİ YAKLAŞAN KİTAPLAR" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

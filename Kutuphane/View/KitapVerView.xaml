@@ -155,6 +155,9 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
                                             <Setter Property="Background" Value="Red" />
+                                        </DataTrigger>  
+                                        <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
+                                            <Setter Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

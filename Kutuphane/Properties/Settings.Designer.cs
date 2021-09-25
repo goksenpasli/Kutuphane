@@ -94,5 +94,17 @@ namespace Kutuphane.Properties {
                 this["KişiGirişEkranıVarsayılan"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public double YaklaşanİşlemlerGünSayısı {
+            get {
+                return ((double)(this["YaklaşanİşlemlerGünSayısı"]));
+            }
+            set {
+                this["YaklaşanİşlemlerGünSayısı"] = value;
+            }
+        }
     }
 }

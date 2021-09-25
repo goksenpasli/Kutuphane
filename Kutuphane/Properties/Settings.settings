@@ -20,5 +20,8 @@
     <Setting Name="KişiGirişEkranıVarsayılan" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="YaklaşanİşlemlerGünSayısı" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

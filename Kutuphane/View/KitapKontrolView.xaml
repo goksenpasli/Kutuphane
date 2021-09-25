@@ -159,7 +159,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <GroupBox Header="KİŞİ" Grid.Column="1" Grid.RowSpan="2">
+            <GroupBox Header="BU KİTABI OKUYANLAR" Grid.Column="1" Grid.RowSpan="2">
                 <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
                     <ListView.View>
                         <GridView>
