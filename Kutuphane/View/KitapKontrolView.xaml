@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="Kutuphane.View.KitapKontrolView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewmodel:KitapKontrolViewModel}"
+    d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+    </UserControl.Resources>
+    <GroupBox Header="KİTAP KONTROL">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" SelectedItem="{Binding SeçiliKitap}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
+                            <GridViewColumn.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="KİTAP&#xA;ADI" />
+                                    <TextBox Text="{Binding KişiKitapAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                </StackPanel>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150" Extensions:GridViewSort.PropertyName="Barkod" DisplayMemberBinding="{Binding Barkod}">
+                            <GridViewColumn.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="KİTAP&#xA;BARKOD" />
+                                    <TextBox Text="{Binding KitapBarkodArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                </StackPanel>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Command="{Binding KitapKontrolViewModel.KitapKayıpTutanakOluştur, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding Mode=OneWay}">
+                                            <Run Text="KAYIP TUTANAK OLUŞTUR" />
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="70">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Extensions:ContentToggleButton Visibility="{Binding Tutanak, Converter={StaticResource BooleanToVisibilityConverter}}" CornerRadius="0" OverContent="TUTANAK">
+                                        <Extensions:ContentToggleButton.Content>
+                                            <GroupBox Header="TUTANAK" Width="280" Height="210">
+                                                <StackPanel>
+                                                    <FlowDocumentScrollViewer x:Name="Fd" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                                        <FlowDocument FontSize="16" FontFamily="Times New Roman"
+                                                            Block.LineHeight="1" Language="tr-tr" PagePadding="10">
+                                                            <FlowDocument.Resources>
+                                                                <Style TargetType="{x:Type TableCell}">
+                                                                    <Setter Property="BorderBrush" Value="Black" />
+                                                                    <Setter Property="BorderThickness" Value="0.5pt" />
+                                                                </Style>
+                                                            </FlowDocument.Resources>
+                                                            <Table CellSpacing="0">
+                                                                <Table.Columns>
+                                                                    <TableColumn Width="100" />
+                                                                    <TableColumn Width="150" />
+                                                                </Table.Columns>
+                                                                <TableRowGroup>
+                                                                    <TableRow>
+                                                                        <TableCell ColumnSpan="2">
+                                                                            <Paragraph TextAlignment="Center">
+                                                                                <Run Text="TUTANAK" FontWeight="Bold" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell BorderThickness="0" ColumnSpan="2">
+                                                                            <BlockUIContainer TextAlignment="Center" />
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="KİTAP" FontWeight="Bold" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="{Binding Ad}" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="BARKOD" FontWeight="Bold" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="{Binding Barkod}" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="FİYAT" FontWeight="Bold" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="{Binding Fiyat}" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="DURUM" FontWeight="Bold" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                        <TableCell>
+                                                                            <Paragraph>
+                                                                                <Run Text="KAYIP" />
+                                                                            </Paragraph>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                </TableRowGroup>
+                                                            </Table>
+                                                        </FlowDocument>
+                                                    </FlowDocumentScrollViewer>
+                                                    <Button Content="YAZDIR" Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Fd}" />
+                                                </StackPanel>
+                                            </GroupBox>
+                                        </Extensions:ContentToggleButton.Content>
+                                    </Extensions:ContentToggleButton>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="KİTAP&#xA;DURUM" Extensions:GridViewSort.PropertyName="KitapDurum">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox IsEnabled="False"
+                                        Width="100"
+                                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
+                                        SelectedIndex="{Binding KitapDurumId}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <GroupBox Header="KİŞİ" Grid.Column="1" Grid.RowSpan="2">
+                <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="AD" DisplayMemberBinding="{Binding Ad}" />
+                            <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
+                            <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
+                            <GridViewColumn Header="TELEFON">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Extensions:MaskedTextBlock InputMask="(000) 000 00 00" UnmaskedText="{Binding Telefon}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+            <Button Grid.Row="1" Command="{Binding KitapKontrolViewModel.KitapGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding SelectedItem, ElementName=listView}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="32" Height="32">
+                        <Image.Source>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="144" />
+                            </MultiBinding>
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="KAYDET" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </GroupBox>
+</UserControl>
