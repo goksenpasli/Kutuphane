@@ -23,5 +23,8 @@
     <Setting Name="YaklaşanİşlemlerGünSayısı" Type="System.Double" Scope="User">
       <Value Profile="(Default)">7</Value>
     </Setting>
+    <Setting Name="QrMultipleBorderThickness" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

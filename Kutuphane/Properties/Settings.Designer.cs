@@ -106,5 +106,17 @@ namespace Kutuphane.Properties {
                 this["YaklaşanİşlemlerGünSayısı"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double QrMultipleBorderThickness {
+            get {
+                return ((double)(this["QrMultipleBorderThickness"]));
+            }
+            set {
+                this["QrMultipleBorderThickness"] = value;
+            }
+        }
     }
 }

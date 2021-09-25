@@ -1,0 +1,12 @@
+﻿using System.Windows;
+using System.Windows.Data;
+
+namespace Kutuphane
+{
+    public class DoubleToThicknessConverter : IValueConverter
+    {
+        public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture) => new Thickness(System.Convert.ToDouble(value));
+
+        public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
+    }
+}
