@@ -6,7 +6,7 @@ namespace Kutuphane.ViewModel
 {
     public class QrCodeMultipleViewModel : QrCodeViewModel
     {
-        private ObservableCollection<BitmapSource> barkodResimler = new();
+        private ObservableCollection<BitmapSource> barkodResimler;
 
         private int boy = 4;
 

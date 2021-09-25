@@ -29,6 +29,7 @@ namespace Kutuphane.View
                 var dc = qrCodeMultipleView.DataContext as QrCodeMultipleViewModel;
                 dc.Barkod.Metin = qrCodeMultipleView.TopluBarkodMetin;
                 dc.Barkod.BarkodImage = dc.GenerateBarCodeImage(dc.Barkod.BarcodeFormat);
+                dc.BarkodResimler = new();
                 for (var i = 0; i < dc.En * dc.Boy; i++)
                 {
                     dc.BarkodResimler.Add(dc.Barkod.BarkodImage);
