@@ -231,6 +231,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Raporlar\KitapAlanlarRaporu.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Raporlar\KitapListesiRaporu.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

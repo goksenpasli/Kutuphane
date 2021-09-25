@@ -232,6 +232,7 @@
                             <Binding Converter="{StaticResource FilePathToIconConverter}" Source=".csv" />
                         </RibbonMenuButton.SmallImageSource>
                         <RibbonMenuItem Header="KİTAP LİSTESİ RAPORU" Command="{Binding ReportViewModel.KitapListesiRaporu, Mode=OneWay}" />
+                        <RibbonMenuItem Header="KİTAP ALANLAR RAPORU" Command="{Binding ReportViewModel.KitapAlanlarRaporu, Mode=OneWay}" />
                     </RibbonMenuButton>
                 </RibbonGroup>
             </RibbonTab>
@@ -239,7 +240,16 @@
         <ContentPresenter Content="{Binding CurrentView}" Grid.Row="1" />
         <StatusBar Grid.Row="2">
             <StatusBarItem DataContext="{Binding KitapGeriAlViewModel}">
-                <StackPanel Visibility="{Binding Yaklaşanİşlemler, Converter={StaticResource NullToVisibilityConverter}}" Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Yaklaşanİşlemler.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
                     <Image Width="16" Height="16">
                         <Image.Source>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
