@@ -46,6 +46,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -67,6 +68,10 @@
                                     <Extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1"
                                         ToolTip="Durum Çubuğunda Yaklaşan Etkinliklerin Kaç Gün Öncesine Kadar Olacağını Gösterir"
                                         Value="{Binding Path=YaklaşanİşlemlerGünSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="KİTAP UZATMA SAYISI">
+                                    <Extensions:NumericUpDownControl Maximum="10" Minimum="1" SmallChange="1" ToolTip="Verilen Kitabın Tarihi En Çok Bu Kadar Kez Uzatılır."
+                                        Value="{Binding Path=MaksimumUzatmaSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
                                 <CheckBox Content="KİŞİ GİRİŞ AKTARMA YAP" IsChecked="{Binding Path=Aktarma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kayıtlı TC Bulunduğunda Kitap Ver Ekranına Yönlendirir. İşaretli Kalması Önerilir." />
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />

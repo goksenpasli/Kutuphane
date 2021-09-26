@@ -23,7 +23,7 @@ namespace Kutuphane.ViewModel
                 İşlem.UzatmaSayısı++;
                 İşlem.GeriGetirmeTarihi = İşlem.UzatılmaTarihi;
                 MainViewModel.DatabaseSave.Execute(null);
-            }, parameter => İşlem.UzatılmaTarihi > İşlem.GeriGetirmeTarihi);
+            }, parameter => İşlem.UzatılmaTarihi > İşlem.GeriGetirmeTarihi && İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
 
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }

@@ -85,7 +85,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="150" Extensions:GridViewSort.PropertyName="Barkod">
+                            <GridViewColumn Width="120" Extensions:GridViewSort.PropertyName="Barkod">
                                 <GridViewColumn.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;BARKOD" />
@@ -94,28 +94,20 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBox Text="{Binding Barkod, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
-                                            <Extensions:ContentToggleButton Width="18" Height="18"
-                                                Background="{StaticResource QrCode}"
-                                                BorderBrush="#800000"
-                                                CornerRadius="0">
-                                                <local:QrCodeView Barkod="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Parent.DataContext.Barkod}" />
-                                            </Extensions:ContentToggleButton>
-                                            <Extensions:ContentToggleButton Width="18" Height="18"
-                                                Background="{StaticResource QrCode}"
-                                                BorderBrush="Blue"
-                                                CornerRadius="0">
-                                                <local:QrCodeMultipleView TopluBarkodMetin="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Parent.DataContext.Barkod}" />
-                                            </Extensions:ContentToggleButton>
-                                        </StackPanel>
+                                        <TextBox Text="{Binding Barkod, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="KİTAP&#xA;BASIM&#xA;YILI" Extensions:GridViewSort.PropertyName="BasımYılı">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}" />
+                                        <ComboBox ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}">
+                                            <ComboBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <VirtualizingStackPanel />
+                                                </ItemsPanelTemplate>
+                                            </ComboBox.ItemsPanel>
+                                        </ComboBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -199,7 +191,23 @@
                         <TextBlock Text="GÜNCELLE" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <Image Grid.Column="1" Grid.RowSpan="2" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <Image Grid.Column="1" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
+                    <UniformGrid Columns="2">
+                        <Extensions:ContentToggleButton Width="32" Height="32"
+                            Background="{StaticResource QrCode}"
+                            BorderBrush="#800000"
+                            CornerRadius="0">
+                            <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                        </Extensions:ContentToggleButton>
+                        <Extensions:ContentToggleButton Width="32" Height="32"
+                            Background="{StaticResource QrCode}"
+                            BorderBrush="Blue"
+                            CornerRadius="0">
+                            <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                        </Extensions:ContentToggleButton>
+                    </UniformGrid>
+                </GroupBox>
             </Grid>
         </GroupBox>
     </Grid>
