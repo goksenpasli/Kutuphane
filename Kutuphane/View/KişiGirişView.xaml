@@ -140,15 +140,14 @@
                         </Button>
                         <TextBlock FontSize="22" TextWrapping="Wrap">
                             <Run Text="Bugünden Başlayarak" />
-                            <Run Text="{Binding Path=HızlıKitapGirişGünSüresi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Foreground="Red" ToolTip="Ayarlardan Gün Değiştirilebilir." />
-                            <Run Text="Gün Sonrasına Seçili Kitabı Vermek İçin Kitap Seçin Ve Soldaki Buttona Tıklayın." />
-                        </TextBlock>
+                            <Run Text="{Binding HızlıKitapGirişGünSüresi, Mode=OneWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" ToolTip="Ayarlardan Gün Değiştirilebilir." />
+                            <Run Text="Gün Sonrasına Seçili Kitabı Vermek İçin Kitap Seçin Ve Soldaki Buttona Tıklayın." /></TextBlock>
                     </UniformGrid>
                 </GroupBox>
             </Grid>
         </GroupBox>
         <GroupBox Header="MEVCUT KİTAPLAR" Grid.Column="1">
-            <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" >
+            <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad">

@@ -1,6 +1,7 @@
 ﻿<Application x:Class="Kutuphane.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Converters="clr-namespace:Extensions.Converters;assembly=Extensions"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions" xmlns:Kutuphane="clr-namespace:Kutuphane"
     xmlns:Model="clr-namespace:Kutuphane.Model" xmlns:View="clr-namespace:Kutuphane.View"
     xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
@@ -20,6 +21,7 @@
             <Extensions:FilePathToIconConverter x:Key="FilePathToIconConverter" />
             <Kutuphane:DatePassedConverter x:Key="DatePassedConverter" />
             <Kutuphane:ListViewCezaTutarConverter x:Key="ListViewCezaTutarConverter" />
+            <Converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="DataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             <ObjectDataProvider x:Key="KitapDurumu" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
