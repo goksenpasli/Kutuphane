@@ -22,17 +22,17 @@
                 <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="KİTAP&#xA;ADI" DisplayMemberBinding="{Binding Ad}" />
-                            <GridViewColumn Header="KİTAP&#xA;BARKOD" DisplayMemberBinding="{Binding Barkod}" />
-                            <GridViewColumn Header="KİTAP BASIM&#xA;YILI" DisplayMemberBinding="{Binding BasımYılı}" />
-                            <GridViewColumn Header="DEMİRBAŞ">
+                            <GridViewColumn Header="KİTAP&#xA;ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
+                            <GridViewColumn Header="KİTAP&#xA;BARKOD" Extensions:GridViewSort.PropertyName="Barkod" DisplayMemberBinding="{Binding Barkod}" />
+                            <GridViewColumn Header="KİTAP BASIM&#xA;YILI" Extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />
+                            <GridViewColumn Header="DEMİRBAŞ" Extensions:GridViewSort.PropertyName="Demirbaş">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsEnabled="False" IsChecked="{Binding Demirbaş}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="DOLAP">
+                            <GridViewColumn Header="DOLAP" Extensions:GridViewSort.PropertyName="DolapAltKod">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -48,7 +48,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP&#xA;DURUM" Width="110">
+                            <GridViewColumn Header="KİTAP&#xA;DURUM" Width="110" Extensions:GridViewSort.PropertyName="KitapDurumId">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox IsEnabled="{Binding KitapDurum}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" SelectedIndex="{Binding KitapDurumId}">
@@ -57,7 +57,7 @@
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Mode=OneWay}" Value="Okuyucuda">
                                                             <Setter Property="IsEnabled" Value="False" />
-                                                        </DataTrigger>  
+                                                        </DataTrigger>
                                                         <DataTrigger Binding="{Binding Mode=OneWay}" Value="Kütüphanede">
                                                             <Setter Property="IsEnabled" Value="False" />
                                                         </DataTrigger>

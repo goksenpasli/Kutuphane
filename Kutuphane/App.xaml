@@ -277,9 +277,9 @@
                 </StackPanel>
             </DataTemplate>
             <Style TargetType="ListView">
-                <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
-                <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
+                <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
+                <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
             </Style>
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
             <Style x:Key="KitapTemplate" TargetType="ComboBox">
