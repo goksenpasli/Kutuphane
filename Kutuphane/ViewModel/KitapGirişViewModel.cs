@@ -3,7 +3,6 @@ using Extensions;
 using Kutuphane.Model;
 using Microsoft.Win32;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -14,10 +13,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapGirişViewModel : InpcBase
     {
-        private ObservableCollection<KitapTürü> seçiliKitapTürleri = new();
-
-        private ObservableCollection<Yazar> seçiliYazarlar = new();
-
         public KitapGirişViewModel()
         {
             Kitap = new Kitap();
@@ -44,12 +39,13 @@ namespace Kutuphane.ViewModel
                 }
 
                 MainViewModel.DatabaseSave.Execute(null);
-
                 ResetKitap();
+
                 if (Kitap.OtomatikBarkod)
                 {
                     Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
                 }
+
             }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad));
 
             KitapTürEkle = new RelayCommand<object>(parameter =>
@@ -127,34 +123,6 @@ namespace Kutuphane.ViewModel
 
         public ICommand KitapYazarEkle { get; }
 
-        public ObservableCollection<KitapTürü> SeçiliKitapTürleri
-        {
-            get => seçiliKitapTürleri;
-
-            set
-            {
-                if (seçiliKitapTürleri != value)
-                {
-                    seçiliKitapTürleri = value;
-                    OnPropertyChanged(nameof(SeçiliKitapTürleri));
-                }
-            }
-        }
-
-        public ObservableCollection<Yazar> SeçiliYazarlar
-        {
-            get => seçiliYazarlar;
-
-            set
-            {
-                if (seçiliYazarlar != value)
-                {
-                    seçiliYazarlar = value;
-                    OnPropertyChanged(nameof(SeçiliYazarlar));
-                }
-            }
-        }
-
         public ICommand TopluKitapEkle { get; }
 
         private void Kitap_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -189,11 +157,11 @@ namespace Kutuphane.ViewModel
                 ÖdünçVerilebilir = Kitap.ÖdünçVerilebilir,
                 KitapDili = Kitap.KitapDili
             };
-            foreach (var item in SeçiliYazarlar)
+            foreach (var item in Kitap.SeçiliYazarlar)
             {
                 kitap.Yazarlar.Add(item);
             }
-            foreach (var item in SeçiliKitapTürleri)
+            foreach (var item in Kitap.SeçiliKitapTürleri)
             {
                 kitap.Türler.Add(item);
             }

@@ -29,11 +29,15 @@
     <Grid>
         <GroupBox Header="KİTAP VER">
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-                <GroupBox Grid.Row="8">
+                <GroupBox>
                     <GroupBox.Header>
                         <StackPanel>
                             <TextBlock Text="MEVCUT KİTAPLAR" HorizontalAlignment="Center" />
@@ -121,7 +125,11 @@
                         </ListView.View>
                     </ListView>
                 </GroupBox>
-                <GroupBox Grid.Column="1">
+                <TextBox Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}"
+                    Grid.Row="2"
+                    IsReadOnly="True"
+                    TextWrapping="Wrap" />
+                <GroupBox Grid.Column="1" Grid.RowSpan="2">
                     <GroupBox.Header>
                         <StackPanel>
                             <TextBlock Text="KİŞİLER" HorizontalAlignment="Center" />

@@ -23,6 +23,7 @@ namespace Kutuphane.ViewModel
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = İşlem.KitapGün,
                         GeriGetirmeTarihi = İşlem.GeriGetirmeTarihi,
+                        UzatılmaTarihi = İşlem.GeriGetirmeTarihi,
                         KitapId = kitap.Id,
                         BaşlangıçTarihi = İşlem.BaşlangıçTarihi,
                     };
@@ -45,6 +46,8 @@ namespace Kutuphane.ViewModel
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = Properties.Settings.Default.HızlıKitapGirişGünSüresi,
                         GeriGetirmeTarihi = DateTime.Today.AddDays(Properties.Settings.Default.HızlıKitapGirişGünSüresi),
+                        UzatılmaTarihi = DateTime.Today.AddDays(Properties.Settings.Default.HızlıKitapGirişGünSüresi),
+
                         KitapId = kitap.Id,
                         BaşlangıçTarihi = DateTime.Today,
                     };

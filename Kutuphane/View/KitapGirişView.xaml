@@ -207,7 +207,7 @@
                                 </UniformGrid>
                                 <ListView Grid.Row="1"
                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Yazarlar}}"
-                                    Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliYazarlar}"
+                                    Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliYazarlar}"
                                     ItemContainerStyle="{StaticResource ListViewItemStretchStyle}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
@@ -232,7 +232,7 @@
                                 </UniformGrid>
                                 <ListView Grid.Row="1"
                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapTürleri}}"
-                                    Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKitapTürleri}"
+                                    Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliKitapTürleri}"
                                     ItemContainerStyle="{StaticResource ListViewItemStretchStyle}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>

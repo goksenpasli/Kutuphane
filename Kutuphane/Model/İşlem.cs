@@ -27,6 +27,12 @@ namespace Kutuphane.Model
 
         private Kitap seçiliKitap;
 
+        private bool uzatıldı;
+
+        private DateTime uzatılmaTarihi;
+
+        private int uzatmaSayısı;
+
         [XmlAttribute(AttributeName = "BaşlangıçTarihi")]
         public DateTime BaşlangıçTarihi
         {
@@ -175,6 +181,51 @@ namespace Kutuphane.Model
                 {
                     seçiliKitap = value;
                     OnPropertyChanged(nameof(SeçiliKitap));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "Uzatıldı")]
+        public bool Uzatıldı
+        {
+            get => uzatıldı;
+
+            set
+            {
+                if (uzatıldı != value)
+                {
+                    uzatıldı = value;
+                    OnPropertyChanged(nameof(Uzatıldı));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "UzatılmaTarihi")]
+        public DateTime UzatılmaTarihi
+        {
+            get => uzatılmaTarihi;
+
+            set
+            {
+                if (uzatılmaTarihi != value)
+                {
+                    uzatılmaTarihi = value;
+                    OnPropertyChanged(nameof(UzatılmaTarihi));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "UzatmaSayısı")]
+        public int UzatmaSayısı
+        {
+            get { return uzatmaSayısı; }
+
+            set
+            {
+                if (uzatmaSayısı != value)
+                {
+                    uzatmaSayısı = value;
+                    OnPropertyChanged(nameof(UzatmaSayısı));
                 }
             }
         }

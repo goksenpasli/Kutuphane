@@ -14,6 +14,10 @@
     </UserControl.Resources>
     <GroupBox Header="GECİKEN KİTAPLAR">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -51,7 +55,7 @@
             </ListView>
             <GroupBox Header="DURUM"
                 Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
-                <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
@@ -67,11 +71,20 @@
                             </GridViewColumn>
                             <GridViewColumn Header="GETİRME TARİHİ" extensions:GridViewSort.PropertyName="GeriGetirmeTarihi" DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}" />
                             <GridViewColumn Header="ŞU ANKİ CEZA TUTARI" DisplayMemberBinding="{Binding GeriGetirmeTarihi, Converter={StaticResource ListViewCezaTutarConverter}}" />
+                            <GridViewColumn Header="UZATMA">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding UzatmaSayısı}"
+                                            IsEnabled="False"
+                                            ContentStringFormat="{}{0} Kez"
+                                            IsChecked="{Binding Uzatıldı}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="Background" Value="Green" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -87,6 +100,12 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
+            </GroupBox>
+            <GroupBox Header="UZATMA" Grid.Row="2" Grid.Column="1">
+                <StackPanel>
+                    <DatePicker DisplayDateStart="{Binding İşlem.GeriGetirmeTarihi}" SelectedDate="{Binding İşlem.UzatılmaTarihi}" />
+                    <Button Content="UZAT" Command="{Binding UzatmaGir}" />
+                </StackPanel>
             </GroupBox>
         </Grid>
     </GroupBox>

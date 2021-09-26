@@ -50,6 +50,10 @@ namespace Kutuphane.Model
 
         private string resim;
 
+        private ObservableCollection<KitapTürü> seçiliKitapTürleri = new();
+
+        private ObservableCollection<Yazar> seçiliYazarlar = new();
+
         private DateTime sistemKayıtTarihi = DateTime.Now;
 
         private bool topluKitapGirişi;
@@ -346,6 +350,36 @@ namespace Kutuphane.Model
                 {
                     resim = value;
                     OnPropertyChanged(nameof(Resim));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public ObservableCollection<KitapTürü> SeçiliKitapTürleri
+        {
+            get => seçiliKitapTürleri;
+
+            set
+            {
+                if (seçiliKitapTürleri != value)
+                {
+                    seçiliKitapTürleri = value;
+                    OnPropertyChanged(nameof(SeçiliKitapTürleri));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public ObservableCollection<Yazar> SeçiliYazarlar
+        {
+            get => seçiliYazarlar;
+
+            set
+            {
+                if (seçiliYazarlar != value)
+                {
+                    seçiliYazarlar = value;
+                    OnPropertyChanged(nameof(SeçiliYazarlar));
                 }
             }
         }
