@@ -1,14 +1,12 @@
 ﻿using Extensions;
 using Kutuphane.Model;
 using Microsoft.Win32;
-using System;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ZXing;
 
 namespace Kutuphane.ViewModel
 {
@@ -48,7 +46,7 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => true);
 
-            Barkod.PropertyChanged += QrCodeViewModel_PropertyChanged;
+            Barkod.PropertyChanged += Barkod_PropertyChanged;
         }
 
         public Barkod Barkod { get; set; }
@@ -57,39 +55,11 @@ namespace Kutuphane.ViewModel
 
         public ICommand KareKodYazdır { get; }
 
-        public WriteableBitmap GenerateBarCodeImage(BarcodeFormat format = BarcodeFormat.QR_CODE)
-        {
-            try
-            {
-                BarcodeWriter writer = new()
-                {
-                    Format = format,
-                    Options = new ZXing.Common.EncodingOptions
-                    {
-                        Height = Barkod.QrHeight,
-                        Width = Barkod.QrWidth,
-                        Margin = 0
-                    }
-                };
-                if (!string.IsNullOrWhiteSpace(Barkod.Metin))
-                {
-                    return writer.WriteAsWriteableBitmap(Barkod.Metin);
-                }
-                Barkod.BarkodError = "";
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Barkod.BarkodError = ex.Message;
-                return null;
-            }
-        }
-
-        private void QrCodeViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Barkod_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "BarcodeFormat")
             {
-                Barkod.BarkodImage = GenerateBarCodeImage(Barkod.BarcodeFormat);
+                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Barkod.BarcodeFormat);
             }
         }
     }

@@ -28,7 +28,7 @@ namespace Kutuphane.View
             {
                 var dc = qrCodeView.DataContext as QrCodeViewModel;
                 dc.Barkod.Metin = e.NewValue as string;
-                dc.Barkod.BarkodImage = dc.GenerateBarCodeImage(dc.Barkod.BarcodeFormat);
+                dc.Barkod.BarkodImage = dc.Barkod.GenerateBarCodeImage(dc.Barkod.BarcodeFormat);
             }
         }
     }

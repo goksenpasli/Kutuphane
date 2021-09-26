@@ -1,12 +1,15 @@
 ﻿using Kutuphane.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using ZXing;
 
 namespace Kutuphane.ViewModel
 {
@@ -37,6 +40,34 @@ namespace Kutuphane.ViewModel
             }
             _ = Directory.CreateDirectory(Path.GetDirectoryName(MainViewModel.xmldatapath));
             return new ObservableCollection<Dolap>();
+        }
+
+        public static WriteableBitmap GenerateBarCodeImage(this Barkod barkod, BarcodeFormat format = BarcodeFormat.QR_CODE)
+        {
+            try
+            {
+                BarcodeWriter writer = new()
+                {
+                    Format = format,
+                    Options = new ZXing.Common.EncodingOptions
+                    {
+                        Height = barkod.QrHeight,
+                        Width = barkod.QrWidth,
+                        Margin = 0
+                    }
+                };
+                if (!string.IsNullOrWhiteSpace(barkod.Metin))
+                {
+                    return writer.WriteAsWriteableBitmap(barkod.Metin);
+                }
+                barkod.BarkodError = "";
+                return null;
+            }
+            catch (Exception ex)
+            {
+                barkod.BarkodError = ex.Message;
+                return null;
+            }
         }
 
         public static string HarfeDöndür(this int counter)

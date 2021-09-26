@@ -82,11 +82,6 @@
                                                                         </TableCell>
                                                                     </TableRow>
                                                                     <TableRow>
-                                                                        <TableCell BorderThickness="0" ColumnSpan="2">
-                                                                            <BlockUIContainer TextAlignment="Center" />
-                                                                        </TableCell>
-                                                                    </TableRow>
-                                                                    <TableRow>
                                                                         <TableCell>
                                                                             <Paragraph>
                                                                                 <Run Text="KİTAP" FontWeight="Bold" />
