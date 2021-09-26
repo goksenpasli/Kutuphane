@@ -9,7 +9,7 @@
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:KişiGirişViewModel}}"
-    d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
+    d:DesignHeight="578" d:DesignWidth="800" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar"
@@ -24,6 +24,7 @@
                 <ComponentModel:SortDescription Direction="Ascending" PropertyName="Ad" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
         <DrawingBrush x:Key="UserGroup" Stretch="Uniform">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
@@ -59,6 +60,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="158.4" />
                     <RowDefinition Height="220.8" />
                 </Grid.RowDefinitions>
                 <HeaderedContentControl Header="AD">
@@ -103,7 +105,85 @@
                         <TextBlock Text="KİŞİ GİR" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <GroupBox Header="SON KAYIT EDİLEN KİŞİ" Grid.Row="8" Visibility="{Binding Kişi.SonKaydedilenKişi, Converter={StaticResource NullToVisibilityConverter}}">
+                <GroupBox Header="KİŞİ GÜNCELLE" Grid.Row="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="KİŞİ ADI" VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding Kişi.KişiAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                        </StackPanel>
+                                    </GridViewColumn>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="KİŞİ SOYADI" VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding Kişi.KişiSoyadArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                        </StackPanel>
+                                    </GridViewColumn>
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="KİŞİ TC" VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding Kişi.KişiTcArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                        </StackPanel>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="KİTAP ALABİLİR">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding KitapAlabilir}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <extensions:ContentToggleButton CornerRadius="0" OverContent="İŞLEM">
+                                                    <ListBox ItemsSource="{Binding İşlem}">
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <ComboBox IsEnabled="False"
+                                                                    ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
+                                                                    Style="{StaticResource KitapTemplate}"
+                                                                    SelectedValue="{Binding KitapId}"
+                                                                    SelectedValuePath="Id" />
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                        <ListBox.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <extensions:VirtualizingWrapPanel />
+                                                            </ItemsPanelTemplate>
+                                                        </ListBox.ItemsPanel>
+                                                    </ListBox>
+                                                </extensions:ContentToggleButton>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Button Grid.Row="1" Command="{Binding KişiGirişViewModel.KişiGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="238" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock Text="GÜNCELLE" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="SON KAYIT EDİLEN KİŞİ" Grid.Row="9" Visibility="{Binding Kişi.SonKaydedilenKişi, Converter={StaticResource NullToVisibilityConverter}}">
                     <UniformGrid Columns="2">
                         <Button Width="192" Height="192"
                             HorizontalAlignment="Left" VerticalAlignment="Top"

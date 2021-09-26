@@ -46,7 +46,7 @@ namespace Kutuphane.ViewModel
                         DoğumTarihi = Kişi.DoğumTarihi,
                         Adres = Kişi.Adres,
                         KitapAlabilir = Kişi.KitapAlabilir,
-                        KayıtTarihi=DateTime.Now
+                        KayıtTarihi = DateTime.Now
                     };
                     mainViewModel.Kütüphane.Kişiler.Add(kişi);
                     MainViewModel.DatabaseSave.Execute(null);
@@ -56,12 +56,16 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => !string.IsNullOrWhiteSpace(Kişi.TC) && !string.IsNullOrWhiteSpace(Kişi.Ad) && !string.IsNullOrWhiteSpace(Kişi.Soyad));
 
+            KişiGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter => true);
+
             Kişi.PropertyChanged += KişiGirişViewModel_PropertyChanged;
         }
 
         public Kişi Kişi { get; set; }
 
         public ICommand KişiEkle { get; }
+
+        public ICommand KişiGüncelle { get; }
 
         private void KişiGirişViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -73,6 +77,20 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
                 KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap).Barkod.Contains(Kişi.KişiKitapBarkodArama);
+            } 
+            
+            if (e.PropertyName is "KişiAdArama")
+            {
+                KişiGirişView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Ad.Contains(Kişi.KişiAdArama);
+            }
+
+            if (e.PropertyName is "KişiSoyadArama")
+            {
+                KişiGirişView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Soyad.Contains(Kişi.KişiSoyadArama);
+            }     
+            if (e.PropertyName is "KişiTcArama")
+            {
+                KişiGirişView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).TC.Contains(Kişi.KişiTcArama);
             }
         }
 

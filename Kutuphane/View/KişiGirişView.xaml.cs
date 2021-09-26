@@ -11,10 +11,13 @@ namespace Kutuphane.View
     {
         public static CollectionViewSource cvs;
 
+        public static CollectionViewSource cvskişi;
+
         public KişiGirişView()
         {
             InitializeComponent();
             cvs = TryFindResource("Kitaplar") as CollectionViewSource;
+            cvskişi = TryFindResource("Kişiler") as CollectionViewSource;
             cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.KitapDurumId == 0;
         }
     }
