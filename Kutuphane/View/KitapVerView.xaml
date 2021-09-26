@@ -33,8 +33,27 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-                <GroupBox Header="MEVCUT KİTAPLAR" Grid.Row="8">
+                <GroupBox Grid.Row="8">
+                    <GroupBox.Header>
+                        <StackPanel>
+                            <TextBlock Text="MEVCUT KİTAPLAR" HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16" Height="16" Fill="Red" />
+                                <TextBlock Text="KİTAP VERİLMEZ" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox.Header>
                     <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="false">
+                                        <Setter Property="Foreground" Value="Red" />
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad">
@@ -102,17 +121,37 @@
                         </ListView.View>
                     </ListView>
                 </GroupBox>
-                <GroupBox Header="KİŞİLER" Grid.Column="1">
+                <GroupBox Grid.Column="1">
+                    <GroupBox.Header>
+                        <StackPanel>
+                            <TextBlock Text="KİŞİLER" HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16" Height="16" Fill="Red" />
+                                <TextBlock Text="KİTAP ALAMAZ" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="165.6" />
                         </Grid.RowDefinitions>
                         <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding KitapAlabilir}" Value="false">
+                                            <Setter Property="Foreground" Value="Red" />
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
@@ -133,17 +172,6 @@
                                             <TextBox Text="{Binding Kişi.KişiTcArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="85" VerticalContentAlignment="Center" />
                                         </StackPanel>
                                     </GridViewColumn>
-                                    <GridViewColumn>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <ProgressBar Width="48"
-                                                    Foreground="Red" Background="Green" BorderBrush="Transparent"
-                                                    Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
-                                                    Maximum="{Binding İşlem.Count, Mode=OneWay}"
-                                                    Value="{Binding KitapCezasıAdeti}" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -155,7 +183,7 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
                                             <Setter Property="Background" Value="Red" />
-                                        </DataTrigger>  
+                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
@@ -188,6 +216,13 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                        <ProgressBar Grid.Column="2" Grid.RowSpan="2"
+                            Width="16"
+                            Foreground="Red" Background="Green" BorderBrush="Transparent"
+                            Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
+                            Maximum="{Binding SelectedItem.İşlem.Count, Mode=OneWay, ElementName=listViewKişi}"
+                            Orientation="Vertical"
+                            Value="{Binding SelectedItem.KitapCezasıAdeti, ElementName=listViewKişi}" />
                         <GroupBox Header="İŞLEM" Grid.Row="1" Grid.Column="0">
                             <StackPanel>
                                 <HeaderedContentControl Header="GÜN SAYISI">

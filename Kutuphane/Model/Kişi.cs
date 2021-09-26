@@ -21,6 +21,8 @@ namespace Kutuphane.Model
 
         private ObservableCollection<İşlem> işlem = new();
 
+        private DateTime kayıtTarihi = DateTime.Now;
+
         private string kişiAdArama;
 
         private string kişiKitapAdArama;
@@ -30,6 +32,8 @@ namespace Kutuphane.Model
         private string kişiSoyadArama;
 
         private string kişiTcArama;
+
+        private bool kitapAlabilir = true;
 
         private int kitapCezasıAdeti;
 
@@ -134,6 +138,21 @@ namespace Kutuphane.Model
             }
         }
 
+        [XmlAttribute(AttributeName = "KayıtTarihi")]
+        public DateTime KayıtTarihi
+        {
+            get => kayıtTarihi;
+
+            set
+            {
+                if (kayıtTarihi != value)
+                {
+                    kayıtTarihi = value;
+                    OnPropertyChanged(nameof(KayıtTarihi));
+                }
+            }
+        }
+
         [XmlIgnore]
         public string KişiAdArama
         {
@@ -205,6 +224,21 @@ namespace Kutuphane.Model
                 {
                     kişiTcArama = value;
                     OnPropertyChanged(nameof(KişiTcArama));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "KitapAlabilir")]
+        public bool KitapAlabilir
+        {
+            get => kitapAlabilir;
+
+            set
+            {
+                if (kitapAlabilir != value)
+                {
+                    kitapAlabilir = value;
+                    OnPropertyChanged(nameof(KitapAlabilir));
                 }
             }
         }

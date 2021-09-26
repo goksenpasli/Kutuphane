@@ -38,6 +38,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -60,15 +61,25 @@
                             ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
                             SelectedIndex="{Binding Kitap.KitapDurumId}" />
                     </HeaderedContentControl>
-                    <HeaderedContentControl Header="KİTAP FİYATI" Grid.Row="4">
+                    <HeaderedContentControl Header="KİTAP DİLİ" Grid.Row="4">
+                        <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Kitap.Diller}" SelectedItem="{Binding Kitap.KitapDili}" >
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Header="KİTAP FİYATI" Grid.Row="5">
                         <Extensions:NumericUpDownControl Maximum="100000" Minimum="1" ShowMode="CurrencyMode"
                             Value="{Binding Kitap.Fiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
-                    <StackPanel Grid.Row="5">
-                        <CheckBox Content="DEMİRBAŞ" IsChecked="{Binding Kitap.Demirbaş}" />
-                        <CheckBox Content="FAVORİ" IsChecked="{Binding Kitap.Favori}" />
+                    <StackPanel Grid.Row="6">
+                        <CheckBox Content="DEMİRBAŞ" IsChecked="{Binding Kitap.Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox Content="FAVORİ" IsChecked="{Binding Kitap.Favori, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox Content="ÖDÜNÇ VERİLEBİLİR" IsChecked="{Binding Kitap.ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
-                    <Grid Grid.Row="6">
+                    <Grid Grid.Row="7">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -78,14 +89,14 @@
                             Grid.Row="1"
                             AcceptsReturn="True" MaxLength="500" TextWrapping="Wrap" />
                     </Grid>
-                    <UniformGrid Grid.Row="7" Columns="2">
-                        <CheckBox Content="RAF OTOMATİK ARTIR" VerticalAlignment="Center" IsChecked="{Binding Kitap.KitapSayıOtomatikArttır}" />
+                    <UniformGrid Grid.Row="8" Columns="2">
+                        <CheckBox Content="RAF OTOMATİK ARTIR" VerticalAlignment="Center" IsChecked="{Binding Kitap.KitapSayıOtomatikArttır, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <HeaderedContentControl Header="RAF SIRASI">
                             <Extensions:NumericUpDownControl Maximum="1000000" Minimum="1" SmallChange="1"
                                 Value="{Binding Kitap.DolapAltKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </HeaderedContentControl>
                     </UniformGrid>
-                    <Button Grid.Row="8"
+                    <Button Grid.Row="9"
                         HorizontalAlignment="Stretch"
                         Command="{Binding KitapResimEkle, Mode=OneWay}"
                         CommandParameter="{Binding Kitap}"
@@ -102,14 +113,14 @@
                             <TextBlock Text="KİTAP RESİM EKLE" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
-                    <UniformGrid Grid.Row="9" Columns="2">
-                        <CheckBox Content="TOPLU KİTAP GİRİŞİ YAP" VerticalAlignment="Center" IsChecked="{Binding Kitap.TopluKitapGirişi}" />
+                    <UniformGrid Grid.Row="10" Columns="2">
+                        <CheckBox Content="TOPLU KİTAP GİRİŞİ YAP" VerticalAlignment="Center" IsChecked="{Binding Kitap.TopluKitapGirişi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Extensions:NumericUpDownControl Grid.Row="9"
                             IsEnabled="{Binding Kitap.TopluKitapGirişi}"
                             Maximum="1000" Minimum="1" SmallChange="1"
                             Value="{Binding Kitap.TopluKitapSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </UniformGrid>
-                    <Button Grid.Row="10"
+                    <Button Grid.Row="11"
                         HorizontalAlignment="Stretch"
                         Command="{Binding KitapEkle}"
                         CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}">

@@ -45,6 +45,8 @@ namespace Kutuphane.ViewModel
                         Cinsiyet = Kişi.Cinsiyet,
                         DoğumTarihi = Kişi.DoğumTarihi,
                         Adres = Kişi.Adres,
+                        KitapAlabilir = Kişi.KitapAlabilir,
+                        KayıtTarihi=DateTime.Now
                     };
                     mainViewModel.Kütüphane.Kişiler.Add(kişi);
                     MainViewModel.DatabaseSave.Execute(null);
@@ -83,6 +85,6 @@ namespace Kutuphane.ViewModel
             Kişi.Adres = null;
             Kişi.Cinsiyet = -1;
             Kişi.AktarmaTC = null;
-        }  
+        }
     }
 }

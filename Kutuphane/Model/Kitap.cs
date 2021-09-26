@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -21,6 +22,8 @@ namespace Kutuphane.Model
 
         private bool demirbaş;
 
+        private IEnumerable<string> diller;
+
         private int dolapAltKod = 1;
 
         private int dolapId;
@@ -33,11 +36,15 @@ namespace Kutuphane.Model
 
         private ObservableCollection<Kişi> kişiler = new();
 
+        private string kitapDili;
+
         private bool kitapDurum = true;
 
         private int kitapDurumId;
 
         private bool kitapSayıOtomatikArttır;
+
+        private bool ödünçVerilebilir = true;
 
         private string resim;
 
@@ -132,6 +139,18 @@ namespace Kutuphane.Model
             }
         }
 
+        [XmlIgnore]
+        public IEnumerable<string> Diller
+        {
+            get
+            {
+                diller = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(z => !z.DisplayName.Contains('(')).Select(z => z.DisplayName);
+                return diller;
+            }
+
+            set => diller = value;
+        }
+
         [XmlAttribute(AttributeName = "DolapAltKod")]
         public int DolapAltKod
         {
@@ -224,6 +243,21 @@ namespace Kutuphane.Model
             }
         }
 
+        [XmlAttribute(AttributeName = "KitapDili")]
+        public string KitapDili
+        {
+            get => kitapDili;
+
+            set
+            {
+                if (kitapDili != value)
+                {
+                    kitapDili = value;
+                    OnPropertyChanged(nameof(KitapDili));
+                }
+            }
+        }
+
         [XmlIgnore]
         public bool KitapDurum
         {
@@ -265,6 +299,21 @@ namespace Kutuphane.Model
                 {
                     kitapSayıOtomatikArttır = value;
                     OnPropertyChanged(nameof(KitapSayıOtomatikArttır));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "ÖdünçVerilebilir")]
+        public bool ÖdünçVerilebilir
+        {
+            get => ödünçVerilebilir;
+
+            set
+            {
+                if (ödünçVerilebilir != value)
+                {
+                    ödünçVerilebilir = value;
+                    OnPropertyChanged(nameof(ÖdünçVerilebilir));
                 }
             }
         }

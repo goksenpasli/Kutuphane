@@ -155,7 +155,9 @@ namespace Kutuphane.ViewModel
                 SistemKayıtTarihi = DateTime.Now,
                 Yazarlar = SeçiliYazarlar,
                 Türler = SeçiliKitapTürleri,
-                Resim = Kitap.Resim
+                Resim = Kitap.Resim,
+                ÖdünçVerilebilir = Kitap.ÖdünçVerilebilir,
+                KitapDili = Kitap.KitapDili
             };
         }
     }

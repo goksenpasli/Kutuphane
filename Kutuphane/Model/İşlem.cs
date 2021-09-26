@@ -167,7 +167,7 @@ namespace Kutuphane.Model
         [XmlIgnore]
         public Kitap SeçiliKitap
         {
-            get { return seçiliKitap; }
+            get => seçiliKitap;
 
             set
             {

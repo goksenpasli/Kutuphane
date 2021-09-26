@@ -76,7 +76,13 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP&#xA;BARKOD" Width="150" Extensions:GridViewSort.PropertyName="Barkod">
+                            <GridViewColumn Width="150" Extensions:GridViewSort.PropertyName="Barkod">
+                                <GridViewColumn.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="KİTAP&#xA;BARKOD" />
+                                        <TextBox Text="{Binding KişiKitapBarkodArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                    </StackPanel>
+                                </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -108,6 +114,13 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="ÖDÜNÇ&#xA;VERİLEBİLİR" Extensions:GridViewSort.PropertyName="ÖdünçVerilebilir">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -147,7 +160,7 @@
                                                             <Setter Property="IsEnabled" Value="False" />
                                                             <Setter Property="ToolTip" Value="Kitap Ver Menüsünden İşlem Yapın" />
                                                             <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                                                        </DataTrigger>    
+                                                        </DataTrigger>
                                                         <DataTrigger Binding="{Binding Mode=OneWay}" Value="Kütüphanede">
                                                             <Setter Property="IsEnabled" Value="False" />
                                                             <Setter Property="ToolTip" Value="Kitap Geri Al Menüsünden İşlem Yapın" />

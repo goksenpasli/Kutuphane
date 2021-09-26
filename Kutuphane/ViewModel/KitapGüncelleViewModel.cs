@@ -11,6 +11,8 @@ namespace Kutuphane.ViewModel
     {
         private string kişiKitapAdArama;
 
+        private string kişiKitapBarkodArama;
+
         public KitapGüncelleViewModel()
         {
             KitapGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter =>
@@ -44,6 +46,20 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public string KişiKitapBarkodArama
+        {
+            get => kişiKitapBarkodArama;
+
+            set
+            {
+                if (kişiKitapBarkodArama != value)
+                {
+                    kişiKitapBarkodArama = value;
+                    OnPropertyChanged(nameof(KişiKitapBarkodArama));
+                }
+            }
+        }
+
         public ICommand KitapGüncelle { get; }
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -51,6 +67,10 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "KişiKitapAdArama")
             {
                 KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Ad.Contains(KişiKitapAdArama);
+            }
+            if (e.PropertyName is "KişiKitapBarkodArama")
+            {
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Barkod.Contains(KişiKitapBarkodArama);
             }
         }
     }

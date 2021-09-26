@@ -68,7 +68,7 @@
                     <TextBox Text="{Binding Kişi.Soyad, UpdateSourceTrigger=PropertyChanged}" />
                 </HeaderedContentControl>
                 <HeaderedContentControl Header="TC" Grid.Row="2">
-                    <TextBox Text="{Binding Kişi.TC, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Text="{Binding Kişi.TC, UpdateSourceTrigger=PropertyChanged}" MaxLength="11" />
                 </HeaderedContentControl>
                 <HeaderedContentControl Header="ADRES" Grid.Row="3">
                     <TextBox Text="{Binding Kişi.Adres, UpdateSourceTrigger=PropertyChanged}" />
@@ -146,8 +146,27 @@
                 </GroupBox>
             </Grid>
         </GroupBox>
-        <GroupBox Header="MEVCUT KİTAPLAR" Grid.Column="1">
+        <GroupBox Grid.Column="1">
+            <GroupBox.Header>
+                <StackPanel>
+                    <TextBlock Text="MEVCUT KİTAPLAR" HorizontalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="16" Height="16" Fill="Red" />
+                        <TextBlock Text="KİTAP VERİLMEZ" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox.Header>
             <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="false">
+                                <Setter Property="Foreground" Value="Red" />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad">

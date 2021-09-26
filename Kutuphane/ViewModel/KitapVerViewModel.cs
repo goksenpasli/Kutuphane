@@ -34,7 +34,7 @@ namespace Kutuphane.ViewModel
                     İşlem.KitapGün = 1;
                     İşlem.BaşlangıçTarihi = DateTime.Today;
                 }
-            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap);
+            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir);
 
             HızlıKitapVer = new RelayCommand<object>(parameter =>
             {
@@ -53,7 +53,7 @@ namespace Kutuphane.ViewModel
                     kitap.KitapDurumId = 1;
                     MainViewModel.DatabaseSave.Execute(null);
                 }
-            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap);
+            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir);
 
             İşlem.GeriGetirmeTarihi = İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
