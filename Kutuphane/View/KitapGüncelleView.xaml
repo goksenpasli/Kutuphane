@@ -26,18 +26,27 @@
                 <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn>
+                            <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Resim">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
                                             <Hyperlink Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding Mode=OneWay}" TextDecorations="None">
-                                                <Run Text="+" FontWeight="Bold" />
+                                                <InlineUIContainer>
+                                                    <Image Width="16" Height="16">
+                                                        <Image.Source>
+                                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                                <Binding Source="Shell32.dll" />
+                                                                <Binding Source="117" />
+                                                            </MultiBinding>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </InlineUIContainer>
                                             </Hyperlink>
                                         </TextBlock>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn>
+                            <GridViewColumn Extensions:GridViewSort.PropertyName="Favori">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ToggleButton IsChecked="{Binding Favori}">
@@ -103,7 +112,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP BASIM&#xA;YILI" Extensions:GridViewSort.PropertyName="BasımYılı">
+                            <GridViewColumn Header="KİTAP&#xA;BASIM&#xA;YILI" Extensions:GridViewSort.PropertyName="BasımYılı">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}" />
@@ -173,6 +182,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Header="KİTAP&#xA;GİRİŞ&#xA;TARİHİ" Extensions:GridViewSort.PropertyName="SistemKayıtTarihi" DisplayMemberBinding="{Binding SistemKayıtTarihi, StringFormat=\{0:d\}}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

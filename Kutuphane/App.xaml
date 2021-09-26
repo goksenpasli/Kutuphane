@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="/PresentationFramework.Aero,Version=4.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35,processorArchitecture=MSIL;component/themes/Aero.NormalColor.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ViewModel:MainViewModel x:Key="MainViewModel" />
+            <Kutuphane:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Extensions:SystemFileIconConverter x:Key="SystemFileIconConverter" />
             <Extensions:FilePathToIconConverter x:Key="FilePathToIconConverter" />
@@ -182,7 +183,7 @@
                         ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Grid>
             </ControlTemplate>
-            <DrawingBrush x:Key="QrCode" Stretch="Uniform">
+            <DrawingBrush x:Key="QrCode" RenderOptions.CachingHint="Cache">
                 <DrawingBrush.Drawing>
                     <DrawingGroup>
                         <DrawingGroup.Children>
@@ -276,6 +277,8 @@
                 </StackPanel>
             </DataTemplate>
             <Style TargetType="ListView">
+                <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+                <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
             </Style>
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />

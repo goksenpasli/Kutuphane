@@ -44,6 +44,8 @@ namespace Kutuphane.Model
 
         private bool kitapSayıOtomatikArttır;
 
+        private bool otomatikBarkod;
+
         private bool ödünçVerilebilir = true;
 
         private string resim;
@@ -299,6 +301,21 @@ namespace Kutuphane.Model
                 {
                     kitapSayıOtomatikArttır = value;
                     OnPropertyChanged(nameof(KitapSayıOtomatikArttır));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public bool OtomatikBarkod
+        {
+            get => otomatikBarkod;
+
+            set
+            {
+                if (otomatikBarkod != value)
+                {
+                    otomatikBarkod = value;
+                    OnPropertyChanged(nameof(OtomatikBarkod));
                 }
             }
         }

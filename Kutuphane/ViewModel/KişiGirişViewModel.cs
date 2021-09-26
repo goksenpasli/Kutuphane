@@ -77,8 +77,8 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
                 KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap).Barkod.Contains(Kişi.KişiKitapBarkodArama);
-            } 
-            
+            }
+
             if (e.PropertyName is "KişiAdArama")
             {
                 KişiGirişView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Ad.Contains(Kişi.KişiAdArama);
@@ -87,7 +87,7 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "KişiSoyadArama")
             {
                 KişiGirişView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Soyad.Contains(Kişi.KişiSoyadArama);
-            }     
+            }
             if (e.PropertyName is "KişiTcArama")
             {
                 KişiGirişView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).TC.Contains(Kişi.KişiTcArama);

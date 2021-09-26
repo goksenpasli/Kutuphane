@@ -1,4 +1,5 @@
-﻿using Extensions;
+﻿using ExcelDataReader;
+using Extensions;
 using Kutuphane.Model;
 using Microsoft.Win32;
 using System;
@@ -22,36 +23,30 @@ namespace Kutuphane.ViewModel
 
             KitapEkle = new RelayCommand<object>(parameter =>
             {
-                Kitap kitap;
-                if (parameter is Kütüphane kütüphane)
+                var kitap = KitapOluştur();
+                if (Kitap.TopluKitapGirişi)
                 {
-                    kitap = KitapOluştur();
-
-                    if (Kitap.TopluKitapGirişi)
+                    for (var i = 0; i < Kitap.TopluKitapSayısı; i++)
                     {
-                        for (var i = 0; i < Kitap.TopluKitapSayısı; i++)
-                        {
-                            kitap = KitapOluştur();
-                            kütüphane?.Kitaplar.Add(kitap);
-                        }
+                        kitap = KitapOluştur();
+                        (parameter as Kütüphane)?.Kitaplar.Add(kitap);
                     }
-                    else
-                    {
-                        kütüphane?.Kitaplar.Add(kitap);
-                    }
+                }
+                else
+                {
+                    (parameter as Kütüphane)?.Kitaplar.Add(kitap);
+                }
 
-                    if (Kitap.KitapSayıOtomatikArttır)
-                    {
-                        kitap.DolapAltKod = Kitap.DolapAltKod++;
-                    }
+                if (Kitap.KitapSayıOtomatikArttır)
+                {
+                    kitap.DolapAltKod = Kitap.DolapAltKod++;
+                }
 
-                    MainViewModel.DatabaseSave.Execute(null);
-
-                    Kitap.Ad = null;
-                    Kitap.Resim = null;
-                    Kitap.Barkod = null;
-                    Kitap.Açıklama = null;
-                    Kitap.TopluKitapSayısı = 1;
+                MainViewModel.DatabaseSave.Execute(null);
+                ResetKitap();
+                if (Kitap.OtomatikBarkod)
+                {
+                    Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
                 }
             }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad));
 
@@ -87,6 +82,30 @@ namespace Kutuphane.ViewModel
                     (parameter as Kitap).Resim = filename;
                 }
             }, parameter => true);
+
+            TopluKitapEkle = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Excel Dosyaları (*.xls;*.xlsx)|*.xls;*.xlsx" };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    using var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    using var reader = ExcelReaderFactory.CreateReader(stream);
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            (parameter as Kütüphane)?.Kitaplar.Add(new Kitap
+                            {
+                                Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
+                                Ad = reader.GetValue(0).ToString(),
+                                Barkod = reader.GetValue(1).ToString(),
+                                DolapId = Kitap.DolapId
+                            });
+                        }
+                    } while (reader.NextResult());
+                    MainViewModel.DatabaseSave.Execute(null);
+                }
+            }, parameter => Kitap.DolapId != 0);
 
             Kitap.PropertyChanged += Kitap_PropertyChanged;
         }
@@ -129,11 +148,17 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public ICommand TopluKitapEkle { get; }
+
         private void Kitap_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "TopluKitapGirişi" && !Kitap.TopluKitapGirişi)
             {
                 Kitap.TopluKitapSayısı = 1;
+            }
+            if (e.PropertyName is "OtomatikBarkod" && Kitap.OtomatikBarkod)
+            {
+                Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
             }
         }
 
@@ -159,6 +184,15 @@ namespace Kutuphane.ViewModel
                 ÖdünçVerilebilir = Kitap.ÖdünçVerilebilir,
                 KitapDili = Kitap.KitapDili
             };
+        }
+
+        private void ResetKitap()
+        {
+            Kitap.Ad = null;
+            Kitap.Resim = null;
+            Kitap.Barkod = null;
+            Kitap.Açıklama = null;
+            Kitap.TopluKitapSayısı = 1;
         }
     }
 }
