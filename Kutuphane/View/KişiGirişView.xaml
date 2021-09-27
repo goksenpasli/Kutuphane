@@ -282,7 +282,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="DOLAP" extensions:GridViewSort.PropertyName="DolapAltKod">
+                        <!--<GridViewColumn Header="DOLAP" extensions:GridViewSort.PropertyName="DolapAltKod">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel IsEnabled="False" Orientation="Horizontal">
@@ -297,8 +297,8 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="KİTAP&#xA;DURUM">
+                        </GridViewColumn>-->
+                        <!--<GridViewColumn Header="KİTAP&#xA;DURUM">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox IsEnabled="False"
@@ -307,7 +307,7 @@
                                         SelectedIndex="{Binding KitapDurumId}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        </GridViewColumn>-->
                     </GridView>
                 </ListView.View>
             </ListView>

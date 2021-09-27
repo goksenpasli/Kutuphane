@@ -29,8 +29,6 @@ namespace Kutuphane.Model
 
         private bool uzatıldı;
 
-        private DateTime uzatılmaTarihi;
-
         private int uzatmaSayısı;
 
         [XmlAttribute(AttributeName = "BaşlangıçTarihi")]
@@ -196,21 +194,6 @@ namespace Kutuphane.Model
                 {
                     uzatıldı = value;
                     OnPropertyChanged(nameof(Uzatıldı));
-                }
-            }
-        }
-
-        [XmlAttribute(AttributeName = "UzatılmaTarihi")]
-        public DateTime UzatılmaTarihi
-        {
-            get => uzatılmaTarihi;
-
-            set
-            {
-                if (uzatılmaTarihi != value)
-                {
-                    uzatılmaTarihi = value;
-                    OnPropertyChanged(nameof(UzatılmaTarihi));
                 }
             }
         }

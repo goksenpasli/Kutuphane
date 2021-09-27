@@ -53,8 +53,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <GroupBox Header="DURUM"
-                Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+            <GroupBox Header="DURUM" Grid.Row="0" Grid.Column="1">
                 <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.View>
                         <GridView>
@@ -103,7 +102,7 @@
             </GroupBox>
             <GroupBox Header="UZATMA" Grid.Row="2" Grid.Column="1">
                 <StackPanel>
-                    <DatePicker DisplayDateStart="{Binding İşlem.GeriGetirmeTarihi}" SelectedDate="{Binding İşlem.UzatılmaTarihi}" />
+                    <DatePicker IsEnabled="{Binding TarihEtkin}" DisplayDateStart="{Binding İşlem.GeriGetirmeTarihi}" SelectedDate="{Binding UzatılmaTarihi}" />
                     <Button Content="UZAT" Command="{Binding UzatmaGir}" />
                 </StackPanel>
             </GroupBox>

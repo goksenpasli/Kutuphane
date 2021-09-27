@@ -193,7 +193,7 @@
                 </Button>
                 <Image Grid.Column="1" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
                 <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
-                    <UniformGrid Columns="2">
+                    <UniformGrid Columns="2" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"
                             BorderBrush="#800000"

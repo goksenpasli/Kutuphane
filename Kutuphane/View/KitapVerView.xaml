@@ -111,7 +111,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="KİTAP&#xA;DURUM">
+                                <!--<GridViewColumn Header="KİTAP&#xA;DURUM">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <ComboBox IsEnabled="False"
@@ -120,7 +120,7 @@
                                                 SelectedIndex="{Binding KitapDurumId}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                </GridViewColumn>-->
                             </GridView>
                         </ListView.View>
                     </ListView>

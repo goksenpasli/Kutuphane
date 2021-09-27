@@ -1,6 +1,7 @@
 ﻿using Extensions;
 using Kutuphane.Model;
 using Kutuphane.View;
+using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -12,6 +13,10 @@ namespace Kutuphane.ViewModel
 
         private Kişi kişi;
 
+        private bool tarihEtkin = true;
+
+        private DateTime uzatılmaTarihi = DateTime.Today;
+
         public GecikenKitaplarViewModel()
         {
             Kişi = new Kişi();
@@ -21,10 +26,11 @@ namespace Kutuphane.ViewModel
             {
                 İşlem.Uzatıldı = true;
                 İşlem.UzatmaSayısı++;
-                İşlem.GeriGetirmeTarihi = İşlem.UzatılmaTarihi;
+                İşlem.GeriGetirmeTarihi = UzatılmaTarihi;
                 MainViewModel.DatabaseSave.Execute(null);
-            }, parameter => İşlem.UzatılmaTarihi > İşlem.GeriGetirmeTarihi && İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
+            }, parameter => UzatılmaTarihi > İşlem.GeriGetirmeTarihi && İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
 
+            PropertyChanged += GecikenKitaplarViewModel_PropertyChanged;
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }
 
@@ -56,7 +62,44 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public bool TarihEtkin
+        {
+            get => tarihEtkin;
+
+            set
+            {
+                if (tarihEtkin != value)
+                {
+                    tarihEtkin = value;
+                    OnPropertyChanged(nameof(TarihEtkin));
+                }
+            }
+        }
+
+        public DateTime UzatılmaTarihi
+        {
+            get => uzatılmaTarihi;
+
+            set
+            {
+                if (uzatılmaTarihi != value)
+                {
+                    uzatılmaTarihi = value;
+                    OnPropertyChanged(nameof(UzatılmaTarihi));
+                }
+            }
+        }
+
         public ICommand UzatmaGir { get; }
+
+        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (UzatılmaTarihi < İşlem.GeriGetirmeTarihi)
+            {
+                UzatılmaTarihi = İşlem.GeriGetirmeTarihi;
+            }
+            TarihEtkin = İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
+        }
 
         private void Kişi_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

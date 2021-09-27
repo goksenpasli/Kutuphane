@@ -22,6 +22,7 @@
             <Extensions:FilePathToIconConverter x:Key="FilePathToIconConverter" />
             <Kutuphane:DatePassedConverter x:Key="DatePassedConverter" />
             <Kutuphane:ListViewCezaTutarConverter x:Key="ListViewCezaTutarConverter" />
+            <Extensions:NullableToBooleanConverter x:Key="NullableToBooleanConverter" />
             <Converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="DataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
