@@ -19,7 +19,7 @@
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
-                <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
+                <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="KİTAP&#xA;ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />

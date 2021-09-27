@@ -23,7 +23,7 @@ namespace Kutuphane.ViewModel
 
             KitapGeriAl = new RelayCommand<object>(parameter =>
             {
-                if (parameter is İşlem işlem)
+                if (MessageBox.Show("Seçili Kitabı Geri Almak İstiyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes && parameter is İşlem işlem)
                 {
                     var günfarkı = DateTime.Today - işlem.GeriGetirmeTarihi;
                     işlem.CezaTutar = günfarkı.TotalDays > 0 ? (günfarkı.TotalDays * Properties.Settings.Default.GünlükGecikmeBedeli) : 0;
@@ -46,9 +46,10 @@ namespace Kutuphane.ViewModel
                         işlem.GeriGetirmeTarihi = DateTime.Now;
                         işlem.SeçiliKitap.KitapDurumId = (int)KitapDurumu.Kütüphanede;
                         MainViewModel.DatabaseSave.Execute(null);
+                        işlem = null;
                     }
                 }
-            }, parameter => parameter is İşlem işlem);
+            }, parameter => parameter is İşlem işlem && işlem.SeçiliKitap.KitapDurumId == (int)KitapDurumu.Okuyucuda);
 
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }

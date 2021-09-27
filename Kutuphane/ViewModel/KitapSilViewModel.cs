@@ -12,13 +12,10 @@ namespace Kutuphane.ViewModel
         {
             KitapSil = new RelayCommand<object>(parameter =>
             {
-                if (parameter is object[] data && data[0] is Kitap seçilikitap && data[1] is ObservableCollection<Kitap> liste)
+                if (parameter is object[] data && data[0] is Kitap seçilikitap && data[1] is ObservableCollection<Kitap> liste && MessageBox.Show($"{seçilikitap.Ad} Adlı Seçili {(KitapDurumu)seçilikitap.KitapDurumId} Kitabı Silmek İstiyor Musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
-                    if (MessageBox.Show($"{seçilikitap.Ad.ToUpper()} Adlı Seçili {(KitapDurumu)seçilikitap.KitapDurumId} Kitabı Silmek İstiyor Musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-                    {
-                        _ = liste.Remove(seçilikitap);
-                        MainViewModel.DatabaseSave.Execute(null);
-                    }
+                    _ = liste.Remove(seçilikitap);
+                    MainViewModel.DatabaseSave.Execute(null);
                 }
             }, parameter =>
             {

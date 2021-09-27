@@ -149,7 +149,16 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <extensions:ContentToggleButton CornerRadius="0" OverContent="İŞLEM">
-                                                        <ListBox ItemsSource="{Binding İşlem}">
+                                                        <ListBox Width="480" Height="360" ItemsSource="{Binding İşlem}">
+                                                            <ListBox.ItemContainerStyle>
+                                                                <Style TargetType="ListBoxItem">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding İşlemBitti}" Value="false">
+                                                                            <Setter Property="Background" Value="Green" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ListBox.ItemContainerStyle>
                                                             <ListBox.ItemTemplate>
                                                                 <DataTemplate>
                                                                     <ComboBox IsEnabled="False"
@@ -161,7 +170,7 @@
                                                             </ListBox.ItemTemplate>
                                                             <ListBox.ItemsPanel>
                                                                 <ItemsPanelTemplate>
-                                                                    <extensions:VirtualizingWrapPanel />
+                                                                    <extensions:VirtualizingWrapPanel VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" />
                                                                 </ItemsPanelTemplate>
                                                             </ListBox.ItemsPanel>
                                                         </ListBox>
@@ -234,7 +243,7 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox.Header>
-            <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
+            <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>

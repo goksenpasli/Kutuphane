@@ -22,7 +22,10 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" SelectedItem="{Binding SeçiliKitap}">
+            <ListView x:Name="listView"
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                SelectedItem="{Binding SeçiliKitap}"
+                VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">

@@ -23,7 +23,7 @@
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
-                <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
+                <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Resim">
@@ -193,7 +193,7 @@
                 </Button>
                 <Image Grid.Column="1" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
                 <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
-                    <UniformGrid Columns="2" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                    <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"
                             BorderBrush="#800000"

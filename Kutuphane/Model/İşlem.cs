@@ -15,7 +15,7 @@ namespace Kutuphane.Model
 
         private double cezaTutar;
 
-        private DateTime geriGetirmeTarihi;
+        private DateTime geriGetirmeTarihi = DateTime.Today;
 
         private int ıd;
 
@@ -201,7 +201,7 @@ namespace Kutuphane.Model
         [XmlAttribute(AttributeName = "UzatmaSayısı")]
         public int UzatmaSayısı
         {
-            get { return uzatmaSayısı; }
+            get => uzatmaSayısı;
 
             set
             {

@@ -70,7 +70,7 @@
                     </StackPanel>
                 </Button>
                 <GroupBox Header="DOLAPTAKİ TÜM KİTAPLAR" Grid.Row="4">
-                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}">
+                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="KİTAP ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />

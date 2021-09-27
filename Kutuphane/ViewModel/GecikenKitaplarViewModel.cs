@@ -3,6 +3,7 @@ using Kutuphane.Model;
 using Kutuphane.View;
 using System;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
@@ -24,12 +25,16 @@ namespace Kutuphane.ViewModel
 
             UzatmaGir = new RelayCommand<object>(parameter =>
             {
-                İşlem.Uzatıldı = true;
-                İşlem.UzatmaSayısı++;
-                İşlem.GeriGetirmeTarihi = UzatılmaTarihi;
-                MainViewModel.DatabaseSave.Execute(null);
+                if (MessageBox.Show("Seçili Kitaba Süre Uzatması Girmek İstiyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    İşlem.Uzatıldı = true;
+                    İşlem.UzatmaSayısı++;
+                    İşlem.GeriGetirmeTarihi = UzatılmaTarihi;
+                    MainViewModel.DatabaseSave.Execute(null);
+                }
             }, parameter => UzatılmaTarihi > İşlem.GeriGetirmeTarihi && İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
-
+            
+            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             PropertyChanged += GecikenKitaplarViewModel_PropertyChanged;
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }
@@ -92,14 +97,15 @@ namespace Kutuphane.ViewModel
 
         public ICommand UzatmaGir { get; }
 
-        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (UzatılmaTarihi < İşlem.GeriGetirmeTarihi)
+            if (e.PropertyName is "MaksimumUzatmaSayısı")
             {
-                UzatılmaTarihi = İşlem.GeriGetirmeTarihi;
+                TarihEtkin = İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
             }
-            TarihEtkin = İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
         }
+
+        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) => TarihEtkin = İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
 
         private void Kişi_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
