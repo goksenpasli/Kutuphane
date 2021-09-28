@@ -9,6 +9,9 @@ namespace Kutuphane.ViewModel
 {
     public class KitapVerViewModel : InpcBase
     {
+        private Kişi kişi;
+        private İşlem işlem;
+
         public KitapVerViewModel()
         {
             Kişi = new Kişi();
@@ -62,9 +65,33 @@ namespace Kutuphane.ViewModel
 
         public ICommand HızlıKitapVer { get; }
 
-        public İşlem İşlem { get; set; }
+        public İşlem İşlem
+        {
+            get => işlem;
 
-        public Kişi Kişi { get; set; }
+            set
+            {
+                if (işlem != value)
+                {
+                    işlem = value;
+                    OnPropertyChanged(nameof(İşlem));
+                }
+            }
+        }
+
+        public Kişi Kişi
+        {
+            get => kişi;
+
+            set
+            {
+                if (kişi != value)
+                {
+                    kişi = value;
+                    OnPropertyChanged(nameof(Kişi));
+                }
+            }
+        }
 
         public ICommand KitapVer { get; }
 

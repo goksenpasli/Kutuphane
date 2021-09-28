@@ -81,13 +81,7 @@
                                         <TextBox Text="{Binding Kişi.KişiKitapBarkodArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn>
-                                <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ComboBox IsEnabled="False" ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />
                                 <GridViewColumn Header="DEMİRBAŞ">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -111,16 +105,6 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <!--<GridViewColumn Header="KİTAP&#xA;DURUM">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ComboBox IsEnabled="False"
-                                                Width="100"
-                                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                                SelectedIndex="{Binding KitapDurumId}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>-->
                             </GridView>
                         </ListView.View>
                     </ListView>

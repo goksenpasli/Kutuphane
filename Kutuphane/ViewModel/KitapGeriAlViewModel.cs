@@ -77,7 +77,7 @@ namespace Kutuphane.ViewModel
                 if (File.Exists(MainViewModel.xmldatapath))
                 {
                     yaklaşanİşlemler = new();
-                    foreach (var kişi in XDocument.Load(MainViewModel.xmldatapath)?.Descendants("İşlem")?.Where(z => !(bool)z.Attribute("İşlemBitti") && ((DateTime)z.Attribute("GeriGetirmeTarihi")).AddDays(-Properties.Settings.Default.YaklaşanİşlemlerGünSayısı) < DateTime.Now && ((DateTime)z.Attribute("GeriGetirmeTarihi")) > DateTime.Now)?.Select(z => z.Parent))
+                    foreach (var kişi in XDocument.Load(MainViewModel.xmldatapath)?.Descendants("İşlem")?.Where(z => !(bool)z.Attribute("İşlemBitti") && ((DateTime)z.Attribute("GeriGetirmeTarihi")).AddDays(-Properties.Settings.Default.YaklaşanİşlemlerGünSayısı) < DateTime.Now && ((DateTime)z.Attribute("GeriGetirmeTarihi")) > DateTime.Now)?.Select(z => z.Parent).Distinct())
                     {
                         yaklaşanİşlemler.Add(kişi.DeSerialize<Kişi>());
                     }

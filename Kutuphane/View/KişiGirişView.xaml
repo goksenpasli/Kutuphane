@@ -277,13 +277,7 @@
                                 <TextBox Text="{Binding Kişi.KişiKitapBarkodArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
-                        <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox IsEnabled="False" ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />
                         <GridViewColumn Header="DEMİRBAŞ">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -291,32 +285,6 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <!--<GridViewColumn Header="DOLAP" extensions:GridViewSort.PropertyName="DolapAltKod">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel IsEnabled="False" Orientation="Horizontal">
-                                        <ComboBox Width="70"
-                                            ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
-                                            DisplayMemberPath="Açıklama"
-                                            SelectedValue="{Binding DolapId}"
-                                            SelectedValuePath="Id" />
-                                        <extensions:NumericUpDownControl Width="40"
-                                            Maximum="1000000" Minimum="1" SmallChange="1"
-                                            Value="{Binding DolapAltKod}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>-->
-                        <!--<GridViewColumn Header="KİTAP&#xA;DURUM">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox IsEnabled="False"
-                                        Width="100"
-                                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                        SelectedIndex="{Binding KitapDurumId}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>-->
                     </GridView>
                 </ListView.View>
             </ListView>

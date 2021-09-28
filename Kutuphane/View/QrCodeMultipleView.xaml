@@ -19,19 +19,24 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="381.6" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="365" />
+                <RowDefinition Height="42.4" />
             </Grid.RowDefinitions>
-            <UniformGrid Columns="3" Rows="2">
+            <UniformGrid Columns="4" Rows="2">
                 <TextBlock Text="EN" HorizontalAlignment="Center" />
                 <TextBlock Text="BOY" HorizontalAlignment="Center" />
                 <TextBlock Text="KALINLIK" HorizontalAlignment="Center" />
+                <TextBlock Text="BİÇİM" HorizontalAlignment="Center" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
                     Value="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
                     Value="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="0" SmallChange="1"
                     Value="{Binding QrMultipleBorderThickness, Mode=TwoWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox Grid.Row="1"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
+                    IsTabStop="False"
+                    SelectedItem="{Binding BarcodeFormat}" />
             </UniformGrid>
             <FlowDocumentScrollViewer Grid.Row="1">
                 <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">

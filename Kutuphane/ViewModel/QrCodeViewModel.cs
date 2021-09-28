@@ -12,6 +12,8 @@ namespace Kutuphane.ViewModel
 {
     public class QrCodeViewModel : InpcBase
     {
+        private Barkod barkod;
+
         public QrCodeViewModel()
         {
             Barkod = new Barkod();
@@ -49,7 +51,19 @@ namespace Kutuphane.ViewModel
             Barkod.PropertyChanged += Barkod_PropertyChanged;
         }
 
-        public Barkod Barkod { get; set; }
+        public Barkod Barkod
+        {
+            get => barkod;
+
+            set
+            {
+                if (barkod != value)
+                {
+                    barkod = value;
+                    OnPropertyChanged(nameof(Barkod));
+                }
+            }
+        }
 
         public ICommand KareKodSakla { get; }
 

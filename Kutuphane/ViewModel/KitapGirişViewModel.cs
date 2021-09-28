@@ -13,6 +13,8 @@ namespace Kutuphane.ViewModel
 {
     public class KitapGirişViewModel : InpcBase
     {
+        private Kitap kitap;
+
         public KitapGirişViewModel()
         {
             Kitap = new Kitap();
@@ -25,6 +27,10 @@ namespace Kutuphane.ViewModel
                     for (var i = 0; i < Kitap.TopluKitapSayısı; i++)
                     {
                         kitap = KitapOluştur();
+                        if (Kitap.OtomatikBarkod)
+                        {
+                            kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                        }
                         (parameter as Kütüphane)?.Kitaplar.Add(kitap);
                     }
                 }
@@ -113,7 +119,19 @@ namespace Kutuphane.ViewModel
             Kitap.PropertyChanged += Kitap_PropertyChanged;
         }
 
-        public Kitap Kitap { get; set; }
+        public Kitap Kitap
+        {
+            get => kitap;
+
+            set
+            {
+                if (kitap != value)
+                {
+                    kitap = value;
+                    OnPropertyChanged(nameof(Kitap));
+                }
+            }
+        }
 
         public ICommand KitapEkle { get; }
 

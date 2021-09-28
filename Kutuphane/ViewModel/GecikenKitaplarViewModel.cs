@@ -25,7 +25,7 @@ namespace Kutuphane.ViewModel
 
             UzatmaGir = new RelayCommand<object>(parameter =>
             {
-                if (MessageBox.Show("Seçili Kitaba Süre Uzatması Girmek İstiyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Seçili Kitaba Süre Uzatması Girmek İstiyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     İşlem.Uzatıldı = true;
                     İşlem.UzatmaSayısı++;
