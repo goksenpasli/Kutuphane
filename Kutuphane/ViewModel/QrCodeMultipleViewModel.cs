@@ -1,11 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
+using ZXing;
 
 namespace Kutuphane.ViewModel
 {
     public class QrCodeMultipleViewModel : QrCodeViewModel
     {
+        private BarcodeFormat barcodeFormat = BarcodeFormat.CODE_128;
+
         private ObservableCollection<BitmapSource> barkodResimler;
 
         private int boy = 4;
@@ -15,6 +18,20 @@ namespace Kutuphane.ViewModel
         public QrCodeMultipleViewModel()
         {
             PropertyChanged += QrCodeMultipleViewModel_PropertyChanged;
+        }
+
+        public BarcodeFormat BarcodeFormat
+        {
+            get => barcodeFormat;
+
+            set
+            {
+                if (barcodeFormat != value)
+                {
+                    barcodeFormat = value;
+                    OnPropertyChanged(nameof(BarcodeFormat));
+                }
+            }
         }
 
         public ObservableCollection<BitmapSource> BarkodResimler
@@ -62,8 +79,9 @@ namespace Kutuphane.ViewModel
         private void QrCodeMultipleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             BarkodResimler.Clear();
-            if (e.PropertyName is "En" or "Boy")
+            if (e.PropertyName is "En" or "Boy" or "BarcodeFormat")
             {
+                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(BarcodeFormat);
                 for (var i = 0; i < En * Boy; i++)
                 {
                     BarkodResimler.Add(Barkod.BarkodImage);

@@ -11,18 +11,7 @@
     d:DesignHeight="578" d:DesignWidth="800" Loaded="UserControl_Loaded" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kitaplar"
-            d:Source="{d:DesignInstance {x:Type model:Kitap},
-                                        CreateList=True}"
-            IsLiveFilteringRequested="True"
-            Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}">
-            <CollectionViewSource.LiveFilteringProperties>
-                <System:String>KitapDurumId</System:String>
-            </CollectionViewSource.LiveFilteringProperties>
-            <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription Direction="Ascending" PropertyName="Ad" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
+        <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}" />
     </UserControl.Resources>
@@ -55,6 +44,9 @@
                                         <Setter Property="Foreground" Value="Red" />
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </ListView.ItemContainerStyle>
@@ -81,13 +73,7 @@
                                         <TextBox Text="{Binding Kişi.KişiKitapBarkodArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn>
-                                <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ComboBox IsEnabled="False" ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />
                                 <GridViewColumn Header="DEMİRBAŞ">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -111,16 +97,6 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <!--<GridViewColumn Header="KİTAP&#xA;DURUM">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ComboBox IsEnabled="False"
-                                                Width="100"
-                                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                                SelectedIndex="{Binding KitapDurumId}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>-->
                             </GridView>
                         </ListView.View>
                     </ListView>

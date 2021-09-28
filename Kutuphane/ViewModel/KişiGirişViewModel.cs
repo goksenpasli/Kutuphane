@@ -10,6 +10,8 @@ namespace Kutuphane.ViewModel
 {
     public class KişiGirişViewModel : InpcBase
     {
+        private Kişi kişi;
+
         public KişiGirişViewModel()
         {
             Kişi = new Kişi();
@@ -61,7 +63,19 @@ namespace Kutuphane.ViewModel
             Kişi.PropertyChanged += KişiGirişViewModel_PropertyChanged;
         }
 
-        public Kişi Kişi { get; set; }
+        public Kişi Kişi
+        {
+            get => kişi;
+
+            set
+            {
+                if (kişi != value)
+                {
+                    kişi = value;
+                    OnPropertyChanged(nameof(Kişi));
+                }
+            }
+        }
 
         public ICommand KişiEkle { get; }
 

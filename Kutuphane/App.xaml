@@ -20,6 +20,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Extensions:SystemFileIconConverter x:Key="SystemFileIconConverter" />
             <Extensions:FilePathToIconConverter x:Key="FilePathToIconConverter" />
+            <Kutuphane:StringToBarCodeImageConverter x:Key="StringToBarCodeImageConverter" />
             <Kutuphane:DatePassedConverter x:Key="DatePassedConverter" />
             <Kutuphane:ListViewCezaTutarConverter x:Key="ListViewCezaTutarConverter" />
             <Extensions:NullableToBooleanConverter x:Key="NullableToBooleanConverter" />
