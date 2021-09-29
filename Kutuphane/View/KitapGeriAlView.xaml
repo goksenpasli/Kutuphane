@@ -75,7 +75,24 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />
+                        <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox IsEnabled="False"
+                                        ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
+                                        ItemTemplate="{StaticResource KitapTemplate}"
+                                        SelectedItem="{Binding SeçiliKitap}"
+                                        SelectedValue="{Binding KitapId}"
+                                        SelectedValuePath="Id">
+                                        <ComboBox.Template>
+                                            <ControlTemplate TargetType="ComboBox">
+                                                <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" IsHitTestVisible="False" />
+                                            </ControlTemplate>
+                                        </ComboBox.Template>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="CEZA" extensions:GridViewSort.PropertyName="Ceza">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
