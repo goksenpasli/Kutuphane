@@ -28,7 +28,7 @@
                 VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
+                        <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad"  CellTemplate="{StaticResource KitapTemplate}">
                             <GridViewColumn.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="KİTAP&#xA;ADI" />
@@ -161,7 +161,7 @@
                 <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="AD" DisplayMemberBinding="{Binding Ad}" />
+                            <GridViewColumn Header="AD" CellTemplate="{StaticResource KişiTemplate}" />
                             <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
                             <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
                             <GridViewColumn Header="TELEFON">

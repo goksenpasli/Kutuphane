@@ -72,6 +72,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfCap, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFCap.1.2.0\lib\net40\WpfCap.dll</HintPath>
+    </Reference>
     <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.0.16.6\lib\net45\zxing.dll</HintPath>
     </Reference>
@@ -116,6 +119,9 @@
     <Compile Include="ViewModel\QrCodeViewModel.cs" />
     <Compile Include="ViewModel\Reporting.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="View\CameraUserControl.xaml.cs">
+      <DependentUpon>CameraUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DolapDüzenView.xaml.cs">
       <DependentUpon>DolapDüzenView.xaml</DependentUpon>
     </Compile>
@@ -164,6 +170,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CameraUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DolapDüzenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

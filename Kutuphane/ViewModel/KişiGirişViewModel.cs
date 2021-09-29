@@ -48,7 +48,8 @@ namespace Kutuphane.ViewModel
                         DoğumTarihi = Kişi.DoğumTarihi,
                         Adres = Kişi.Adres,
                         KitapAlabilir = Kişi.KitapAlabilir,
-                        KayıtTarihi = DateTime.Now
+                        KayıtTarihi = DateTime.Now,
+                        Resim = Kişi.Resim
                     };
                     mainViewModel.Kütüphane.Kişiler.Add(kişi);
                     MainViewModel.DatabaseSave.Execute(null);
@@ -58,7 +59,7 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => !string.IsNullOrWhiteSpace(Kişi.TC) && !string.IsNullOrWhiteSpace(Kişi.Ad) && !string.IsNullOrWhiteSpace(Kişi.Soyad));
 
-            KişiGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter => true);
+            KişiGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter => parameter is Kişi kişi);
 
             Kişi.PropertyChanged += KişiGirişViewModel_PropertyChanged;
         }
@@ -117,6 +118,7 @@ namespace Kutuphane.ViewModel
             Kişi.Adres = null;
             Kişi.Cinsiyet = -1;
             Kişi.AktarmaTC = null;
+            Kişi.Resim = null;
         }
     }
 }

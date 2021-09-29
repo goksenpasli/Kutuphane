@@ -130,5 +130,17 @@ namespace Kutuphane.Properties {
                 this["MaksimumUzatmaSayısı"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool KişiResimGöster {
+            get {
+                return ((bool)(this["KişiResimGöster"]));
+            }
+            set {
+                this["KişiResimGöster"] = value;
+            }
+        }
     }
 }

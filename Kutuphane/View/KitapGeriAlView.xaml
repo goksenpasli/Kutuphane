@@ -26,7 +26,7 @@
             <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
+                        <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;ADI" />
                                 <TextBox Text="{Binding Kişi.KişiAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
@@ -75,19 +75,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox IsEnabled="False"
-                                        ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                        Style="{StaticResource KitapTemplate}"
-                                        DisplayMemberPath="Ad"
-                                        SelectedItem="{Binding SeçiliKitap}"
-                                        SelectedValue="{Binding KitapId}"
-                                        SelectedValuePath="Id" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />
                         <GridViewColumn Header="CEZA" extensions:GridViewSort.PropertyName="Ceza">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

@@ -52,16 +52,7 @@
                         </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Ad}">
-                                                <TextBlock.ToolTip>
-                                                    <Image Source="{Binding Resim, Converter={StaticResource DataImageFilePathImageUriConverter}}" />
-                                                </TextBlock.ToolTip>
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
+                                <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KitapTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;ADI" />
                                         <TextBox Text="{Binding Kişi.KişiKitapAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
@@ -138,7 +129,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}">
+                                    <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;ADI" />
                                             <TextBox Text="{Binding Kişi.KişiAdArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
@@ -176,18 +167,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <ComboBox IsEnabled="False"
-                                                    ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                                    Style="{DynamicResource KitapTemplate}"
-                                                    DisplayMemberPath="Ad"
-                                                    SelectedValue="{Binding KitapId}"
-                                                    SelectedValuePath="Id" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />
                                     <GridViewColumn Header="CEZA" extensions:GridViewSort.PropertyName="Ceza">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>

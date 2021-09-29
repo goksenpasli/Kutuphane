@@ -37,6 +37,8 @@ namespace Kutuphane.Model
 
         private int kitapCezasıAdeti;
 
+        private string resim;
+
         private Kişi sonKaydedilenKişi;
 
         private string soyad;
@@ -258,6 +260,21 @@ namespace Kutuphane.Model
                 {
                     kitapCezasıAdeti = value;
                     OnPropertyChanged(nameof(KitapCezasıAdeti));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "Resim")]
+        public string Resim
+        {
+            get { return resim; }
+
+            set
+            {
+                if (resim != value)
+                {
+                    resim = value;
+                    OnPropertyChanged(nameof(Resim));
                 }
             }
         }

@@ -87,7 +87,6 @@
             </DrawingBrush>
             <ControlTemplate x:Key="ValidationErrorTemplate">
                 <Grid Focusable="False">
-                    <AdornedElementPlaceholder x:Name="Adorner" />
                     <Canvas x:Name="Cnv"
                         Width="18" Height="18"
                         Background="{StaticResource Dur}"
@@ -111,6 +110,7 @@
                             </TransformGroup>
                         </Canvas.RenderTransform>
                     </Canvas>
+                    <AdornedElementPlaceholder x:Name="Adorner" />
                 </Grid>
                 <ControlTemplate.Triggers>
                     <DataTrigger Binding="{Binding AdornedElement.(Validation.HasError), ElementName=Adorner}" Value="True">
@@ -284,47 +284,63 @@
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
             </Style>
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
-            <Style x:Key="KitapTemplate" TargetType="ComboBox">
-                <Setter Property="Template">
-                    <Setter.Value>
+            <DataTemplate x:Key="KişiTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <Image MaxWidth="72" MaxHeight="72">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock Text="{Binding Ad}" VerticalAlignment="Center" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="KitapTemplate">
+                <StackPanel>
+                    <TextBlock>
+                        <Run Text="{Binding Ad}" FontWeight="Bold" />
+                        <LineBreak />
+                        <Run Text="{Binding Barkod}" />
+                    </TextBlock>
+                    <Image MaxWidth="110" MaxHeight="145">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="KitapComboBoxTemplate">
+                <ComboBox IsEnabled="False"
+                    ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
+                    ItemTemplate="{StaticResource KitapTemplate}"
+                    SelectedValue="{Binding KitapId}"
+                    SelectedValuePath="Id">
+                    <ComboBox.Template>
                         <ControlTemplate TargetType="ComboBox">
                             <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" IsHitTestVisible="False" />
                         </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="ItemTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock>
-                                    <Run Text="{Binding Ad}" FontWeight="Bold" />
-                                    <LineBreak />
-                                    <Run Text="{Binding Barkod}" />
-                                </TextBlock>
-                                <ComboBox IsEnabled="False"
-                                    Width="100"
-                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                    SelectedIndex="{Binding KitapDurumId}" />
-                                <Image MaxWidth="110" MaxHeight="145">
-                                    <Image.Style>
-                                        <Style TargetType="Image">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
-                                                    <Setter Property="Source">
-                                                        <Setter.Value>
-                                                            <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Image.Style>
-                                </Image>
-                            </StackPanel>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+                    </ComboBox.Template>
+                </ComboBox>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
