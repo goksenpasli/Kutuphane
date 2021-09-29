@@ -86,7 +86,7 @@
                     <HeaderedContentControl Header="DOĞUM TARİHİ" Grid.Row="6">
                         <DatePicker DisplayDateEnd="{Binding Mode=OneWay, Source={x:Static System:DateTime.Today}}" SelectedDate="{Binding Kişi.DoğumTarihi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
-                    <UniformGrid Grid.Row="7" Columns="2">
+                    <UniformGrid Grid.Row="7" Columns="3">
                         <Button Command="{Binding KişiEkle, Mode=OneWay}" CommandParameter="{Binding Mode=OneWay, Source={StaticResource MainViewModel}}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="32" Height="32">
@@ -98,6 +98,19 @@
                                     </Image.Source>
                                 </Image>
                                 <TextBlock Text="KİŞİ GİR" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding KişiResimYükle}" IsTabStop="False">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="32" Height="32">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="160" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock Text="RESİM YÜKLE" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                         <extensions:ContentToggleButton IsTabStop="False">
@@ -283,14 +296,14 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="KİMLİK KARTI" Grid.Row="1" Grid.Column="1">
-            <Grid Width="8cm" HorizontalAlignment="Left">
+            <Grid Width="10cm" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <FlowDocumentScrollViewer x:Name="Fd" VerticalScrollBarVisibility="Disabled">
                     <FlowDocument FontSize="16" FontFamily="Times New Roman"
-                        Block.LineHeight="1" Language="tr-tr" PagePadding="0">
+                        Block.LineHeight="1" Language="tr-tr" PagePadding="1">
                         <FlowDocument.Resources>
                             <Style TargetType="{x:Type TableCell}">
                                 <Setter Property="BorderBrush" Value="Black" />
@@ -300,11 +313,12 @@
                         <Table CellSpacing="0">
                             <Table.Columns>
                                 <TableColumn Width="100" />
-                                <TableColumn Width="200" />
+                                <TableColumn Width="180" />
+                                <TableColumn Width="95" />
                             </Table.Columns>
                             <TableRowGroup>
                                 <TableRow>
-                                    <TableCell ColumnSpan="2">
+                                    <TableCell ColumnSpan="3">
                                         <Paragraph TextAlignment="Center">
                                             <Run Text="KİMLİK KARTI" FontWeight="Bold" />
                                         </Paragraph>
@@ -320,6 +334,11 @@
                                         <Paragraph>
                                             <Run Text="{Binding Kişi.Ad}" />
                                         </Paragraph>
+                                    </TableCell>
+                                    <TableCell RowSpan="4">
+                                        <BlockUIContainer>
+                                            <Image Width="70" Height="110" Source="{Binding Kişi.Resim, Converter={StaticResource LocalDataImageFilePathImageUriConverter}}" />
+                                        </BlockUIContainer>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>

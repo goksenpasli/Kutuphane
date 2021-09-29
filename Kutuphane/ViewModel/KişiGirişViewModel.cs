@@ -1,7 +1,9 @@
 ﻿using Extensions;
 using Kutuphane.Model;
 using Kutuphane.View;
+using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -61,6 +63,17 @@ namespace Kutuphane.ViewModel
 
             KişiGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter => parameter is Kişi kişi);
 
+            KişiResimYükle = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                    Kişi.Resim = filename;
+                }
+            }, parameter => true);
+
             Kişi.PropertyChanged += KişiGirişViewModel_PropertyChanged;
         }
 
@@ -81,6 +94,8 @@ namespace Kutuphane.ViewModel
         public ICommand KişiEkle { get; }
 
         public ICommand KişiGüncelle { get; }
+
+        public ICommand KişiResimYükle { get; }
 
         private void KişiGirişViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
