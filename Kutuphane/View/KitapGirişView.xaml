@@ -80,7 +80,7 @@
                         </ComboBox>
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="KİTAP YAZARI" Grid.Row="5" IsTabStop="False">
-                        <Extensions:ContentToggleButton CornerRadius="0" OverContent="KİTAP YAZARI">
+                        <Extensions:ContentToggleButton  OverContent="KİTAP YAZARI">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -108,7 +108,7 @@
                         </Extensions:ContentToggleButton>
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="KİTAP TÜRÜ" Grid.Row="6" IsTabStop="False">
-                        <Extensions:ContentToggleButton CornerRadius="0" OverContent="KİTAP TÜRÜ">
+                        <Extensions:ContentToggleButton  OverContent="KİTAP TÜRÜ">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -251,7 +251,7 @@
                 </Grid.RowDefinitions>
                 <Extensions:ContentToggleButton Grid.Row="0"
                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    CornerRadius="0">
+                    >
                     <Extensions:ContentToggleButton.OverContent>
                         <StackPanel Orientation="Horizontal">
                             <Image Width="32" Height="32">

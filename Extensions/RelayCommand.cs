@@ -6,16 +6,16 @@ using System.Windows.Input;
 
 namespace Extensions
 {
-    public class RelayAsyncCommand : RelayCommand
+    public class RelayAsyncCommand<T> : RelayCommand<T>
     {
         private bool isExecuting;
 
-        public RelayAsyncCommand(Action execute, Func<bool> canExecute)
+        public RelayAsyncCommand(Action<T> execute, Predicate<T> canExecute)
             : base(execute, canExecute)
         {
         }
 
-        public RelayAsyncCommand(Action execute)
+        public RelayAsyncCommand(Action<T> execute)
             : base(execute)
         {
         }
@@ -24,7 +24,10 @@ namespace Extensions
 
         public event EventHandler Started;
 
-        public bool IsExecuting => isExecuting;
+        public bool IsExecuting
+        {
+            get { return isExecuting; }
+        }
 
         public override bool CanExecute(object parameter) => base.CanExecute(parameter) && (!isExecuting);
 
@@ -35,8 +38,8 @@ namespace Extensions
                 isExecuting = true;
                 Started?.Invoke(this, EventArgs.Empty);
 
-                var task = Task.Factory.StartNew(() => execute());
-                _ = task.ContinueWith(t => OnRunWorkerCompleted(EventArgs.Empty), TaskScheduler.FromCurrentSynchronizationContext());
+                var task = Task.Factory.StartNew(() => _execute((T)parameter));
+                task.ContinueWith(_ => OnRunWorkerCompleted(EventArgs.Empty), TaskScheduler.FromCurrentSynchronizationContext());
             }
             catch (Exception ex)
             {
@@ -53,27 +56,30 @@ namespace Extensions
 
     public class RelayCommand<T> : ICommand
     {
-        private readonly Predicate<T> _canExecute;
+        #region Fields
 
-        private readonly Action<T> _execute;
+        protected readonly Predicate<T> _canExecute;
+
+        protected readonly Action<T> _execute;
+
+        #endregion Fields
+
+        #region Constructors
 
         public RelayCommand(Action<T> execute)
-            : this(execute, null)
-        { }
-
-        public RelayCommand(Action execute)
-            : this(o => execute())
-        { }
-
-        public RelayCommand(Action execute, Func<bool> canExecute)
-            : this(o => execute(), o => canExecute())
-        { }
+        : this(execute, null)
+        {
+        }
 
         public RelayCommand(Action<T> execute, Predicate<T> canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
+
+        #endregion Constructors
+
+        #region ICommand Members
 
         public event EventHandler CanExecuteChanged
         {
@@ -82,9 +88,11 @@ namespace Extensions
         }
 
         [DebuggerStepThrough]
-        public bool CanExecute(object parameter) => _canExecute == null || _canExecute((T)parameter);
+        public virtual bool CanExecute(object parameter) => _canExecute == null || _canExecute((T)parameter);
 
-        public void Execute(object parameter) => _execute((T)parameter);
+        public virtual void Execute(object parameter) => _execute((T)parameter);
+
+        #endregion ICommand Members
     }
 
     public class RelayCommand : ICommand

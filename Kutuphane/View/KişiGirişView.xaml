@@ -157,7 +157,7 @@
                                                 <TextBox Text="{Binding Kişi.KişiTcArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                             </StackPanel>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="KİTAP ALABİLİR">
+                                        <GridViewColumn Header="KİTAP ALABİLİR" extensions:GridViewSort.PropertyName="KitapAlabilir">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <CheckBox IsChecked="{Binding KitapAlabilir}" />
@@ -167,7 +167,7 @@
                                         <GridViewColumn>
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <extensions:ContentToggleButton CornerRadius="0" OverContent="İŞLEM">
+                                                    <extensions:ContentToggleButton  OverContent="İŞLEM">
                                                         <ListBox Width="480" Height="360"
                                                             ItemsSource="{Binding İşlem}"
                                                             ItemTemplate="{StaticResource KitapComboBoxTemplate}">
@@ -195,7 +195,7 @@
                             </ListView>
                             <Button Grid.Row="1" Command="{Binding KişiGirişViewModel.KişiGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding SelectedItem, ElementName=LvKişi}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Width="16" Height="16">
+                                    <Image Width="32" Height="32">
                                         <Image.Source>
                                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                                 <Binding Source="Shell32.dll" />
@@ -203,7 +203,7 @@
                                             </MultiBinding>
                                         </Image.Source>
                                     </Image>
-                                    <TextBlock Text="GÜNCELLE" />
+                                    <TextBlock Text="GÜNCELLE" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
                         </Grid>

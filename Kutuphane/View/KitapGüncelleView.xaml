@@ -197,13 +197,13 @@
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"
                             BorderBrush="#800000"
-                            CornerRadius="0">
+                            >
                             <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                         </Extensions:ContentToggleButton>
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"
                             BorderBrush="Blue"
-                            CornerRadius="0">
+                            >
                             <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                         </Extensions:ContentToggleButton>
                     </UniformGrid>

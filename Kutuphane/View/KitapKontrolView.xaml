@@ -58,7 +58,7 @@
                         <GridViewColumn Width="70">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Extensions:ContentToggleButton Visibility="{Binding Tutanak, Converter={StaticResource BooleanToVisibilityConverter}}" CornerRadius="0" OverContent="TUTANAK">
+                                    <Extensions:ContentToggleButton Visibility="{Binding Tutanak, Converter={StaticResource BooleanToVisibilityConverter}}"  OverContent="TUTANAK">
                                         <Extensions:ContentToggleButton.Content>
                                             <GroupBox Header="TUTANAK" Width="280" Height="210">
                                                 <StackPanel>

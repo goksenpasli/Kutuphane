@@ -13,7 +13,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Extensions;component/Themes/Generic.xaml" />
-                <ResourceDictionary Source="/PresentationFramework.Aero,Version=4.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35,processorArchitecture=MSIL;component/themes/Aero.NormalColor.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ViewModel:MainViewModel x:Key="MainViewModel" />
             <Kutuphane:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
@@ -283,6 +282,9 @@
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
             </Style>
+            <Style TargetType="Extensions:ContentToggleButton">
+                <Setter Property="CornerRadius" Value="0" />
+            </Style>
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
@@ -306,11 +308,7 @@
             </DataTemplate>
             <DataTemplate x:Key="KitapTemplate">
                 <StackPanel>
-                    <TextBlock>
-                        <Run Text="{Binding Ad}" FontWeight="Bold" />
-                        <LineBreak />
-                        <Run Text="{Binding Barkod}" />
-                    </TextBlock>
+                    <TextBlock Text="{Binding Ad}" />
                     <Image MaxWidth="110" MaxHeight="145">
                         <Image.Style>
                             <Style TargetType="Image">

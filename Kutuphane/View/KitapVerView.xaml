@@ -65,7 +65,7 @@
                                     </StackPanel>
                                 </GridViewColumn>
                                 <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />
-                                <GridViewColumn Header="DEMİRBAŞ">
+                                <GridViewColumn Header="DEMİRBAŞ" extensions:GridViewSort.PropertyName="Demirbaş">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox IsEnabled="False" IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
