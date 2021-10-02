@@ -44,7 +44,7 @@
                                 <TextBox Text="{Binding Kişi.KişiTcArama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
-                        <GridViewColumn>
+                        <GridViewColumn extensions:GridViewSort.PropertyName="KitapCezasıAdeti">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ProgressBar Width="48"

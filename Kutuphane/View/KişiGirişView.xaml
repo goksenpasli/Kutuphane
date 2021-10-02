@@ -64,7 +64,8 @@
                         <TextBox Text="{Binding Kişi.Soyad, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="TC" Grid.Row="2">
-                        <TextBox Text="{Binding Kişi.TC, UpdateSourceTrigger=PropertyChanged}" MaxLength="11" />
+                        <extensions:MaskedTextBox ClearButtonVisibility="Visible" IncludeLiterals="False" IncludePrompt="False" Mask="00000000000"
+                            Value="{Binding Kişi.TC, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="ADRES" Grid.Row="3">
                         <TextBox Text="{Binding Kişi.Adres, UpdateSourceTrigger=PropertyChanged}" />
@@ -164,10 +165,10 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn>
+                                        <GridViewColumn Header="İŞLEM">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <extensions:ContentToggleButton  OverContent="İŞLEM">
+                                                    <extensions:ContentToggleButton OverContent="İŞLEM">
                                                         <ListBox Width="480" Height="360"
                                                             ItemsSource="{Binding İşlem}"
                                                             ItemTemplate="{StaticResource KitapComboBoxTemplate}">
@@ -186,6 +187,15 @@
                                                                 </ItemsPanelTemplate>
                                                             </ListBox.ItemsPanel>
                                                         </ListBox>
+                                                    </extensions:ContentToggleButton>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="KİMLİK">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <extensions:ContentToggleButton OverContent="KİMLİK">
+                                                        <local:KimlikKartıView />
                                                     </extensions:ContentToggleButton>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
@@ -295,106 +305,6 @@
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="KİMLİK KARTI" Grid.Row="1" Grid.Column="1">
-            <Grid Width="10cm" HorizontalAlignment="Left">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <FlowDocumentScrollViewer x:Name="Fd" VerticalScrollBarVisibility="Disabled">
-                    <FlowDocument FontSize="16" FontFamily="Times New Roman"
-                        Block.LineHeight="1" Language="tr-tr" PagePadding="1">
-                        <FlowDocument.Resources>
-                            <Style TargetType="{x:Type TableCell}">
-                                <Setter Property="BorderBrush" Value="Black" />
-                                <Setter Property="BorderThickness" Value="0.5pt" />
-                            </Style>
-                        </FlowDocument.Resources>
-                        <Table CellSpacing="0">
-                            <Table.Columns>
-                                <TableColumn Width="100" />
-                                <TableColumn Width="180" />
-                                <TableColumn Width="95" />
-                            </Table.Columns>
-                            <TableRowGroup>
-                                <TableRow>
-                                    <TableCell ColumnSpan="3">
-                                        <Paragraph TextAlignment="Center">
-                                            <Run Text="KİMLİK KARTI" FontWeight="Bold" />
-                                        </Paragraph>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>
-                                        <Paragraph>
-                                            <Run Text="AD" FontWeight="Bold" />
-                                        </Paragraph>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Paragraph>
-                                            <Run Text="{Binding Kişi.Ad}" />
-                                        </Paragraph>
-                                    </TableCell>
-                                    <TableCell RowSpan="4">
-                                        <BlockUIContainer>
-                                            <Image Width="70" Height="110" Source="{Binding Kişi.Resim, Converter={StaticResource LocalDataImageFilePathImageUriConverter}}" />
-                                        </BlockUIContainer>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>
-                                        <Paragraph>
-                                            <Run Text="SOYAD" FontWeight="Bold" />
-                                        </Paragraph>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Paragraph>
-                                            <Run Text="{Binding Kişi.Soyad}" />
-                                        </Paragraph>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>
-                                        <Paragraph>
-                                            <Run Text="TC KİMLİK" FontWeight="Bold" />
-                                        </Paragraph>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Paragraph>
-                                            <Run Text="{Binding Kişi.TC}" />
-                                        </Paragraph>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell Padding="0,15,0,0">
-                                        <Paragraph>
-                                            <Run Text="TC BARKOD" FontWeight="Bold" />
-                                        </Paragraph>
-                                    </TableCell>
-                                    <TableCell Padding="0,10">
-                                        <BlockUIContainer>
-                                            <Image Height="32" Source="{Binding Kişi.TC, Converter={StaticResource StringToBarCodeImageConverter}}" />
-                                        </BlockUIContainer>
-                                    </TableCell>
-                                </TableRow>
-                            </TableRowGroup>
-                        </Table>
-                    </FlowDocument>
-                </FlowDocumentScrollViewer>
-                <Button Grid.Row="2" Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Fd}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Width="32" Height="32">
-                            <Image.Source>
-                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                    <Binding Source="Shell32.dll" />
-                                    <Binding Source="136" />
-                                </MultiBinding>
-                            </Image.Source>
-                        </Image>
-                        <TextBlock Text="YAZDIR" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button>
-            </Grid>
-        </GroupBox>
+        <local:KimlikKartıView Grid.Row="1" Grid.Column="1" DataContext="{Binding Kişi}" />
     </Grid>
 </UserControl>

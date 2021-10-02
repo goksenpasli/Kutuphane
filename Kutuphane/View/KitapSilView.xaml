@@ -88,7 +88,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Image Grid.Column="1" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <viewmodel:ShadowedImage Grid.Column="1" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
             </Grid>
         </GroupBox>
     </Grid>

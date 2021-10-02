@@ -267,7 +267,7 @@ namespace Kutuphane.Model
         [XmlAttribute(AttributeName = "Resim")]
         public string Resim
         {
-            get { return resim; }
+            get => resim;
 
             set
             {

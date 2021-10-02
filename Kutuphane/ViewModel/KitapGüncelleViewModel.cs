@@ -13,6 +13,9 @@ namespace Kutuphane.ViewModel
 
         private string kişiKitapBarkodArama;
 
+        private int kişiKitapKonumArama = 4;
+        private int kişiDolapIdArama;
+
         public KitapGüncelleViewModel()
         {
             KitapGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter =>
@@ -60,6 +63,34 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public int KişiKitapKonumArama
+        {
+            get => kişiKitapKonumArama;
+
+            set
+            {
+                if (kişiKitapKonumArama != value)
+                {
+                    kişiKitapKonumArama = value;
+                    OnPropertyChanged(nameof(KişiKitapKonumArama));
+                }
+            }
+        }
+
+        public int KişiDolapIdArama
+        {
+            get => kişiDolapIdArama;
+
+            set
+            {
+                if (kişiDolapIdArama != value)
+                {
+                    kişiDolapIdArama = value;
+                    OnPropertyChanged(nameof(KişiDolapIdArama));
+                }
+            }
+        }
+
         public ICommand KitapGüncelle { get; }
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -71,6 +102,21 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
                 KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Barkod.Contains(KişiKitapBarkodArama);
+            }  
+            if (e.PropertyName is "KişiDolapIdArama")
+            {
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).DolapId== KişiDolapIdArama;
+            }
+            if (e.PropertyName is "KişiKitapKonumArama")
+            {
+                if (KişiKitapKonumArama != 4)
+                {
+                    KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).KitapDurumId == KişiKitapKonumArama;
+                }
+                else
+                {
+                    KitapGüncelleView.cvs.View.Filter = null;
+                }
             }
         }
     }

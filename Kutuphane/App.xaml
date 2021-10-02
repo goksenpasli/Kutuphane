@@ -72,6 +72,9 @@
             <DataTemplate DataType="{x:Type ViewModel:KitapGeriAlViewModel}">
                 <View:KitapGeriAlView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type ViewModel:KitapCezaDurumViewModel}">
+                <View:KitapCezaDurumView />
+            </DataTemplate>
             <DrawingBrush x:Key="Dur" ice:Freeze="True" Stretch="Uniform">
                 <DrawingBrush.Drawing>
                     <DrawingGroup>
@@ -288,7 +291,7 @@
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <Image MaxWidth="72" MaxHeight="72">
+                    <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72" ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -302,14 +305,14 @@
                                 </Style.Triggers>
                             </Style>
                         </Image.Style>
-                    </Image>
+                    </ViewModel:ShadowedImage>
                     <TextBlock Text="{Binding Ad}" VerticalAlignment="Center" />
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="KitapTemplate">
                 <StackPanel>
                     <TextBlock Text="{Binding Ad}" />
-                    <Image MaxWidth="110" MaxHeight="145">
+                    <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145" ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -323,7 +326,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Image.Style>
-                    </Image>
+                    </ViewModel:ShadowedImage>
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="KitapComboBoxTemplate">

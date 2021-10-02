@@ -125,7 +125,17 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="DOLAP" Extensions:GridViewSort.PropertyName="DolapId">
+                            <GridViewColumn Width="150" Extensions:GridViewSort.PropertyName="DolapId">
+                                <GridViewColumn.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="DOLAP" VerticalAlignment="Center" />
+                                        <ComboBox Width="70"
+                                            ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
+                                            DisplayMemberPath="Açıklama"
+                                            SelectedValue="{Binding KişiDolapIdArama}"
+                                            SelectedValuePath="Id" />
+                                    </StackPanel>
+                                </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -147,7 +157,20 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP&#xA;DURUM" Extensions:GridViewSort.PropertyName="KitapDurum">
+                            <GridViewColumn Extensions:GridViewSort.PropertyName="KitapDurumId">
+                                <GridViewColumn.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="KİTAP&#xA;DURUM" />
+                                        <ComboBox Width="100" VerticalContentAlignment="Center" SelectedIndex="{Binding KişiKitapKonumArama}">
+                                            <ComboBox.ItemsSource>
+                                                <CompositeCollection>
+                                                    <CollectionContainer Collection="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" />
+                                                    <System:String>Tümü</System:String>
+                                                </CompositeCollection>
+                                            </ComboBox.ItemsSource>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox IsEnabled="{Binding KitapDurum}"
@@ -191,19 +214,17 @@
                         <TextBlock Text="GÜNCELLE" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <Image Grid.Column="1" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <ViewModel:ShadowedImage Grid.Column="1" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
                 <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
                     <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"
-                            BorderBrush="#800000"
-                            >
+                            BorderBrush="#800000">
                             <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                         </Extensions:ContentToggleButton>
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"
-                            BorderBrush="Blue"
-                            >
+                            BorderBrush="Blue">
                             <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                         </Extensions:ContentToggleButton>
                     </UniformGrid>
