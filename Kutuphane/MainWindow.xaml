@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Ribbon Margin="0,-22,0,0">
             <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu>
+                <RibbonApplicationMenu KeyTip="A">
                     <RibbonApplicationMenu.SmallImageSource>
                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                             <Binding Source="Shell32.dll" />
@@ -84,14 +84,14 @@
                     </RibbonApplicationMenu.AuxiliaryPaneContent>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Header="KÜTÜPHANE">
+            <RibbonTab Header="KÜTÜPHANE" KeyTip="H">
                 <RibbonTab.Resources>
                     <Style TargetType="RibbonButton">
                         <Setter Property="CanAddToQuickAccessToolBarDirectly" Value="False" />
                     </Style>
                 </RibbonTab.Resources>
                 <RibbonGroup Header="Kitap">
-                    <RibbonButton Command="{Binding KitapGirişiEkranı, Mode=OneWay}" Label="Kitap Gir">
+                    <RibbonButton Command="{Binding KitapGirişiEkranı, Mode=OneWay}" KeyTip="K" Label="Kitap Gir">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -105,7 +105,7 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KişiGirişiEkranı, Mode=OneWay}" Label="Kişi Gir">
+                    <RibbonButton Command="{Binding KişiGirişiEkranı, Mode=OneWay}" KeyTip="S" Label="Kişi Gir">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -119,7 +119,7 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KitapGüncelleEkranı, Mode=OneWay}" Label="Kitap Güncelle">
+                    <RibbonButton Command="{Binding KitapGüncelleEkranı, Mode=OneWay}" KeyTip="G" Label="Kitap Güncelle">
                         <RibbonButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -133,7 +133,7 @@
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KitapSilEkranı, Mode=OneWay}" Label="Kitap Sil">
+                    <RibbonButton Command="{Binding KitapSilEkranı, Mode=OneWay}" KeyTip="L" Label="Kitap Sil">
                         <RibbonButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -149,7 +149,7 @@
                     </RibbonButton>
                 </RibbonGroup>
                 <RibbonGroup Header="İşlem">
-                    <RibbonButton Command="{Binding KitapVerEkranı}" Label="Kitap Ver">
+                    <RibbonButton Command="{Binding KitapVerEkranı}" KeyTip="V" Label="Kitap Ver">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -157,7 +157,7 @@
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KitapKontrolEkranı}" Label="Kitap Kontrol Et">
+                    <RibbonButton Command="{Binding KitapKontrolEkranı}" KeyTip="E" Label="Kitap Kontrol Et">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -171,7 +171,7 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KitapGeriAlEkranı}" Label="Kitap Geri Al">
+                    <RibbonButton Command="{Binding KitapGeriAlEkranı}" KeyTip="Z" Label="Kitap Geri Al">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -185,7 +185,7 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding GecikenKitaplarEkranı, Mode=OneWay}" Label="Geciken Kitaplar">
+                    <RibbonButton Command="{Binding GecikenKitaplarEkranı, Mode=OneWay}" KeyTip="D" Label="Geciken Kitaplar">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -199,7 +199,7 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KitapCezaEkranı, Mode=OneWay}" Label="Ceza Ödenen Kitaplar">
+                    <RibbonButton Command="{Binding KitapCezaEkranı, Mode=OneWay}" KeyTip="M" Label="Ceza Ödenen Kitaplar">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -215,7 +215,7 @@
                     </RibbonButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">
-                    <RibbonButton Command="{Binding DolapGirişiEkranı, Mode=OneWay}" Label="Dolap Gir">
+                    <RibbonButton Command="{Binding DolapGirişiEkranı, Mode=OneWay}" KeyTip="C" Label="Dolap Gir">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Moricons.dll" />
@@ -229,7 +229,7 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding DolapDüzeniEkranı, Mode=OneWay}" Label="Dolap Düzeni">
+                    <RibbonButton Command="{Binding DolapDüzeniEkranı, Mode=OneWay}" KeyTip="E" Label="Dolap Düzeni">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
@@ -245,15 +245,15 @@
                     </RibbonButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Rapor">
-                    <RibbonMenuButton Label="Excele Aktar">
+                    <RibbonMenuButton KeyTip="R" Label="Excele Aktar">
                         <RibbonMenuButton.LargeImageSource>
                             <Binding Converter="{StaticResource FilePathToIconConverter}" Source=".csv" />
                         </RibbonMenuButton.LargeImageSource>
                         <RibbonMenuButton.SmallImageSource>
                             <Binding Converter="{StaticResource FilePathToIconConverter}" Source=".csv" />
                         </RibbonMenuButton.SmallImageSource>
-                        <RibbonMenuItem Header="KİTAP LİSTESİ RAPORU" Command="{Binding ReportViewModel.KitapListesiRaporu, Mode=OneWay}" />
-                        <RibbonMenuItem Header="KİTAP ALANLAR RAPORU" Command="{Binding ReportViewModel.KitapAlanlarRaporu, Mode=OneWay}" />
+                        <RibbonMenuItem Header="KİTAP LİSTESİ RAPORU" Command="{Binding ReportViewModel.KitapListesiRaporu, Mode=OneWay}" KeyTip="KL" />
+                        <RibbonMenuItem Header="KİTAP ALANLAR RAPORU" Command="{Binding ReportViewModel.KitapAlanlarRaporu, Mode=OneWay}" KeyTip="KA" />
                     </RibbonMenuButton>
                 </RibbonGroup>
             </RibbonTab>
