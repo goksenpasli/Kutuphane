@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:view="clr-namespace:Kutuphane.View"
+    xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:KitapVerViewModel}}"
     d:DesignHeight="578" d:DesignWidth="800" Loaded="UserControl_Loaded" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -114,7 +115,8 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
-                            <RowDefinition Height="165.6" />
+                            <RowDefinition Height="122.4" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
                             <ListView.ItemContainerStyle>
@@ -151,7 +153,7 @@
                             </ListView.View>
                         </ListView>
                         <ListView x:Name="listViewİşlem"
-                            Grid.Column="1" Grid.RowSpan="2"
+                            Grid.Column="1" Grid.RowSpan="23"
                             ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
@@ -180,44 +182,33 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ProgressBar Grid.Column="2" Grid.RowSpan="2"
+                        <ProgressBar Grid.Column="2" Grid.RowSpan="3"
                             Width="16"
                             Foreground="Red" Background="Green" BorderBrush="Transparent"
                             Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
                             Maximum="{Binding SelectedItem.İşlem.Count, Mode=OneWay, ElementName=listViewKişi}"
                             Orientation="Vertical"
                             Value="{Binding SelectedItem.KitapCezasıAdeti, ElementName=listViewKişi}" />
-                        <GroupBox Header="İŞLEM" Grid.Row="1" Grid.Column="0">
-                            <StackPanel>
-                                <HeaderedContentControl Header="GÜN SAYISI">
-                                    <extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1"
-                                        Value="{Binding İşlem.KitapGün}" />
-                                </HeaderedContentControl>
-                                <HeaderedContentControl Header="BAŞLANGIÇ TARİHİ">
-                                    <DatePicker DisplayDateStart="{Binding Mode=OneWay, Source={x:Static System:DateTime.Today}}" SelectedDate="{Binding İşlem.BaşlangıçTarihi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </HeaderedContentControl>
-                                <TextBlock Foreground="Red" FontSize="16"><Run Text="GETİRME TARİHİ" /><Run Text=" " /><Run Text="{Binding İşlem.GeriGetirmeTarihi, StringFormat=\{0:D\}}" Language="tr-tr" /></TextBlock>
-                                <Button Command="{Binding KitapVer, Mode=OneWay}">
-                                    <Button.CommandParameter>
-                                        <MultiBinding Converter="{StaticResource CloneConverter}">
-                                            <Binding ElementName="listViewKişi" Path="SelectedItem" />
-                                            <Binding ElementName="listViewKitap" Path="SelectedItem" />
+                        <view:İşlemView Grid.Row="1" DataContext="{Binding İşlem}" />
+                        <Button Grid.Row="2" Command="{Binding KitapVer, Mode=OneWay}">
+                            <Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                    <Binding ElementName="listViewKişi" Path="SelectedItem" />
+                                    <Binding ElementName="listViewKitap" Path="SelectedItem" />
+                                </MultiBinding>
+                            </Button.CommandParameter>
+                            <StackPanel Orientation="Horizontal">
+                                <Image>
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="28" />
                                         </MultiBinding>
-                                    </Button.CommandParameter>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image>
-                                            <Image.Source>
-                                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                    <Binding Source="Shell32.dll" />
-                                                    <Binding Source="28" />
-                                                </MultiBinding>
-                                            </Image.Source>
-                                        </Image>
-                                        <TextBlock Text="KİTAP VER" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                </Button>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock Text="KİTAP VER" VerticalAlignment="Center" />
                             </StackPanel>
-                        </GroupBox>
+                        </Button>
                     </Grid>
                 </GroupBox>
             </Grid>

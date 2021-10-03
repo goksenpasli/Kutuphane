@@ -249,7 +249,11 @@
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>
-                            <TextBlock FontSize="22" TextWrapping="Wrap"><Run Text="Bugünden Başlayarak" /><Run Text=" " /><Run Text="{Binding HızlıKitapGirişGünSüresi, Mode=OneWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" ToolTip="Ayarlardan Gün Değiştirilebilir." /><Run Text=" " /><Run Text="Gün Sonrasına Seçili Kitabı Vermek İçin Kitap Seçin Ve Soldaki Buttona Tıklayın." /></TextBlock>
+                            <TextBlock FontSize="22" TextWrapping="Wrap">
+                                <Run Text="Bugünden Başlayarak" />
+                                <Run Text="{Binding HızlıKitapGirişGünSüresi, Mode=OneWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" ToolTip="Ayarlardan Gün Değiştirilebilir." />
+                                <Run Text="Gün Sonrasına Seçili Kitabı Vermek İçin Kitap Seçin Ve Soldaki Buttona Tıklayın." />
+                            </TextBlock>
                         </UniformGrid>
                     </GroupBox>
                 </Grid>
@@ -275,6 +279,7 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed" />
+                                <Setter Property="IsSelected" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

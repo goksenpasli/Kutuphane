@@ -9,8 +9,9 @@ namespace Kutuphane.ViewModel
 {
     public class KitapVerViewModel : InpcBase
     {
-        private Kişi kişi;
         private İşlem işlem;
+
+        private Kişi kişi;
 
         public KitapVerViewModel()
         {

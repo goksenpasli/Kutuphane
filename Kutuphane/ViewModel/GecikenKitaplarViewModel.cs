@@ -32,7 +32,7 @@ namespace Kutuphane.ViewModel
                     İşlem.GeriGetirmeTarihi = UzatılmaTarihi;
                     MainViewModel.DatabaseSave.Execute(null);
                 }
-            }, parameter => UzatılmaTarihi > İşlem.GeriGetirmeTarihi && İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
+            }, parameter => UzatılmaTarihi > İşlem?.GeriGetirmeTarihi && İşlem?.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
             
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             PropertyChanged += GecikenKitaplarViewModel_PropertyChanged;
@@ -101,11 +101,11 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "MaksimumUzatmaSayısı")
             {
-                TarihEtkin = İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
+                TarihEtkin = İşlem?.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
             }
         }
 
-        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) => TarihEtkin = İşlem.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
+        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) => TarihEtkin = İşlem?.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
 
         private void Kişi_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

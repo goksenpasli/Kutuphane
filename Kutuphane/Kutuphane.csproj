@@ -165,6 +165,9 @@
     <Compile Include="View\QrCodeView.xaml.cs">
       <DependentUpon>QrCodeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\İşlemView.xaml.cs">
+      <DependentUpon>İşlemView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -234,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\QrCodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\İşlemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
