@@ -103,6 +103,23 @@
                         <GridViewColumn Header="GÜN" extensions:GridViewSort.PropertyName="KitapGün" DisplayMemberBinding="{Binding KitapGün}" />
                         <GridViewColumn Header="GERİ GETİRME" extensions:GridViewSort.PropertyName="GeriGetirmeTarihi" DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}" />
                         <GridViewColumn Header="ŞU ANKİ CEZA TUTARI" DisplayMemberBinding="{Binding GeriGetirmeTarihi, Converter={StaticResource ListViewCezaTutarConverter}}" />
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Command="{Binding ReportViewModel.KitapTutanakRaporu, Mode=OneWay, Source={StaticResource MainViewModel}}">
+                                            <Hyperlink.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource CloneConverter}">
+                                                    <Binding ElementName="listViewKişi" Path="SelectedItem" />
+                                                    <Binding Mode="OneWay" />
+                                                </MultiBinding>
+                                            </Hyperlink.CommandParameter>
+                                            <Run Text="TUTANAK" />
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

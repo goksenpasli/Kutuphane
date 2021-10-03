@@ -98,6 +98,8 @@ namespace Kutuphane.ViewModel
 
             AyarlarıSıfırla = new RelayCommand<object>(parameter => Properties.Settings.Default.Reset());
 
+            SetValueNull = new RelayCommand<object>(parameter => parameter = null, parameter => true);
+
             Properties.Settings.Default.PropertyChanged += (s, e) => Properties.Settings.Default.Save();
         }
 
@@ -174,5 +176,7 @@ namespace Kutuphane.ViewModel
         public QrCodeViewModel QrCodeViewModel { get; set; }
 
         public ReportViewModel ReportViewModel { get; set; }
+
+        public ICommand SetValueNull { get; }
     }
 }
