@@ -48,6 +48,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -78,6 +79,7 @@
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />
                                 <CheckBox Content="KİŞİ RESİM GÖSTER" IsChecked="{Binding Path=KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kişide Resim Varsa Önizlemesi Gösterilir." />
                                 <CheckBox Content="KİŞİ GİRİŞ EKRANI" IsChecked="{Binding Path=KişiGirişEkranıVarsayılan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Program Açılışında Kişi Giriş Ekranı Açılır." />
+                                <CheckBox Content="OTOMATİK TUTANAK" IsChecked="{Binding Path=OtomatikTutanak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
                                 <Button Content="AYARLARI SIFIRLA" Command="{Binding AyarlarıSıfırla}" />
                             </StackPanel>
                         </GroupBox>

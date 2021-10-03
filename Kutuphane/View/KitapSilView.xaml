@@ -22,6 +22,20 @@
                 <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Visibility="{Binding Resim, Converter={StaticResource NullToVisibilityConverter}}" Width="16" Height="16">
+                                            <Image.Source>
+                                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                    <Binding Source="Shell32.dll" />
+                                                    <Binding Source="117" />
+                                                </MultiBinding>
+                                            </Image.Source>
+                                        </Image>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="KİTAP&#xA;ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
                             <GridViewColumn Header="KİTAP&#xA;BARKOD" Extensions:GridViewSort.PropertyName="Barkod" DisplayMemberBinding="{Binding Barkod}" />
                             <GridViewColumn Header="KİTAP BASIM&#xA;YILI" Extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />

@@ -142,5 +142,17 @@ namespace Kutuphane.Properties {
                 this["KişiResimGöster"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OtomatikTutanak {
+            get {
+                return ((bool)(this["OtomatikTutanak"]));
+            }
+            set {
+                this["OtomatikTutanak"] = value;
+            }
+        }
     }
 }
