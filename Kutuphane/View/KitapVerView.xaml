@@ -47,6 +47,7 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
                                         <Setter Property="Visibility" Value="Collapsed" />
+                                        <Setter Property="IsSelected" Value="False" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

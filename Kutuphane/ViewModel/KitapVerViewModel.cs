@@ -22,42 +22,38 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && MessageBox.Show($"{kitap.Ad} Adlı Kitap {kişi.Ad} {kişi.Soyad} Adlı Kişiye {İşlem.KitapGün} Günlüğüne Verilecek Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
-                    var işlem = new İşlem
+                    kişi.İşlem.Add(new İşlem
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = İşlem.KitapGün,
                         GeriGetirmeTarihi = İşlem.GeriGetirmeTarihi,
                         KitapId = kitap.Id,
                         BaşlangıçTarihi = İşlem.BaşlangıçTarihi,
-                    };
-
-                    kişi.İşlem.Add(işlem);
+                    });
                     kitap.KitapDurumId = 1;
                     MainViewModel.DatabaseSave.Execute(null);
 
                     İşlem.KitapGün = 1;
                     İşlem.BaşlangıçTarihi = DateTime.Today;
                 }
-            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir);
+            }, parameter => KitapAlabilir(parameter));
 
             HızlıKitapVer = new RelayCommand<object>(parameter =>
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap)
                 {
-                    var işlem = new İşlem
+                    kişi.İşlem.Add(new İşlem
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = Properties.Settings.Default.HızlıKitapGirişGünSüresi,
                         GeriGetirmeTarihi = DateTime.Today.AddDays(Properties.Settings.Default.HızlıKitapGirişGünSüresi),
                         KitapId = kitap.Id,
                         BaşlangıçTarihi = DateTime.Today,
-                    };
-
-                    kişi.İşlem.Add(işlem);
+                    });
                     kitap.KitapDurumId = 1;
                     MainViewModel.DatabaseSave.Execute(null);
                 }
-            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir);
+            }, parameter => KitapAlabilir(parameter));
 
             İşlem.GeriGetirmeTarihi = İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
@@ -95,6 +91,8 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand KitapVer { get; }
+
+        private static bool KitapAlabilir(object parameter) => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir;
 
         private void İşlem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
