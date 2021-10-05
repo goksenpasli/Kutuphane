@@ -33,7 +33,7 @@ namespace Kutuphane.ViewModel
                     MainViewModel.DatabaseSave.Execute(null);
                 }
             }, parameter => UzatılmaTarihi > İşlem?.GeriGetirmeTarihi && İşlem?.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı);
-            
+
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             PropertyChanged += GecikenKitaplarViewModel_PropertyChanged;
             Kişi.PropertyChanged += Kişi_PropertyChanged;

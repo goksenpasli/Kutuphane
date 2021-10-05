@@ -76,12 +76,8 @@
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="CİNSİYET" Grid.Row="5">
                         <ComboBox SelectedValue="{Binding Kişi.Cinsiyet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag">
-                            <ComboBoxItem Tag="0">
-                                <Canvas Width="16" Height="16" Background="{StaticResource Banana}" />
-                            </ComboBoxItem>
-                            <ComboBoxItem Tag="1">
-                                <Canvas Width="16" Height="16" Background="{StaticResource Peach}" />
-                            </ComboBoxItem>
+                            <ComboBoxItem Content="ERKEK" Tag="0" />
+                            <ComboBoxItem Content="KADIN" Tag="1" />
                         </ComboBox>
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="DOĞUM TARİHİ" Grid.Row="6">

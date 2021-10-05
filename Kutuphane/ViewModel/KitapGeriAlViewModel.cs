@@ -2,12 +2,8 @@
 using Kutuphane.Model;
 using Kutuphane.View;
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Xml.Linq;
 
 namespace Kutuphane.ViewModel
 {
@@ -35,6 +31,7 @@ namespace Kutuphane.ViewModel
                             işlem.İşlemBitti = true;
                             işlem.SeçiliKitap.KitapDurumId = (int)KitapDurumu.Kütüphanede;
                             MainViewModel.DatabaseSave.Execute(null);
+                            Kişi.KitapCezasıAdeti++;
                         }
                     }
                     else

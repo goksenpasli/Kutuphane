@@ -139,9 +139,9 @@ namespace Kutuphane.ViewModel
 
         public ICommand GecikenKitaplarEkranı { get; }
 
-        public GecikenKitaplarViewModel GecikenKitaplarViewModel { get; set; }
-
         public GecikenKitaplarSimpleViewModel GecikenKitaplarSimpleViewModel { get; set; }
+
+        public GecikenKitaplarViewModel GecikenKitaplarViewModel { get; set; }
 
         public ICommand KişiGirişiEkranı { get; }
 

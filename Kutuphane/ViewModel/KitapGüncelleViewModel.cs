@@ -9,12 +9,13 @@ namespace Kutuphane.ViewModel
 {
     public class KitapGüncelleViewModel : InpcBase
     {
+        private int kişiDolapIdArama;
+
         private string kişiKitapAdArama;
 
         private string kişiKitapBarkodArama;
 
         private int kişiKitapKonumArama = 4;
-        private int kişiDolapIdArama;
 
         public KitapGüncelleViewModel()
         {
@@ -33,6 +34,20 @@ namespace Kutuphane.ViewModel
             });
 
             PropertyChanged += KitapGüncelleViewModel_PropertyChanged;
+        }
+
+        public int KişiDolapIdArama
+        {
+            get => kişiDolapIdArama;
+
+            set
+            {
+                if (kişiDolapIdArama != value)
+                {
+                    kişiDolapIdArama = value;
+                    OnPropertyChanged(nameof(KişiDolapIdArama));
+                }
+            }
         }
 
         public string KişiKitapAdArama
@@ -73,20 +88,6 @@ namespace Kutuphane.ViewModel
                 {
                     kişiKitapKonumArama = value;
                     OnPropertyChanged(nameof(KişiKitapKonumArama));
-                }
-            }
-        }
-
-        public int KişiDolapIdArama
-        {
-            get => kişiDolapIdArama;
-
-            set
-            {
-                if (kişiDolapIdArama != value)
-                {
-                    kişiDolapIdArama = value;
-                    OnPropertyChanged(nameof(KişiDolapIdArama));
                 }
             }
         }

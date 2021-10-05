@@ -29,12 +29,15 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListBox Grid.Column="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+        <ListBox Grid.Column="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" IsSynchronizedWithCurrentItem="False">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
-                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
+                            <Setter Property="Background" Value="Red" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -42,7 +45,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding GeriGetirmeTarihi}" Foreground="Red" />
+                        <TextBlock Text="{Binding GeriGetirmeTarihi}" FontWeight="Bold" />
                         <ComboBox IsEnabled="False"
                             ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
                             DisplayMemberPath="Ad"

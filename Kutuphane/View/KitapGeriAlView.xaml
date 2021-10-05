@@ -23,7 +23,10 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+            <ListView x:Name="listViewKişi"
+                Grid.Row="0"
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
+                SelectedItem="{Binding Kişi}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -51,7 +54,7 @@
                                         Foreground="Red" Background="Green" BorderBrush="Transparent"
                                         Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
                                         Maximum="{Binding İşlem.Count, Mode=OneWay}"
-                                        Value="{Binding KitapCezasıAdeti}" />
+                                        Value="{Binding KitapCezasıAdeti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
