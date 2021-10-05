@@ -105,6 +105,7 @@
     <Compile Include="ViewModel\DolapDüzenViewModel.cs" />
     <Compile Include="ViewModel\DolapGirişViewModel.cs" />
     <Compile Include="ViewModel\ExtensionMethods.cs" />
+    <Compile Include="ViewModel\GecikenKitaplarSimpleViewModel.cs" />
     <Compile Include="ViewModel\GecikenKitaplarViewModel.cs" />
     <Compile Include="ViewModel\KitapCezaDurumViewModel.cs" />
     <Compile Include="ViewModel\KitapGeriAlViewModel.cs" />
@@ -128,6 +129,9 @@
     </Compile>
     <Compile Include="View\DolapGirişView.xaml.cs">
       <DependentUpon>DolapGirişView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GecikenKitaplarSimpleView.xaml.cs">
+      <DependentUpon>GecikenKitaplarSimpleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GecikenKitaplarView.xaml.cs">
       <DependentUpon>GecikenKitaplarView.xaml</DependentUpon>
@@ -189,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DolapGirişView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GecikenKitaplarSimpleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

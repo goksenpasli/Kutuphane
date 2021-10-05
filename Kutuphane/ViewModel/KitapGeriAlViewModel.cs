@@ -15,8 +15,6 @@ namespace Kutuphane.ViewModel
     {
         private Kişi kişi;
 
-        private ObservableCollection<Kişi> yaklaşanİşlemler;
-
         public KitapGeriAlViewModel()
         {
             Kişi = new Kişi();
@@ -69,32 +67,6 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand KitapGeriAl { get; }
-
-        public ObservableCollection<Kişi> Yaklaşanİşlemler
-        {
-            get
-            {
-                if (File.Exists(MainViewModel.xmldatapath))
-                {
-                    yaklaşanİşlemler = new();
-                    foreach (var kişi in XDocument.Load(MainViewModel.xmldatapath)?.Descendants("İşlem")?.Where(z => !(bool)z.Attribute("İşlemBitti") && ((DateTime)z.Attribute("GeriGetirmeTarihi")).AddDays(-Properties.Settings.Default.YaklaşanİşlemlerGünSayısı) < DateTime.Now && ((DateTime)z.Attribute("GeriGetirmeTarihi")) > DateTime.Now)?.Select(z => z.Parent).Distinct())
-                    {
-                        yaklaşanİşlemler.Add(kişi.DeSerialize<Kişi>());
-                    }
-                    return yaklaşanİşlemler;
-                }
-                return null;
-            }
-
-            set
-            {
-                if (yaklaşanİşlemler != value)
-                {
-                    yaklaşanİşlemler = value;
-                    OnPropertyChanged(nameof(Yaklaşanİşlemler));
-                }
-            }
-        }
 
         private void Kişi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

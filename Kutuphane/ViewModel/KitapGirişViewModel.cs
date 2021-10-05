@@ -51,7 +51,7 @@ namespace Kutuphane.ViewModel
                 {
                     Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
                 }
-            }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad));
+            }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad) && !string.IsNullOrWhiteSpace(Kitap?.Barkod));
 
             KitapTürEkle = new RelayCommand<object>(parameter =>
             {

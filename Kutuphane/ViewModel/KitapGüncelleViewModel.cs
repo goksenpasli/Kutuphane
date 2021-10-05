@@ -27,7 +27,7 @@ namespace Kutuphane.ViewModel
                         item.KitapDurum = false;
                     }
 
-                    return kitaplar.All(z => !string.IsNullOrWhiteSpace(z.Ad));
+                    return kitaplar.All(z => !string.IsNullOrWhiteSpace(z.Barkod) && !string.IsNullOrWhiteSpace(z.Ad));
                 }
                 return false;
             });
@@ -102,10 +102,10 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
                 KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Barkod.Contains(KişiKitapBarkodArama);
-            }  
+            }
             if (e.PropertyName is "KişiDolapIdArama")
             {
-                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).DolapId== KişiDolapIdArama;
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).DolapId == KişiDolapIdArama;
             }
             if (e.PropertyName is "KişiKitapKonumArama")
             {

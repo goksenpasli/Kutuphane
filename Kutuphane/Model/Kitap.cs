@@ -511,6 +511,7 @@ namespace Kutuphane.Model
         public string this[string columnName] => columnName switch
         {
             "Ad" when string.IsNullOrWhiteSpace(Ad) => "Adı Boş Geçmeyin.",
+            "Barkod" when string.IsNullOrWhiteSpace(Barkod) => "Barkod Boş Geçmeyin.",
             _ => null
         };
     }

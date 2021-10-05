@@ -59,7 +59,7 @@
                                 IsChecked="{Binding Kitap.OtomatikBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsTabStop="False" ToolTip="İşaretlenirse Otomatik Rastgele Barkod Verilir." />
                         </HeaderedContentControl.Header>
-                        <TextBox Text="{Binding Kitap.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Kitap.OtomatikBarkod, Converter={StaticResource ReverseBooleanConverter}}" />
+                        <TextBox Text="{Binding Kitap.Barkod, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Kitap.OtomatikBarkod, Converter={StaticResource ReverseBooleanConverter}}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" />
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="KİTAP BASIM YILI" Grid.Row="2">
                         <Extensions:NumericUpDownControl Maximum="9999" Minimum="1" SmallChange="1"

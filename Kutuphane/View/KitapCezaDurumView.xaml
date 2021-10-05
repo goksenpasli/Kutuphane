@@ -16,7 +16,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />
-                        <GridViewColumn Header="CEZA TUTARI" DisplayMemberBinding="{Binding CezaTutar, StringFormat=\{0:C\}}" />
+                        <GridViewColumn Header="CEZA TUTARI" extensions:GridViewSort.PropertyName="CezaTutar" DisplayMemberBinding="{Binding CezaTutar, StringFormat=\{0:C\}}" />
                     </GridView>
                 </ListView.View>
             </ListView>

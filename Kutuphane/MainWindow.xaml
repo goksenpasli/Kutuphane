@@ -5,7 +5,7 @@
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:properties="clr-namespace:Kutuphane.Properties"
+    xmlns:properties="clr-namespace:Kutuphane.Properties" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     Title="Kütüphane"
     DataContext="{Binding Mode=OneWay, Source={StaticResource MainViewModel}}"
     d:DesignHeight="578" d:DesignWidth="800" UseLayoutRounding="True" WindowStartupLocation="CenterScreen"
@@ -262,12 +262,12 @@
         </Ribbon>
         <ContentPresenter Content="{Binding CurrentView}" Grid.Row="1" />
         <StatusBar Grid.Row="2">
-            <StatusBarItem DataContext="{Binding KitapGeriAlViewModel}">
+            <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Yaklaşanİşlemler.Count}" Value="0">
+                                <DataTrigger Binding="{Binding GecikenKitaplarSimpleViewModel.Yaklaşanİşlemler.Count, Mode=OneWay, Source={StaticResource MainViewModel}}" Value="0">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -285,51 +285,9 @@
                             </Image>
                         </Extensions:ContentToggleButton.OverContent>
                         <Extensions:ContentToggleButton.Content>
-                            <Grid Width="480" Height="360">
-                                <Grid.Resources>
-                                    <CollectionViewSource x:Key="İşlemler" Source="{Binding ElementName=Lv, Path=SelectedItem.İşlem}">
-                                        <CollectionViewSource.SortDescriptions>
-                                            <ComponentModel:SortDescription Direction="Ascending" PropertyName="GeriGetirmeTarihi" />
-                                        </CollectionViewSource.SortDescriptions>
-                                    </CollectionViewSource>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ListView x:Name="Lv" ItemsSource="{Binding Yaklaşanİşlemler}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="AD" DisplayMemberBinding="{Binding Ad}" />
-                                            <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
-                                            <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                                <ListBox Grid.Column="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="ListBoxItem">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding GeriGetirmeTarihi}" Foreground="Red" />
-                                                <ComboBox IsEnabled="False"
-                                                    ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                                    DisplayMemberPath="Ad"
-                                                    SelectedValue="{Binding KitapId}"
-                                                    SelectedValuePath="Id" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Grid>
+                            <GroupBox Header="SÜRESİ YAKLAŞAN KİTAPLAR" Width="480" Height="360">
+                                <viewmodel:GecikenKitaplarSimpleViewModel />
+                            </GroupBox>
                         </Extensions:ContentToggleButton.Content>
                     </Extensions:ContentToggleButton>
                     <TextBlock Text="SÜRESİ YAKLAŞAN KİTAPLAR" />
