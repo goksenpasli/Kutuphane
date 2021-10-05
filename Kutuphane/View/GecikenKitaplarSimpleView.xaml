@@ -26,17 +26,19 @@
                     <GridViewColumn Header="AD" DisplayMemberBinding="{Binding Ad}" />
                     <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
                     <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
-                    <GridViewColumn Header="ADET">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding İşlem.Count}" Foreground="Red" FontWeight="Bold" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
         <ListBox Grid.Column="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
