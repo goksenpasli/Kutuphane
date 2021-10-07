@@ -8,13 +8,33 @@
     d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding Kütüphane.İşlemler, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <GroupBox Header="CEZA DURUMU">
         <Grid>
-            <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+            <ListView x:Name="Lvİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn extensions:GridViewSort.PropertyName="Ad">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox Grid.Column="1"
+                                        IsEnabled="False"
+                                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
+                                        IsSynchronizedWithCurrentItem="False"
+                                        ItemTemplate="{StaticResource KişiDetayTemplate}"
+                                        SelectedValue="{Binding KişiId}"
+                                        SelectedValuePath="Id">
+                                        <ComboBox.Template>
+                                            <ControlTemplate TargetType="ComboBox">
+                                                <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" IsHitTestVisible="False" />
+                                            </ControlTemplate>
+                                        </ComboBox.Template>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />
                         <GridViewColumn Header="CEZA TUTARI" extensions:GridViewSort.PropertyName="CezaTutar" DisplayMemberBinding="{Binding CezaTutar, StringFormat=\{0:C\}}" />
                     </GridView>

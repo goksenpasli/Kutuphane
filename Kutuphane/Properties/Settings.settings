@@ -35,5 +35,8 @@
     <Setting Name="OtomatikTutanak" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="KişiKitapKritikOran" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

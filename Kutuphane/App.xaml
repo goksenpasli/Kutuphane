@@ -78,6 +78,9 @@
             <DataTemplate DataType="{x:Type ViewModel:GecikenKitaplarSimpleViewModel}">
                 <View:GecikenKitaplarSimpleView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type ViewModel:KişiGüncelleViewModel}">
+                <View:KişiGüncelleView />
+            </DataTemplate>
             <DrawingBrush x:Key="Dur" ice:Freeze="True" Stretch="Uniform">
                 <DrawingBrush.Drawing>
                     <DrawingGroup>
@@ -283,6 +286,35 @@
                         </Image.Style>
                     </ViewModel:ShadowedImage>
                     <TextBlock Text="{Binding Ad}" VerticalAlignment="Center" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="KişiDetayTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120" ShowShadow="True">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </ViewModel:ShadowedImage>
+                    <GroupBox>
+                        <StackPanel>
+                            <TextBlock FontSize="24" FontWeight="Bold">
+                                <Run Text="{Binding Ad}" />
+                                <Run Text="{Binding Soyad}" />
+                            </TextBlock>
+                            <TextBlock Text="{Binding TC}" FontSize="24" FontStyle="Italic" />
+                            <Extensions:MaskedTextBlock FontSize="18" InputMask="(000) 000 00 00" UnmaskedText="{Binding Telefon}" />
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="KitapTemplate">

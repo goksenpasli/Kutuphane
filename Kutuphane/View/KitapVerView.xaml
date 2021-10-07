@@ -187,9 +187,9 @@
                             Width="16"
                             Foreground="Red" Background="Green" BorderBrush="Transparent"
                             Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
-                            Maximum="{Binding SelectedItem.İşlem.Count, Mode=OneWay, ElementName=listViewKişi}"
+                            Maximum="100"
                             Orientation="Vertical"
-                            Value="{Binding SelectedItem.KitapCezasıAdeti, ElementName=listViewKişi}" />
+                            Value="{Binding SelectedItem.KitapCezasıOranı, ElementName=listViewKişi}" />
                         <view:İşlemView Grid.Row="1" DataContext="{Binding İşlem}" />
                         <Button Grid.Row="2" Command="{Binding KitapVer, Mode=OneWay}">
                             <Button.CommandParameter>

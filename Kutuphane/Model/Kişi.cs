@@ -37,6 +37,8 @@ namespace Kutuphane.Model
 
         private int kitapCezasıAdeti;
 
+        private double kitapCezasıOranı;
+
         private string resim;
 
         private Kişi sonKaydedilenKişi;
@@ -260,6 +262,29 @@ namespace Kutuphane.Model
                 {
                     kitapCezasıAdeti = value;
                     OnPropertyChanged(nameof(KitapCezasıAdeti));
+                    OnPropertyChanged(nameof(KitapCezasıOranı));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public double KitapCezasıOranı
+        {
+            get
+            {
+                if (İşlem?.Any() == true)
+                {
+                    kitapCezasıOranı = 100 * (double)İşlem?.Count(z => z.Ceza) / İşlem?.Count ?? 0;
+                }
+                return kitapCezasıOranı;
+            }
+
+            set
+            {
+                if (kitapCezasıOranı != value)
+                {
+                    kitapCezasıOranı = value;
+                    OnPropertyChanged(nameof(KitapCezasıOranı));
                 }
             }
         }

@@ -104,6 +104,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="GÜN" extensions:GridViewSort.PropertyName="KitapGün" DisplayMemberBinding="{Binding KitapGün}" />
+                        <GridViewColumn Header="İŞLEM TARİHİ" extensions:GridViewSort.PropertyName="BaşlangıçTarihi" DisplayMemberBinding="{Binding BaşlangıçTarihi, StringFormat=\{0:d\}}" />
                         <GridViewColumn Header="GERİ GETİRME" extensions:GridViewSort.PropertyName="GeriGetirmeTarihi" DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}" />
                         <GridViewColumn Header="ŞU ANKİ CEZA TUTARI" DisplayMemberBinding="{Binding GeriGetirmeTarihi, Converter={StaticResource ListViewCezaTutarConverter}}" />
                         <GridViewColumn>

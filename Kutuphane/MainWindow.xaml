@@ -49,6 +49,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -74,6 +75,11 @@
                                 <HeaderedContentControl Header="KİTAP UZATMA SAYISI">
                                     <Extensions:NumericUpDownControl Maximum="10" Minimum="1" SmallChange="1" ToolTip="Verilen Kitabın Tarihi En Çok Bu Kadar Kez Uzatılır."
                                         Value="{Binding Path=MaksimumUzatmaSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="KİŞİ KİTAP PERFORMANSI">
+                                    <Extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
+                                        ToolTip="Kişinin Aldığı Kitabı Geri Getirmeme Oranı Bu Değeri Geçen Kişilere Kitap Verilmez."
+                                        Value="{Binding Path=KişiKitapKritikOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
                                 <CheckBox Content="KİŞİ GİRİŞ AKTARMA YAP" IsChecked="{Binding Path=Aktarma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kayıtlı TC Bulunduğunda Kitap Ver Ekranına Yönlendirir. İşaretli Kalması Önerilir." />
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />
@@ -132,6 +138,20 @@
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
                                 <Binding Source="238" />
+                            </MultiBinding>
+                        </RibbonButton.LargeImageSource>
+                    </RibbonButton>
+                    <RibbonButton Command="{Binding KişiGüncelleEkranı, Mode=OneWay}" KeyTip="P" Label="Kişi Güncelle">
+                        <RibbonButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="158" />
+                            </MultiBinding>
+                        </RibbonButton.SmallImageSource>
+                        <RibbonButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="158" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                     </RibbonButton>

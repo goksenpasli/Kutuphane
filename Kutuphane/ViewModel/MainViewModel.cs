@@ -41,6 +41,8 @@ namespace Kutuphane.ViewModel
 
             KişiGirişViewModel = new KişiGirişViewModel();
 
+            KişiGüncelleViewModel = new KişiGüncelleViewModel();
+
             KitapKontrolViewModel = new KitapKontrolViewModel();
 
             KitapGeriAlViewModel = new KitapGeriAlViewModel();
@@ -62,6 +64,8 @@ namespace Kutuphane.ViewModel
             GecikenKitaplarEkranı = new RelayCommand<object>(parameter => CurrentView = GecikenKitaplarViewModel, parameter => CurrentView != GecikenKitaplarViewModel);
 
             KitapVerEkranı = new RelayCommand<object>(parameter => CurrentView = KitapVerViewModel, parameter => CurrentView != KitapVerViewModel);
+
+            KişiGüncelleEkranı = new RelayCommand<object>(parameter => CurrentView = KişiGüncelleViewModel, parameter => CurrentView != KişiGüncelleViewModel);
 
             KitapCezaEkranı = new RelayCommand<object>(parameter => CurrentView = KitapCezaDurumViewModel, parameter => CurrentView != KitapCezaDurumViewModel);
 
@@ -146,6 +150,10 @@ namespace Kutuphane.ViewModel
         public ICommand KişiGirişiEkranı { get; }
 
         public KişiGirişViewModel KişiGirişViewModel { get; set; }
+
+        public ICommand KişiGüncelleEkranı { get; }
+
+        public KişiGüncelleViewModel KişiGüncelleViewModel { get; set; }
 
         public KitapCezaDurumViewModel KitapCezaDurumViewModel { get; set; }
 

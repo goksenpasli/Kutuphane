@@ -115,6 +115,7 @@
     <Compile Include="ViewModel\KitapSilViewModel.cs" />
     <Compile Include="ViewModel\KitapVerViewModel.cs" />
     <Compile Include="ViewModel\KişiGirişViewModel.cs" />
+    <Compile Include="ViewModel\KişiGüncelleViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\QrCodeMultipleViewModel.cs" />
     <Compile Include="ViewModel\QrCodeViewModel.cs" />
@@ -162,6 +163,9 @@
     </Compile>
     <Compile Include="View\KişiGirişView.xaml.cs">
       <DependentUpon>KişiGirişView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KişiGüncelleView.xaml.cs">
+      <DependentUpon>KişiGüncelleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\QrCodeMultipleView.xaml.cs">
       <DependentUpon>QrCodeMultipleView.xaml</DependentUpon>
@@ -237,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\KişiGirişView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\KişiGüncelleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

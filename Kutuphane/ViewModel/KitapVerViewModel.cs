@@ -22,12 +22,18 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && MessageBox.Show($"{kitap.Ad} Adlı Kitap {kişi.Ad} {kişi.Soyad} Adlı Kişiye {İşlem.KitapGün} Günlüğüne Verilecek Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
+                    if (kişi.KitapCezasıOranı > Properties.Settings.Default.KişiKitapKritikOran)
+                    {
+                        _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
                     var işlem = new İşlem
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = İşlem.KitapGün,
                         GeriGetirmeTarihi = İşlem.GeriGetirmeTarihi,
                         KitapId = kitap.Id,
+                        KişiId = kişi.Id,
                         BaşlangıçTarihi = İşlem.BaşlangıçTarihi,
                     };
                     kişi.İşlem.Add(işlem);
@@ -49,12 +55,18 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap)
                 {
+                    if (kişi.KitapCezasıOranı > Properties.Settings.Default.KişiKitapKritikOran)
+                    {
+                        _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
                     var işlem = new İşlem
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = Properties.Settings.Default.HızlıKitapGirişGünSüresi,
                         GeriGetirmeTarihi = DateTime.Today.AddDays(Properties.Settings.Default.HızlıKitapGirişGünSüresi),
                         KitapId = kitap.Id,
+                        KişiId = kişi.Id,
                         BaşlangıçTarihi = DateTime.Today,
                     };
                     kişi.İşlem.Add(işlem);

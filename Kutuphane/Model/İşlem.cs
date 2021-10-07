@@ -21,6 +21,8 @@ namespace Kutuphane.Model
 
         private bool işlemBitti;
 
+        private int kişiId;
+
         private double kitapGün = 1;
 
         private int kitapId;
@@ -133,6 +135,21 @@ namespace Kutuphane.Model
                 {
                     işlemBitti = value;
                     OnPropertyChanged(nameof(İşlemBitti));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "KişiId")]
+        public int KişiId
+        {
+            get => kişiId;
+
+            set
+            {
+                if (kişiId != value)
+                {
+                    kişiId = value;
+                    OnPropertyChanged(nameof(KişiId));
                 }
             }
         }
