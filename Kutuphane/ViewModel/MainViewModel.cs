@@ -22,14 +22,11 @@ namespace Kutuphane.ViewModel
                 KitapTürleri = ExtensionMethods.TürleriYükle(),
                 Dolaplar = ExtensionMethods.DolaplarıYükle(),
                 Kişiler = ExtensionMethods.KişileriYükle(),
-                İşlemler = ExtensionMethods.İşlemleriYükle()
             };
 
             KitapGirişViewModel = new KitapGirişViewModel();
 
             KitapSilViewModel = new KitapSilViewModel();
-
-            KitapCezaDurumViewModel = new KitapCezaDurumViewModel();
 
             KitapVerViewModel = new KitapVerViewModel();
 
@@ -66,8 +63,6 @@ namespace Kutuphane.ViewModel
             KitapVerEkranı = new RelayCommand<object>(parameter => CurrentView = KitapVerViewModel, parameter => CurrentView != KitapVerViewModel);
 
             KişiGüncelleEkranı = new RelayCommand<object>(parameter => CurrentView = KişiGüncelleViewModel, parameter => CurrentView != KişiGüncelleViewModel);
-
-            KitapCezaEkranı = new RelayCommand<object>(parameter => CurrentView = KitapCezaDurumViewModel, parameter => CurrentView != KitapCezaDurumViewModel);
 
             KitapGeriAlEkranı = new RelayCommand<object>(parameter => CurrentView = KitapGeriAlViewModel, parameter => CurrentView != KitapGeriAlViewModel);
 
@@ -154,8 +149,6 @@ namespace Kutuphane.ViewModel
         public ICommand KişiGüncelleEkranı { get; }
 
         public KişiGüncelleViewModel KişiGüncelleViewModel { get; set; }
-
-        public KitapCezaDurumViewModel KitapCezaDurumViewModel { get; set; }
 
         public ICommand KitapGeriAlEkranı { get; }
 

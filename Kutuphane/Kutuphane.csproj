@@ -107,7 +107,6 @@
     <Compile Include="ViewModel\ExtensionMethods.cs" />
     <Compile Include="ViewModel\GecikenKitaplarSimpleViewModel.cs" />
     <Compile Include="ViewModel\GecikenKitaplarViewModel.cs" />
-    <Compile Include="ViewModel\KitapCezaDurumViewModel.cs" />
     <Compile Include="ViewModel\KitapGeriAlViewModel.cs" />
     <Compile Include="ViewModel\KitapGirişViewModel.cs" />
     <Compile Include="ViewModel\KitapGüncelleViewModel.cs" />
@@ -139,9 +138,6 @@
     </Compile>
     <Compile Include="View\KimlikKartıView.xaml.cs">
       <DependentUpon>KimlikKartıView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\KitapCezaDurumView.xaml.cs">
-      <DependentUpon>KitapCezaDurumView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KitapGeriAlView.xaml.cs">
       <DependentUpon>KitapGeriAlView.xaml</DependentUpon>
@@ -209,10 +205,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\KimlikKartıView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\KitapCezaDurumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

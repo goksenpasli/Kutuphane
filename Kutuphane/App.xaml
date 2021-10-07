@@ -72,9 +72,6 @@
             <DataTemplate DataType="{x:Type ViewModel:KitapGeriAlViewModel}">
                 <View:KitapGeriAlView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type ViewModel:KitapCezaDurumViewModel}">
-                <View:KitapCezaDurumView />
-            </DataTemplate>
             <DataTemplate DataType="{x:Type ViewModel:GecikenKitaplarSimpleViewModel}">
                 <View:GecikenKitaplarSimpleView />
             </DataTemplate>

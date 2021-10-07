@@ -86,25 +86,6 @@ namespace Kutuphane.ViewModel
             return new string(stack.ToArray());
         }
 
-        public static ObservableCollection<İşlem> İşlemleriYükle()
-        {
-            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-            {
-                return null;
-            }
-            if (File.Exists(MainViewModel.xmldatapath))
-            {
-                var işlem = new ObservableCollection<İşlem>();
-                foreach (var item in XDocument.Load(MainViewModel.xmldatapath).Descendants("İşlem"))
-                {
-                    işlem.Add(item.DeSerialize<İşlem>());
-                }
-                return işlem;
-            }
-            _ = Directory.CreateDirectory(Path.GetDirectoryName(MainViewModel.xmldatapath));
-            return new ObservableCollection<İşlem>();
-        }
-
         public static ObservableCollection<Kişi> KişileriYükle()
         {
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))

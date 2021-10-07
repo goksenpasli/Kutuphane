@@ -11,6 +11,7 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding ElementName=LvKişiler, Path=SelectedItem.İşlem}" />
     </UserControl.Resources>
     <GroupBox Header="KİTAP KONTROL">
         <Grid>
@@ -28,11 +29,11 @@
                 VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad"  CellTemplate="{StaticResource KitapTemplate}">
+                        <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KitapTemplate}">
                             <GridViewColumn.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="KİTAP&#xA;ADI" />
-                                    <TextBox Text="{Binding KişiKitapAdArama,  Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                    <TextBox Text="{Binding KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                 </StackPanel>
                             </GridViewColumn.Header>
                         </GridViewColumn>
@@ -40,7 +41,7 @@
                             <GridViewColumn.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                    <TextBox Text="{Binding KitapBarkodArama, Delay=500,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                    <TextBox Text="{Binding KitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                 </StackPanel>
                             </GridViewColumn.Header>
                         </GridViewColumn>
@@ -58,7 +59,7 @@
                         <GridViewColumn Width="70">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Extensions:ContentToggleButton Visibility="{Binding Tutanak, Converter={StaticResource BooleanToVisibilityConverter}}"  OverContent="TUTANAK">
+                                    <Extensions:ContentToggleButton Visibility="{Binding Tutanak, Converter={StaticResource BooleanToVisibilityConverter}}" OverContent="TUTANAK">
                                         <Extensions:ContentToggleButton.Content>
                                             <GroupBox Header="TUTANAK" Width="280" Height="210">
                                                 <StackPanel>
@@ -158,22 +159,35 @@
                 </ListView.View>
             </ListView>
             <GroupBox Header="BU KİTABI OKUYANLAR" Grid.Column="1" Grid.RowSpan="2">
-                <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="AD" CellTemplate="{StaticResource KişiTemplate}" />
-                            <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
-                            <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
-                            <GridViewColumn Header="TELEFON">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Extensions:MaskedTextBlock InputMask="(000) 000 00 00" UnmaskedText="{Binding Telefon}" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="LvKişiler" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="AD" CellTemplate="{StaticResource KişiTemplate}" />
+                                <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
+                                <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
+                                <GridViewColumn Header="TELEFON">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Extensions:MaskedTextBlock InputMask="(000) 000 00 00" UnmaskedText="{Binding Telefon}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="CEZA TUTARI" DisplayMemberBinding="{Binding CezaTutar, StringFormat=\{0:C\}}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </GroupBox>
             <Button Grid.Row="1" Command="{Binding KitapKontrolViewModel.KitapGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding SelectedItem, ElementName=listView}">
                 <StackPanel Orientation="Horizontal">

@@ -221,20 +221,6 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KitapCezaEkranı, Mode=OneWay}" KeyTip="M" Label="Ceza Ödenen Kitaplar">
-                        <RibbonButton.LargeImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="200" />
-                            </MultiBinding>
-                        </RibbonButton.LargeImageSource>
-                        <RibbonButton.SmallImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="200" />
-                            </MultiBinding>
-                        </RibbonButton.SmallImageSource>
-                    </RibbonButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">
                     <RibbonButton Command="{Binding DolapGirişiEkranı, Mode=OneWay}" KeyTip="C" Label="Dolap Gir">
