@@ -20,6 +20,26 @@
             <ListView x:Name="LvKişi" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Width="32" extensions:GridViewSort.PropertyName="Resim">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Command="{Binding KişiGüncelleViewModel.KişiResimGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding Mode=OneWay}" TextDecorations="None">
+                                            <InlineUIContainer>
+                                                <Image Width="16" Height="16">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                            <Binding Source="Shell32.dll" />
+                                                            <Binding Source="117" />
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                            </InlineUIContainer>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ ADI" VerticalAlignment="Center" />

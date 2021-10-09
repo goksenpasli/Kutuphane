@@ -22,18 +22,31 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is Kitap kitap)
                 {
-                    kitap.KitapDurumId = 2;
+                    kitap.KitapDurumId = (int)KitapDurumu.Kayıp;
                     MainViewModel.DatabaseSave.Execute(null);
                 }
             }, parameter => parameter is Kitap kitap && kitap.Tutanak);
 
             KitapKayıpTutanakOluştur = new RelayCommand<object>(parameter =>
             {
-                if (parameter is Kitap kitap && MessageBox.Show($"{kitap.Ad} Adlı Kitaba Tutanak Oluşturulacak Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (parameter is Kitap kitap)
                 {
-                    kitap.Tutanak = true;
+                    if (kitap.KitapDurumId == (int)KitapDurumu.Okuyucuda)
+                    {
+                        _ = MessageBox.Show($"İlgili Kitabın Bedeli Olan {kitap.Fiyat:C} yi Okuyucudan Almayı Unutmayın.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
+
+                    if (kitap.KitapDurumId == (int)KitapDurumu.Kütüphanede)
+                    {
+                        _ = MessageBox.Show($"İlgili Kitabın Bedeli Olan {kitap.Fiyat:C} yi Kütüphane Görevlisinden Almayı Unutmayın.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
+
+                    if (MessageBox.Show($"{kitap.Ad} Adlı Kitaba Tutanak Oluşturulacak Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        kitap.Tutanak = true;
+                    }
                 }
-            }, parameter => parameter is Kitap kitap && kitap.KitapDurumId != 2);
+            }, parameter => parameter is Kitap kitap && kitap.KitapDurumId != (int)KitapDurumu.Kayıp);
 
             PropertyChanged += KitapKontrolViewModel_PropertyChanged;
         }

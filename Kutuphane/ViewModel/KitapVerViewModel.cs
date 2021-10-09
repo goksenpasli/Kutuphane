@@ -37,7 +37,7 @@ namespace Kutuphane.ViewModel
                         BaşlangıçTarihi = İşlem.BaşlangıçTarihi,
                     };
                     kişi.İşlem.Add(işlem);
-                    kitap.KitapDurumId = 1;
+                    kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
                     MainViewModel.DatabaseSave.Execute(null);
 
                     İşlem.KitapGün = 1;
@@ -70,7 +70,7 @@ namespace Kutuphane.ViewModel
                         BaşlangıçTarihi = DateTime.Today,
                     };
                     kişi.İşlem.Add(işlem);
-                    kitap.KitapDurumId = 1;
+                    kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
                     MainViewModel.DatabaseSave.Execute(null);
 
                     if (Properties.Settings.Default.OtomatikTutanak)

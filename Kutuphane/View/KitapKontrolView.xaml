@@ -145,7 +145,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="KİTAP&#xA;DURUM" Extensions:GridViewSort.PropertyName="KitapDurum">
+                        <GridViewColumn Header="KİTAP&#xA;DURUM" Extensions:GridViewSort.PropertyName="KitapDurumId">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox IsEnabled="False"
@@ -164,22 +164,7 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ListView x:Name="LvKişiler" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="AD" CellTemplate="{StaticResource KişiTemplate}" />
-                                <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
-                                <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
-                                <GridViewColumn Header="TELEFON">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Extensions:MaskedTextBlock InputMask="(000) 000 00 00" UnmaskedText="{Binding Telefon}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <ListView x:Name="LvKişiler" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" ItemTemplate="{StaticResource KişiDetayTemplate}" />
                     <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
                         <ListView.View>
                             <GridView>

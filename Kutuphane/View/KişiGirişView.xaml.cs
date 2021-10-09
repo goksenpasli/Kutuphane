@@ -21,7 +21,7 @@ namespace Kutuphane.View
             InitializeComponent();
             cvs = TryFindResource("Kitaplar") as CollectionViewSource;
             cvskişi = TryFindResource("Kişiler") as CollectionViewSource;
-            cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.KitapDurumId == 0;
+            cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.KitapDurumId == (int)KitapDurumu.Kütüphanede;
         }
 
         private void CameraUserControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
