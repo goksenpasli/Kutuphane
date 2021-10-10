@@ -17,6 +17,8 @@ namespace Kutuphane.ViewModel
 
         private int kişiKitapKonumArama = 4;
 
+        private int kişiKitapYılArama;
+
         public KitapGüncelleViewModel()
         {
             KitapGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter =>
@@ -92,27 +94,45 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public int KişiKitapYılArama
+        {
+            get => kişiKitapYılArama;
+
+            set
+            {
+                if (kişiKitapYılArama != value)
+                {
+                    kişiKitapYılArama = value;
+                    OnPropertyChanged(nameof(KişiKitapYılArama));
+                }
+            }
+        }
+
         public ICommand KitapGüncelle { get; }
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "KişiKitapAdArama")
             {
-                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Ad.Contains(KişiKitapAdArama);
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Ad.Contains(KişiKitapAdArama) == true;
             }
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
-                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Barkod.Contains(KişiKitapBarkodArama);
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.Contains(KişiKitapBarkodArama) == true;
             }
             if (e.PropertyName is "KişiDolapIdArama")
             {
-                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).DolapId == KişiDolapIdArama;
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.DolapId == KişiDolapIdArama;
+            }
+            if (e.PropertyName is "KişiKitapYılArama")
+            {
+                KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.BasımYılı == KişiKitapYılArama;
             }
             if (e.PropertyName is "KişiKitapKonumArama")
             {
                 if (KişiKitapKonumArama != 4)
                 {
-                    KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).KitapDurumId == KişiKitapKonumArama;
+                    KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.KitapDurumId == KişiKitapKonumArama;
                 }
                 else
                 {

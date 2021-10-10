@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:QrCodeViewModel}"
-    d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
+    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <viewmodel:QrCodeViewModel />

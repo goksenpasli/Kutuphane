@@ -99,12 +99,12 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "KişiKitapAdArama")
             {
-                KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap).Ad.Contains(Kişi.KişiKitapAdArama);
+                KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Ad.Contains(Kişi.KişiKitapAdArama) == true;
             }
 
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
-                KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap).Barkod.Contains(Kişi.KişiKitapBarkodArama);
+                KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.Contains(Kişi.KişiKitapBarkodArama) == true;
             }
         }
 

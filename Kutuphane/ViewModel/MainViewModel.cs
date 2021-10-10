@@ -68,7 +68,11 @@ namespace Kutuphane.ViewModel
 
             KitapKontrolEkranı = new RelayCommand<object>(parameter => CurrentView = KitapKontrolViewModel, parameter => CurrentView != KitapKontrolViewModel);
 
-            KitapGüncelleEkranı = new RelayCommand<object>(parameter => CurrentView = KitapGüncelleViewModel, parameter => CurrentView != KitapGüncelleViewModel);
+            KitapGüncelleEkranı = new RelayCommand<object>(parameter =>
+            {
+                KitapGüncelleViewModel.KişiKitapKonumArama = 4;
+                CurrentView = KitapGüncelleViewModel;
+            }, parameter => CurrentView != KitapGüncelleViewModel);
 
             DolapGirişiEkranı = new RelayCommand<object>(parameter => CurrentView = DolapGirişViewModel, parameter => CurrentView != DolapGirişViewModel);
 

@@ -22,11 +22,12 @@
                 <RowDefinition Height="365" />
                 <RowDefinition Height="42.4" />
             </Grid.RowDefinitions>
-            <UniformGrid Columns="4" Rows="2">
+            <UniformGrid Columns="5" Rows="2">
                 <TextBlock Text="EN" HorizontalAlignment="Center" />
                 <TextBlock Text="BOY" HorizontalAlignment="Center" />
                 <TextBlock Text="KALINLIK" HorizontalAlignment="Center" />
                 <TextBlock Text="BİÇİM" HorizontalAlignment="Center" />
+                <TextBlock Text="ALT METİN GİZLE" HorizontalAlignment="Center" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
                     Value="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
@@ -37,6 +38,7 @@
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
                     IsTabStop="False"
                     SelectedItem="{Binding BarcodeFormat}" />
+                <CheckBox IsChecked="{Binding PureBarcode}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </UniformGrid>
             <FlowDocumentScrollViewer Grid.Row="1">
                 <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">

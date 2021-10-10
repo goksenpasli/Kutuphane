@@ -53,16 +53,16 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "KişiAdArama")
             {
-                KişiGüncelleView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Ad.Contains(Kişi.KişiAdArama);
+                KişiGüncelleView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.Ad.Contains(Kişi.KişiAdArama) == true;
             }
 
             if (e.PropertyName is "KişiSoyadArama")
             {
-                KişiGüncelleView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Soyad.Contains(Kişi.KişiSoyadArama);
+                KişiGüncelleView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.Soyad.Contains(Kişi.KişiSoyadArama) == true;
             }
             if (e.PropertyName is "KişiTcArama")
             {
-                KişiGüncelleView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).TC.Contains(Kişi.KişiTcArama);
+                KişiGüncelleView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.TC.Contains(Kişi.KişiTcArama) == true;
             }
         }
     }

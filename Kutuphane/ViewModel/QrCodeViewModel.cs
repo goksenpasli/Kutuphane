@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace Kutuphane.ViewModel
 {
-    public class QrCodeViewModel : InpcBase
+    public class QrCodeViewModel : Barkod
     {
         private Barkod barkod;
 
@@ -71,9 +71,9 @@ namespace Kutuphane.ViewModel
 
         private void Barkod_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is "BarcodeFormat")
+            if (e.PropertyName is "BarcodeFormat" or "PureBarcode")
             {
-                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Barkod.BarcodeFormat);
+                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Barkod.BarcodeFormat, Barkod.PureBarcode);
             }
         }
     }

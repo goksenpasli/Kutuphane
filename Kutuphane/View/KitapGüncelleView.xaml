@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Kutuphane.Model"
     d:DataContext="{d:DesignInstance Type=ViewModel:KitapGüncelleViewModel}"
-    d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
+    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
@@ -74,9 +74,9 @@
                             </GridViewColumn>
                             <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad">
                                 <GridViewColumn.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="KİTAP&#xA;ADI" />
-                                        <TextBox Text="{Binding KişiKitapAdArama, Delay=500,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                    <StackPanel >
+                                        <TextBlock Text="KİTAP ADI" />
+                                        <TextBox Width="160" Text="{Binding KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
@@ -87,9 +87,9 @@
                             </GridViewColumn>
                             <GridViewColumn Width="120" Extensions:GridViewSort.PropertyName="Barkod">
                                 <GridViewColumn.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                        <TextBox Text="{Binding KişiKitapBarkodArama, Delay=500,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                    <StackPanel >
+                                        <TextBlock Text="KİTAP BARKOD" />
+                                        <TextBox Width="110" Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
@@ -98,7 +98,19 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP&#xA;BASIM&#xA;YILI" Extensions:GridViewSort.PropertyName="BasımYılı">
+                            <GridViewColumn Extensions:GridViewSort.PropertyName="BasımYılı">
+                                <GridViewColumn.Header>
+                                    <StackPanel>
+                                        <TextBlock Text="KİTAP BASIM YILI" />
+                                        <ComboBox ItemsSource="{Binding Kütüphane.Kitaplar/Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding KişiKitapYılArama}">
+                                            <ComboBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <VirtualizingStackPanel />
+                                                </ItemsPanelTemplate>
+                                            </ComboBox.ItemsPanel>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}">
@@ -125,11 +137,11 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="150" Extensions:GridViewSort.PropertyName="DolapId">
+                            <GridViewColumn Width="130" Extensions:GridViewSort.PropertyName="DolapId">
                                 <GridViewColumn.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="DOLAP" VerticalAlignment="Center" />
-                                        <ComboBox Width="70"
+                                    <StackPanel>
+                                        <TextBlock Text="DOLAP" HorizontalAlignment="Center" />
+                                        <ComboBox Width="120"
                                             ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
                                             DisplayMemberPath="Açıklama"
                                             SelectedValue="{Binding KişiDolapIdArama}"
@@ -159,8 +171,8 @@
                             </GridViewColumn>
                             <GridViewColumn Extensions:GridViewSort.PropertyName="KitapDurumId">
                                 <GridViewColumn.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="KİTAP&#xA;DURUM" />
+                                    <StackPanel>
+                                        <TextBlock Text="KİTAP DURUM" HorizontalAlignment="Center" />
                                         <ComboBox Width="100" VerticalContentAlignment="Center" SelectedIndex="{Binding KişiKitapKonumArama}">
                                             <ComboBox.ItemsSource>
                                                 <CompositeCollection>

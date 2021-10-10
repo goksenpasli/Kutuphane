@@ -111,15 +111,15 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "KişiAdArama")
             {
-                GecikenKitaplarView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Ad.Contains(Kişi.KişiAdArama);
+                GecikenKitaplarView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.Ad.Contains(Kişi.KişiAdArama) == true;
             }
             if (e.PropertyName is "KişiSoyadArama")
             {
-                GecikenKitaplarView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Soyad.Contains(Kişi.KişiSoyadArama);
+                GecikenKitaplarView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.Soyad.Contains(Kişi.KişiSoyadArama) == true;
             }
             if (e.PropertyName is "KişiTcArama")
             {
-                GecikenKitaplarView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).TC.Contains(Kişi.KişiTcArama);
+                GecikenKitaplarView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.TC.Contains(Kişi.KişiTcArama) == true;
             }
         }
     }

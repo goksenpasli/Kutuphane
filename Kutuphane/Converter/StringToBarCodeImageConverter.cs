@@ -16,7 +16,7 @@ namespace Kutuphane
                     QrWidth = 350,
                     BarcodeFormat = ZXing.BarcodeFormat.CODE_128
                 };
-                return barkod.GenerateBarCodeImage(barkod.BarcodeFormat);
+                return barkod.GenerateBarCodeImage(barkod.BarcodeFormat, true);
             }
             return null;
         }

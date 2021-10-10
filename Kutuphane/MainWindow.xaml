@@ -8,7 +8,7 @@
     xmlns:properties="clr-namespace:Kutuphane.Properties" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     Title="Kütüphane"
     DataContext="{Binding Mode=OneWay, Source={StaticResource MainViewModel}}"
-    d:DesignHeight="578" d:DesignWidth="800" UseLayoutRounding="True" WindowStartupLocation="CenterScreen"
+    d:DesignHeight="578" d:DesignWidth="1280" UseLayoutRounding="True" WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>

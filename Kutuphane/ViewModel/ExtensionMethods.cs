@@ -1,6 +1,5 @@
 ﻿using Kutuphane.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -42,7 +41,7 @@ namespace Kutuphane.ViewModel
             return new ObservableCollection<Dolap>();
         }
 
-        public static WriteableBitmap GenerateBarCodeImage(this Barkod barkod, BarcodeFormat format = BarcodeFormat.QR_CODE)
+        public static BitmapImage GenerateBarCodeImage(this Barkod barkod, BarcodeFormat format = BarcodeFormat.QR_CODE, bool pure = false)
         {
             try
             {
@@ -51,6 +50,7 @@ namespace Kutuphane.ViewModel
                     Format = format,
                     Options = new ZXing.Common.EncodingOptions
                     {
+                        PureBarcode = pure,
                         Height = barkod.QrHeight,
                         Width = barkod.QrWidth,
                         Margin = 0
@@ -58,7 +58,7 @@ namespace Kutuphane.ViewModel
                 };
                 if (!string.IsNullOrWhiteSpace(barkod.Metin))
                 {
-                    return writer.WriteAsWriteableBitmap(barkod.Metin);
+                    return Extensions.ExtensionMethods.ToBitmapImage(writer.Write(barkod.Metin), System.Drawing.Imaging.ImageFormat.Png);
                 }
                 barkod.BarkodError = "";
                 return null;
@@ -68,22 +68,6 @@ namespace Kutuphane.ViewModel
                 barkod.BarkodError = ex.Message;
                 return null;
             }
-        }
-
-        public static string HarfeDöndür(this int counter)
-        {
-            Stack<char> stack = new();
-            if (counter == 0)
-            {
-                return "A";
-            }
-            while (counter > 0)
-            {
-                stack.Push((char)('A' + counter % 26));
-                counter /= 26;
-            }
-
-            return new string(stack.ToArray());
         }
 
         public static ObservableCollection<Kişi> KişileriYükle()
@@ -125,22 +109,7 @@ namespace Kutuphane.ViewModel
         {
             var tekler = 0;
             var ciftler = 0;
-            if (string.IsNullOrWhiteSpace(tcKimlikNo))
-            {
-                return false;
-            }
-
-            if (tcKimlikNo.Length != 11)
-            {
-                return false;
-            }
-
-            if (!tcKimlikNo.All(z => char.IsNumber(z)))
-            {
-                return false;
-            }
-
-            if (tcKimlikNo.Substring(0, 1) == "0")
+            if (string.IsNullOrWhiteSpace(tcKimlikNo) || tcKimlikNo.Length != 11 || !tcKimlikNo.All(z => char.IsNumber(z)) || tcKimlikNo.Substring(0, 1) == "0")
             {
                 return false;
             }

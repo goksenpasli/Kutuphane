@@ -132,27 +132,27 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "KişiKitapAdArama")
             {
-                KitapVerView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap).Ad.Contains(Kişi.KişiKitapAdArama);
+                KitapVerView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Ad.Contains(Kişi.KişiKitapAdArama) == true;
             }
 
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
-                KitapVerView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap).Barkod.Contains(Kişi.KişiKitapBarkodArama);
+                KitapVerView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.Contains(Kişi.KişiKitapBarkodArama) == true;
             }
 
             if (e.PropertyName is "KişiAdArama")
             {
-                KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Ad.Contains(Kişi.KişiAdArama);
+                KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.Ad.Contains(Kişi.KişiAdArama) == true;
             }
 
             if (e.PropertyName is "KişiSoyadArama")
             {
-                KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).Soyad.Contains(Kişi.KişiSoyadArama);
+                KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.Soyad.Contains(Kişi.KişiSoyadArama) == true;
             }
 
             if (e.PropertyName is "KişiTcArama")
             {
-                KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi).TC.Contains(Kişi.KişiTcArama);
+                KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.TC.Contains(Kişi.KişiTcArama) == true;
             }
         }
     }

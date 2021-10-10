@@ -14,6 +14,8 @@ namespace Kutuphane.Model
 
         private string metin;
 
+        private bool pureBarcode;
+
         private int qrHeight = 75;
 
         private int qrWidth = 150;
@@ -70,6 +72,20 @@ namespace Kutuphane.Model
                 {
                     metin = value;
                     OnPropertyChanged(nameof(Metin));
+                }
+            }
+        }
+
+        public bool PureBarcode
+        {
+            get => pureBarcode;
+
+            set
+            {
+                if (pureBarcode != value)
+                {
+                    pureBarcode = value;
+                    OnPropertyChanged(nameof(PureBarcode));
                 }
             }
         }

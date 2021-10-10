@@ -101,12 +101,12 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "KişiKitapAdArama")
             {
-                KitapKontrolView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Ad.Contains(KişiKitapAdArama);
+                KitapKontrolView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.Ad.Contains(KişiKitapAdArama) ?? false;
             }
 
             if (e.PropertyName is "KitapBarkodArama")
             {
-                KitapKontrolView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap).Barkod.Contains(KitapBarkodArama);
+                KitapKontrolView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.Barkod.Contains(KitapBarkodArama) ?? false;
             }
 
             if (e.PropertyName is "SeçiliKitap" && SeçiliKitap is not null)
