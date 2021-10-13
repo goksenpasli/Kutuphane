@@ -86,6 +86,7 @@
                                 <CheckBox Content="KİŞİ RESİM GÖSTER" IsChecked="{Binding Path=KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kişide Resim Varsa Önizlemesi Gösterilir." />
                                 <CheckBox Content="KİŞİ GİRİŞ EKRANI" IsChecked="{Binding Path=KişiGirişEkranıVarsayılan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Program Açılışında Kişi Giriş Ekranı Açılır." />
                                 <CheckBox Content="OTOMATİK TUTANAK" IsChecked="{Binding Path=OtomatikTutanak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
+                                <ComboBox ItemsSource="{Binding TtsDilleri}" SelectedItem="{Binding SeçiliTts, Mode=TwoWay, Source={x:Static properties:Settings.Default}}" ToolTip="TTS Dilini Seçin." />
                                 <Button Content="AYARLARI SIFIRLA" Command="{Binding AyarlarıSıfırla}" />
                             </StackPanel>
                         </GroupBox>
@@ -166,6 +167,20 @@
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
                                 <Binding Source="31" />
+                            </MultiBinding>
+                        </RibbonButton.LargeImageSource>
+                    </RibbonButton>
+                    <RibbonButton Command="{Binding KitapTakvimEkranı, Mode=OneWay}" KeyTip="T" Label="Kitap Takvim">
+                        <RibbonButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="20" />
+                            </MultiBinding>
+                        </RibbonButton.SmallImageSource>
+                        <RibbonButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="20" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                     </RibbonButton>

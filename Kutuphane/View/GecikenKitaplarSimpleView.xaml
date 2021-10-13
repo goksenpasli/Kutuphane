@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Extensions;assembly=Extensions" xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:GecikenKitaplarSimpleViewModel}"
@@ -23,9 +24,9 @@
         <ListView x:Name="Lv" ItemsSource="{Binding Yaklaşanİşlemler}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="AD" DisplayMemberBinding="{Binding Ad}" />
-                    <GridViewColumn Header="SOYAD" DisplayMemberBinding="{Binding Soyad}" />
-                    <GridViewColumn Header="TC" DisplayMemberBinding="{Binding TC}" />
+                    <GridViewColumn Header="AD" extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
+                    <GridViewColumn Header="SOYAD" extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}" />
+                    <GridViewColumn Header="TC" extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}" />
                 </GridView>
             </ListView.View>
         </ListView>

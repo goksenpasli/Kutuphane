@@ -56,6 +56,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -113,6 +114,7 @@
     <Compile Include="ViewModel\KitapGüncelleViewModel.cs" />
     <Compile Include="ViewModel\KitapKontrolViewModel.cs" />
     <Compile Include="ViewModel\KitapSilViewModel.cs" />
+    <Compile Include="ViewModel\KitapTakvimViewModel.cs" />
     <Compile Include="ViewModel\KitapVerViewModel.cs" />
     <Compile Include="ViewModel\KişiGirişViewModel.cs" />
     <Compile Include="ViewModel\KişiGüncelleViewModel.cs" />
@@ -154,6 +156,9 @@
     </Compile>
     <Compile Include="View\KitapSilView.xaml.cs">
       <DependentUpon>KitapSilView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KitapTakvimView.xaml.cs">
+      <DependentUpon>KitapTakvimView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KitapVerView.xaml.cs">
       <DependentUpon>KitapVerView.xaml</DependentUpon>
@@ -226,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\KitapSilView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\KitapTakvimView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

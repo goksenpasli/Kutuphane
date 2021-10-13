@@ -1,8 +1,12 @@
 ﻿using Extensions;
 using Kutuphane.Model;
+using Kutuphane.Properties;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Speech.Synthesis;
 using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
@@ -11,7 +15,9 @@ namespace Kutuphane.ViewModel
     {
         public static readonly string xmldatapath = Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath) + @"\Data.xml";
 
-        private object currentView;
+        private static readonly SpeechSynthesizer synthesizer = new() { Volume = 100 };
+
+        private InpcBase currentView;
 
         public MainViewModel()
         {
@@ -42,6 +48,8 @@ namespace Kutuphane.ViewModel
 
             KitapKontrolViewModel = new KitapKontrolViewModel();
 
+            KitapTakvimViewModel = new KitapTakvimViewModel();
+
             KitapGeriAlViewModel = new KitapGeriAlViewModel();
 
             GecikenKitaplarViewModel = new GecikenKitaplarViewModel();
@@ -61,6 +69,8 @@ namespace Kutuphane.ViewModel
             GecikenKitaplarEkranı = new RelayCommand<object>(parameter => CurrentView = GecikenKitaplarViewModel, parameter => CurrentView != GecikenKitaplarViewModel);
 
             KitapVerEkranı = new RelayCommand<object>(parameter => CurrentView = KitapVerViewModel, parameter => CurrentView != KitapVerViewModel);
+
+            KitapTakvimEkranı = new RelayCommand<object>(parameter => CurrentView = KitapTakvimViewModel, parameter => CurrentView != KitapTakvimViewModel);
 
             KişiGüncelleEkranı = new RelayCommand<object>(parameter => CurrentView = KişiGüncelleViewModel, parameter => CurrentView != KişiGüncelleViewModel);
 
@@ -86,7 +96,7 @@ namespace Kutuphane.ViewModel
 
             DatabaseSave = new RelayCommand<object>(parameter => Kütüphane.Serialize());
 
-            UygulamadanÇık = new RelayCommand<object>(parameter => App.Current.MainWindow.Close());
+            UygulamadanÇık = new RelayCommand<object>(parameter => System.Windows.Application.Current.MainWindow.Close());
 
             VeritabanınıAç = new RelayCommand<object>(parameter =>
             {
@@ -96,14 +106,23 @@ namespace Kutuphane.ViewModel
                 }
             });
 
-            if (Properties.Settings.Default.KişiGirişEkranıVarsayılan)
+            MetinOku = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is string metin)
+                {
+                    synthesizer.SelectVoice(Settings.Default.SeçiliTts);
+                    synthesizer.SpeakAsync(metin);
+                }
+            }, parameter => !string.IsNullOrEmpty(Settings.Default.SeçiliTts));
+
+            if (Settings.Default.KişiGirişEkranıVarsayılan)
             {
                 CurrentView = KişiGirişViewModel;
             }
 
-            AyarlarıSıfırla = new RelayCommand<object>(parameter => Properties.Settings.Default.Reset());
+            AyarlarıSıfırla = new RelayCommand<object>(parameter => Settings.Default.Reset());
 
-            Properties.Settings.Default.PropertyChanged += (s, e) => Properties.Settings.Default.Save();
+            Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
         }
 
         public static ICommand AyarlarıSıfırla { get; set; }
@@ -118,7 +137,7 @@ namespace Kutuphane.ViewModel
 
         public static ICommand VeritabanınıAç { get; set; }
 
-        public object CurrentView
+        public InpcBase CurrentView
         {
             get => currentView;
 
@@ -148,6 +167,8 @@ namespace Kutuphane.ViewModel
 
         public ICommand KişiGirişiEkranı { get; }
 
+        public ICommand KitapTakvimEkranı { get; }
+
         public KişiGirişViewModel KişiGirişViewModel { get; set; }
 
         public ICommand KişiGüncelleEkranı { get; }
@@ -168,6 +189,8 @@ namespace Kutuphane.ViewModel
 
         public KitapKontrolViewModel KitapKontrolViewModel { get; set; }
 
+        public KitapTakvimViewModel KitapTakvimViewModel { get; set; }
+
         public ICommand KitapSilEkranı { get; }
 
         public KitapSilViewModel KitapSilViewModel { get; set; }
@@ -178,10 +201,14 @@ namespace Kutuphane.ViewModel
 
         public Kütüphane Kütüphane { get; set; }
 
+        public ICommand MetinOku { get; }
+
         public QrCodeMultipleViewModel QrCodeMultipleViewModel { get; set; }
 
         public QrCodeViewModel QrCodeViewModel { get; set; }
 
         public ReportViewModel ReportViewModel { get; set; }
+
+        public IEnumerable<string> TtsDilleri { get; set; } = synthesizer.GetInstalledVoices().Select(z => z.VoiceInfo.Name);
     }
 }

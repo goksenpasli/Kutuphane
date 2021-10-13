@@ -94,10 +94,14 @@
                         </ListView.View>
                     </ListView>
                 </GroupBox>
-                <TextBox Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}"
-                    Grid.Row="2"
-                    IsReadOnly="True"
-                    TextWrapping="Wrap" />
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" IsReadOnly="True" TextWrapping="Wrap" />
+                    <Button Grid.Column="1" Content="OKU" Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" />
+                </Grid>
                 <GroupBox Grid.Column="1" Grid.RowSpan="2">
                     <GroupBox.Header>
                         <StackPanel>
@@ -187,8 +191,7 @@
                             Width="16"
                             Foreground="Red" Background="Green" BorderBrush="Transparent"
                             Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
-                            Maximum="100"
-                            Orientation="Vertical"
+                            Maximum="100" Orientation="Vertical"
                             Value="{Binding SelectedItem.KitapCezasıOranı, ElementName=listViewKişi}" />
                         <view:İşlemView Grid.Row="1" DataContext="{Binding İşlem}" />
                         <Button Grid.Row="2" Command="{Binding KitapVer, Mode=OneWay}">

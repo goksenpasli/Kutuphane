@@ -48,6 +48,7 @@
                                         </Image>
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem Header="ALT METİN GİZLE" IsCheckable="True" IsChecked="{Binding Barkod.PureBarcode}" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>

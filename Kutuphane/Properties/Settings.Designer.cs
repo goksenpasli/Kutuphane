@@ -166,5 +166,17 @@ namespace Kutuphane.Properties {
                 this["KişiKitapKritikOran"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SeçiliTts {
+            get {
+                return ((string)(this["SeçiliTts"]));
+            }
+            set {
+                this["SeçiliTts"] = value;
+            }
+        }
     }
 }

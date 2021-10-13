@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,7 +12,6 @@ namespace Extensions
     {
         #region Public attached properties
 
-        // Using a DependencyProperty as the backing store for AutoSort.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AutoSortProperty =
             DependencyProperty.RegisterAttached(
                 "AutoSort",
@@ -29,11 +29,11 @@ namespace Extensions
                                 var newValue = (bool)e.NewValue;
                                 if (oldValue && !newValue)
                                 {
-                                    listView.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                                    listView.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                                 }
                                 if (!oldValue && newValue)
                                 {
-                                    listView.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                                    listView.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                                 }
                             }
                         }
@@ -56,11 +56,11 @@ namespace Extensions
                             {
                                 if (e.OldValue != null && e.NewValue == null)
                                 {
-                                    listView.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                                    listView.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                                 }
                                 if (e.OldValue == null && e.NewValue != null)
                                 {
-                                    listView.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                                    listView.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                                 }
                             }
                         }
@@ -68,26 +68,13 @@ namespace Extensions
                 )
             );
 
-        // Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PropertyNameProperty =
-            DependencyProperty.RegisterAttached(
-                "PropertyName",
-                typeof(string),
-                typeof(GridViewSort),
-                new UIPropertyMetadata(null)
-            );
+        public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached("PropertyName", typeof(string), typeof(GridViewSort), new UIPropertyMetadata(null));
 
-        // Using a DependencyProperty as the backing store for ShowSortGlyph.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ShowSortGlyphProperty =
-            DependencyProperty.RegisterAttached("ShowSortGlyph", typeof(bool), typeof(GridViewSort), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowSortGlyphProperty = DependencyProperty.RegisterAttached("ShowSortGlyph", typeof(bool), typeof(GridViewSort), new UIPropertyMetadata(true));
 
-        // Using a DependencyProperty as the backing store for SortGlyphAscending.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SortGlyphAscendingProperty =
-            DependencyProperty.RegisterAttached("SortGlyphAscending", typeof(ImageSource), typeof(GridViewSort), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached("SortGlyphAscending", typeof(ImageSource), typeof(GridViewSort), new UIPropertyMetadata(null));
 
-        // Using a DependencyProperty as the backing store for SortGlyphDescending.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SortGlyphDescendingProperty =
-            DependencyProperty.RegisterAttached("SortGlyphDescending", typeof(ImageSource), typeof(GridViewSort), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty SortGlyphDescendingProperty = DependencyProperty.RegisterAttached("SortGlyphDescending", typeof(ImageSource), typeof(GridViewSort), new UIPropertyMetadata(null));
 
         public static bool GetAutoSort(DependencyObject obj) => (bool)obj.GetValue(AutoSortProperty);
 
@@ -117,9 +104,7 @@ namespace Extensions
 
         #region Private attached properties
 
-        // Using a DependencyProperty as the backing store for SortedColumn.  This enables animation, styling, binding, etc...
-        private static readonly DependencyProperty SortedColumnHeaderProperty =
-            DependencyProperty.RegisterAttached("SortedColumnHeader", typeof(GridViewColumnHeader), typeof(GridViewSort), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty SortedColumnHeaderProperty = DependencyProperty.RegisterAttached("SortedColumnHeader", typeof(GridViewColumnHeader), typeof(GridViewSort), new UIPropertyMetadata(null));
 
         private static GridViewColumnHeader GetSortedColumnHeader(DependencyObject obj) => (GridViewColumnHeader)obj.GetValue(SortedColumnHeaderProperty);
 
@@ -257,7 +242,7 @@ namespace Extensions
                 if (_sortGlyph != null)
                 {
                     var x = _columnHeader.ActualWidth - 13;
-                    var y = _columnHeader.ActualHeight / 2 - 5;
+                    var y = (_columnHeader.ActualHeight / 2) - 5;
                     Rect rect = new(x, y, 10, 10);
                     drawingContext.DrawImage(_sortGlyph, rect);
                 }
@@ -269,10 +254,10 @@ namespace Extensions
 
             private Geometry GetDefaultGlyph()
             {
-                var x1 = _columnHeader.ActualWidth - 13;
+                var x1 = (_columnHeader.ActualWidth / 2) - 5;
                 var x2 = x1 + 10;
                 var x3 = x1 + 5;
-                var y1 = _columnHeader.ActualHeight / 2 - 3;
+                var y1 = 0;
                 var y2 = y1 + 5;
 
                 if (_direction == ListSortDirection.Ascending)

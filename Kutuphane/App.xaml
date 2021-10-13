@@ -77,6 +77,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type ViewModel:KişiGüncelleViewModel}">
                 <View:KişiGüncelleView />
+            </DataTemplate>   
+            <DataTemplate DataType="{x:Type ViewModel:KitapTakvimViewModel}">
+                <View:KitapTakvimView />
             </DataTemplate>
             <DrawingBrush x:Key="Dur" ice:Freeze="True" Stretch="Uniform">
                 <DrawingBrush.Drawing>
