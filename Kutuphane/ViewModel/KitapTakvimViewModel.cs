@@ -4,9 +4,36 @@ using Kutuphane.View;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
 {
+    public static class CalandarHelper
+    {
+        public static readonly DependencyProperty SingleClickDefocusProperty = DependencyProperty.RegisterAttached("SingleClickDefocus", typeof(bool), typeof(CalandarHelper), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(SingleClickDefocusChanged)));
+
+        public static bool GetSingleClickDefocus(DependencyObject obj) => (bool)obj.GetValue(SingleClickDefocusProperty);
+
+        public static void SetSingleClickDefocus(DependencyObject obj, bool value) => obj.SetValue(SingleClickDefocusProperty, value);
+
+        private static void SingleClickDefocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Calendar calendar)
+            {
+                calendar.PreviewMouseDown += (a, b) =>
+                {
+                    if (Mouse.Captured is Calendar or CalendarItem)
+                    {
+                        _ = Mouse.Capture(null);
+                    }
+                };
+            }
+        }
+    }
+
     public class KitapTakvimViewModel : InpcBase
     {
         private DateTime? seçiliGün;

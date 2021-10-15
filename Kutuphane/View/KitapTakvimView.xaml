@@ -18,8 +18,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <GroupBox Header="TAKVİM">
-            <Viewbox Stretch="Fill"  ClipToBounds="True" >
-                <Calendar  Margin="-8"  Background="{StaticResource BorderBackground}" BorderBrush="Transparent" SelectedDate="{Binding SeçiliGün}" />
+            <Viewbox ClipToBounds="True" Stretch="Fill">
+                <Calendar Background="{StaticResource BorderBackground}"
+                    BorderBrush="Transparent"
+                    Margin="-8"
+                    viewmodel:CalandarHelper.SingleClickDefocus="True"
+                    SelectedDate="{Binding SeçiliGün}" />
             </Viewbox>
         </GroupBox>
         <GroupBox Header="KİŞİ" Grid.Column="1">

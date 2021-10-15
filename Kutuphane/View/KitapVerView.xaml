@@ -100,7 +100,10 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBox Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" IsReadOnly="True" TextWrapping="Wrap" />
-                    <Button Grid.Column="1" Content="OKU" Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" />
+                    <Button Content="OKU"
+                        Grid.Column="1"
+                        Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                        CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" />
                 </Grid>
                 <GroupBox Grid.Column="1" Grid.RowSpan="2">
                     <GroupBox.Header>
