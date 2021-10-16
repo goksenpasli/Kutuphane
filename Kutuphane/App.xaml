@@ -270,7 +270,7 @@
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72" ShowShadow="True">
+                    <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72" ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -290,7 +290,7 @@
             </DataTemplate>
             <DataTemplate x:Key="KişiDetayTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120" ShowShadow="True">
+                    <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120" ShowShadow="True" ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -320,7 +320,7 @@
             <DataTemplate x:Key="KitapTemplate">
                 <StackPanel>
                     <TextBlock Text="{Binding Ad}" />
-                    <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145" ShowShadow="True">
+                    <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145" ShowShadow="True" ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>

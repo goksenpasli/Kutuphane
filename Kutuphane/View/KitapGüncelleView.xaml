@@ -74,9 +74,9 @@
                             </GridViewColumn>
                             <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad">
                                 <GridViewColumn.Header>
-                                    <StackPanel >
+                                    <StackPanel>
                                         <TextBlock Text="KİTAP ADI" />
-                                        <TextBox Width="160" Text="{Binding KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center" />
+                                        <TextBox Text="{Binding KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="160" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
@@ -87,9 +87,9 @@
                             </GridViewColumn>
                             <GridViewColumn Width="120" Extensions:GridViewSort.PropertyName="Barkod">
                                 <GridViewColumn.Header>
-                                    <StackPanel >
+                                    <StackPanel>
                                         <TextBlock Text="KİTAP BARKOD" />
-                                        <TextBox Width="110" Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
+                                        <TextBox Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="110" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
@@ -226,7 +226,10 @@
                         <TextBlock Text="GÜNCELLE" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <ViewModel:ShadowedImage Grid.Column="1" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <ViewModel:ShadowedImage Grid.Column="1"
+                    ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
+                    ShowShadow="True"
+                    Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
                 <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
                     <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <Extensions:ContentToggleButton Width="32" Height="32"

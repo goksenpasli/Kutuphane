@@ -178,5 +178,17 @@ namespace Kutuphane.Properties {
                 this["SeçiliTts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string KimlikArkaPlanResim {
+            get {
+                return ((string)(this["KimlikArkaPlanResim"]));
+            }
+            set {
+                this["KimlikArkaPlanResim"] = value;
+            }
+        }
     }
 }

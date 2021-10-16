@@ -50,6 +50,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -87,6 +88,9 @@
                                 <CheckBox Content="KİŞİ GİRİŞ EKRANI" IsChecked="{Binding Path=KişiGirişEkranıVarsayılan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Program Açılışında Kişi Giriş Ekranı Açılır." />
                                 <CheckBox Content="OTOMATİK TUTANAK" IsChecked="{Binding Path=OtomatikTutanak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
                                 <ComboBox ItemsSource="{Binding TtsDilleri}" SelectedItem="{Binding SeçiliTts, Mode=TwoWay, Source={x:Static properties:Settings.Default}}" ToolTip="TTS Dilini Seçin." />
+                                <HeaderedContentControl Header="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Kimliklerin Arkaplanına Belirtilen Resmi Yerleştirin.">
+                                    <Button Content="KİMLİK ARKAPLAN RESİM YÜKLE" Command="{Binding KimlikArkaplanResimGüncelle, Mode=OneWay}" />
+                                </HeaderedContentControl>
                                 <Button Content="AYARLARI SIFIRLA" Command="{Binding AyarlarıSıfırla}" />
                             </StackPanel>
                         </GroupBox>

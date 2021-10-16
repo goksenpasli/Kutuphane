@@ -102,7 +102,10 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <viewmodel:ShadowedImage Grid.Column="1" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <viewmodel:ShadowedImage Grid.Column="1"
+                    ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
+                    ShowShadow="True"
+                    Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
             </Grid>
         </GroupBox>
     </Grid>

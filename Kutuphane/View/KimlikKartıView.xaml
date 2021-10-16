@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
+    xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=model:Kişi}"
     d:DesignHeight="210" d:DesignWidth="380" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -15,7 +16,10 @@
             </Grid.RowDefinitions>
             <FlowDocumentScrollViewer x:Name="Fd" VerticalScrollBarVisibility="Disabled">
                 <FlowDocument FontSize="16" FontFamily="Times New Roman"
-                    Block.LineHeight="1" Language="tr-tr" PagePadding="1">
+                    Block.LineHeight="1" Language="tr-tr" PagePadding="0">
+                    <FlowDocument.Background>
+                        <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                    </FlowDocument.Background>
                     <FlowDocument.Resources>
                         <Style TargetType="{x:Type TableCell}">
                             <Setter Property="BorderBrush" Value="Black" />
@@ -26,7 +30,7 @@
                         <Table.Columns>
                             <TableColumn Width="100" />
                             <TableColumn Width="180" />
-                            <TableColumn Width="95" />
+                            <TableColumn Width="97" />
                         </Table.Columns>
                         <TableRowGroup>
                             <TableRow>

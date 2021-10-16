@@ -1,6 +1,8 @@
 ﻿using Extensions;
 using Kutuphane.Model;
 using Kutuphane.Properties;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -115,6 +117,17 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => !string.IsNullOrEmpty(Settings.Default.SeçiliTts));
 
+            KimlikArkaplanResimGüncelle = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(xmldatapath)}\\{filename}");
+                    Settings.Default.KimlikArkaPlanResim = filename;
+                }
+            }, parameter => true);
+
             if (Settings.Default.KişiGirişEkranıVarsayılan)
             {
                 CurrentView = KişiGirişViewModel;
@@ -165,9 +178,9 @@ namespace Kutuphane.ViewModel
 
         public GecikenKitaplarViewModel GecikenKitaplarViewModel { get; set; }
 
-        public ICommand KişiGirişiEkranı { get; }
+        public ICommand KimlikArkaplanResimGüncelle { get; }
 
-        public ICommand KitapTakvimEkranı { get; }
+        public ICommand KişiGirişiEkranı { get; }
 
         public KişiGirişViewModel KişiGirişViewModel { get; set; }
 
@@ -189,11 +202,13 @@ namespace Kutuphane.ViewModel
 
         public KitapKontrolViewModel KitapKontrolViewModel { get; set; }
 
-        public KitapTakvimViewModel KitapTakvimViewModel { get; set; }
-
         public ICommand KitapSilEkranı { get; }
 
         public KitapSilViewModel KitapSilViewModel { get; set; }
+
+        public ICommand KitapTakvimEkranı { get; }
+
+        public KitapTakvimViewModel KitapTakvimViewModel { get; set; }
 
         public ICommand KitapVerEkranı { get; }
 

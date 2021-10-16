@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using ZXing;
+using System.Drawing.Imaging;
 
 namespace Kutuphane.ViewModel
 {
@@ -56,12 +57,8 @@ namespace Kutuphane.ViewModel
                         Margin = 0
                     }
                 };
-                if (!string.IsNullOrWhiteSpace(barkod.Metin))
-                {
-                    return Extensions.ExtensionMethods.ToBitmapImage(writer.Write(barkod.Metin), System.Drawing.Imaging.ImageFormat.Png);
-                }
                 barkod.BarkodError = "";
-                return null;
+                return !string.IsNullOrWhiteSpace(barkod.Metin) ? Extensions.ExtensionMethods.ToBitmapImage(writer.Write(barkod.Metin), ImageFormat.Png) : null;
             }
             catch (Exception ex)
             {
