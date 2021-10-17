@@ -23,10 +23,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listViewKişi"
-                Grid.Row="0"
-                ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
-                SelectedItem="{Binding Kişi}">
+            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
