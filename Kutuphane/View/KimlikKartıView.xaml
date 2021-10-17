@@ -8,7 +8,18 @@
     d:DataContext="{d:DesignInstance Type=model:Kişi}"
     d:DesignHeight="210" d:DesignWidth="380" UseLayoutRounding="True"
     mc:Ignorable="d">
-    <GroupBox Header="KİMLİK KARTI" Grid.Row="1" Grid.Column="1">
+    <GroupBox Grid.Row="1" Grid.Column="1">
+        <GroupBox.Header>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="KİMLİK KARTI" VerticalAlignment="Center" />
+                <ComboBox x:Name="Cb"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                    ItemTemplate="{StaticResource ColorItemTemplate}"
+                    ItemsPanel="{StaticResource ColorPanelTemplate}"
+                    SelectedValue="{Binding KimlikYazıRenk, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValuePath="Name" />
+            </StackPanel>
+        </GroupBox.Header>
         <Grid Width="10cm" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -21,6 +32,9 @@
                         <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                     </FlowDocument.Background>
                     <FlowDocument.Resources>
+                        <Style TargetType="Run">
+                            <Setter Property="Foreground" Value="{Binding KimlikYazıRenk}" />
+                        </Style>
                         <Style TargetType="{x:Type TableCell}">
                             <Setter Property="BorderBrush" Value="Black" />
                             <Setter Property="BorderThickness" Value="0.5pt" />

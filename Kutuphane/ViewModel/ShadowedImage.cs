@@ -8,7 +8,7 @@ namespace Kutuphane.ViewModel
     {
         public static readonly DependencyProperty LocationProperty = DependencyProperty.Register("Location", typeof(Point), typeof(ShadowedImage), new PropertyMetadata(new Point(2.5, 2.5)));
 
-        public static readonly DependencyProperty OverlayColorProperty = DependencyProperty.Register("OverlayColor", typeof(SolidColorBrush), typeof(ShadowedImage), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(70, 255, 0, 0))));
+        public static readonly DependencyProperty OverlayColorProperty = DependencyProperty.Register("OverlayColor", typeof(SolidColorBrush), typeof(ShadowedImage), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 255, 0, 0))));
 
         public static readonly DependencyProperty ShadowColorProperty = DependencyProperty.Register("ShadowColor", typeof(SolidColorBrush), typeof(ShadowedImage), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(70, 128, 128, 128))));
 
@@ -16,12 +16,18 @@ namespace Kutuphane.ViewModel
 
         public static readonly DependencyProperty ShowShadowProperty = DependencyProperty.Register("ShowShadow", typeof(bool), typeof(ShadowedImage), new PropertyMetadata(false));
 
+        private readonly Pen pen = new() { Thickness = 3 };
+
         public Point Location
         {
             get => (Point)GetValue(LocationProperty);
             set => SetValue(LocationProperty, value);
         }
-
+        public ShadowedImage()
+        {
+            pen.Brush = OverlayColor;
+            pen.Freeze();
+        }
         public SolidColorBrush OverlayColor
         {
             get => (SolidColorBrush)GetValue(OverlayColorProperty);
@@ -57,7 +63,8 @@ namespace Kutuphane.ViewModel
 
             if (ShowOverlayColor)
             {
-                dc.DrawRectangle(OverlayColor, null, new Rect(new Point(0, 0), new Size(ActualWidth, ActualHeight)));
+                dc.DrawLine(pen, new Point(ActualWidth, 0), new Point(0, ActualHeight));
+                dc.DrawLine(pen, new Point(0, 0), new Point(ActualWidth, ActualHeight));
             }
         }
     }

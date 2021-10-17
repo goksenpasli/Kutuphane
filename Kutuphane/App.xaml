@@ -26,6 +26,7 @@
             <Converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="DataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+            <ObjectDataProvider x:Key="ColorList" MethodName="GetProperties" ObjectInstance="{x:Type Colors}" />
             <ObjectDataProvider x:Key="KitapDurumu" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="Model:KitapDurumu" />
@@ -355,6 +356,15 @@
                         </ControlTemplate>
                     </ComboBox.Template>
                 </ComboBox>
+            </DataTemplate>
+            <ItemsPanelTemplate x:Key="ColorPanelTemplate">
+                <UniformGrid Columns="8" />
+            </ItemsPanelTemplate>
+            <DataTemplate x:Key="ColorItemTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16" Fill="{Binding Name}" />
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                </StackPanel>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

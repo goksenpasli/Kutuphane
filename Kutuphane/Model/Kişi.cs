@@ -9,6 +9,8 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Kişi")]
     public class Kişi : InpcBase
     {
+        private string _KimlikYazıRenk = "Black";
+
         private string ad;
 
         private string adres;
@@ -153,6 +155,21 @@ namespace Kutuphane.Model
                 {
                     kayıtTarihi = value;
                     OnPropertyChanged(nameof(KayıtTarihi));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public string KimlikYazıRenk
+        {
+            get => _KimlikYazıRenk;
+
+            set
+            {
+                if (_KimlikYazıRenk != value)
+                {
+                    _KimlikYazıRenk = value;
+                    OnPropertyChanged(nameof(KimlikYazıRenk));
                 }
             }
         }
