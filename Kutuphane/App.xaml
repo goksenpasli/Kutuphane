@@ -165,7 +165,6 @@
                 <GradientStop ice:Freeze="True" Offset="1" Color="PaleVioletRed" />
                 <GradientStop ice:Freeze="True" Color="#4cc1f6" />
             </LinearGradientBrush>
-            <ImageBrush x:Key="ImageBrush" ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
 
             <Style TargetType="{x:Type GroupBox}">
                 <Setter Property="Background" Value="{StaticResource GroupBoxBackGround}" />

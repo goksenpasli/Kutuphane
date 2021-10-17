@@ -6,7 +6,7 @@
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=model:Kişi}"
-    d:DesignHeight="210" d:DesignWidth="380" UseLayoutRounding="True"
+    d:DesignHeight="260" d:DesignWidth="380" UseLayoutRounding="True"
     mc:Ignorable="d">
     <GroupBox Grid.Row="1" Grid.Column="1">
         <GroupBox.Header>
@@ -18,7 +18,17 @@
                     SelectedValue="{Binding YazıRenk, ElementName=UserControl}"
                     SelectedValuePath="Name" />
                 <ComboBox x:Name="Cb" SelectedIndex="0">
-                    <ComboBoxItem Content="Arka Plan Resmi" Background="{Binding Mode=OneWay, Source={StaticResource ImageBrush}}" />
+                    <ComboBoxItem>
+                        <ComboBoxItem.Background>
+                            <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Opacity="{Binding ElementName=Sld, Path=Value}" />
+                        </ComboBoxItem.Background>
+                        <ComboBoxItem.Content>
+                            <Slider x:Name="Sld"
+                                Width="80"
+                                Maximum="1"
+                                Value="1" />
+                        </ComboBoxItem.Content>
+                    </ComboBoxItem>
                     <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color1}}" />
                     <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color2}}" />
                     <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color3}}" />
@@ -124,6 +134,25 @@
                                 <TableCell Padding="0,10">
                                     <BlockUIContainer>
                                         <Image Height="32" Source="{Binding TC, Converter={StaticResource StringToBarCodeImageConverter}}" />
+                                    </BlockUIContainer>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>
+                                    <Paragraph Padding="0,5,0,0">
+                                        <Hyperlink Command="{Binding İmzaSil, ElementName=UserControl, Mode=OneWay}"
+                                            CommandParameter="{Binding ElementName=Ink}"
+                                            FontWeight="Bold"
+                                            TextDecorations="None">
+                                            <Run Text="GÖREVLİ İMZA" />
+                                        </Hyperlink>
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell ColumnSpan="2">
+                                    <BlockUIContainer>
+                                        <InkCanvas x:Name="Ink"
+                                            Width="270" Height="48"
+                                            Background="Transparent" />
                                     </BlockUIContainer>
                                 </TableCell>
                             </TableRow>

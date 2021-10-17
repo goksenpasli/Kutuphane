@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Extensions;
+using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Kutuphane.View
 {
@@ -12,12 +14,36 @@ namespace Kutuphane.View
 
         private string _YazıRenk = "Black";
 
+        private ICommand imzaSil;
+
         public KimlikKartıView()
         {
             InitializeComponent();
+
+            İmzaSil = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is InkCanvas ınkCanvas)
+                {
+                    ınkCanvas.Strokes.Clear();
+                }
+            }, parameter => true);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public ICommand İmzaSil
+        {
+            get => imzaSil;
+
+            set
+            {
+                if (imzaSil != value)
+                {
+                    imzaSil = value;
+                    OnPropertyChanged(nameof(İmzaSil));
+                }
+            }
+        }
 
         public string Renk
         {

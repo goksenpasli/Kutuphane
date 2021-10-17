@@ -9,7 +9,7 @@
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:KişiGirişViewModel}}"
-    d:DesignHeight="578" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="800" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
@@ -53,7 +53,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="197.6" />
+                        <RowDefinition Height="252.8" />
                         <RowDefinition Height="220.8" />
                     </Grid.RowDefinitions>
                     <HeaderedContentControl Header="AD">
