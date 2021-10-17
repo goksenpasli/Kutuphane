@@ -77,7 +77,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type ViewModel:KişiGüncelleViewModel}">
                 <View:KişiGüncelleView />
-            </DataTemplate>   
+            </DataTemplate>
             <DataTemplate DataType="{x:Type ViewModel:KitapTakvimViewModel}">
                 <View:KitapTakvimView />
             </DataTemplate>
@@ -193,7 +193,7 @@
                         ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Grid>
             </ControlTemplate>
-            <DrawingBrush x:Key="QrCode" RenderOptions.CachingHint="Cache">
+            <DrawingBrush x:Key="QrCode">
                 <DrawingBrush.Drawing>
                     <DrawingGroup>
                         <DrawingGroup.Children>
@@ -270,7 +270,9 @@
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72" ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ShowShadow="True">
+                    <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72"
+                        ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -290,7 +292,9 @@
             </DataTemplate>
             <DataTemplate x:Key="KişiDetayTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120" ShowShadow="True" ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                    <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120"
+                        ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -320,7 +324,9 @@
             <DataTemplate x:Key="KitapTemplate">
                 <StackPanel>
                     <TextBlock Text="{Binding Ad}" />
-                    <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145" ShowShadow="True" ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                    <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145"
+                        ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>

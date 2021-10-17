@@ -151,6 +151,16 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding KitapDurumId}" Value="0">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
                                             <ComboBox Width="70"
                                                 ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
                                                 DisplayMemberPath="Açıklama"
@@ -226,10 +236,16 @@
                         <TextBlock Text="GÜNCELLE" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <ViewModel:ShadowedImage Grid.Column="1"
-                    ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
-                    ShowShadow="True"
-                    Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="75" />
+                    </Grid.RowDefinitions>
+                    <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                    <GroupBox Header="AÇIKLAMA" Grid.Row="1">
+                        <TextBox Text="{Binding ElementName=listView, Path=SelectedItem.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" />
+                    </GroupBox>
+                </Grid>
                 <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
                     <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <Extensions:ContentToggleButton Width="32" Height="32"

@@ -4,6 +4,7 @@ using Kutuphane.View;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Kutuphane.Properties;
 
 namespace Kutuphane.ViewModel
 {
@@ -22,7 +23,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && MessageBox.Show($"{kitap.Ad} Adlı Kitap {kişi.Ad} {kişi.Soyad} Adlı Kişiye {İşlem.KitapGün} Günlüğüne Verilecek Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
-                    if (kişi.KitapCezasıOranı > Properties.Settings.Default.KişiKitapKritikOran)
+                    if (Settings.Default.KişiKitapKritikKontrol && kişi.KitapCezasıOranı > Settings.Default.KişiKitapKritikOran)
                     {
                         _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
@@ -43,7 +44,7 @@ namespace Kutuphane.ViewModel
                     İşlem.KitapGün = 1;
                     İşlem.BaşlangıçTarihi = DateTime.Today;
 
-                    if (Properties.Settings.Default.OtomatikTutanak)
+                    if (Settings.Default.OtomatikTutanak)
                     {
                         işlem.SeçiliKitap = kitap;
                         new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { kişi, işlem });
@@ -55,7 +56,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap)
                 {
-                    if (kişi.KitapCezasıOranı > Properties.Settings.Default.KişiKitapKritikOran)
+                    if (Settings.Default.KişiKitapKritikKontrol && kişi.KitapCezasıOranı > Settings.Default.KişiKitapKritikOran)
                     {
                         _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
@@ -63,8 +64,8 @@ namespace Kutuphane.ViewModel
                     var işlem = new İşlem
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
-                        KitapGün = Properties.Settings.Default.HızlıKitapGirişGünSüresi,
-                        GeriGetirmeTarihi = DateTime.Today.AddDays(Properties.Settings.Default.HızlıKitapGirişGünSüresi),
+                        KitapGün = Settings.Default.HızlıKitapGirişGünSüresi,
+                        GeriGetirmeTarihi = DateTime.Today.AddDays(Settings.Default.HızlıKitapGirişGünSüresi),
                         KitapId = kitap.Id,
                         KişiId = kişi.Id,
                         BaşlangıçTarihi = DateTime.Today,
@@ -73,7 +74,7 @@ namespace Kutuphane.ViewModel
                     kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
                     MainViewModel.DatabaseSave.Execute(null);
 
-                    if (Properties.Settings.Default.OtomatikTutanak)
+                    if (Settings.Default.OtomatikTutanak)
                     {
                         işlem.SeçiliKitap = kitap;
                         new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { kişi, işlem });

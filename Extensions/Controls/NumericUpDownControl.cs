@@ -109,12 +109,12 @@ namespace Extensions
 
         private static void ModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((Mode)e.NewValue == Mode.DateTimeMode)
+            if ((Mode)e.NewValue == Mode.DateTimeMode && d is NumericUpDownControl numericUpDownControl)
             {
-                (d as NumericUpDownControl).SmallChange = 1;
-                (d as NumericUpDownControl).LargeChange = 1;
-                (d as NumericUpDownControl).Maximum = double.MaxValue;
-                (d as NumericUpDownControl).Minimum = double.MinValue;
+                numericUpDownControl.SmallChange = 1;
+                numericUpDownControl.LargeChange = 1;
+                numericUpDownControl.Maximum = double.MaxValue;
+                numericUpDownControl.Minimum = double.MinValue;
             }
         }
 

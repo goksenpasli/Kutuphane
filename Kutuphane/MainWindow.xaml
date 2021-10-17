@@ -8,9 +8,13 @@
     xmlns:properties="clr-namespace:Kutuphane.Properties" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     Title="Kütüphane"
     DataContext="{Binding Mode=OneWay, Source={StaticResource MainViewModel}}"
-    d:DesignHeight="578" d:DesignWidth="1280" UseLayoutRounding="True" WindowStartupLocation="CenterScreen"
-    WindowState="Maximized"
+    d:DesignHeight="578" d:DesignWidth="1280"
+    FocusManager.FocusedElement="{Binding CurrentView}"
+    UseLayoutRounding="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="W" Command="{Binding CloseView, Mode=OneWay, Source={StaticResource MainViewModel}}" Modifiers="Ctrl" />
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -77,8 +81,12 @@
                                     <Extensions:NumericUpDownControl Maximum="10" Minimum="1" SmallChange="1" ToolTip="Verilen Kitabın Tarihi En Çok Bu Kadar Kez Uzatılır."
                                         Value="{Binding Path=MaksimumUzatmaSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
-                                <HeaderedContentControl Header="KİŞİ KİTAP PERFORMANSI">
-                                    <Extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
+                                <HeaderedContentControl>
+                                    <HeaderedContentControl.Header>
+                                        <CheckBox Content="KİŞİ KİTAP PERFORMANSI" IsChecked="{Binding Path=KişiKitapKritikKontrol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                    </HeaderedContentControl.Header>
+                                    <Extensions:NumericUpDownControl IsEnabled="{Binding Path=KişiKitapKritikKontrol, Mode=OneWay, Source={x:Static properties:Settings.Default}}"
+                                        Maximum="100" Minimum="1" SmallChange="1"
                                         ToolTip="Kişinin Aldığı Kitabı Geri Getirmeme Oranı Bu Değeri Geçen Kişilere Kitap Verilmez."
                                         Value="{Binding Path=KişiKitapKritikOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
@@ -87,7 +95,10 @@
                                 <CheckBox Content="KİŞİ RESİM GÖSTER" IsChecked="{Binding Path=KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kişide Resim Varsa Önizlemesi Gösterilir." />
                                 <CheckBox Content="KİŞİ GİRİŞ EKRANI" IsChecked="{Binding Path=KişiGirişEkranıVarsayılan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Program Açılışında Kişi Giriş Ekranı Açılır." />
                                 <CheckBox Content="OTOMATİK TUTANAK" IsChecked="{Binding Path=OtomatikTutanak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
-                                <ComboBox ItemsSource="{Binding TtsDilleri}" SelectedItem="{Binding SeçiliTts, Mode=TwoWay, Source={x:Static properties:Settings.Default}}" ToolTip="TTS Dilini Seçin." />
+                                <ComboBox Text="{Binding SeçiliTts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"
+                                    ItemsSource="{Binding TtsDilleri}"
+                                    SelectedItem="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"
+                                    ToolTip="TTS Dilini Seçin." />
                                 <HeaderedContentControl Header="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Kimliklerin Arkaplanına Belirtilen Resmi Yerleştirin.">
                                     <Button Content="KİMLİK ARKAPLAN RESİM YÜKLE" Command="{Binding KimlikArkaplanResimGüncelle, Mode=OneWay}" />
                                 </HeaderedContentControl>
@@ -282,6 +293,24 @@
                         <RibbonMenuItem Header="KİTAP LİSTESİ RAPORU" Command="{Binding ReportViewModel.KitapListesiRaporu, Mode=OneWay}" KeyTip="KL" />
                         <RibbonMenuItem Header="KİTAP ALANLAR RAPORU" Command="{Binding ReportViewModel.KitapAlanlarRaporu, Mode=OneWay}" KeyTip="KA" />
                     </RibbonMenuButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Hakkında">
+                    <RibbonButton Command="{Binding WebAdreseGit, Mode=OneWay}"
+                        CommandParameter="https://github.com/goksenpasli"
+                        KeyTip="H" Label="Hakkında">
+                        <RibbonButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="14" />
+                            </MultiBinding>
+                        </RibbonButton.LargeImageSource>
+                        <RibbonButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="14" />
+                            </MultiBinding>
+                        </RibbonButton.SmallImageSource>
+                    </RibbonButton>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

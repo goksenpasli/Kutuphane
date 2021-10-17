@@ -100,10 +100,19 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBox Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" IsReadOnly="True" TextWrapping="Wrap" />
-                    <Button Content="OKU"
-                        Grid.Column="1"
-                        Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                        CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" />
+                    <Button Grid.Column="1" Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Source>
+                                    <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                        <Binding Source="Shell32.dll" />
+                                        <Binding Source="137" />
+                                    </MultiBinding>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="METİN&#xA;OKU" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
                 <GroupBox Grid.Column="1" Grid.RowSpan="2">
                     <GroupBox.Header>

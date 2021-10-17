@@ -190,5 +190,17 @@ namespace Kutuphane.Properties {
                 this["KimlikArkaPlanResim"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool KişiKitapKritikKontrol {
+            get {
+                return ((bool)(this["KişiKitapKritikKontrol"]));
+            }
+            set {
+                this["KişiKitapKritikKontrol"] = value;
+            }
+        }
     }
 }

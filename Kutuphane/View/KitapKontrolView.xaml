@@ -12,6 +12,80 @@
         <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding ElementName=LvKişiler, Path=SelectedItem.İşlem}" />
+        <FlowDocument x:Key="Tutanak"
+            FontSize="16" FontFamily="Times New Roman"
+            d:DataContext="{d:DesignInstance Type=model:Kitap}"
+            Block.LineHeight="1" Language="tr-tr" PagePadding="10">
+            <FlowDocument.Resources>
+                <Style TargetType="{x:Type TableCell}">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="0.5pt" />
+                </Style>
+            </FlowDocument.Resources>
+            <Table CellSpacing="0">
+                <Table.Columns>
+                    <TableColumn Width="100" />
+                    <TableColumn Width="150" />
+                </Table.Columns>
+                <TableRowGroup>
+                    <TableRow>
+                        <TableCell ColumnSpan="2">
+                            <Paragraph TextAlignment="Center">
+                                <Run Text="TUTANAK" FontWeight="Bold" />
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="KİTAP" FontWeight="Bold" />
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="{Binding Ad}" />
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="BARKOD" FontWeight="Bold" />
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="{Binding Barkod}" />
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="FİYAT" FontWeight="Bold" />
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="{Binding Fiyat}" />
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="DURUM" FontWeight="Bold" />
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <Run Text="KAYIP" />
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                </TableRowGroup>
+            </Table>
+        </FlowDocument>
     </UserControl.Resources>
     <GroupBox Header="KİTAP KONTROL">
         <Grid>
@@ -63,80 +137,7 @@
                                         <Extensions:ContentToggleButton.Content>
                                             <GroupBox Header="TUTANAK" Width="280" Height="210">
                                                 <StackPanel>
-                                                    <FlowDocumentScrollViewer x:Name="Fd" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                                        <FlowDocument FontSize="16" FontFamily="Times New Roman"
-                                                            Block.LineHeight="1" Language="tr-tr" PagePadding="10">
-                                                            <FlowDocument.Resources>
-                                                                <Style TargetType="{x:Type TableCell}">
-                                                                    <Setter Property="BorderBrush" Value="Black" />
-                                                                    <Setter Property="BorderThickness" Value="0.5pt" />
-                                                                </Style>
-                                                            </FlowDocument.Resources>
-                                                            <Table CellSpacing="0">
-                                                                <Table.Columns>
-                                                                    <TableColumn Width="100" />
-                                                                    <TableColumn Width="150" />
-                                                                </Table.Columns>
-                                                                <TableRowGroup>
-                                                                    <TableRow>
-                                                                        <TableCell ColumnSpan="2">
-                                                                            <Paragraph TextAlignment="Center">
-                                                                                <Run Text="TUTANAK" FontWeight="Bold" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                    </TableRow>
-                                                                    <TableRow>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="KİTAP" FontWeight="Bold" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="{Binding Ad}" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                    </TableRow>
-                                                                    <TableRow>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="BARKOD" FontWeight="Bold" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="{Binding Barkod}" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                    </TableRow>
-                                                                    <TableRow>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="FİYAT" FontWeight="Bold" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="{Binding Fiyat}" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                    </TableRow>
-                                                                    <TableRow>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="DURUM" FontWeight="Bold" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            <Paragraph>
-                                                                                <Run Text="KAYIP" />
-                                                                            </Paragraph>
-                                                                        </TableCell>
-                                                                    </TableRow>
-                                                                </TableRowGroup>
-                                                            </Table>
-                                                        </FlowDocument>
-                                                    </FlowDocumentScrollViewer>
+                                                    <FlowDocumentScrollViewer x:Name="Fd" Document="{StaticResource Tutanak}" ScrollViewer.VerticalScrollBarVisibility="Auto" />
                                                     <Button Content="YAZDIR" Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Fd}" />
                                                 </StackPanel>
                                             </GroupBox>

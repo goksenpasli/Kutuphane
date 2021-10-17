@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Speech.Synthesis;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
@@ -98,11 +99,11 @@ namespace Kutuphane.ViewModel
 
             DatabaseSave = new RelayCommand<object>(parameter => Kütüphane.Serialize());
 
-            UygulamadanÇık = new RelayCommand<object>(parameter => System.Windows.Application.Current.MainWindow.Close());
+            UygulamadanÇık = new RelayCommand<object>(parameter => Application.Current.MainWindow.Close());
 
             VeritabanınıAç = new RelayCommand<object>(parameter =>
             {
-                if (File.Exists(xmldatapath))
+                if (File.Exists(xmldatapath) && MessageBox.Show("Veritabanı dosyasını düzenlemek istiyor musun? Dikkat yanlış düzenleme programın açılmamasına neden olabilir. Devam edilsin mi?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     _ = Process.Start(xmldatapath);
                 }
@@ -113,7 +114,7 @@ namespace Kutuphane.ViewModel
                 if (parameter is string metin)
                 {
                     synthesizer.SelectVoice(Settings.Default.SeçiliTts);
-                    synthesizer.SpeakAsync(metin);
+                    _ = synthesizer.SpeakAsync(metin);
                 }
             }, parameter => !string.IsNullOrEmpty(Settings.Default.SeçiliTts));
 
@@ -133,7 +134,11 @@ namespace Kutuphane.ViewModel
                 CurrentView = KişiGirişViewModel;
             }
 
+            WebAdreseGit = new RelayCommand<object>(parameter => Process.Start(parameter as string), parameter => true);
+
             AyarlarıSıfırla = new RelayCommand<object>(parameter => Settings.Default.Reset());
+
+            CloseView = new RelayCommand<object>(parameter => CurrentView = null);
 
             Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
         }
@@ -149,6 +154,8 @@ namespace Kutuphane.ViewModel
         public static ICommand UygulamadanÇık { get; set; }
 
         public static ICommand VeritabanınıAç { get; set; }
+
+        public ICommand CloseView { get; }
 
         public InpcBase CurrentView
         {
@@ -193,6 +200,8 @@ namespace Kutuphane.ViewModel
         public KitapGeriAlViewModel KitapGeriAlViewModel { get; set; }
 
         public ICommand KitapGirişiEkranı { get; }
+
+        public ICommand WebAdreseGit { get; }
 
         public KitapGirişViewModel KitapGirişViewModel { get; set; }
 
