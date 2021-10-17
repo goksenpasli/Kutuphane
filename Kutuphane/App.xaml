@@ -144,6 +144,29 @@
                 <GradientStop ice:Freeze="True" Offset="1" Color="#FE00B6E8" />
                 <GradientStop ice:Freeze="True" Color="#FF48F3CA" />
             </LinearGradientBrush>
+
+            <LinearGradientBrush x:Key="Color1" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop ice:Freeze="True" Offset="1" Color="#d66adc" />
+                <GradientStop ice:Freeze="True" Color="#4b845d" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="Color2" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop ice:Freeze="True" Offset="1" Color="#c7771a" />
+                <GradientStop ice:Freeze="True" Color="#3369f9" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="Color3" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop ice:Freeze="True" Offset="1" Color="Aqua" />
+                <GradientStop ice:Freeze="True" Color="#20fc78" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="Color4" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop ice:Freeze="True" Offset="1" Color="#4b4fb9" />
+                <GradientStop ice:Freeze="True" Color="Cornsilk" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="Color5" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop ice:Freeze="True" Offset="1" Color="PaleVioletRed" />
+                <GradientStop ice:Freeze="True" Color="#4cc1f6" />
+            </LinearGradientBrush>
+            <ImageBrush x:Key="ImageBrush" ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+
             <Style TargetType="{x:Type GroupBox}">
                 <Setter Property="Background" Value="{StaticResource GroupBoxBackGround}" />
                 <Setter Property="BorderBrush" Value="Black" />
