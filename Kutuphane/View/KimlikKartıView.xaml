@@ -11,7 +11,10 @@
     <GroupBox Grid.Row="1" Grid.Column="1">
         <GroupBox.Header>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="KİMLİK KARTI" VerticalAlignment="Center" />
+                <TextBox x:Name="Tb" Text="{Binding Path=KurumAdı, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"
+                    Width="80"
+                    VerticalAlignment="Center"
+                    CharacterCasing="Upper" />
                 <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
                     ItemTemplate="{StaticResource ColorItemTemplate}"
                     ItemsPanel="{StaticResource ColorPanelTemplate}"
@@ -78,6 +81,7 @@
                             <TableRow>
                                 <TableCell ColumnSpan="3">
                                     <Paragraph TextAlignment="Center">
+                                        <Run Text="{Binding Text, ElementName=Tb}" FontWeight="Bold" />
                                         <Run Text="KİMLİK KARTI" FontWeight="Bold" />
                                     </Paragraph>
                                 </TableCell>
@@ -128,7 +132,7 @@
                             <TableRow>
                                 <TableCell Padding="0,15,0,0">
                                     <Paragraph>
-                                        <Run Text="TC BARKOD" FontWeight="Bold" />
+                                        <Run Text="BARKOD" FontWeight="Bold" />
                                     </Paragraph>
                                 </TableCell>
                                 <TableCell Padding="0,10">

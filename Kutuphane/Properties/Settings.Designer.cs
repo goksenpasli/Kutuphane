@@ -202,5 +202,17 @@ namespace Kutuphane.Properties {
                 this["KişiKitapKritikKontrol"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string KurumAdı {
+            get {
+                return ((string)(this["KurumAdı"]));
+            }
+            set {
+                this["KurumAdı"] = value;
+            }
+        }
     }
 }

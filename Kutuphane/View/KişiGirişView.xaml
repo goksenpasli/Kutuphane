@@ -54,7 +54,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="252.8" />
-                        <RowDefinition Height="220.8" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <HeaderedContentControl Header="AD">
                         <TextBox Text="{Binding Kişi.Ad, UpdateSourceTrigger=PropertyChanged}" />

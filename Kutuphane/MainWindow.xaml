@@ -55,9 +55,13 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
+                                <HeaderedContentControl Header="KURUM ADI">
+                                    <TextBox Text="{Binding Path=KurumAdı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" CharacterCasing="Upper" />
+                                </HeaderedContentControl>
                                 <HeaderedContentControl Header="RESİM ÇÖZÜNÜRLÜK AYARI">
                                     <Slider AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" SmallChange="1"
                                         TickFrequency="32"

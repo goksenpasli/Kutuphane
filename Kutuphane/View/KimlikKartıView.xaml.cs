@@ -1,5 +1,6 @@
 ﻿using Extensions;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -10,7 +11,7 @@ namespace Kutuphane.View
     /// </summary>
     public partial class KimlikKartıView : UserControl, INotifyPropertyChanged
     {
-        private string _Renk;
+        private string _Renk = "Transparent";
 
         private string _YazıRenk = "Black";
 
@@ -27,6 +28,8 @@ namespace Kutuphane.View
                     ınkCanvas.Strokes.Clear();
                 }
             }, parameter => true);
+
+            PropertyChanged += KimlikKartıView_PropertyChanged;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -74,5 +77,13 @@ namespace Kutuphane.View
         }
 
         protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        private void KimlikKartıView_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "YazıRenk" or "Renk" && YazıRenk == Renk)
+            {
+                MessageBox.Show("Aynı Rengi Seçmeyin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
     }
 }
