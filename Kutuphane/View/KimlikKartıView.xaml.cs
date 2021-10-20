@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Kutuphane.View
 {
@@ -11,7 +12,15 @@ namespace Kutuphane.View
     /// </summary>
     public partial class KimlikKartıView : UserControl, INotifyPropertyChanged
     {
+        private Brush _BirleşikRenk;
+
+        private bool _RadialBrush;
+
         private string _Renk = "Transparent";
+
+        private string _Renk1 = "Maroon";
+
+        private string _Renk2 = "Blue";
 
         private string _YazıRenk = "Black";
 
@@ -28,11 +37,25 @@ namespace Kutuphane.View
                     ınkCanvas.Strokes.Clear();
                 }
             }, parameter => true);
-
-            PropertyChanged += KimlikKartıView_PropertyChanged;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Brush BirleşikRenk
+        {
+            get => RadialBrush
+                ? new RadialGradientBrush((Color)ColorConverter.ConvertFromString(Renk1), (Color)ColorConverter.ConvertFromString(Renk2))
+                : new LinearGradientBrush((Color)ColorConverter.ConvertFromString(Renk1), (Color)ColorConverter.ConvertFromString(Renk2), new Point(0.5, 0), new Point(0.5, 1));
+
+            set
+            {
+                if (_BirleşikRenk != value)
+                {
+                    _BirleşikRenk = value;
+                    OnPropertyChanged(nameof(BirleşikRenk));
+                }
+            }
+        }
 
         public ICommand İmzaSil
         {
@@ -48,6 +71,21 @@ namespace Kutuphane.View
             }
         }
 
+        public bool RadialBrush
+        {
+            get => _RadialBrush;
+
+            set
+            {
+                if (_RadialBrush != value)
+                {
+                    _RadialBrush = value;
+                    OnPropertyChanged(nameof(RadialBrush));
+                    OnPropertyChanged(nameof(BirleşikRenk));
+                }
+            }
+        }
+
         public string Renk
         {
             get => _Renk;
@@ -58,6 +96,36 @@ namespace Kutuphane.View
                 {
                     _Renk = value;
                     OnPropertyChanged(nameof(Renk));
+                }
+            }
+        }
+
+        public string Renk1
+        {
+            get => _Renk1;
+
+            set
+            {
+                if (_Renk1 != value)
+                {
+                    _Renk1 = value;
+                    OnPropertyChanged(nameof(Renk1));
+                    OnPropertyChanged(nameof(BirleşikRenk));
+                }
+            }
+        }
+
+        public string Renk2
+        {
+            get => _Renk2;
+
+            set
+            {
+                if (_Renk2 != value)
+                {
+                    _Renk2 = value;
+                    OnPropertyChanged(nameof(Renk2));
+                    OnPropertyChanged(nameof(BirleşikRenk));
                 }
             }
         }
@@ -77,13 +145,5 @@ namespace Kutuphane.View
         }
 
         protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        private void KimlikKartıView_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName is "YazıRenk" or "Renk" && YazıRenk == Renk)
-            {
-                MessageBox.Show("Aynı Rengi Seçmeyin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-        }
     }
 }

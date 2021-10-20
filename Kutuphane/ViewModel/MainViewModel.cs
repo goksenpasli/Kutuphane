@@ -99,7 +99,13 @@ namespace Kutuphane.ViewModel
 
             DatabaseSave = new RelayCommand<object>(parameter => Kütüphane.Serialize());
 
-            UygulamadanÇık = new RelayCommand<object>(parameter => Application.Current.MainWindow.Close());
+            UygulamadanÇık = new RelayCommand<object>(parameter =>
+            {
+                if (MessageBox.Show("Uygulamadan çıkmak istiyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    Application.Current.MainWindow.Close();
+                }
+            });
 
             VeritabanınıAç = new RelayCommand<object>(parameter =>
             {
@@ -136,7 +142,13 @@ namespace Kutuphane.ViewModel
 
             WebAdreseGit = new RelayCommand<object>(parameter => Process.Start(parameter as string), parameter => true);
 
-            AyarlarıSıfırla = new RelayCommand<object>(parameter => Settings.Default.Reset());
+            AyarlarıSıfırla = new RelayCommand<object>(parameter =>
+            {
+                if (MessageBox.Show("Ayarlar varsayılana döndürülecek devam edilsin mi?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    Settings.Default.Reset();
+                }
+            });
 
             CloseView = new RelayCommand<object>(parameter => CurrentView = null);
 

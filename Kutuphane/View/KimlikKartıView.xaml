@@ -15,15 +15,35 @@
                     Width="80"
                     VerticalAlignment="Center"
                     CharacterCasing="Upper" />
-                <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                <ComboBox VerticalContentAlignment="Center"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
                     ItemTemplate="{StaticResource ColorItemTemplate}"
                     ItemsPanel="{StaticResource ColorPanelTemplate}"
                     SelectedValue="{Binding YazıRenk, ElementName=UserControl}"
                     SelectedValuePath="Name" />
                 <ComboBox x:Name="Cb" SelectedIndex="0">
-                    <ComboBoxItem>
+                    <ComboBoxItem Height="96">
+                        <ComboBoxItem.Style>
+                            <Style TargetType="ComboBoxItem">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource StringNullableToBooleanConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="false">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBoxItem.Style>
+                        <ComboBoxItem.Template>
+                            <ControlTemplate TargetType="ComboBoxItem">
+                                <Border Background="{TemplateBinding Panel.Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}"
+                                        HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                                        SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                </Border>
+                            </ControlTemplate>
+                        </ComboBoxItem.Template>
                         <ComboBoxItem.Background>
-                            <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Opacity="{Binding ElementName=Sld, Path=Value}" />
+                            <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Opacity="{Binding ElementName=Sld, Path=Value}" Stretch="UniformToFill" />
                         </ComboBoxItem.Background>
                         <ComboBoxItem.Content>
                             <Slider x:Name="Sld"
@@ -37,6 +57,23 @@
                     <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color3}}" />
                     <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color4}}" />
                     <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color5}}" />
+                    <ComboBoxItem Background="{Binding ElementName=UserControl, Path=BirleşikRenk}">
+                        <ComboBoxItem.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding Mode=OneWay, Source={StaticResource ColorList}}" />
+                                        <Setter Property="ItemTemplate" Value="{StaticResource ColorItemTemplate}" />
+                                        <Setter Property="ItemsPanel" Value="{StaticResource ColorPanelTemplate}" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Text="Doğrusal İki Renk" VerticalAlignment="Center" />
+                                <ComboBox SelectedValue="{Binding Renk1, ElementName=UserControl}" SelectedValuePath="Name" />
+                                <ComboBox SelectedValue="{Binding Renk2, ElementName=UserControl}" SelectedValuePath="Name" />
+                                <CheckBox Content="Radial" IsChecked="{Binding ElementName=UserControl, Path=RadialBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ComboBoxItem.Content>
+                    </ComboBoxItem>
                     <ComboBoxItem Background="{Binding ElementName=CbRenk, Path=SelectedItem.Name}">
                         <ComboBoxItem.Content>
                             <StackPanel Orientation="Horizontal">
@@ -165,6 +202,18 @@
                 </FlowDocument>
             </FlowDocumentScrollViewer>
             <Button Grid.Row="2" Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Fd}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource EqualityConverter}" ConverterParameter="Reverse">
+                                    <Binding ElementName="UserControl" Path="YazıRenk" />
+                                    <Binding ElementName="UserControl" Path="Renk" />
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
                 <StackPanel Orientation="Horizontal">
                     <Image Width="32" Height="32">
                         <Image.Source>

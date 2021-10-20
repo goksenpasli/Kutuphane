@@ -16,8 +16,10 @@
             </ResourceDictionary.MergedDictionaries>
             <ViewModel:MainViewModel x:Key="MainViewModel" />
             <Kutuphane:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
+            <Kutuphane:EqualityConverter x:Key="EqualityConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Extensions:SystemFileIconConverter x:Key="SystemFileIconConverter" />
+            <Extensions:StringNullableToBooleanConverter x:Key="StringNullableToBooleanConverter" />
             <Extensions:FilePathToIconConverter x:Key="FilePathToIconConverter" />
             <Kutuphane:StringToBarCodeImageConverter x:Key="StringToBarCodeImageConverter" />
             <Kutuphane:DatePassedConverter x:Key="DatePassedConverter" />

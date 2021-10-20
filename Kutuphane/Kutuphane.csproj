@@ -92,6 +92,7 @@
     <Compile Include="Converter\DataImageFilePathImageUriConverter.cs" />
     <Compile Include="Converter\DatePassedConverter.cs" />
     <Compile Include="Converter\DoubleToThicknessConverter.cs" />
+    <Compile Include="Converter\EqualityConverter.cs" />
     <Compile Include="Converter\ListViewCezaTutarConverter.cs" />
     <Compile Include="Converter\ReverseBooleanConverter.cs" />
     <Compile Include="Converter\StringToBarCodeImageConverter.cs" />
