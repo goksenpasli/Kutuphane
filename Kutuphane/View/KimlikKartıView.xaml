@@ -49,14 +49,9 @@
                             <Slider x:Name="Sld"
                                 Width="80"
                                 Maximum="1"
-                                Value="1" />
+                                Value="{Binding Path=KimlikArkaPlanResimŞeffaflık, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                         </ComboBoxItem.Content>
                     </ComboBoxItem>
-                    <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color1}}" />
-                    <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color2}}" />
-                    <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color3}}" />
-                    <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color4}}" />
-                    <ComboBoxItem Content="Doğrusal Renk" Background="{Binding Mode=OneWay, Source={StaticResource Color5}}" />
                     <ComboBoxItem Background="{Binding ElementName=UserControl, Path=BirleşikRenk}">
                         <ComboBoxItem.Content>
                             <StackPanel Orientation="Horizontal">
@@ -70,7 +65,7 @@
                                 <TextBlock Text="Doğrusal İki Renk" VerticalAlignment="Center" />
                                 <ComboBox SelectedValue="{Binding Renk1, ElementName=UserControl}" SelectedValuePath="Name" />
                                 <ComboBox SelectedValue="{Binding Renk2, ElementName=UserControl}" SelectedValuePath="Name" />
-                                <CheckBox Content="Radial" IsChecked="{Binding ElementName=UserControl, Path=RadialBrush}" VerticalAlignment="Center"/>
+                                <CheckBox Content="Radial" VerticalAlignment="Center" IsChecked="{Binding ElementName=UserControl, Path=RadialBrush}" />
                             </StackPanel>
                         </ComboBoxItem.Content>
                     </ComboBoxItem>
@@ -204,14 +199,35 @@
             <Button Grid.Row="2" Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Fd}">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="IsEnabled">
-                            <Setter.Value>
-                                <MultiBinding Converter="{StaticResource EqualityConverter}" ConverterParameter="Reverse">
-                                    <Binding ElementName="UserControl" Path="YazıRenk" />
-                                    <Binding ElementName="UserControl" Path="Renk" />
-                                </MultiBinding>
-                            </Setter.Value>
-                        </Setter>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Value="true">
+                                        <Condition.Binding>
+                                            <MultiBinding Converter="{StaticResource EqualityConverter}">
+                                                <Binding ElementName="UserControl" Path="YazıRenk" />
+                                                <Binding ElementName="UserControl" Path="Renk" />
+                                            </MultiBinding>
+                                        </Condition.Binding>
+                                    </Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="False" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Value="true">
+                                        <Condition.Binding>
+                                            <MultiBinding Converter="{StaticResource EqualityConverter}">
+                                                <Binding ElementName="UserControl" Path="YazıRenk" />
+                                                <Binding ElementName="UserControl" Path="Renk1" />
+                                                <Binding ElementName="UserControl" Path="Renk2" />
+                                            </MultiBinding>
+                                        </Condition.Binding>
+                                    </Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="False" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </Button.Style>
                 <StackPanel Orientation="Horizontal">

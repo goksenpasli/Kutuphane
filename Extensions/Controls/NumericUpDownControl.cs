@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
@@ -23,8 +22,6 @@ namespace Extensions
 
         public NumericUpDownControl()
         {
-            GotKeyboardFocus += NumericUpDownControl_GotKeyboardFocus;
-            GotMouseCapture += NumericUpDownControl_GotMouseCapture;
             ValueChanged += NumericUpDownControl_ValueChanged;
         }
 
@@ -65,7 +62,7 @@ namespace Extensions
         {
             if (!IsReadOnly)
             {
-                if (e.Key is not ((>= Key.NumPad0 and <= Key.NumPad9) or (>= Key.D0 and <= Key.D9) or Key.OemComma or Key.Back or Key.Tab or Key.Enter))
+                if (e.Key is not ((>= Key.NumPad0 and <= Key.NumPad9) or (>= Key.D0 and <= Key.D9) or Key.OemComma or Key.Back or Key.Tab or Key.Enter or Key.Left or Key.Right))
                 {
                     e.Handled = true;
                 }
@@ -115,22 +112,6 @@ namespace Extensions
                 numericUpDownControl.LargeChange = 1;
                 numericUpDownControl.Maximum = double.MaxValue;
                 numericUpDownControl.Minimum = double.MinValue;
-            }
-        }
-
-        private void NumericUpDownControl_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (ShowMode != Mode.DateTimeMode)
-            {
-                (e.OriginalSource as TextBox)?.SelectAll();
-            }
-        }
-
-        private void NumericUpDownControl_GotMouseCapture(object sender, MouseEventArgs e)
-        {
-            if (ShowMode != Mode.DateTimeMode)
-            {
-                (e.OriginalSource as TextBox)?.SelectAll();
             }
         }
 

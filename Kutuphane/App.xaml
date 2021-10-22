@@ -146,28 +146,6 @@
                 <GradientStop ice:Freeze="True" Offset="1" Color="#FE00B6E8" />
                 <GradientStop ice:Freeze="True" Color="#FF48F3CA" />
             </LinearGradientBrush>
-
-            <LinearGradientBrush x:Key="Color1" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop ice:Freeze="True" Offset="1" Color="#d66adc" />
-                <GradientStop ice:Freeze="True" Color="#4b845d" />
-            </LinearGradientBrush>
-            <LinearGradientBrush x:Key="Color2" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop ice:Freeze="True" Offset="1" Color="#c7771a" />
-                <GradientStop ice:Freeze="True" Color="#3369f9" />
-            </LinearGradientBrush>
-            <LinearGradientBrush x:Key="Color3" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop ice:Freeze="True" Offset="1" Color="Aqua" />
-                <GradientStop ice:Freeze="True" Color="#20fc78" />
-            </LinearGradientBrush>
-            <LinearGradientBrush x:Key="Color4" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop ice:Freeze="True" Offset="1" Color="#4b4fb9" />
-                <GradientStop ice:Freeze="True" Color="Cornsilk" />
-            </LinearGradientBrush>
-            <LinearGradientBrush x:Key="Color5" ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop ice:Freeze="True" Offset="1" Color="PaleVioletRed" />
-                <GradientStop ice:Freeze="True" Color="#4cc1f6" />
-            </LinearGradientBrush>
-
             <Style TargetType="{x:Type GroupBox}">
                 <Setter Property="Background" Value="{StaticResource GroupBoxBackGround}" />
                 <Setter Property="BorderBrush" Value="Black" />
@@ -296,7 +274,7 @@
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
                     <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72"
-                        ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                         ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -318,12 +296,12 @@
             <DataTemplate x:Key="KişiDetayTemplate">
                 <StackPanel Orientation="Horizontal">
                     <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120"
-                        ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                         ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
+                                    <DataTrigger Binding="{Binding KişiResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
                                         <Setter Property="Source">
                                             <Setter.Value>
                                                 <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
@@ -350,12 +328,12 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Ad}" />
                     <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145"
-                        ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                         ShowShadow="True">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
+                                    <DataTrigger Binding="{Binding KitapResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
                                         <Setter Property="Source">
                                             <Setter.Value>
                                                 <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />

@@ -50,5 +50,8 @@
     <Setting Name="KurumAdı" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="KimlikArkaPlanResimŞeffaflık" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -214,5 +214,17 @@ namespace Kutuphane.Properties {
                 this["KurumAdı"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double KimlikArkaPlanResimŞeffaflık {
+            get {
+                return ((double)(this["KimlikArkaPlanResimŞeffaflık"]));
+            }
+            set {
+                this["KimlikArkaPlanResimŞeffaflık"] = value;
+            }
+        }
     }
 }
