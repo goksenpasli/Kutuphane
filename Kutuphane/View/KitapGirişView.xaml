@@ -49,6 +49,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <HeaderedContentControl Header="KİTAP ADI">
                         <TextBox Text="{Binding Kitap.Ad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" />
@@ -194,7 +195,7 @@
                             <TextBlock Text="KİTAP RESİM EKLE" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
-                    <UniformGrid Grid.Row="12" Columns="2">
+                    <UniformGrid Grid.Row="14" Columns="2">
                         <Button HorizontalAlignment="Stretch" Command="{Binding KitapEkle}" CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="32" Height="32">
