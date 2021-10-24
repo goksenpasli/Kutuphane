@@ -3,6 +3,7 @@ using Kutuphane.Model;
 using Kutuphane.View;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
@@ -21,19 +22,20 @@ namespace Kutuphane.ViewModel
 
         public KitapGüncelleViewModel()
         {
-            KitapGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter =>
+            KitapGüncelle = new RelayCommand<object>(parameter =>
             {
-                if (parameter is ObservableCollection<Kitap> kitaplar && kitaplar.Any())
+                if (parameter is ObservableCollection<Kitap> kitaplar)
                 {
-                    foreach (var item in kitaplar.Where(item => item.KitapDurumId is ((int)KitapDurumu.Kütüphanede) or ((int)KitapDurumu.Okuyucuda)))
+                    if (kitaplar.All(z => !string.IsNullOrWhiteSpace(z.Barkod) && !string.IsNullOrWhiteSpace(z.Ad)))
                     {
-                        item.KitapDurum = false;
+                        MainViewModel.DatabaseSave.Execute(null);
                     }
-
-                    return kitaplar.All(z => !string.IsNullOrWhiteSpace(z.Barkod) && !string.IsNullOrWhiteSpace(z.Ad));
+                    else
+                    {
+                        MessageBox.Show("Hatalı Girişleri Düzeltin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
                 }
-                return false;
-            });
+            }, parameter => true);
 
             PropertyChanged += KitapGüncelleViewModel_PropertyChanged;
         }

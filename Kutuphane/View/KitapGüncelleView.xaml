@@ -94,7 +94,7 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding Barkod, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                                        <TextBlock Text="{Binding Barkod, Mode=OneWay}" Width="100" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -113,7 +113,7 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding Yıllar}" SelectedItem="{Binding BasımYılı}">
+                                        <ComboBox ItemsSource="{Binding Yıllar, Mode=OneWay}" SelectedItem="{Binding BasımYılı}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
@@ -162,7 +162,7 @@
                                                 </Style>
                                             </StackPanel.Style>
                                             <ComboBox Width="70"
-                                                ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
+                                                ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                                 DisplayMemberPath="Açıklama"
                                                 SelectedValue="{Binding DolapId}"
                                                 SelectedValuePath="Id">
@@ -195,10 +195,19 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox IsEnabled="{Binding KitapDurum}"
-                                            Width="100"
-                                            ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                            SelectedIndex="{Binding KitapDurumId}">
+                                        <ComboBox Width="100" ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" SelectedIndex="{Binding KitapDurumId}">
+                                            <ComboBox.Style>
+                                                <Style TargetType="ComboBox">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding KitapDurumId}" Value="0">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ComboBox.Style>
                                             <ComboBox.ItemContainerStyle>
                                                 <Style TargetType="ComboBoxItem">
                                                     <Style.Triggers>
@@ -219,7 +228,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP&#xA;GİRİŞ&#xA;TARİHİ" Extensions:GridViewSort.PropertyName="SistemKayıtTarihi" DisplayMemberBinding="{Binding SistemKayıtTarihi, StringFormat=\{0:d\}}" />
+                            <GridViewColumn Header="KİTAP&#xA;GİRİŞ&#xA;TARİHİ" Extensions:GridViewSort.PropertyName="SistemKayıtTarihi" DisplayMemberBinding="{Binding SistemKayıtTarihi, Mode=OneWay, StringFormat=\{0:d\}}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -246,7 +255,13 @@
                         <TextBox Text="{Binding ElementName=listView, Path=SelectedItem.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" />
                     </GroupBox>
                 </Grid>
-                <GroupBox Header="BARKOD" Grid.Row="2" Grid.Column="1">
+                <GroupBox Grid.Row="2" Grid.Column="1">
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="BARKOD" VerticalAlignment="Center"/>
+                            <TextBox Width="100" Text="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </GroupBox.Header>
                     <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <Extensions:ContentToggleButton Width="32" Height="32"
                             Background="{StaticResource QrCode}"

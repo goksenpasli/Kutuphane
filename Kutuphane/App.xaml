@@ -263,8 +263,7 @@
                 </StackPanel>
             </DataTemplate>
             <Style TargetType="ListView">
-                <Setter Property="VirtualizingPanel.CacheLength" Value="1"/>
-                <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Pixel" />
+                <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Item" />
                 <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
