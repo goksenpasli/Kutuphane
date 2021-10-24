@@ -1,5 +1,6 @@
 ﻿using CatenaLogic.Windows.Presentation.WebcamPlayer;
 using Extensions;
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
@@ -32,10 +33,7 @@ namespace Kutuphane.View
             KameradanResimYükle = new RelayCommand<object>(parameter =>
             {
                 using MemoryStream ms = new();
-                JpegBitmapEncoder encoder = new();
-                encoder.Frames.Add(BitmapFrame.Create(new TransformedBitmap(Device.BitmapSource, new RotateTransform(Rotation))));
-                encoder.QualityLevel = 100;
-                encoder.Save(ms);
+                EncodeBitmapImage(ms);
                 ResimData = ms.ToArray();
             }, parameter => SeçiliKamera is not null);
 
@@ -43,7 +41,25 @@ namespace Kutuphane.View
 
             Oynat = new RelayCommand<object>(parameter => Device.Start(), parameter => SeçiliKamera is not null && !Device.IsRunning);
 
+            Kaydet = new RelayCommand<object>(parameter =>
+            {
+                var saveFileDialog = new SaveFileDialog { Filter = "Jpg Dosyası (*.jpg)|*.jpg", AddExtension = true, Title = "Kaydet" };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    using var ms = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write);
+                    EncodeBitmapImage(ms);
+                }
+            }, parameter => SeçiliKamera is not null);
+
             PropertyChanged += CameraUserControl_PropertyChanged;
+        }
+
+        private void EncodeBitmapImage(Stream ms)
+        {
+            JpegBitmapEncoder encoder = new();
+            encoder.Frames.Add(BitmapFrame.Create(new TransformedBitmap(Device.BitmapSource, new RotateTransform(Rotation))));
+            encoder.QualityLevel = 90;
+            encoder.Save(ms);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -65,6 +81,8 @@ namespace Kutuphane.View
         public ICommand Durdur { get; }
 
         public ICommand KameradanResimYükle { get; }
+
+        public ICommand Kaydet { get; }
 
         public FilterInfo[] Liste
         {

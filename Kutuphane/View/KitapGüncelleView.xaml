@@ -245,36 +245,52 @@
                         <TextBlock Text="GÜNCELLE" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="75" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
-                    <GroupBox Header="AÇIKLAMA" Grid.Row="1">
-                        <TextBox Text="{Binding ElementName=listView, Path=SelectedItem.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" />
-                    </GroupBox>
-                </Grid>
-                <GroupBox Grid.Row="2" Grid.Column="1">
-                    <GroupBox.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="BARKOD" VerticalAlignment="Center"/>
-                            <TextBox Width="100" Text="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                    </GroupBox.Header>
-                    <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
-                        <Extensions:ContentToggleButton Width="32" Height="32"
-                            Background="{StaticResource QrCode}"
-                            BorderBrush="#800000">
-                            <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
-                        </Extensions:ContentToggleButton>
-                        <Extensions:ContentToggleButton Width="32" Height="32"
-                            Background="{StaticResource QrCode}"
-                            BorderBrush="Blue">
-                            <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
-                        </Extensions:ContentToggleButton>
+                    <UniformGrid Grid.Row="1" Columns="2">
+                        <GroupBox>
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="AÇIKLAMA" VerticalAlignment="Center" />
+                                    <Button Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listView, Path=SelectedItem.Açıklama}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="16" Height="16">
+                                                <Image.Source>
+                                                    <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                        <Binding Source="Shell32.dll" />
+                                                        <Binding Source="137" />
+                                                    </MultiBinding>
+                                                </Image.Source>
+                                            </Image>
+                                            <TextBlock Text="METİN OKU" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <TextBox Text="{Binding ElementName=listView, Path=SelectedItem.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" />
+                        </GroupBox>
+                        <GroupBox Grid.Row="2" Grid.Column="1">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="BARKOD" VerticalAlignment="Center" />
+                                    <TextBox Text="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
+                                <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                                <Extensions:ContentToggleButton Width="96" Height="96"
+                                    Background="{StaticResource QrCode}">
+                                    <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                                </Extensions:ContentToggleButton>
+                            </UniformGrid>
+                        </GroupBox>
+
                     </UniformGrid>
-                </GroupBox>
+                </Grid>
             </Grid>
         </GroupBox>
     </Grid>

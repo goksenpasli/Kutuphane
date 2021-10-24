@@ -28,11 +28,10 @@ namespace Kutuphane.ViewModel
                 if (File.Exists(ExeFolder + filepath))
                 {
                     var data = new ObservableCollection<Data>();
-                    foreach (var (kitap, kişi) in ExtensionMethods.KitaplarıYükle().SelectMany(kitap => ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.Where(işlem => işlem.KitapId == kitap.Id).Select(işlem => (kitap, kişi)))))
+                    foreach (var (kişi, kitap) in ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.SelectMany(işlem => ExtensionMethods.KitaplarıYükle().Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
                     {
                         data.Add(new Data() { Ad = kişi.Ad, Soyad = kişi.Soyad, KitapAdı = kitap.Ad });
                     }
-
                     data.CreateXlsReport(ExeFolder + filepath);
                 }
             }, parameter => true);

@@ -37,7 +37,7 @@
                             </StackPanel>
                         </StackPanel>
                     </GroupBox.Header>
-                    <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling" >
+                    <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Style.Triggers>
@@ -102,7 +102,7 @@
                     <TextBox Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}" IsReadOnly="True" TextWrapping="Wrap" />
                     <Button Grid.Column="1" Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}">
                         <StackPanel Orientation="Horizontal">
-                            <Image>
+                            <Image Width="32" Height="32">
                                 <Image.Source>
                                     <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                         <Binding Source="Shell32.dll" />

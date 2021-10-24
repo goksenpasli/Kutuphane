@@ -23,6 +23,19 @@
     <SolidColorBrush x:Key="ScrollBar.Pressed.Thumb" Color="#606060" />
     <SolidColorBrush x:Key="ScrollBar.Static.Thumb" Color="#CDCDCD" />
     <StreamGeometry x:Key="ArrowGeometry">M0,0L4,4 8,0z</StreamGeometry>
+    <Style x:Key="NumericUpdownTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="CurrencyMode">
+                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:C\}, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="DateTimeMode">
+                <Setter Property="Text" Value="{Binding DateValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="NumberMode">
+                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="#888888" />
@@ -286,23 +299,8 @@
                 MinWidth="18"
                 Background="{TemplateBinding Background}"
                 BorderThickness="1"
-                VerticalContentAlignment="Center">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="CurrencyMode">
-                                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:C\}}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="DateTimeMode">
-                                <Setter Property="Text" Value="{Binding DateValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="NumberMode">
-                                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+                VerticalContentAlignment="Center"
+                Style="{StaticResource NumericUpdownTextBoxStyle}" />
             <RepeatButton x:Name="PART_LineUpButton"
                 Grid.Row="0" Grid.Column="0"
                 Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}"
@@ -368,23 +366,8 @@
                 MinWidth="18"
                 Background="{TemplateBinding Background}"
                 BorderThickness="1"
-                VerticalContentAlignment="Center">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="CurrencyMode">
-                                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:C\}}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="DateTimeMode">
-                                <Setter Property="Text" Value="{Binding DateValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="NumberMode">
-                                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+                VerticalContentAlignment="Center"
+                Style="{StaticResource NumericUpdownTextBoxStyle}" />
             <RepeatButton x:Name="PART_LineUpButton"
                 Grid.Row="0" Grid.Column="1"
                 Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}"

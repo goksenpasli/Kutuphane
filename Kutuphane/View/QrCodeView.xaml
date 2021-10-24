@@ -11,54 +11,50 @@
         <viewmodel:QrCodeViewModel />
     </UserControl.DataContext>
     <Grid>
-        <GroupBox Header="BARKOD">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Viewbox Grid.Row="0" Grid.Column="1"
-                    Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <Image Source="{Binding Barkod.BarkodImage}">
-                        <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="RESİM OLARAK SAKLA" Command="{Binding KareKodSakla, Mode=OneWay}" CommandParameter="{Binding Barkod.BarkodImage}">
-                                    <MenuItem.Icon>
-                                        <Image Width="16" Height="16">
-                                            <Image.Source>
-                                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                    <Binding Source="Shell32.dll" />
-                                                    <Binding Source="122" />
-                                                </MultiBinding>
-                                            </Image.Source>
-                                        </Image>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="KOD YAZDIR" Command="{Binding KareKodYazdır}" CommandParameter="{Binding Parent.PlacementTarget, RelativeSource={RelativeSource Mode=Self}}">
-                                    <MenuItem.Icon>
-                                        <Image Width="16" Height="16">
-                                            <Image.Source>
-                                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                    <Binding Source="Shell32.dll" />
-                                                    <Binding Source="136" />
-                                                </MultiBinding>
-                                            </Image.Source>
-                                        </Image>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="ALT METİN GİZLE" IsCheckable="True" IsChecked="{Binding Barkod.PureBarcode}" />
-                            </ContextMenu>
-                        </Image.ContextMenu>
-                    </Image>
-                </Viewbox>
-                <ComboBox Grid.Row="1"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ComboBox Grid.Row="0"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
                     IsTabStop="False"
                     SelectedItem="{Binding Barkod.BarcodeFormat}" />
-                <TextBlock Text="{Binding Barkod.BarkodError}" Grid.Row="2" Foreground="Red" />
-            </Grid>
-        </GroupBox>
+        <Viewbox Grid.Row="1" Grid.Column="1"
+                    Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <Image Source="{Binding Barkod.BarkodImage}">
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="RESİM OLARAK SAKLA" Command="{Binding KareKodSakla, Mode=OneWay}" CommandParameter="{Binding Barkod.BarkodImage}">
+                            <MenuItem.Icon>
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="122" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="KOD YAZDIR" Command="{Binding KareKodYazdır}" CommandParameter="{Binding Parent.PlacementTarget, RelativeSource={RelativeSource Mode=Self}}">
+                            <MenuItem.Icon>
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="136" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="ALT METİN GİZLE" IsCheckable="True" IsChecked="{Binding Barkod.PureBarcode}" />
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
+        </Viewbox>
+        <TextBlock Text="{Binding Barkod.BarkodError}" Grid.Row="2" Foreground="Red" />
     </Grid>
 </UserControl>
