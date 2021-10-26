@@ -226,5 +226,29 @@ namespace Kutuphane.Properties {
                 this["KimlikArkaPlanResimŞeffaflık"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ResimKüçült {
+            get {
+                return ((bool)(this["ResimKüçült"]));
+            }
+            set {
+                this["ResimKüçült"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        public double ResimKüçültmeOranı {
+            get {
+                return ((double)(this["ResimKüçültmeOranı"]));
+            }
+            set {
+                this["ResimKüçültmeOranı"] = value;
+            }
+        }
     }
 }

@@ -306,6 +306,13 @@ namespace Extensions
             return tb;
         }
 
+        public static BitmapSource Resize(this BitmapSource bfPhoto, double oran)
+        {
+            TransformedBitmap tb = new TransformedBitmap(bfPhoto, new ScaleTransform(oran, oran, 0, 0));
+            tb.Freeze();
+            return tb;
+        }
+
         public static string SetUniqueFile(this string path, string file, string extension)
         {
             int i;

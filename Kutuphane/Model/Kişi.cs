@@ -1,13 +1,15 @@
 ﻿using Extensions;
+using Kutuphane.ViewModel;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
 
 namespace Kutuphane.Model
 {
     [XmlRoot(ElementName = "Kişi")]
-    public class Kişi : InpcBase
+    public class Kişi : InpcBase, IDataErrorInfo
     {
         private string ad;
 
@@ -111,6 +113,8 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        public string Error => string.Empty;
 
         [XmlAttribute(AttributeName = "Id")]
         public int Id
@@ -363,5 +367,11 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        public string this[string columnName] => columnName switch
+        {
+            "TC" when !TC.TcGeçerli() => "TC Geçerli Değil.",
+            _ => null
+        };
     }
 }

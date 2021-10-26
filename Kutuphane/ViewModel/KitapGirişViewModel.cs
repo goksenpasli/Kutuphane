@@ -1,6 +1,7 @@
 ﻿using ExcelDataReader;
 using Extensions;
 using Kutuphane.Model;
+using Kutuphane.Properties;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Kutuphane.ViewModel
 {
@@ -76,11 +78,20 @@ namespace Kutuphane.ViewModel
             KitapResimEkle = new RelayCommand<object>(parameter =>
             {
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
-                if (openFileDialog.ShowDialog() == true)
+                if (openFileDialog.ShowDialog() == true && parameter is Kitap kitap)
                 {
                     var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
-                    File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
-                    (parameter as Kitap).Resim = filename;
+                    if (Settings.Default.ResimKüçült)
+                    {
+                        BitmapSource image = new BitmapImage(new Uri(openFileDialog.FileName));
+                        File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", image.Resize(Settings.Default.ResimKüçültmeOranı).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                    }
+                    else
+                    {
+                        File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                    }
+
+                    kitap.Resim = filename;
                 }
             }, parameter => true);
 

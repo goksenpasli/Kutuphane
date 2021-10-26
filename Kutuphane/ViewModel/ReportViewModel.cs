@@ -27,12 +27,7 @@ namespace Kutuphane.ViewModel
                 const string filepath = @"\Raporlar\KitapAlanlarRaporu.xlsx";
                 if (File.Exists(ExeFolder + filepath))
                 {
-                    var data = new ObservableCollection<Data>();
-                    foreach (var (kişi, kitap) in ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.SelectMany(işlem => ExtensionMethods.KitaplarıYükle().Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
-                    {
-                        data.Add(new Data() { Ad = kişi.Ad, Soyad = kişi.Soyad, KitapAdı = kitap.Ad });
-                    }
-                    data.CreateXlsReport(ExeFolder + filepath);
+                    KitapAlanlarListesi().CreateXlsReport(ExeFolder + filepath);
                 }
             }, parameter => true);
 
@@ -61,6 +56,17 @@ namespace Kutuphane.ViewModel
         public ICommand KitapTutanakRaporu { get; }
 
         private string ExeFolder { get; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+
+        private static ObservableCollection<Data> KitapAlanlarListesi()
+        {
+            var data = new ObservableCollection<Data>();
+            foreach (var (kişi, kitap) in ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.SelectMany(işlem => ExtensionMethods.KitaplarıYükle().Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
+            {
+                data.Add(new Data() { Ad = kişi.Ad, Soyad = kişi.Soyad, KitapAdı = kitap.Ad });
+            }
+
+            return data;
+        }
 
         internal class Data : Kişi
         {

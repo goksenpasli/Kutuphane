@@ -17,7 +17,7 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListView x:Name="LvKişi" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+            <ListView x:Name="LvKişi" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" SelectedItem="{Binding SeçiliKişi}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="32" extensions:GridViewSort.PropertyName="Resim">
@@ -96,6 +96,28 @@
                                 <DataTemplate>
                                     <extensions:ContentToggleButton OverContent="KİMLİK">
                                         <local:KimlikKartıView />
+                                    </extensions:ContentToggleButton>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="KAMERA">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <extensions:ContentToggleButton IsTabStop="False">
+                                        <extensions:ContentToggleButton.OverContent>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="16" Height="16">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                            <Binding Source="Shell32.dll" />
+                                                            <Binding Source="203" />
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                                <TextBlock Text="KAMERA" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </extensions:ContentToggleButton.OverContent>
+                                        <local:CameraUserControl Width="480" Height="360" PropertyChanged="CameraUserControl_PropertyChanged" />
                                     </extensions:ContentToggleButton>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

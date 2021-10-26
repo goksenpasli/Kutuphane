@@ -12,6 +12,8 @@ namespace Kutuphane.ViewModel
     {
         private Kişi kişi;
 
+        private Kişi seçiliKişi;
+
         public KişiGüncelleViewModel()
         {
             Kişi = new Kişi();
@@ -20,12 +22,15 @@ namespace Kutuphane.ViewModel
 
             KişiResimGüncelle = new RelayCommand<object>(parameter =>
             {
-                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
-                if (openFileDialog.ShowDialog() == true)
+                if (parameter is Kişi kişi)
                 {
-                    var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
-                    File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
-                    (parameter as Kişi).Resim = filename;
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                        File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                        kişi.Resim = filename;
+                    }
                 }
             }, parameter => true);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
@@ -48,6 +53,20 @@ namespace Kutuphane.ViewModel
         public ICommand KişiGüncelle { get; }
 
         public ICommand KişiResimGüncelle { get; }
+
+        public Kişi SeçiliKişi
+        {
+            get => seçiliKişi;
+
+            set
+            {
+                if (seçiliKişi != value)
+                {
+                    seçiliKişi = value;
+                    OnPropertyChanged(nameof(SeçiliKişi));
+                }
+            }
+        }
 
         private void Kişi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

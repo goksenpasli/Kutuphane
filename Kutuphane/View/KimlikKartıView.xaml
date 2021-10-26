@@ -167,9 +167,13 @@
                                         <Run Text="BARKOD" FontWeight="Bold" />
                                     </Paragraph>
                                 </TableCell>
-                                <TableCell Padding="0,10">
+                                <TableCell>
                                     <BlockUIContainer>
-                                        <Image Height="32" Source="{Binding TC, Converter={StaticResource StringToBarCodeImageConverter}}" />
+                                        <Image x:Name="ImgBarkod"
+                                            Width="150" Height="32"
+                                            Margin="0,10"
+                                            Source="{Binding TC, ValidatesOnDataErrors=True, Converter={StaticResource StringToBarCodeImageConverter}}"
+                                            Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" />
                                     </BlockUIContainer>
                                 </TableCell>
                             </TableRow>
@@ -227,6 +231,15 @@
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="False" />
                             </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding (Validation.HasError), ElementName=ImgBarkod}" Value="true">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Ad, Converter={StaticResource StringNullableToBooleanConverter}}" Value="false">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Soyad, Converter={StaticResource StringNullableToBooleanConverter}}" Value="false">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

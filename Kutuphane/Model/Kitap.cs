@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace Kutuphane.Model
@@ -12,6 +13,8 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Kitap")]
     public class Kitap : InpcBase, IDataErrorInfo
     {
+        private Brush _KitapListeArkaPlanRengi = Brushes.Transparent;
+
         private string açıklama;
 
         private string ad;
@@ -290,6 +293,21 @@ namespace Kutuphane.Model
                 {
                     kitapDurumId = value;
                     OnPropertyChanged(nameof(KitapDurumId));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public Brush KitapListeArkaPlanRengi
+        {
+            get => _KitapListeArkaPlanRengi;
+
+            set
+            {
+                if (_KitapListeArkaPlanRengi != value)
+                {
+                    _KitapListeArkaPlanRengi = value;
+                    OnPropertyChanged(nameof(KitapListeArkaPlanRengi));
                 }
             }
         }

@@ -101,6 +101,11 @@
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                 SelectedItem="{Binding SeçiliKitap}"
                 VirtualizingPanel.VirtualizationMode="Recycling">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="{Binding KitapListeArkaPlanRengi}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KitapTemplate}">
@@ -159,13 +164,19 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <GroupBox Header="BU KİTABI OKUYANLAR" Grid.Column="1" Grid.RowSpan="2">
+            <GroupBox Grid.Column="1" Grid.RowSpan="2">
+                <GroupBox.Header>
+                    <CheckBox Content="BU KİTABI OKUYANLAR" IsChecked="{Binding OkunanKitapRenkGöster}" ToolTip="İşaretlenirse Sarı Renk İle Kitap Belirtilir." />
+                </GroupBox.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ListView x:Name="LvKişiler" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" ItemTemplate="{StaticResource KişiDetayTemplate}" />
+                    <ListView x:Name="LvKişiler"
+                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
+                        ItemTemplate="{StaticResource KişiDetayTemplate}"
+                        SelectedItem="{Binding SeçiliKişi}" />
                     <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
                         <ListView.View>
                             <GridView>

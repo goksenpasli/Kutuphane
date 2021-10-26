@@ -56,6 +56,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -65,7 +66,7 @@
                                 <HeaderedContentControl Header="RESİM ÇÖZÜNÜRLÜK AYARI">
                                     <Slider AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" SmallChange="1"
                                         TickFrequency="32"
-                                        ToolTip="Resim Çözünürlük Ayarı Yüksek Ayarlarda Daha Net Görüntü Oluşturulur. Ancak Bellek Kullanımı Artar"
+                                        ToolTip="Resim Çözünürlük Ayarı Yüksek Ayarlarda Daha Net Görüntü Oluşturulur. Ancak Bellek Kullanımı Artar. Sadece Kitap Güncelle Ve Sil Ekranı İçindir."
                                         Value="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
                                 <HeaderedContentControl Header="GÜNLÜK GECİKME BEDELİ">
@@ -93,6 +94,14 @@
                                         Maximum="100" Minimum="1" SmallChange="1"
                                         ToolTip="Kişinin Aldığı Kitabı Geri Getirmeme Oranı Bu Değeri Geçen Kişilere Kitap Verilmez."
                                         Value="{Binding Path=KişiKitapKritikOran, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                </HeaderedContentControl>
+                                <HeaderedContentControl>
+                                    <HeaderedContentControl.Header>
+                                        <CheckBox Content="KİTAP RESİM KÜÇÜLT" IsChecked="{Binding Path=ResimKüçült, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretlenirse Kitap Resmi Belirtilen Oranda Küçültülür." />
+                                    </HeaderedContentControl.Header>
+                                    <Extensions:NumericUpDownControl IsEnabled="{Binding Path=ResimKüçült, Mode=OneWay, Source={x:Static properties:Settings.Default}}"
+                                        Maximum="1" Minimum="0.10" SmallChange="0.01" ToolTip="Kitap Resim Küçültme Oranı"
+                                        Value="{Binding Path=ResimKüçültmeOranı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
                                 <CheckBox Content="KİŞİ GİRİŞ AKTARMA YAP" IsChecked="{Binding Path=Aktarma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kayıtlı TC Bulunduğunda Kitap Ver Ekranına Yönlendirir. İşaretli Kalması Önerilir." />
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />
