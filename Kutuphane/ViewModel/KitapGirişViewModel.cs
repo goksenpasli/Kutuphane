@@ -183,7 +183,8 @@ namespace Kutuphane.ViewModel
                 SistemKayıtTarihi = DateTime.Now,
                 Resim = Kitap.Resim,
                 ÖdünçVerilebilir = Kitap.ÖdünçVerilebilir,
-                KitapDili = Kitap.KitapDili
+                KitapDili = Kitap.KitapDili,
+                Renk = Kitap.Renk
             };
             foreach (var item in Kitap.SeçiliYazarlar)
             {
@@ -202,6 +203,7 @@ namespace Kutuphane.ViewModel
             Kitap.Resim = null;
             Kitap.Barkod = null;
             Kitap.Açıklama = null;
+            Kitap.Renk = "Transparent";
             Kitap.TopluKitapSayısı = 1;
         }
     }

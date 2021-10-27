@@ -8,8 +8,6 @@ namespace Extensions
 {
     public class RelayAsyncCommand<T> : RelayCommand<T>
     {
-        private bool isExecuting;
-
         public RelayAsyncCommand(Action<T> execute, Predicate<T> canExecute)
             : base(execute, canExecute)
         {
@@ -24,18 +22,15 @@ namespace Extensions
 
         public event EventHandler Started;
 
-        public bool IsExecuting
-        {
-            get { return isExecuting; }
-        }
+        public bool IsExecuting { get; private set; }
 
-        public override bool CanExecute(object parameter) => base.CanExecute(parameter) && (!isExecuting);
+        public override bool CanExecute(object parameter) => base.CanExecute(parameter) && (!IsExecuting);
 
         public override void Execute(object parameter)
         {
             try
             {
-                isExecuting = true;
+                IsExecuting = true;
                 Started?.Invoke(this, EventArgs.Empty);
 
                 var task = Task.Factory.StartNew(() => _execute((T)parameter));
@@ -49,7 +44,7 @@ namespace Extensions
 
         private void OnRunWorkerCompleted(EventArgs e)
         {
-            isExecuting = false;
+            IsExecuting = false;
             Ended?.Invoke(this, e);
         }
     }

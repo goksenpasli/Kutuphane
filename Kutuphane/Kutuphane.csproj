@@ -96,6 +96,7 @@
     <Compile Include="Converter\ListViewCezaTutarConverter.cs" />
     <Compile Include="Converter\ReverseBooleanConverter.cs" />
     <Compile Include="Converter\StringToBarCodeImageConverter.cs" />
+    <Compile Include="Converter\StringToBrushConverter.cs" />
     <Compile Include="Model\Dolap.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\Kitap.cs" />

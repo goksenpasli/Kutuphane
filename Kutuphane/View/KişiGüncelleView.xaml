@@ -43,19 +43,19 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ ADI" VerticalAlignment="Center" />
-                                <TextBox Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                <TextBox Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ SOYADI" VerticalAlignment="Center" />
-                                <TextBox Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                <TextBox Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ TC" VerticalAlignment="Center" />
-                                <TextBox Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                <TextBox Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn Header="KİTAP ALABİLİR" extensions:GridViewSort.PropertyName="KitapAlabilir">

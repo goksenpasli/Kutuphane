@@ -57,13 +57,13 @@
                                 <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KitapTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;ADI" />
-                                        <TextBox Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                        <TextBox Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn>
                                 <GridViewColumn Width="130" extensions:GridViewSort.PropertyName="Barkod" DisplayMemberBinding="{Binding Barkod}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                        <TextBox Text="{Binding Kişi.KişiKitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                        <TextBox Text="{Binding Kişi.KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn>
                                 <GridViewColumn Header="KİTAP BASIM&#xA;YILI" extensions:GridViewSort.PropertyName="BasımYılı" DisplayMemberBinding="{Binding BasımYılı}" />
@@ -151,13 +151,13 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;ADI" />
-                                            <TextBox Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                            <TextBox Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                         </StackPanel>
                                     </GridViewColumn>
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                            <TextBox Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                            <TextBox Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                                         </StackPanel>
                                     </GridViewColumn>
                                     <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">

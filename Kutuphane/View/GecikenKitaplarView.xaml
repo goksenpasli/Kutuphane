@@ -36,19 +36,19 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;ADI" />
-                                <TextBox Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                <TextBox Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                <TextBox Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                <TextBox Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;TC" />
-                                <TextBox Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
+                                <TextBox Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="55" VerticalContentAlignment="Center" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn Header="TELEFON" extensions:GridViewSort.PropertyName="Telefon">

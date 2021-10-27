@@ -90,7 +90,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <FlowDocumentScrollViewer x:Name="Fd" VerticalScrollBarVisibility="Disabled">
+            <FlowDocumentScrollViewer x:Name="Fd" ContextMenuService.IsEnabled="False" VerticalScrollBarVisibility="Disabled">
                 <FlowDocument Background="{Binding ElementName=Cb, Path=SelectedItem.Background}"
                     FontSize="16" FontFamily="Times New Roman"
                     Block.LineHeight="1" Language="tr-tr" PagePadding="0">

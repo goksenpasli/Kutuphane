@@ -14,6 +14,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Extensions;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Kutuphane:StringToBrushConverter x:Key="StringToBrushConverter" />
             <ViewModel:MainViewModel x:Key="MainViewModel" />
             <Kutuphane:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
             <Kutuphane:EqualityConverter x:Key="EqualityConverter" />
@@ -326,7 +327,7 @@
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="KitapTemplate">
-                <StackPanel>
+                <StackPanel Background="{Binding Renk, Converter={StaticResource StringToBrushConverter}}">
                     <TextBlock Text="{Binding Ad}" />
                     <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145"
                         ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"

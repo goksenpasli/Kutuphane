@@ -76,7 +76,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP ADI" />
-                                        <TextBox Text="{Binding KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="160" VerticalContentAlignment="Center" />
+                                        <TextBox Text="{Binding KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="160" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
@@ -89,7 +89,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP BARKOD" />
-                                        <TextBox Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="110" VerticalContentAlignment="Center" />
+                                        <TextBox Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="110" VerticalContentAlignment="Center" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>

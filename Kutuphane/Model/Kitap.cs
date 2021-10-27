@@ -51,6 +51,8 @@ namespace Kutuphane.Model
 
         private bool ödünçVerilebilir = true;
 
+        private string renk = "White";
+
         private string resim;
 
         private ObservableCollection<KitapTürü> seçiliKitapTürleri = new();
@@ -353,6 +355,21 @@ namespace Kutuphane.Model
                 {
                     ödünçVerilebilir = value;
                     OnPropertyChanged(nameof(ÖdünçVerilebilir));
+                }
+            }
+        }
+
+        [XmlAttribute(AttributeName = "Renk")]
+        public string Renk
+        {
+            get => renk;
+
+            set
+            {
+                if (renk != value)
+                {
+                    renk = value;
+                    OnPropertyChanged(nameof(Renk));
                 }
             }
         }
