@@ -21,28 +21,15 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is object[] data && data[0] is Kitap seçilikitap)
                 {
-                    if (seçilikitap.KitapDurumId == (int)KitapDurumu.Okuyucuda)
+                    switch (seçilikitap.KitapDurumId)
                     {
-                        seçilikitap.KitapDurum = false;
-                        return false;
+                        case (int)KitapDurumu.Okuyucuda:
+                        case (int)KitapDurumu.Kütüphanede:
+                            return false;
+                        case (int)KitapDurumu.Kayıp:
+                        case (int)KitapDurumu.Yıpranmış:
+                            return true;
                     }
-
-                    if (seçilikitap.KitapDurumId == (int)KitapDurumu.Kütüphanede)
-                    {
-                        seçilikitap.KitapDurum = false;
-                        return false;
-                    }
-
-                    if (seçilikitap.KitapDurumId == (int)KitapDurumu.Kayıp)
-                    {
-                        return true;
-                    }
-
-                    if (seçilikitap.KitapDurumId == (int)KitapDurumu.Yıpranmış)
-                    {
-                        return true;
-                    }
-                    seçilikitap.KitapDurum = true;
                 }
                 return false;
             });

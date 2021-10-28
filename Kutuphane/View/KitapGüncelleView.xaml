@@ -282,8 +282,7 @@
                             </GroupBox.Header>
                             <UniformGrid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                                 <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
-                                <Extensions:ContentToggleButton Width="96" Height="96"
-                                    Background="{StaticResource QrCode}">
+                                <Extensions:ContentToggleButton Width="96" Height="96" Background="{StaticResource QrCode}">
                                     <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                                 </Extensions:ContentToggleButton>
                             </UniformGrid>

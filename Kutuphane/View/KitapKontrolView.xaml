@@ -67,7 +67,7 @@
                         </TableCell>
                         <TableCell>
                             <Paragraph>
-                                <Run Text="{Binding Fiyat}" />
+                                <Run Text="{Binding Fiyat, StringFormat=\{0:C\}}" />
                             </Paragraph>
                         </TableCell>
                     </TableRow>
@@ -142,7 +142,7 @@
                                         <Extensions:ContentToggleButton.Content>
                                             <GroupBox Header="TUTANAK" Width="280" Height="210">
                                                 <StackPanel>
-                                                    <FlowDocumentScrollViewer x:Name="Fd" Document="{StaticResource Tutanak}" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                                                    <FlowDocumentScrollViewer x:Name="Fd" Document="{DynamicResource Tutanak}" ScrollViewer.VerticalScrollBarVisibility="Auto" />
                                                     <Button Content="YAZDIR" Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Fd}" />
                                                 </StackPanel>
                                             </GroupBox>

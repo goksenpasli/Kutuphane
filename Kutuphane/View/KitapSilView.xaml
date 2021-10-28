@@ -65,7 +65,19 @@
                             <GridViewColumn Header="KİTAP&#xA;DURUM" Width="110" Extensions:GridViewSort.PropertyName="KitapDurumId">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox IsEnabled="{Binding KitapDurum}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" SelectedIndex="{Binding KitapDurumId}">
+                                        <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" SelectedIndex="{Binding KitapDurumId}">
+                                            <ComboBox.Style>
+                                                <Style TargetType="ComboBox">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding KitapDurumId}" Value="0">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ComboBox.Style>
                                             <ComboBox.ItemContainerStyle>
                                                 <Style TargetType="ComboBoxItem">
                                                     <Style.Triggers>

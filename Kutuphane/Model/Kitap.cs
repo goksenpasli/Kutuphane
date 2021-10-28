@@ -41,8 +41,6 @@ namespace Kutuphane.Model
 
         private string kitapDili;
 
-        private bool kitapDurum = true;
-
         private int kitapDurumId;
 
         private bool kitapSayıOtomatikArttır;
@@ -265,21 +263,6 @@ namespace Kutuphane.Model
                 {
                     kitapDili = value;
                     OnPropertyChanged(nameof(KitapDili));
-                }
-            }
-        }
-
-        [XmlIgnore]
-        public bool KitapDurum
-        {
-            get => kitapDurum;
-
-            set
-            {
-                if (kitapDurum != value)
-                {
-                    kitapDurum = value;
-                    OnPropertyChanged(nameof(KitapDurum));
                 }
             }
         }
