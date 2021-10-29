@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -9,7 +10,6 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using ZXing;
-using System.Drawing.Imaging;
 
 namespace Kutuphane.ViewModel
 {
@@ -65,6 +65,23 @@ namespace Kutuphane.ViewModel
                 barkod.BarkodError = ex.Message;
                 return null;
             }
+        }
+
+        public static DateTime İşGünüEkle(this DateTime date, double addDays)
+        {
+            while (addDays != 0)
+            {
+                date = date.AddDays(Math.Sign(addDays));
+                if (date.DayOfWeek switch
+                {
+                    DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday or DayOfWeek.Friday => true,
+                    _ => false,
+                })
+                {
+                    addDays -= Math.Sign(addDays);
+                }
+            }
+            return date;
         }
 
         public static ObservableCollection<Kişi> KişileriYükle()

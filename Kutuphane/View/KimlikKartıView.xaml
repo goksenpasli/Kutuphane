@@ -90,7 +90,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <FlowDocumentScrollViewer x:Name="Fd" ContextMenuService.IsEnabled="False" VerticalScrollBarVisibility="Disabled">
+            <FlowDocumentScrollViewer x:Name="Fd" VerticalScrollBarVisibility="Disabled">
                 <FlowDocument Background="{Binding ElementName=Cb, Path=SelectedItem.Background}"
                     FontSize="16" FontFamily="Times New Roman"
                     Block.LineHeight="1" Language="tr-tr" PagePadding="0">
@@ -179,14 +179,16 @@
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <Paragraph Padding="0,5,0,0">
-                                        <Hyperlink Command="{Binding İmzaSil, ElementName=UserControl, Mode=OneWay}"
-                                            CommandParameter="{Binding ElementName=Ink}"
-                                            FontWeight="Bold"
-                                            TextDecorations="None">
-                                            <Run Text="GÖREVLİ İMZA" />
-                                        </Hyperlink>
-                                    </Paragraph>
+                                    <BlockUIContainer Padding="0,5,0,0">
+                                        <TextBlock>
+                                            <Hyperlink Command="{Binding İmzaSil, ElementName=UserControl, Mode=OneWay}"
+                                                CommandParameter="{Binding ElementName=Ink}"
+                                                FontWeight="Bold"
+                                                TextDecorations="None">
+                                                <Run Text="GÖREVLİ&#xA;İMZA" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </BlockUIContainer>
                                 </TableCell>
                                 <TableCell ColumnSpan="2">
                                     <BlockUIContainer>

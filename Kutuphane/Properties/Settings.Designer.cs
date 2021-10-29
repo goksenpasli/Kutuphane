@@ -250,5 +250,17 @@ namespace Kutuphane.Properties {
                 this["ResimKüçültmeOranı"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool KitapVermeİşGünüSay {
+            get {
+                return ((bool)(this["KitapVermeİşGünüSay"]));
+            }
+            set {
+                this["KitapVermeİşGünüSay"] = value;
+            }
+        }
     }
 }

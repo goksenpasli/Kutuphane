@@ -1,10 +1,10 @@
 ﻿using Extensions;
 using Kutuphane.Model;
+using Kutuphane.Properties;
 using Kutuphane.View;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using Kutuphane.Properties;
 
 namespace Kutuphane.ViewModel
 {
@@ -65,7 +65,7 @@ namespace Kutuphane.ViewModel
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = Settings.Default.HızlıKitapGirişGünSüresi,
-                        GeriGetirmeTarihi = DateTime.Today.AddDays(Settings.Default.HızlıKitapGirişGünSüresi),
+                        GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? DateTime.Today.İşGünüEkle(Settings.Default.HızlıKitapGirişGünSüresi) : DateTime.Today.AddDays(Settings.Default.HızlıKitapGirişGünSüresi),
                         KitapId = kitap.Id,
                         KişiId = kişi.Id,
                         BaşlangıçTarihi = DateTime.Today,
@@ -82,7 +82,7 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => KitapAlabilir(parameter));
 
-            İşlem.GeriGetirmeTarihi = İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
+            İşlem.GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? İşlem.BaşlangıçTarihi.İşGünüEkle(İşlem.KitapGün) : İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
             İşlem.PropertyChanged += İşlem_PropertyChanged;
         }
@@ -125,7 +125,7 @@ namespace Kutuphane.ViewModel
         {
             if (e.PropertyName is "BaşlangıçTarihi" or "KitapGün")
             {
-                İşlem.GeriGetirmeTarihi = İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
+                İşlem.GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? İşlem.BaşlangıçTarihi.İşGünüEkle(İşlem.KitapGün) : İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             }
         }
 

@@ -165,7 +165,10 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="AÇIKLAMA" HorizontalAlignment="Center" />
+                        <TextBlock HorizontalAlignment="Center">
+                            <Run Text="AÇIKLAMA" />
+                            <Run Text="{Binding Kitap.Açıklama.Length, Mode=OneWay, StringFormat={}{0}/500, FallbackValue=0}" />
+                        </TextBlock>
                         <TextBox Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Grid.Row="1"
                             AcceptsReturn="True" MaxLength="500" TextWrapping="Wrap" />

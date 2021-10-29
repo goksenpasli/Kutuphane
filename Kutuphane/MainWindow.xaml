@@ -57,6 +57,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <GroupBox Header="AYARLAR">
                             <StackPanel>
@@ -103,6 +104,7 @@
                                         Maximum="1" Minimum="0.10" SmallChange="0.01" ToolTip="Kitap Resim Küçültme Oranı"
                                         Value="{Binding Path=ResimKüçültmeOranı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                                 </HeaderedContentControl>
+                                <CheckBox Content="KİTAP VERMEDE İŞ GÜNÜ SAY" IsChecked="{Binding Path=KitapVermeİşGünüSay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verme İşleminde Gün Saymada Hafta Sonları Atlanır." />
                                 <CheckBox Content="KİŞİ GİRİŞ AKTARMA YAP" IsChecked="{Binding Path=Aktarma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kayıtlı TC Bulunduğunda Kitap Ver Ekranına Yönlendirir. İşaretli Kalması Önerilir." />
                                 <CheckBox Content="KİTAP RESİM GÖSTER" IsChecked="{Binding Path=KitapResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitapta Resim Varsa Önizlemesi Gösterilir." />
                                 <CheckBox Content="KİŞİ RESİM GÖSTER" IsChecked="{Binding Path=KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kişide Resim Varsa Önizlemesi Gösterilir." />
@@ -112,8 +114,10 @@
                                     <HeaderedContentControl.Header>
                                         <StackPanel>
                                             <Extensions:ContentToggleButton OverContent="TTS">
-                                                <GroupBox Header="TÜRKÇE TTS REGISTRY AYARLARI" Width="640" Height="480">
-                                                    <FlowDocumentScrollViewer Document="{StaticResource TTSRegistry}" />
+                                                <GroupBox Header="TÜRKÇE TTS REGISTRY AYARLARI" Width="640" Height="340">
+                                                    <TextBox Text="{StaticResource RegistyString}"
+                                                        IsReadOnly="True"
+                                                        TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                                 </GroupBox>
                                             </Extensions:ContentToggleButton>
                                         </StackPanel>
