@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     Title="Kütüphane"
@@ -112,15 +112,21 @@
                                 <CheckBox Content="OTOMATİK TUTANAK" IsChecked="{Binding Path=OtomatikTutanak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
                                 <HeaderedContentControl>
                                     <HeaderedContentControl.Header>
-                                        <StackPanel>
-                                            <Extensions:ContentToggleButton OverContent="TTS">
-                                                <GroupBox Header="TÜRKÇE TTS REGISTRY AYARLARI" Width="640" Height="340">
-                                                    <TextBox Text="{StaticResource RegistyString}"
-                                                        IsReadOnly="True"
-                                                        TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
-                                                </GroupBox>
-                                            </Extensions:ContentToggleButton>
-                                        </StackPanel>
+                                        <Button Command="{Binding TtsRegImport, Mode=OneWay}" CommandParameter="{Binding Path=TtsReg, Mode=OneWay, Source={x:Static properties:Settings.Default}}">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Width="32" Height="32">
+                                                        <Image.Source>
+                                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                                <Binding Source="User32.dll" />
+                                                                <Binding Source="6" />
+                                                            </MultiBinding>
+                                                        </Image.Source>
+                                                    </Image>
+                                                    <TextBlock Text="TTS REGISTRY KAYDI" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
                                     </HeaderedContentControl.Header>
                                     <ComboBox Text="{Binding SeçiliTts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"
                                         ItemsSource="{Binding TtsDilleri}"
@@ -142,6 +148,36 @@
                         <Setter Property="CanAddToQuickAccessToolBarDirectly" Value="False" />
                     </Style>
                 </RibbonTab.Resources>
+                <RibbonGroup Header="Kişi">
+                    <RibbonButton Command="{Binding KişiGirişiEkranı, Mode=OneWay}" KeyTip="S" Label="Kişi Gir">
+                        <RibbonButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="160" />
+                            </MultiBinding>
+                        </RibbonButton.LargeImageSource>
+                        <RibbonButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="160" />
+                            </MultiBinding>
+                        </RibbonButton.SmallImageSource>
+                    </RibbonButton>
+                    <RibbonButton Command="{Binding KişiGüncelleEkranı, Mode=OneWay}" KeyTip="P" Label="Kişi Güncelle">
+                        <RibbonButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="158" />
+                            </MultiBinding>
+                        </RibbonButton.SmallImageSource>
+                        <RibbonButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="158" />
+                            </MultiBinding>
+                        </RibbonButton.LargeImageSource>
+                    </RibbonButton>
+                </RibbonGroup>
                 <RibbonGroup Header="Kitap">
                     <RibbonButton Command="{Binding KitapGirişiEkranı, Mode=OneWay}" KeyTip="K" Label="Kitap Gir">
                         <RibbonButton.LargeImageSource>
@@ -157,20 +193,6 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonButton Command="{Binding KişiGirişiEkranı, Mode=OneWay}" KeyTip="S" Label="Kişi Gir">
-                        <RibbonButton.LargeImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="160" />
-                            </MultiBinding>
-                        </RibbonButton.LargeImageSource>
-                        <RibbonButton.SmallImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="160" />
-                            </MultiBinding>
-                        </RibbonButton.SmallImageSource>
-                    </RibbonButton>
                     <RibbonButton Command="{Binding KitapGüncelleEkranı, Mode=OneWay}" KeyTip="G" Label="Kitap Güncelle">
                         <RibbonButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
@@ -182,20 +204,6 @@
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
                                 <Binding Source="238" />
-                            </MultiBinding>
-                        </RibbonButton.LargeImageSource>
-                    </RibbonButton>
-                    <RibbonButton Command="{Binding KişiGüncelleEkranı, Mode=OneWay}" KeyTip="P" Label="Kişi Güncelle">
-                        <RibbonButton.SmallImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="158" />
-                            </MultiBinding>
-                        </RibbonButton.SmallImageSource>
-                        <RibbonButton.LargeImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="158" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                     </RibbonButton>
@@ -279,6 +287,28 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
+                    <RibbonMenuButton KeyTip="O" Label="Barkod Oluştur">
+                        <RibbonMenuButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="19" />
+                            </MultiBinding>
+                        </RibbonMenuButton.LargeImageSource>
+                        <RibbonMenuButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="19" />
+                            </MultiBinding>
+                        </RibbonMenuButton.SmallImageSource>
+                        <RibbonMenuItem Header="BARKOD" KeyTip="BR">
+                            <GroupBox>
+                                <StackPanel>
+                                    <TextBox x:Name="Tb" />
+                                    <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
+                                </StackPanel>
+                            </GroupBox>
+                        </RibbonMenuItem>
+                    </RibbonMenuButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">
                     <RibbonButton Command="{Binding DolapGirişiEkranı, Mode=OneWay}" KeyTip="C" Label="Dolap Gir">

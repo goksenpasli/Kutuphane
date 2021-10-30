@@ -4,6 +4,7 @@ using Kutuphane.Properties;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -142,6 +143,20 @@ namespace Kutuphane.ViewModel
 
             WebAdreseGit = new RelayCommand<object>(parameter => Process.Start(parameter as string), parameter => true);
 
+            TtsRegImport = new RelayCommand<object>(parameter =>
+            {
+                try
+                {
+                    var path = $"{Path.GetTempPath()}\\{Guid.NewGuid() + ".reg"}";
+                    File.WriteAllLines(path, (parameter as StringCollection).Cast<string>());
+                    _ = Process.Start("regedit.exe", "/s" + path);
+                }
+                catch (Exception ex)
+                {
+                    _ = MessageBox.Show(ex.Message);
+                }
+            }, parameter => true);
+
             AyarlarıSıfırla = new RelayCommand<object>(parameter =>
             {
                 if (MessageBox.Show("Ayarlar varsayılana döndürülecek devam edilsin mi?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
@@ -213,8 +228,6 @@ namespace Kutuphane.ViewModel
 
         public ICommand KitapGirişiEkranı { get; }
 
-        public ICommand WebAdreseGit { get; }
-
         public KitapGirişViewModel KitapGirişViewModel { get; set; }
 
         public ICommand KitapGüncelleEkranı { get; }
@@ -246,5 +259,9 @@ namespace Kutuphane.ViewModel
         public ReportViewModel ReportViewModel { get; set; }
 
         public IEnumerable<string> TtsDilleri { get; set; } = synthesizer.GetInstalledVoices().Select(z => z.VoiceInfo.Name);
+
+        public ICommand TtsRegImport { get; }
+
+        public ICommand WebAdreseGit { get; }
     }
 }

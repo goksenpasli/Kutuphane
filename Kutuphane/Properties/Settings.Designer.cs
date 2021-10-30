@@ -262,5 +262,57 @@ namespace Kutuphane.Properties {
                 this["KitapVermeİşGünüSay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>Windows Registry Editor Version 5.00</string>\r\n  <string />\r\n  <string>[HK" +
+            "EY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\SPEECH\\Voices\\Tokens\\MSTTS_V110_" +
+            "trTR_Tolga] @=\"Microsoft Tolga - Turkish (Turkey)\" \"041f\"=\"Microsoft Tolga - Tur" +
+            "kish (Turkey)\" \"CLSID\"=\"{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}\" \"LangDataPath\"=h" +
+            "ex(2):25,00,77,00,69,00,6e,00,64,00,69,00,72,00,25,00,5c,00,53,</string>\r\n  <str" +
+            "ing>00,70,00,65,00,65,00,63,00,68,00,5f,00,4f,00,6e,00,65,00,43,00,6f,00,72,00,<" +
+            "/string>\r\n  <string>65,00,5c,00,45,00,6e,00,67,00,69,00,6e,00,65,00,73,00,5c,00," +
+            "54,00,54,00,53,</string>\r\n  <string>00,5c,00,74,00,72,00,2d,00,54,00,52,00,5c,00" +
+            ",4d,00,53,00,54,00,54,00,53,00,</string>\r\n  <string>4c,00,6f,00,63,00,54,00,72,0" +
+            "0,54,00,52,00,2e,00,64,00,61,00,74,00,00,00 \"VoicePath\"=hex(2):25,00,77,00,69,00" +
+            ",6e,00,64,00,69,00,72,00,25,00,5c,00,53,00,</string>\r\n  <string>70,00,65,00,65,0" +
+            "0,63,00,68,00,5f,00,4f,00,6e,00,65,00,43,00,6f,00,72,00,65,</string>\r\n  <string>" +
+            "00,5c,00,45,00,6e,00,67,00,69,00,6e,00,65,00,73,00,5c,00,54,00,54,00,53,00,</str" +
+            "ing>\r\n  <string>5c,00,74,00,72,00,2d,00,54,00,52,00,5c,00,4d,00,31,00,30,00,35,0" +
+            "0,35,00,54,</string>\r\n  <string>00,6f,00,6c,00,67,00,61,00,00,00</string>\r\n  <st" +
+            "ring />\r\n  <string>[HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\SPEECH\\Voi" +
+            "ces\\Tokens\\MSTTS_V110_trTR_Tolga\\Attributes] \"Age\"=\"Adult\" \"DataVersion\"=\"11.0.2" +
+            "016.0129\" \"Gender\"=\"Male\" \"Language\"=\"041f\" \"Name\"=\"Microsoft Tolga\" \"SayAsSuppo" +
+            "rt\"=\"spell=NativeSupported; alphanumeric=NativeSupported\" \"SharedPronunciation\"=" +
+            "\"\" \"Vendor\"=\"Microsoft\" \"Version\"=\"11.0\"</string>\r\n  <string />\r\n  <string>[HKEY" +
+            "_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\MSTTS_V110_trTR_Tolga] @=" +
+            "\"Microsoft Tolga - Turkish (Turkey)\" \"041f\"=\"Microsoft Tolga - Turkish (Turkey)\"" +
+            " \"CLSID\"=\"{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}\" \"LangDataPath\"=hex(2):25,00,77" +
+            ",00,69,00,6e,00,64,00,69,00,72,00,25,00,5c,00,53,</string>\r\n  <string>00,70,00,6" +
+            "5,00,65,00,63,00,68,00,5f,00,4f,00,6e,00,65,00,43,00,6f,00,72,00,</string>\r\n  <s" +
+            "tring>65,00,5c,00,45,00,6e,00,67,00,69,00,6e,00,65,00,73,00,5c,00,54,00,54,00,53" +
+            ",</string>\r\n  <string>00,5c,00,74,00,72,00,2d,00,54,00,52,00,5c,00,4d,00,53,00,5" +
+            "4,00,54,00,53,00,</string>\r\n  <string>4c,00,6f,00,63,00,54,00,72,00,54,00,52,00," +
+            "2e,00,64,00,61,00,74,00,00,00 \"VoicePath\"=hex(2):25,00,77,00,69,00,6e,00,64,00,6" +
+            "9,00,72,00,25,00,5c,00,53,00,</string>\r\n  <string>70,00,65,00,65,00,63,00,68,00," +
+            "5f,00,4f,00,6e,00,65,00,43,00,6f,00,72,00,65,</string>\r\n  <string>00,5c,00,45,00" +
+            ",6e,00,67,00,69,00,6e,00,65,00,73,00,5c,00,54,00,54,00,53,00,</string>\r\n  <strin" +
+            "g>5c,00,74,00,72,00,2d,00,54,00,52,00,5c,00,4d,00,31,00,30,00,35,00,35,00,54,</s" +
+            "tring>\r\n  <string>00,6f,00,6c,00,67,00,61,00,00,00</string>\r\n  <string />\r\n  <st" +
+            "ring>[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\MSTTS_V110_trTR" +
+            "_Tolga\\Attributes] \"Age\"=\"Adult\" \"DataVersion\"=\"11.0.2016.0129\" \"Gender\"=\"Male\" " +
+            "\"Language\"=\"041f\" \"Name\"=\"Microsoft Tolga\" \"SayAsSupport\"=\"spell=NativeSupported" +
+            "; alphanumeric=NativeSupported\" \"SharedPronunciation\"=\"\" \"Vendor\"=\"Microsoft\" \"V" +
+            "ersion\"=\"11.0\"</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection TtsReg {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["TtsReg"]));
+            }
+            set {
+                this["TtsReg"] = value;
+            }
+        }
     }
 }
