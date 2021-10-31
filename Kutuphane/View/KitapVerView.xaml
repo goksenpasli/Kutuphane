@@ -70,7 +70,7 @@
                                 <GridViewColumn Header="DEMİRBAŞ" extensions:GridViewSort.PropertyName="Demirbaş">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox IsEnabled="False" IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <ToggleButton Content="{StaticResource DemirbaşImage}" IsEnabled="False" IsChecked="{Binding Demirbaş}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -83,9 +83,7 @@
                                                     DisplayMemberPath="Açıklama"
                                                     SelectedValue="{Binding DolapId}"
                                                     SelectedValuePath="Id" />
-                                                <extensions:NumericUpDownControl Width="40"
-                                                    Maximum="1000000" Minimum="1" SmallChange="1"
-                                                    Value="{Binding DolapAltKod}" />
+                                                <TextBlock Text="{Binding DolapAltKod}" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>

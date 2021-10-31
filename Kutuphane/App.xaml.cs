@@ -1,4 +1,5 @@
 ﻿using Extensions;
+using Kutuphane.Properties;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,6 +42,14 @@ namespace Kutuphane
             if (!(Keyboard.FocusedElement is not UIElement elementWithFocus) && elementWithFocus.MoveFocus(request))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            if (e.Args.Length > 0 && e.Args[0] == "/RESET")
+            {
+                Settings.Default.Reset();
             }
         }
     }

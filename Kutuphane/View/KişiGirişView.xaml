@@ -211,7 +211,7 @@
                         <GridViewColumn Header="DEMİRBAŞ">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsEnabled="False" IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <ToggleButton Content="{StaticResource DemirbaşImage}" IsEnabled="False" IsChecked="{Binding Demirbaş}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

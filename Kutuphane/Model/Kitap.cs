@@ -523,9 +523,6 @@ namespace Kutuphane.Model
             }
         }
 
-        [XmlIgnore]
-        public IEnumerable<int> Yıllar { get; set; } = Enumerable.Range(DateTime.Now.Year - 50, 100);
-
         public string this[string columnName] => columnName switch
         {
             "Ad" when string.IsNullOrWhiteSpace(Ad) => "Adı Boş Geçmeyin.",

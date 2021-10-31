@@ -14,6 +14,8 @@ namespace Kutuphane.Model
 
         private double kod = 1;
 
+        private bool seçili = true;
+
         [XmlAttribute(AttributeName = "Açıklama")]
         public string Açıklama
         {
@@ -70,6 +72,21 @@ namespace Kutuphane.Model
                 {
                     kod = value;
                     OnPropertyChanged(nameof(Kod));
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public bool Seçili
+        {
+            get => seçili;
+
+            set
+            {
+                if (seçili != value)
+                {
+                    seçili = value;
+                    OnPropertyChanged(nameof(Seçili));
                 }
             }
         }

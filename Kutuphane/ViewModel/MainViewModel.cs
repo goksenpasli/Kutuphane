@@ -31,7 +31,7 @@ namespace Kutuphane.ViewModel
                 Yazarlar = ExtensionMethods.YazarlarıYükle(),
                 KitapTürleri = ExtensionMethods.TürleriYükle(),
                 Dolaplar = ExtensionMethods.DolaplarıYükle(),
-                Kişiler = ExtensionMethods.KişileriYükle(),
+                Kişiler = ExtensionMethods.KişileriYükle()
             };
 
             KitapGirişViewModel = new KitapGirişViewModel();
@@ -263,5 +263,7 @@ namespace Kutuphane.ViewModel
         public ICommand TtsRegImport { get; }
 
         public ICommand WebAdreseGit { get; }
+
+        public IEnumerable<int> Yıllar { get; } = Enumerable.Range(DateTime.Now.Year - 50, 100);
     }
 }

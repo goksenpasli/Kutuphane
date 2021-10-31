@@ -288,26 +288,33 @@
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
                     <RibbonMenuButton KeyTip="O" Label="Barkod Oluştur">
+                        <RibbonMenuButton.Resources>
+                            <Style TargetType="RibbonMenuItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="RibbonMenuItem">
+                                            <ContentPresenter Content="{TemplateBinding Header}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </RibbonMenuButton.Resources>
                         <RibbonMenuButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="19" />
+                                <Binding Source="Setupapi.dll" />
+                                <Binding Source="38" />
                             </MultiBinding>
                         </RibbonMenuButton.LargeImageSource>
                         <RibbonMenuButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="19" />
+                                <Binding Source="Setupapi.dll" />
+                                <Binding Source="38" />
                             </MultiBinding>
                         </RibbonMenuButton.SmallImageSource>
-                        <RibbonMenuItem Header="BARKOD" KeyTip="BR">
-                            <GroupBox>
-                                <StackPanel>
-                                    <TextBox x:Name="Tb" />
-                                    <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
-                                </StackPanel>
-                            </GroupBox>
-                        </RibbonMenuItem>
+                        <StackPanel>
+                            <TextBox x:Name="Tb" />
+                            <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
+                        </StackPanel>
                     </RibbonMenuButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">

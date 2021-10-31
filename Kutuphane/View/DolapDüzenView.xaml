@@ -84,16 +84,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="RAF NO" Extensions:GridViewSort.PropertyName="DolapAltKod">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Extensions:NumericUpDownControl IsReadOnly="True"
-                                                Width="50"
-                                                Maximum="1000000" Minimum="1" NumericUpDownButtonsVisibility="Collapsed" SmallChange="1"
-                                                Value="{Binding DolapAltKod}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                <GridViewColumn Header="RAF NO" Extensions:GridViewSort.PropertyName="DolapAltKod" DisplayMemberBinding="{Binding DolapAltKod}" />
                             </GridView>
                         </ListView.View>
                     </ListView>

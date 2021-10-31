@@ -54,13 +54,8 @@
                                     ItemTemplate="{StaticResource KitapTemplate}"
                                     SelectedItem="{Binding SeçiliKitap}"
                                     SelectedValue="{Binding KitapId}"
-                                    SelectedValuePath="Id">
-                                    <ComboBox.Template>
-                                        <ControlTemplate TargetType="ComboBox">
-                                            <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" IsHitTestVisible="False" />
-                                        </ControlTemplate>
-                                    </ComboBox.Template>
-                                </ComboBox>
+                                    SelectedValuePath="Id"
+                                    Template="{StaticResource ComboBoxSimpleTemplate}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

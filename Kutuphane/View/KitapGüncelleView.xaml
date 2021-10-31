@@ -102,7 +102,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP BASIM YILI" />
-                                        <ComboBox ItemsSource="{Binding Kütüphane.Kitaplar/Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding KişiKitapYılArama}">
+                                        <ComboBox ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding KişiKitapYılArama}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
@@ -113,7 +113,7 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding Yıllar, Mode=OneWay}" SelectedItem="{Binding BasımYılı}">
+                                        <ComboBox ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding BasımYılı}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
@@ -126,27 +126,71 @@
                             <GridViewColumn Header="DEMİRBAŞ" Extensions:GridViewSort.PropertyName="Demirbaş">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ToggleButton Content="{StaticResource DemirbaşImage}" IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="ÖDÜNÇ&#xA;VERİLEBİLİR" Extensions:GridViewSort.PropertyName="ÖdünçVerilebilir">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ToggleButton IsChecked="{Binding ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <Image Width="16" Height="16">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="true">
+                                                                <Setter Property="Source">
+                                                                    <Setter.Value>
+                                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                                            <Binding Source="Shell32.dll" />
+                                                                            <Binding Source="28" />
+                                                                        </MultiBinding>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </ToggleButton>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="130" Extensions:GridViewSort.PropertyName="DolapId">
                                 <GridViewColumn.Header>
-                                    <StackPanel>
-                                        <TextBlock Text="DOLAP" HorizontalAlignment="Center" />
-                                        <ComboBox Width="120"
-                                            ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
-                                            DisplayMemberPath="Açıklama"
-                                            SelectedValue="{Binding KişiDolapIdArama}"
-                                            SelectedValuePath="Id" />
-                                    </StackPanel>
+                                    <Extensions:ContentToggleButton OverContent="DOLAP&#xA;ARA">
+                                        <StackPanel>
+                                            <ListView Width="200" Height="120"
+                                                ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
+                                                Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliDolaplar}">
+                                                <ListView.Resources>
+                                                    <Style TargetType="ListViewItem">
+                                                        <Setter Property="IsSelected" Value="{Binding Seçili, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </Style>
+                                                </ListView.Resources>
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox Content="{Binding Açıklama}" HorizontalAlignment="Stretch" IsChecked="{Binding Seçili, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                            <Button Command="{Binding DolapAra}">
+                                                <Button.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="32" Height="32">
+                                                            <Image.Source>
+                                                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                                    <Binding Source="Shell32.dll" />
+                                                                    <Binding Source="22" />
+                                                                </MultiBinding>
+                                                            </Image.Source>
+                                                        </Image>
+                                                        <TextBlock Text="ARA" VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                    </Extensions:ContentToggleButton>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -213,13 +257,9 @@
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Mode=OneWay}" Value="Okuyucuda">
                                                             <Setter Property="IsEnabled" Value="False" />
-                                                            <Setter Property="ToolTip" Value="Kitap Ver Menüsünden İşlem Yapın" />
-                                                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding Mode=OneWay}" Value="Kütüphanede">
                                                             <Setter Property="IsEnabled" Value="False" />
-                                                            <Setter Property="ToolTip" Value="Kitap Geri Al Menüsünden İşlem Yapın" />
-                                                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -251,7 +291,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
-                    <UniformGrid Grid.Row="1" Columns="2">
+                    <UniformGrid Grid.Row="1" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <GroupBox>
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">

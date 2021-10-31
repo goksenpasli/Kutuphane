@@ -63,7 +63,7 @@ namespace Kutuphane.ViewModel
                     kütüphane?.KitapTürleri.Add(tür);
                     MainViewModel.DatabaseSave.Execute(null);
                 }
-            }, parameter => parameter is Kütüphane kütüphane && !kütüphane.KitapTürleri.Any(z => z.Açıklama == Kitap.Açıklama) && !string.IsNullOrWhiteSpace(Kitap?.Tür));
+            }, parameter => parameter is Kütüphane kütüphane && !kütüphane.KitapTürleri.Any(z => z.Açıklama == Kitap.Tür) && !string.IsNullOrWhiteSpace(Kitap?.Tür));
 
             KitapYazarEkle = new RelayCommand<object>(parameter =>
             {
