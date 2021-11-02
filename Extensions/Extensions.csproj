@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Controls\Chart.cs" />
     <Compile Include="Controls\CircularProgress.cs" />
+    <Compile Include="Controls\ImageViewer.cs" />
     <Compile Include="Controls\MaskedTextBlock.cs" />
     <Compile Include="Controls\MediaViewer.xaml.cs">
       <DependentUpon>MediaViewer.xaml</DependentUpon>

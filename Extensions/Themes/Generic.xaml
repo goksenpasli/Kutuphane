@@ -23,6 +23,83 @@
     <SolidColorBrush x:Key="ScrollBar.Pressed.Thumb" Color="#606060" />
     <SolidColorBrush x:Key="ScrollBar.Static.Thumb" Color="#CDCDCD" />
     <StreamGeometry x:Key="ArrowGeometry">M0,0L4,4 8,0z</StreamGeometry>
+    <local:SystemFileIconConverter x:Key="SystemFileIconConverter" />
+    <local:NullableToBooleanConverter x:Key="NullableToBooleanConverter" />
+    <Style x:Key="RightRepeatButton" TargetType="RepeatButton">
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border Height="5"
+                        Background="Red" BorderBrush="Gray" BorderThickness="0,1,1,1"
+                        CornerRadius="0.5" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LeftRepeatButton" TargetType="RepeatButton">
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border Height="5"
+                        Background="#FFE22828" BorderBrush="Gray" BorderThickness="1,1,0,1"
+                        CornerRadius="0.5" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SliderThumb" TargetType="Thumb">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Ellipse Width="16" Height="16"
+                        Stroke="Gray" StrokeThickness="1"
+                        Fill="Blue" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="Slider" TargetType="Slider">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Track x:Name="PART_Track" Grid.Row="1">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource LeftRepeatButton}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource SliderThumb}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource RightRepeatButton}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+    <Style x:Key="Horizontal_Slider" TargetType="Slider">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="MinHeight" Value="21" />
+                <Setter Property="Template" Value="{StaticResource Slider}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="NumericUpdownTextBoxStyle" TargetType="{x:Type TextBox}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="CurrencyMode">
@@ -77,6 +154,100 @@
                             </Trigger.EnterActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="local:ImageViewer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:ImageViewer">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Image RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True"
+                                Source="{Binding Source, RelativeSource={RelativeSource TemplatedParent}}"
+                                Stretch="None">
+                                <Image.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}}" ScaleY="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <RotateTransform Angle="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </TransformGroup>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </ScrollViewer>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Visibility="{Binding OpenButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding ResimAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Button.Content>
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="3" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                </Button.Content>
+                            </Button>
+                            <StackPanel Grid.Column="1" Visibility="{Binding TifNavigasyonButtonEtkin, RelativeSource={RelativeSource TemplatedParent}}" Orientation="Horizontal">
+                                <RepeatButton Command="{Binding TifViewerBack, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Önceki Sayfa">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="246" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                </RepeatButton>
+                                <TextBlock Text="{Binding Sayfa, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" />
+                                <RepeatButton Command="{Binding TifViewerNext, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Sonraki Sayfa">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="247" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                </RepeatButton>
+                            </StackPanel>
+                            <Button Grid.Column="2" Command="{Binding Yazdır, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Button.Content>
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="16" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                </Button.Content>
+                            </Button>
+                            <Slider Grid.Column="3"
+                                IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
+                                Margin="2"
+                                Style="{StaticResource Horizontal_Slider}"
+                                AutoToolTipPlacement="TopLeft" Minimum="0.01" SmallChange="1"
+                                Value="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Slider Grid.Column="4"
+                                IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
+                                Margin="2"
+                                Style="{StaticResource Horizontal_Slider}"
+                                AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="False" Maximum="360" SmallChange="1"
+                                Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -49,7 +49,7 @@ namespace Kutuphane.Model
 
         private bool ödünçVerilebilir = true;
 
-        private string renk = "White";
+        private string renk = "Transparent";
 
         private string resim;
 

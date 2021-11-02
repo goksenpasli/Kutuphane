@@ -73,12 +73,22 @@
                             ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
                             SelectedIndex="{Binding Kitap.KitapDurumId}" />
                     </HeaderedContentControl>
-                    <HeaderedContentControl Header="KİTAP RENK" Grid.Row="4">
+                    <HeaderedContentControl Header="KİTAP&#xA;RENK" Grid.Row="4">
                         <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
                             ItemTemplate="{StaticResource ColorItemTemplate}"
                             ItemsPanel="{StaticResource ColorPanelTemplate}"
                             SelectedValue="{Binding Kitap.Renk}"
-                            SelectedValuePath="Name" />
+                            SelectedValuePath="Name">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Name}" Value="Black">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="KİTAP DİLİ" Grid.Row="5">
                         <ComboBox HorizontalAlignment="Stretch" SelectedItem="{Binding Kitap.KitapDili}">

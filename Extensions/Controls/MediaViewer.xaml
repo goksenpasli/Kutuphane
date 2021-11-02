@@ -8,81 +8,6 @@
     <UserControl.Resources>
         <local:TimespanToSecondsConverter x:Key="TimespanToSecondsConverter" />
         <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <Style x:Key="RightRepeatButton" TargetType="RepeatButton">
-            <Setter Property="Focusable" Value="false" />
-            <Setter Property="IsTabStop" Value="false" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RepeatButton">
-                        <Border Height="5"
-                            Background="Red" BorderBrush="Gray" BorderThickness="0,1,1,1"
-                            CornerRadius="0.5" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="LeftRepeatButton" TargetType="RepeatButton">
-            <Setter Property="Focusable" Value="false" />
-            <Setter Property="IsTabStop" Value="false" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RepeatButton">
-                        <Border Height="5"
-                            Background="#FFE22828" BorderBrush="Gray" BorderThickness="1,1,0,1"
-                            CornerRadius="0.5" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="SliderThumb" TargetType="Thumb">
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Thumb">
-                        <Ellipse Width="16" Height="16"
-                            Stroke="Gray" StrokeThickness="1"
-                            Fill="Blue" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <ControlTemplate x:Key="Slider" TargetType="Slider">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Track x:Name="PART_Track" Grid.Row="1">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource LeftRepeatButton}" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb Style="{StaticResource SliderThumb}" />
-                    </Track.Thumb>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource RightRepeatButton}" />
-                    </Track.IncreaseRepeatButton>
-                </Track>
-            </Grid>
-        </ControlTemplate>
-        <Style x:Key="Horizontal_Slider" TargetType="Slider">
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="UseLayoutRounding" Value="False" />
-            <Style.Triggers>
-                <Trigger Property="Orientation" Value="Horizontal">
-                    <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="MinHeight" Value="21" />
-                    <Setter Property="Template" Value="{StaticResource Slider}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -143,12 +68,14 @@
                 Grid.Column="5"
                 Width="24" Height="24"
                 Foreground="Blue"
-                FontSize="18" FontFamily="Webdings" Click="SlowBackward_Click" />
+                FontSize="18" FontFamily="Webdings"
+                Click="SlowBackward_Click" />
             <Button x:Name="SlowForward" Content=":"
                 Grid.Column="6"
                 Width="24" Height="24"
                 Foreground="Blue"
-                FontSize="18" FontFamily="Webdings" Click="SlowForward_Click" />
+                FontSize="18" FontFamily="Webdings"
+                Click="SlowForward_Click" />
             <Slider x:Name="Sld"
                 Grid.Column="7"
                 VerticalAlignment="Center"

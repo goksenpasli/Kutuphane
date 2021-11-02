@@ -1,4 +1,5 @@
 ﻿using Kutuphane.ViewModel;
+using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -37,6 +38,6 @@ namespace Kutuphane
             return null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value as BitmapImage;
     }
 }

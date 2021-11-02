@@ -363,10 +363,7 @@
                 <UniformGrid Columns="8" />
             </ItemsPanelTemplate>
             <DataTemplate x:Key="ColorItemTemplate">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="16" Height="16" Fill="{Binding Name}" />
-                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                </StackPanel>
+                <Rectangle Width="32" Height="32" Fill="{Binding Name}" />
             </DataTemplate>
             <Image x:Key="DemirbaşImage"
                 Width="16" Height="16"
