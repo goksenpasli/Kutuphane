@@ -187,7 +187,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Button Visibility="{Binding OpenButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding ResimAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Button Visibility="{Binding OpenButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding DosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
                                     <Image Width="16" Height="16">
                                         <Image.Source>
@@ -200,7 +200,7 @@
                                 </Button.Content>
                             </Button>
                             <StackPanel Grid.Column="1" Visibility="{Binding TifNavigasyonButtonEtkin, RelativeSource={RelativeSource TemplatedParent}}" Orientation="Horizontal">
-                                <RepeatButton Command="{Binding TifViewerBack, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Önceki Sayfa">
+                                <RepeatButton Command="{Binding ViewerBack, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Önceki Sayfa">
                                     <Image Width="16" Height="16">
                                         <Image.Source>
                                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
@@ -211,7 +211,7 @@
                                     </Image>
                                 </RepeatButton>
                                 <TextBlock Text="{Binding Sayfa, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" />
-                                <RepeatButton Command="{Binding TifViewerNext, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Sonraki Sayfa">
+                                <RepeatButton Command="{Binding ViewerNext, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Sonraki Sayfa">
                                     <Image Width="16" Height="16">
                                         <Image.Source>
                                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">

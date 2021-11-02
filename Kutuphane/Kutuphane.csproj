@@ -47,6 +47,9 @@
     <Reference Include="ExcelDataReader, Version=3.7.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.3.7.0-develop00310\lib\net45\ExcelDataReader.dll</HintPath>
     </Reference>
+    <Reference Include="Freeware.Pdf2Png, Version=1.0.1.0, Culture=neutral, PublicKeyToken=0b93ff91d4be458d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Freeware.Pdf2Png.1.0.1\lib\net45\Freeware.Pdf2Png.dll</HintPath>
+    </Reference>
     <Reference Include="NGS.Templater, Version=2.1.5.13808, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\NGS.Templater.dll</HintPath>
@@ -109,6 +112,7 @@
     <Compile Include="ViewModel\DolapDüzenViewModel.cs" />
     <Compile Include="ViewModel\DolapGirişViewModel.cs" />
     <Compile Include="ViewModel\ExtensionMethods.cs" />
+    <Compile Include="ViewModel\PdfViewer.cs" />
     <Compile Include="ViewModel\GecikenKitaplarSimpleViewModel.cs" />
     <Compile Include="ViewModel\GecikenKitaplarViewModel.cs" />
     <Compile Include="ViewModel\KitapGeriAlViewModel.cs" />

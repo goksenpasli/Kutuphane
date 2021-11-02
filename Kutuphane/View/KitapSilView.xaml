@@ -112,10 +112,11 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <viewmodel:ShadowedImage Grid.Column="1"
+                <viewmodel:PdfViewer Grid.Column="1" OpenButtonVisibility="Visible" />
+                <!--<viewmodel:ShadowedImage Grid.Column="1"
                     ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
                     ShowShadow="True"
-                    Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                    Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />-->
             </Grid>
         </GroupBox>
     </Grid>

@@ -21,7 +21,7 @@
                     ItemsPanel="{StaticResource ColorPanelTemplate}"
                     SelectedValue="{Binding YazıRenk, ElementName=UserControl}"
                     SelectedValuePath="Name" />
-                <ComboBox x:Name="Cb" SelectedIndex="0">
+                <ComboBox x:Name="Cb" VerticalContentAlignment="Center" SelectedIndex="0">
                     <ComboBoxItem Height="96">
                         <ComboBoxItem.Style>
                             <Style TargetType="ComboBoxItem">

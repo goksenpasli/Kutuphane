@@ -33,7 +33,7 @@ namespace Extensions
 
         public ImageViewer()
         {
-            ResimAç = new RelayCommand<object>(parameter =>
+            DosyaAç = new RelayCommand<object>(parameter =>
             {
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                 if (openFileDialog.ShowDialog() == true)
@@ -43,42 +43,39 @@ namespace Extensions
                     {
                         case ".tiff":
                         case ".tif":
-                            {
-                                Sayfa = 1;
-                                Decoder = new TiffBitmapDecoder(new Uri(openFileDialog.FileName), BitmapCreateOptions.None, BitmapCacheOption.None);
-                                TifNavigasyonButtonEtkin = Visibility.Visible;
-                                Source = Decoder.Frames[0];
-                                break;
-                            }
+                            Sayfa = 1;
+                            Decoder = new TiffBitmapDecoder(new Uri(openFileDialog.FileName), BitmapCreateOptions.None, BitmapCacheOption.None);
+                            TifNavigasyonButtonEtkin = Visibility.Visible;
+                            Source = Decoder.Frames[0];
+                            break;
+
                         case ".png":
                         case ".jpg":
                         case ".jpeg":
+                            TifNavigasyonButtonEtkin = Visibility.Collapsed;
+                            BitmapImage image = new();
+                            image.BeginInit();
+                            image.CacheOption = BitmapCacheOption.None;
+                            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                            image.UriSource = new Uri(openFileDialog.FileName);
+                            image.EndInit();
+                            if (!image.IsFrozen && image.CanFreeze)
                             {
-                                TifNavigasyonButtonEtkin = Visibility.Collapsed;
-                                BitmapImage image = new();
-                                image.BeginInit();
-                                image.CacheOption = BitmapCacheOption.None;
-                                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                                image.UriSource = new Uri(openFileDialog.FileName);
-                                image.EndInit();
-                                if (!image.IsFrozen && image.CanFreeze)
-                                {
-                                    image.Freeze();
-                                }
-                                Source = image;
-                                break;
+                                image.Freeze();
                             }
+                            Source = image;
+                            break;
                     }
                 }
             });
 
-            TifViewerBack = new RelayCommand<object>(parameter =>
+            ViewerBack = new RelayCommand<object>(parameter =>
             {
                 Sayfa--;
                 Source = Decoder.Frames[Sayfa - 1];
             }, parameter => Decoder != null && Sayfa > 1 && Sayfa <= Decoder.Frames.Count);
 
-            TifViewerNext = new RelayCommand<object>(parameter =>
+            ViewerNext = new RelayCommand<object>(parameter =>
             {
                 Sayfa++;
                 Source = Decoder.Frames[Sayfa - 1];
@@ -179,7 +176,7 @@ namespace Extensions
             }
         }
 
-        public ICommand ResimAç { get; }
+        public ICommand DosyaAç { get; }
 
         public int Sayfa
         {
@@ -215,9 +212,9 @@ namespace Extensions
             }
         }
 
-        public ICommand TifViewerBack { get; }
+        public ICommand ViewerBack { get; }
 
-        public ICommand TifViewerNext { get; }
+        public ICommand ViewerNext { get; }
 
         public ICommand Yazdır { get; }
 
