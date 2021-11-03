@@ -11,6 +11,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP SİL">

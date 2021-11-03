@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,6 +23,8 @@ namespace Extensions
         private TiffBitmapDecoder decoder;
 
         private Visibility openButtonVisibility = Visibility.Collapsed;
+
+        private IEnumerable<int> pages;
 
         private int sayfa = 1;
 
@@ -47,6 +51,7 @@ namespace Extensions
                             Decoder = new TiffBitmapDecoder(new Uri(openFileDialog.FileName), BitmapCreateOptions.None, BitmapCacheOption.None);
                             TifNavigasyonButtonEtkin = Visibility.Visible;
                             Source = Decoder.Frames[0];
+                            Pages = Enumerable.Range(1, Decoder.Frames.Count);
                             break;
 
                         case ".png":
@@ -138,6 +143,8 @@ namespace Extensions
                     }
                 }
             }, parameter => Source is not null);
+
+            PropertyChanged += ImageViewer_PropertyChanged;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -162,6 +169,8 @@ namespace Extensions
             }
         }
 
+        public ICommand DosyaAç { get; }
+
         public Visibility OpenButtonVisibility
         {
             get => openButtonVisibility;
@@ -176,7 +185,19 @@ namespace Extensions
             }
         }
 
-        public ICommand DosyaAç { get; }
+        public IEnumerable<int> Pages
+        {
+            get => pages;
+
+            set
+            {
+                if (pages != value)
+                {
+                    pages = value;
+                    OnPropertyChanged(nameof(Pages));
+                }
+            }
+        }
 
         public int Sayfa
         {
@@ -231,6 +252,14 @@ namespace Extensions
             if (d is ImageViewer imageViewer && imageViewer.Source is not null)
             {
                 imageViewer.Zoom = imageViewer.ActualWidth / imageViewer.Source.Width;
+            }
+        }
+
+        private void ImageViewer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "Sayfa")
+            {
+                Source = Decoder.Frames[Sayfa - 1];
             }
         }
     }

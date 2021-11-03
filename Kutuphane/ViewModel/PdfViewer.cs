@@ -3,6 +3,7 @@ using Freeware;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -11,11 +12,13 @@ namespace Kutuphane.ViewModel
 {
     public class PdfViewer : ImageViewer, IDisposable
     {
+        public static readonly DependencyProperty DpiProperty = DependencyProperty.Register("Dpi", typeof(int), typeof(PdfViewer), new PropertyMetadata(150, DpiChanged));
+
+        private static FileStream pdf;
+
         private bool disposedValue;
 
-        private FileStream pdf;
-
-        private int pdfDpi = 150;
+        private int toplamSayfa;
 
         public PdfViewer()
         {
@@ -26,7 +29,9 @@ namespace Kutuphane.ViewModel
                 if (openFileDialog.ShowDialog() == true)
                 {
                     pdf = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, PdfDpi));
+                    ToplamSayfa = Pdf2Png.ConvertAllPages(pdf, 0).Count;
+                    Pages = Enumerable.Range(1, ToplamSayfa);
+                    Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, Dpi));
                     TifNavigasyonButtonEtkin = Visibility.Visible;
                 }
             });
@@ -34,36 +39,38 @@ namespace Kutuphane.ViewModel
             ViewerBack = new RelayCommand<object>(parameter =>
             {
                 Sayfa--;
-                Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, PdfDpi));
-                if (Source == null)
-                {
-                    MessageBox.Show("Öncesinde Sayfa Yok.");
-                }
-            }, parameter => true);
+                Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, Dpi));
+            }, parameter => Source is not null && Sayfa > 1 && Sayfa <= ToplamSayfa);
 
             ViewerNext = new RelayCommand<object>(parameter =>
             {
                 Sayfa++;
-                Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, PdfDpi));
-                if (Source == null)
-                {
-                    MessageBox.Show("Sonrasında Sayfa Yok.");
-                }
-            }, parameter => true);
+                Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, Dpi));
+            }, parameter => Source is not null && Sayfa >= 1 && Sayfa < ToplamSayfa);
+
+            PropertyChanged += PdfViewer_PropertyChanged;
         }
 
         public new ICommand DosyaAç { get; }
 
-        public int PdfDpi
+        public int Dpi
         {
-            get => pdfDpi;
+            get => (int)GetValue(DpiProperty);
+            set => SetValue(DpiProperty, value);
+        }
+
+        public int[] DpiList { get; set; } = new int[] { 96, 150, 225, 300, 600 };
+
+        public int ToplamSayfa
+        {
+            get => toplamSayfa;
 
             set
             {
-                if (pdfDpi != value)
+                if (toplamSayfa != value)
                 {
-                    pdfDpi = value;
-                    OnPropertyChanged(nameof(PdfDpi));
+                    toplamSayfa = value;
+                    OnPropertyChanged(nameof(ToplamSayfa));
                 }
             }
         }
@@ -90,7 +97,7 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        private BitmapSource BitmapSourceFromByteArray(byte[] buffer)
+        private static BitmapSource BitmapSourceFromByteArray(byte[] buffer)
         {
             if (buffer != null)
             {
@@ -104,6 +111,22 @@ namespace Kutuphane.ViewModel
                 return bitmap;
             }
             return null;
+        }
+
+        private static void DpiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is PdfViewer pdfViewer)
+            {
+                pdfViewer.Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, pdfViewer.Sayfa, (int)e.NewValue));
+            }
+        }
+
+        private void PdfViewer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "Sayfa")
+            {
+                Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, Dpi));
+            }
         }
     }
 }
