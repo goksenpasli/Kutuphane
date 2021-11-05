@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Extensions.Converters
+namespace Extensions
 {
     public class NullToVisibilityConverter : IValueConverter
     {

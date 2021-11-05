@@ -318,6 +318,14 @@
       <Project>{22b9a127-5e74-4534-bfc4-a3349544c52c}</Project>
       <Name>Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TwainControl\TwainControl.csproj">
+      <Project>{e18bdb1b-1d7c-4f60-85b1-53eae13074c4}</Project>
+      <Name>TwainControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwainWpf\TwainWpf.csproj">
+      <Project>{8304c254-e3d2-4553-b596-f028b8d9b740}</Project>
+      <Name>TwainWpf</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Runtime.WindowsRuntime.5.0.0-preview.5.20278.1\build\net45\System.Runtime.WindowsRuntime.targets" Condition="Exists('..\packages\System.Runtime.WindowsRuntime.5.0.0-preview.5.20278.1\build\net45\System.Runtime.WindowsRuntime.targets')" />

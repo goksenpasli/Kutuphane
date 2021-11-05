@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
+    xmlns:TwainControl="clr-namespace:TwainControl;assembly=TwainControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
@@ -290,13 +291,7 @@
                     <RibbonMenuButton KeyTip="O" Label="Barkod Oluştur">
                         <RibbonMenuButton.Resources>
                             <Style TargetType="RibbonMenuItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="RibbonMenuItem">
-                                            <ContentPresenter Content="{TemplateBinding Header}" />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter Property="Template" Value="{StaticResource RibbonMenuButtonEmptyTemplate}" />
                             </Style>
                         </RibbonMenuButton.Resources>
                         <RibbonMenuButton.LargeImageSource>
@@ -315,6 +310,26 @@
                             <TextBox x:Name="Tb" />
                             <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
                         </StackPanel>
+                    </RibbonMenuButton>
+                    <RibbonMenuButton KeyTip="TR" Label="Tarayıcı">
+                        <RibbonMenuButton.Resources>
+                            <Style TargetType="RibbonMenuItem">
+                                <Setter Property="Template" Value="{StaticResource RibbonMenuButtonEmptyTemplate}" />
+                            </Style>
+                        </RibbonMenuButton.Resources>
+                        <RibbonMenuButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="201" />
+                            </MultiBinding>
+                        </RibbonMenuButton.LargeImageSource>
+                        <RibbonMenuButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="201" />
+                            </MultiBinding>
+                        </RibbonMenuButton.SmallImageSource>
+                        <TwainControl:TwainCtrl Width="600" Height="420" />
                     </RibbonMenuButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">

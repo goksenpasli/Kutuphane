@@ -53,7 +53,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="252.8" />
+                        <RowDefinition Height="268" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <HeaderedContentControl Header="AD">
