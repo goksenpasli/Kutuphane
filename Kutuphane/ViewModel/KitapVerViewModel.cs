@@ -3,7 +3,9 @@ using Kutuphane.Model;
 using Kutuphane.Properties;
 using Kutuphane.View;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -15,6 +17,7 @@ namespace Kutuphane.ViewModel
         private İşlem işlem;
 
         private Kişi kişi;
+
         private Kişi seçiliKişi;
 
         public KitapVerViewModel()
@@ -87,15 +90,18 @@ namespace Kutuphane.ViewModel
 
             KitapTarananEvrakAktar = new RelayCommand<object>(parameter =>
             {
-                if (parameter is BitmapFrame seçiliResim && SeçiliKişi is not null)
+                if (parameter is ObservableCollection<BitmapFrame> seçiliResimler && SeçiliKişi is not null)
                 {
-                    var filename = Guid.NewGuid() + ".jpg";
-                    File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", seçiliResim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
-                    SeçiliKişi.TutanakYolu.Add(filename);
+                    foreach (var resim in seçiliResimler)
+                    {
+                        var filename = Guid.NewGuid() + ".jpg";
+                        File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                        SeçiliKişi.TutanakYolu.Add(filename);
+                    }
                     MainViewModel.DatabaseSave.Execute(null);
                     _ = MessageBox.Show("Taranan Evrak Eklendi.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }, parameter => parameter is BitmapFrame && SeçiliKişi is not null);
+            }, parameter => parameter is ObservableCollection<BitmapFrame> seçiliResimler && seçiliResimler.Any() && SeçiliKişi is not null);
 
             İşlem.GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? İşlem.BaşlangıçTarihi.İşGünüEkle(İşlem.KitapGün) : İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
@@ -132,6 +138,10 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public ICommand KitapTarananEvrakAktar { get; }
+
+        public ICommand KitapVer { get; }
+
         public Kişi SeçiliKişi
         {
             get => seçiliKişi;
@@ -145,10 +155,6 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
-
-        public ICommand KitapTarananEvrakAktar { get; }
-
-        public ICommand KitapVer { get; }
 
         private static bool KitapAlabilir(object parameter) => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir;
 

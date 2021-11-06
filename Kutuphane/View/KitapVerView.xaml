@@ -268,7 +268,7 @@
                             Bw="True" />
                         <Button Grid.Row="2" Grid.Column="1"
                             Command="{Binding KitapTarananEvrakAktar, Mode=OneWay}"
-                            CommandParameter="{Binding ElementName=twainCtrl, Mode=OneWay, Path=SeçiliResim}">
+                            CommandParameter="{Binding ElementName=twainCtrl, Mode=OneWay, Path=SeçiliResimler}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="32" Height="32">
                                     <Image.Source>

@@ -82,11 +82,6 @@ namespace TwainControl
                 }
             }, parameter => !Environment.Is64BitProcess);
 
-            Aktar = new RelayCommand<object>(parameter =>
-            {
-                SeçiliResim = parameter as BitmapFrame;
-                OnPropertyChanged(nameof(SeçiliResim));
-            }, parameter => true);
 
             ResimSil = new RelayCommand<object>(parameter => Resimler?.Remove(parameter as BitmapFrame), parameter => true);
 
@@ -144,8 +139,6 @@ namespace TwainControl
                 }
             }
         }
-
-        public ICommand Aktar { get; }
 
         public bool ArayüzEtkin
         {

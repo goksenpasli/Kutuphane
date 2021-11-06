@@ -179,7 +179,7 @@
                                 </Image.LayoutTransform>
                             </Image>
                         </ScrollViewer>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="1" Visibility="{Binding ToolBarVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />

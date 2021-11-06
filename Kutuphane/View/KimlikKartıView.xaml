@@ -133,7 +133,7 @@
                                     <BlockUIContainer>
                                         <viewmodel:ShadowedImage Width="90" Height="110"
                                             ShowShadow="True"
-                                            Source="{Binding Resim, Converter={StaticResource LocalDataImageFilePathImageUriConverter}}" />
+                                            Source="{Binding Resim, Converter={StaticResource PictureImageFilePathImageUriConverter}}" />
                                     </BlockUIContainer>
                                 </TableCell>
                             </TableRow>

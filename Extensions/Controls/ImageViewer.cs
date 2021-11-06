@@ -33,6 +33,8 @@ namespace Extensions
 
         private Visibility tifNavigasyonButtonEtkin = Visibility.Collapsed;
 
+        private Visibility toolBarVisibility;
+
         static ImageViewer()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageViewer), new FrameworkPropertyMetadata(typeof(ImageViewer)));
@@ -254,6 +256,20 @@ namespace Extensions
                 {
                     tifNavigasyonButtonEtkin = value;
                     OnPropertyChanged(nameof(TifNavigasyonButtonEtkin));
+                }
+            }
+        }
+
+        public Visibility ToolBarVisibility
+        {
+            get { return toolBarVisibility; }
+
+            set
+            {
+                if (toolBarVisibility != value)
+                {
+                    toolBarVisibility = value;
+                    OnPropertyChanged(nameof(ToolBarVisibility));
                 }
             }
         }
