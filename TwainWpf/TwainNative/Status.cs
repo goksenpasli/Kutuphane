@@ -6,6 +6,7 @@ namespace TwainWpf.TwainNative
     public class Status
     {
         public ConditionCode ConditionCode;
+
         public short Reserved;
     }
 }

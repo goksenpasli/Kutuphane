@@ -82,7 +82,6 @@ namespace TwainControl
                 }
             }, parameter => !Environment.Is64BitProcess);
 
-
             ResimSil = new RelayCommand<object>(parameter => Resimler?.Remove(parameter as BitmapFrame), parameter => true);
 
             Kaydet = new RelayCommand<object>(parameter =>
@@ -117,11 +116,6 @@ namespace TwainControl
             }, parameter => true);
 
             Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
-        }
-
-        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            Properties.Settings.Default.Save();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -373,6 +367,11 @@ namespace TwainControl
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

@@ -4,38 +4,38 @@ namespace TwainWpf
 {
     public class ResolutionSettings : INotifyPropertyChanged
     {
-        int? _dpi;
+        private int? _dpi;
 
         /// <summary>
         /// The DPI to scan at. Set to null to use the current default setting.
         /// </summary>
         public int? Dpi
         {
-            get { return _dpi; }
+            get => _dpi;
             set
             {
                 if (value != _dpi)
                 {
                     _dpi = value;
-                    OnPropertyChanged("Dpi");
+                    OnPropertyChanged(nameof(Dpi));
                 }
             }
         }
 
-        ColourSetting _colourSettings;
+        private ColourSetting _colourSettings;
 
         /// <summary>
         /// The colour settings to use.
         /// </summary>
         public ColourSetting ColourSetting
         {
-            get { return _colourSettings; }
+            get => _colourSettings;
             set
             {
                 if (value != _colourSettings)
                 {
                     _colourSettings = value;
-                    OnPropertyChanged("ColourSetting");
+                    OnPropertyChanged(nameof(ColourSetting));
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace TwainWpf
         /// </summary>
         public static readonly ResolutionSettings Fax = new ResolutionSettings()
         {
-            Dpi = 200,
+            Dpi = 300,
             ColourSetting = ColourSetting.BlackAndWhite
         };
 
@@ -81,10 +81,10 @@ namespace TwainWpf
 
     public enum ColourSetting
     {
-        BlackAndWhite,
+        BlackAndWhite = 0,
 
-        GreyScale,
+        GreyScale = 1,
 
-        Colour
+        Colour = 2
     }
 }

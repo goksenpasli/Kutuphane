@@ -9,8 +9,11 @@ namespace TwainWpf.TwainNative
     public struct TwainVersion
     {
         public short MajorNum;
+
         public short MinorNum;
+
         public Language Language;
+
         public Country Country;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 34)]

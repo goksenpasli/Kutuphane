@@ -19,6 +19,7 @@ namespace TwainWpf.TwainNative
         }
 
         public TwainType TwainType { get; set; }
+
         public int Value { get; set; }
     }
 }

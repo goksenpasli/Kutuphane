@@ -24,5 +24,13 @@ namespace TwainWpf
             : base(message, innerException)
         {
         }
+
+        public FeederEmptyException(string message, TwainNative.TwainResult returnCode) : base(message, returnCode)
+        {
+        }
+
+        public FeederEmptyException(string message, TwainNative.TwainResult returnCode, TwainNative.ConditionCode conditionCode) : base(message, returnCode, conditionCode)
+        {
+        }
     }
 }

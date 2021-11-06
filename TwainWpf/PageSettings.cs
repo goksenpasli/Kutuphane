@@ -9,7 +9,7 @@ namespace TwainWpf
     /// </summary>
     public class PageSettings : INotifyPropertyChanged
     {
-        Orientation _orientation;
+        private Orientation _orientation;
 
         /// <summary>
         /// Gets or sets the page orientation.
@@ -17,25 +17,25 @@ namespace TwainWpf
         /// <value>The orientation.</value>
         public Orientation Orientation
         {
-            get { return _orientation; }
+            get => _orientation;
             set
             {
                 if (value != _orientation)
                 {
                     _orientation = value;
-                    OnPropertyChanged("Orientation");
+                    OnPropertyChanged(nameof(Orientation));
                 }
             }
         }
 
-        PageType _size;
+        private PageType _size;
         /// <summary>
         /// Gets or sets the Page Size.
         /// </summary>
         /// <value>The size.</value>
         public PageType Size
         {
-            get { return _size; }
+            get => _size;
             set
             {
                 if (value != _size)

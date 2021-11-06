@@ -6,6 +6,7 @@
     public enum FlipRotation
     {
         Book = 0,
+
         FanFold = 1
     }
 }

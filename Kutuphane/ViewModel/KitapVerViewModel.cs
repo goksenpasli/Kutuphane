@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Kutuphane.ViewModel
@@ -94,8 +95,18 @@ namespace Kutuphane.ViewModel
                 {
                     foreach (var resim in seçiliResimler)
                     {
-                        var filename = Guid.NewGuid() + ".jpg";
-                        File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                        string filename = null;
+                        if (resim.Format == PixelFormats.Bgr32)
+                        {
+                            filename = Guid.NewGuid() + ".jpg";
+                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                        }
+                        else if (resim.Format == PixelFormats.Bgra32)
+                        {
+                            filename = Guid.NewGuid() + ".tif";
+                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Tiff));
+                        }
+
                         SeçiliKişi.TutanakYolu.Add(filename);
                     }
                     MainViewModel.DatabaseSave.Execute(null);

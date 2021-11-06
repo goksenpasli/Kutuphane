@@ -212,7 +212,7 @@ namespace Extensions
 
         public Visibility PrintButtonVisibility
         {
-            get { return printButtonVisibility; }
+            get => printButtonVisibility;
 
             set
             {
@@ -262,7 +262,7 @@ namespace Extensions
 
         public Visibility ToolBarVisibility
         {
-            get { return toolBarVisibility; }
+            get => toolBarVisibility;
 
             set
             {

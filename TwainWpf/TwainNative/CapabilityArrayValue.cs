@@ -14,13 +14,7 @@ namespace TwainWpf.TwainNative
     public class CapabilityArrayValue
     {
         public TwainType TwainType { get; set; }
+
         public int ItemCount { get; set; }
-
-        /// <summary>
-        /// The start of the array values
-        /// </summary>
-        byte _valueStart;
-
-
     }
 }

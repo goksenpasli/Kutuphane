@@ -9,55 +9,55 @@ namespace TwainWpf
         private Units _units;
         public Units Units
         {
-            get { return _units; }
+            get => _units;
             set
             {
                 _units = value;
-                OnPropertyChanged("Units");
+                OnPropertyChanged(nameof(Units));
             }
         }
 
         private float _top;
         public float Top
         {
-            get { return _top; }
+            get => _top;
             private set
             {
                 _top = value;
-                OnPropertyChanged("Top");
+                OnPropertyChanged(nameof(Top));
             }
         }
 
         private float _left;
         public float Left
         {
-            get { return _left; }
+            get => _left;
             private set
             {
                 _left = value;
-                OnPropertyChanged("Left");
+                OnPropertyChanged(nameof(Left));
             }
         }
 
         private float _bottom;
         public float Bottom
         {
-            get { return _bottom; }
+            get => _bottom;
             private set
             {
                 _bottom = value;
-                OnPropertyChanged("Bottom");
+                OnPropertyChanged(nameof(Bottom));
             }
         }
 
         private float _right;
         public float Right
         {
-            get { return _right; }
+            get => _right;
             private set
             {
                 _right = value;
-                OnPropertyChanged("Right");
+                OnPropertyChanged(nameof(Right));
             }
         }
 

@@ -1,7 +1,7 @@
 namespace TwainWpf.TwainNative
 {
-	public enum ConditionCode : short
-	{
+    public enum ConditionCode : short
+    {
         Success = 0,
 
         /// <summary>
@@ -69,5 +69,5 @@ namespace TwainWpf.TwainNative
         FileWriteError = 22,
 
         CheckDeviceOnline = 23
-	}
+    }
 }

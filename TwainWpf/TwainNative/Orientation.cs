@@ -9,17 +9,24 @@ namespace TwainWpf.TwainNative
         /// Default is zero rotation, same as Portrait.
         /// </summary>
         Default = 0,
-        Rotate90 = 1,
-        Rotate180 = 2,
-        Rotate270 = 3,
+
         Portrait = Default,
+
+        Rotate90 = 1,
+
+        Rotate180 = 2,
+
+        Rotate270 = 3,
+
         Landscape = Rotate270,
 
         /// <summary>
-        /// Following require Twain 2.0+. 
+        /// Following require Twain 2.0+.
         /// </summary>
         Auto = 4,
+
         AutoText = 5,
+
         AutoPicture = 6
     }
 }

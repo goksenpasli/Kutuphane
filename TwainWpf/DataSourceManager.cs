@@ -9,13 +9,12 @@ namespace TwainWpf
     /// <summary>
     /// DataSourceManager
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public class DataSourceManager : IDisposable
     {
-        private readonly IWindowsMessageHook _messageHook;
         private Event _eventMessage;
 
-        public Identity ApplicationId { get; private set; }
+        public Identity ApplicationId { get; }
         public DataSource DataSource { get; private set; }
 
         public DataSourceManager(Identity applicationId, IWindowsMessageHook messageHook)
@@ -26,9 +25,9 @@ namespace TwainWpf
             ScanningComplete += delegate { };
             TransferImage += delegate { };
 
-            _messageHook = messageHook;
-            _messageHook.FilterMessageCallback = FilterMessage;
-            IntPtr windowHandle = _messageHook.WindowHandle;
+            MessageHook = messageHook;
+            MessageHook.FilterMessageCallback = FilterMessage;
+            IntPtr windowHandle = MessageHook.WindowHandle;
 
             _eventMessage.EventPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(WindowsMessage)));
 
@@ -46,7 +45,7 @@ namespace TwainWpf
                 //according to the 2.0 spec (2-10) if (applicationId.SupportedGroups | DataGroup.Dsm2) > 0 
                 //then we should call DM_Entry(id, 0, DG_Control, DAT_Entrypoint, MSG_Get, wh)
                 //right here
-                DataSource = DataSource.GetDefault(ApplicationId, _messageHook);
+                DataSource = DataSource.GetDefault(ApplicationId, MessageHook);
             }
             else
             {
@@ -66,7 +65,7 @@ namespace TwainWpf
 
         public event EventHandler<TransferImageEventArgs> TransferImage;
 
-        public IWindowsMessageHook MessageHook { get { return _messageHook; } }
+        public IWindowsMessageHook MessageHook { get; }
 
         public void StartScan(ScanSettings settings)
         {
@@ -74,7 +73,7 @@ namespace TwainWpf
 
             try
             {
-                _messageHook.UseFilter = true;
+                MessageHook.UseFilter = true;
                 scanning = DataSource.Open(settings);
             }
             catch (TwainException)
@@ -227,7 +226,7 @@ namespace TwainWpf
                         using (var renderer = new BitmapRenderer(hbitmap))
                         {
                             var args = new TransferImageEventArgs(renderer.RenderToBitmap(), pendingTransfer.Count != 0);
-                            if (TransferImage != null) TransferImage(this, args);
+                            TransferImage?.Invoke(this, args);
                             if (!args.ContinueScanning)
                                 break;
                         }
@@ -254,8 +253,7 @@ namespace TwainWpf
             DataSource.Close();
             try
             {
-                if (ScanningComplete != null)
-                    ScanningComplete(this, new ScanningCompleteEventArgs(exception));
+                ScanningComplete?.Invoke(this, new ScanningCompleteEventArgs(exception));
             }
             catch
             {
@@ -265,13 +263,13 @@ namespace TwainWpf
 
         protected void EndingScan()
         {
-            _messageHook.UseFilter = false;
+            MessageHook.UseFilter = false;
         }
 
         public void SelectSource()
         {
             DataSource.Dispose();
-            DataSource = DataSource.UserSelected(ApplicationId, _messageHook);
+            DataSource = DataSource.UserSelected(ApplicationId, MessageHook);
         }
 
         public void SelectSource(DataSource dataSource)
@@ -294,7 +292,7 @@ namespace TwainWpf
             {
                 DataSource.Dispose();
 
-                IntPtr windowHandle = _messageHook.WindowHandle;
+                IntPtr windowHandle = MessageHook.WindowHandle;
 
                 if (ApplicationId.Id != 0)
                 {

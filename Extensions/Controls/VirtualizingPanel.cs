@@ -286,7 +286,7 @@ namespace Extensions
         /// <param name="lastVisibleItemIndex">The item index of the last visible item</param>
         private void GetVisibleRange(out int firstVisibleItemIndex, out int lastVisibleItemIndex)
         {
-            var childSize = GetChildSize(_extent);
+            _ = GetChildSize(_extent);
 
             var pageSize = Columns * Rows;
             var pageNumber = Orientation == Orientation.Horizontal ?

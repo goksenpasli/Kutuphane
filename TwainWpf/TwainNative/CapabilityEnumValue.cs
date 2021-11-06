@@ -13,16 +13,14 @@ namespace TwainWpf.TwainNative
     public class CapabilityEnumValue
     {
         public TwainType TwainType { get; set; }
+
         public int ItemCount { get; set; }
 
         public int CurrentIndex { get; set; }
+
         public int DefaultIndex { get; set; }
 
 #pragma warning disable 169
-        /// <summary>
-        /// The start of the array values
-        /// </summary>
-        byte _valueStart;
 #pragma warning restore 169
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace TwainWpf.TwainNative
 {
     /// <summary>
-    /// DAT_USERINTERFACE. Coordinates UI between application and data source. 
+    /// DAT_USERINTERFACE. Coordinates UI between application and data source.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 2)]
     public class UserInterface

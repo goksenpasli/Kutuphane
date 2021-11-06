@@ -23,7 +23,7 @@ namespace TwainWpf
             Dispose(false);
         }
 
-        public Identity SourceId { get; private set; }
+        public Identity SourceId { get; }
 
         public void NegotiateTransferCount(ScanSettings scanSettings)
         {
@@ -43,7 +43,6 @@ namespace TwainWpf
 
         public void NegotiateFeeder(ScanSettings scanSettings)
         {
-
             try
             {
                 if (scanSettings.UseDocumentFeeder.HasValue)
@@ -79,7 +78,6 @@ namespace TwainWpf
             {
                 // Do nothing if the data source does not support the requested capability
             }
-
         }
 
         public PixelType GetPixelType(ScanSettings scanSettings)
@@ -187,7 +185,6 @@ namespace TwainWpf
             {
                 // Do nothing if the data source does not support the requested capability
             }
-
         }
 
         public void NegotiateLightPath(ScanSettings scanSettings)
@@ -196,7 +193,7 @@ namespace TwainWpf
             {
                 if (scanSettings.UseFilmScanner.HasValue && SupportsFilmScanner)
                 {
-                    if (scanSettings.UseFilmScanner.Value == true)
+                    if (scanSettings.UseFilmScanner.Value)
                     {
                         Capability.SetBasicCapability(Capabilities.Lightpath, (ushort)Lightpath.Transmissive, TwainType.UInt16, _applicationId, SourceId);
                     }
@@ -211,7 +208,6 @@ namespace TwainWpf
                 // Do nothing if the data source does not support the requested capability 
 
             }
-
         }
 
         public void NegotiateResolution(ScanSettings scanSettings)
@@ -451,7 +447,7 @@ namespace TwainWpf
         {
             var ui = new UserInterface
             {
-                ShowUI = (short) (settings.ShowTwainUi ? 1 : 0),
+                ShowUI = (short)(settings.ShowTwainUi ? 1 : 0),
                 ModalUI = 1,
                 ParentHand = _messageHook.WindowHandle
             };
@@ -576,7 +572,7 @@ namespace TwainWpf
 
             return null;
         }
-        
+
         public void Dispose()
         {
             Dispose(true);

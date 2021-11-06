@@ -20,16 +20,13 @@ namespace TwainWpf
         /// <value><c>true</c> if [automatic deskew]; otherwise, <c>false</c>.</value>
         public bool AutomaticDeskew
         {
-            get
-            {
-                return _automaticDeskew;
-            }
+            get => _automaticDeskew;
             set
             {
                 if (value != _automaticDeskew)
                 {
                     _automaticDeskew = value;
-                    OnPropertyChanged("AutomaticDeskew");
+                    OnPropertyChanged(nameof(AutomaticDeskew));
                 }
             }
         }
@@ -42,16 +39,13 @@ namespace TwainWpf
         /// </value>
         public bool AutomaticBorderDetection
         {
-            get
-            {
-                return _automaticBorderDetection;
-            }
+            get => _automaticBorderDetection;
             set
             {
                 if (value != _automaticBorderDetection)
                 {
                     _automaticBorderDetection = value;
-                    OnPropertyChanged("AutomaticBorderDetection");
+                    OnPropertyChanged(nameof(AutomaticBorderDetection));
                 }
             }
         }
@@ -62,16 +56,13 @@ namespace TwainWpf
         /// <value><c>true</c> if [automatic rotate]; otherwise, <c>false</c>.</value>
         public bool AutomaticRotate
         {
-            get
-            {
-                return _automaticRotate;
-            }
+            get => _automaticRotate;
             set
             {
                 if (value != _automaticRotate)
                 {
                     _automaticRotate = value;
-                    OnPropertyChanged("AutomaticRotate");
+                    OnPropertyChanged(nameof(AutomaticRotate));
                 }
             }
         }
@@ -82,21 +73,16 @@ namespace TwainWpf
         /// <value>The flip side rotation.</value>
         public FlipRotation FlipSideRotation
         {
-            get
-            {
-                return _flipSideRotation;
-            }
+            get => _flipSideRotation;
             set
             {
                 if (value != _flipSideRotation)
                 {
                     _flipSideRotation = value;
-                    OnPropertyChanged("FlipSideRotation");
+                    OnPropertyChanged(nameof(FlipSideRotation));
                 }
             }
         }
-
-
 
         #region INotifyPropertyChanged Members
 

@@ -1,7 +1,7 @@
 namespace TwainWpf.TwainNative
 {
-	public enum Language : short
-	{
-		USA = 13
-	}
+    public enum Language : short
+    {
+        USA = 13
+    }
 }

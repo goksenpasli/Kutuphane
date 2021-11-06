@@ -7,6 +7,7 @@ namespace TwainWpf.TwainNative
     public struct Event
     {
         public IntPtr EventPtr;
+
         public Message Message;
     }
 }

@@ -4,7 +4,7 @@ namespace TwainWpf
 {
     public class ScanningCompleteEventArgs : EventArgs
     {
-        public Exception Exception { get; private set; }
+        public Exception Exception { get; }
 
         public ScanningCompleteEventArgs(Exception exception)
         {

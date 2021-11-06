@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using TwainWpf.Win32;
+
 // ReSharper disable NotAccessedField.Local
 
 namespace TwainWpf.TwainNative
@@ -16,9 +17,12 @@ namespace TwainWpf.TwainNative
     [StructLayout(LayoutKind.Sequential, Pack = 2)]
     public class TwainCapability : IDisposable
     {
-        Capabilities _capabilities;
-        ContainerType _containerType;
+        private readonly Capabilities _capabilities;
+
+        private readonly ContainerType _containerType;
+
         private readonly IntPtr _handle;
+
         private readonly object _value;
 
         protected TwainCapability(Capabilities capabilities, ContainerType containerType, object value)

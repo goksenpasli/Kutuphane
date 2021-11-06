@@ -16,6 +16,7 @@ namespace TwainWpf.TwainNative
     public class PendingXfers
     {
         public short Count;
+
         public int Eoj;
     }
 }

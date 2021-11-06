@@ -6,15 +6,24 @@ namespace TwainWpf.Wpf
 {
     public class WindowMessageHook : IWindowsMessageHook
     {
-        private readonly HwndSource _source;
         private readonly WindowInteropHelper _interopHelper;
+
+        private readonly HwndSource _source;
+
         private bool _usingFilter;
+
+        public WindowMessageHook(Window window)
+        {
+            _source = (HwndSource)PresentationSource.FromDependencyObject(window);
+            _interopHelper = new WindowInteropHelper(window);
+        }
 
         public FilterMessage FilterMessageCallback { get; set; }
 
         public bool UseFilter
         {
-            get { return _usingFilter; }
+            get => _usingFilter;
+
             set
             {
                 if (!_usingFilter && value)
@@ -36,12 +45,6 @@ namespace TwainWpf.Wpf
             {
                 return _interopHelper.Handle;
             }
-        }
-
-        public WindowMessageHook(Window window)
-        {
-            _source = (HwndSource)PresentationSource.FromDependencyObject(window);
-            _interopHelper = new WindowInteropHelper(window);
         }
 
         public IntPtr FilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
