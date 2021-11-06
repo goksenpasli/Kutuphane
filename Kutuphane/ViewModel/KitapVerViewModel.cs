@@ -3,8 +3,10 @@ using Kutuphane.Model;
 using Kutuphane.Properties;
 using Kutuphane.View;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Kutuphane.ViewModel
 {
@@ -13,6 +15,7 @@ namespace Kutuphane.ViewModel
         private İşlem işlem;
 
         private Kişi kişi;
+        private Kişi seçiliKişi;
 
         public KitapVerViewModel()
         {
@@ -82,6 +85,18 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => KitapAlabilir(parameter));
 
+            KitapTarananEvrakAktar = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is BitmapFrame seçiliResim && SeçiliKişi is not null)
+                {
+                    var filename = Guid.NewGuid() + ".jpg";
+                    File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", seçiliResim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                    SeçiliKişi.TutanakYolu.Add(filename);
+                    MainViewModel.DatabaseSave.Execute(null);
+                    _ = MessageBox.Show("Taranan Evrak Eklendi.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }, parameter => parameter is BitmapFrame && SeçiliKişi is not null);
+
             İşlem.GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? İşlem.BaşlangıçTarihi.İşGünüEkle(İşlem.KitapGün) : İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
             İşlem.PropertyChanged += İşlem_PropertyChanged;
@@ -116,6 +131,22 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        public Kişi SeçiliKişi
+        {
+            get => seçiliKişi;
+
+            set
+            {
+                if (seçiliKişi != value)
+                {
+                    seçiliKişi = value;
+                    OnPropertyChanged(nameof(SeçiliKişi));
+                }
+            }
+        }
+
+        public ICommand KitapTarananEvrakAktar { get; }
 
         public ICommand KitapVer { get; }
 

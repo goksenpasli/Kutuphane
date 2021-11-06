@@ -51,6 +51,8 @@ namespace Kutuphane.Model
 
         private string telefon;
 
+        private ObservableCollection<string> tutanakYolu=new();
+
         [XmlAttribute(AttributeName = "Ad")]
         public string Ad
         {
@@ -364,6 +366,21 @@ namespace Kutuphane.Model
                 {
                     telefon = value;
                     OnPropertyChanged(nameof(Telefon));
+                }
+            }
+        }
+
+        [XmlElement(ElementName = "TutanakYolu")]
+        public ObservableCollection<string> TutanakYolu
+        {
+            get { return tutanakYolu; }
+
+            set
+            {
+                if (tutanakYolu != value)
+                {
+                    tutanakYolu = value;
+                    OnPropertyChanged(nameof(TutanakYolu));
                 }
             }
         }

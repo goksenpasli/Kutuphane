@@ -306,7 +306,7 @@
                                 <Binding Source="38" />
                             </MultiBinding>
                         </RibbonMenuButton.SmallImageSource>
-                        <StackPanel>
+                        <StackPanel Width="200">
                             <TextBox x:Name="Tb" />
                             <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
                         </StackPanel>
@@ -329,7 +329,9 @@
                                 <Binding Source="201" />
                             </MultiBinding>
                         </RibbonMenuButton.SmallImageSource>
-                        <TwainControl:TwainCtrl Width="600" Height="420" />
+                        <Extensions:ResizablePanel Width="600" Height="320" MinWidth="600" MinHeight="320">
+                            <TwainControl:TwainCtrl />
+                        </Extensions:ResizablePanel>
                     </RibbonMenuButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">

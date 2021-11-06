@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -25,6 +26,8 @@ namespace Extensions
         private Visibility openButtonVisibility = Visibility.Collapsed;
 
         private IEnumerable<int> pages;
+
+        private Visibility printButtonVisibility = Visibility.Collapsed;
 
         private int sayfa = 1;
 
@@ -85,6 +88,10 @@ namespace Extensions
                 Sayfa++;
                 Source = Decoder.Frames[Sayfa - 1];
             }, parameter => Decoder != null && Sayfa >= 1 && Sayfa < Decoder.Frames.Count);
+
+            Resize = new RelayCommand<object>(parameter => Zoom = ActualWidth == 0 ? 1 : ActualWidth / Source.Width, parameter => Source is not null);
+
+            OrijinalDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(((BitmapImage)Source).UriSource.AbsolutePath), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && Source is not null && Source is BitmapImage image && File.Exists(image.UriSource.AbsolutePath));
 
             Yazdır = new RelayCommand<object>(parameter =>
             {
@@ -185,6 +192,8 @@ namespace Extensions
             }
         }
 
+        public ICommand OrijinalDosyaAç { get; }
+
         public IEnumerable<int> Pages
         {
             get => pages;
@@ -198,6 +207,22 @@ namespace Extensions
                 }
             }
         }
+
+        public Visibility PrintButtonVisibility
+        {
+            get { return printButtonVisibility; }
+
+            set
+            {
+                if (printButtonVisibility != value)
+                {
+                    printButtonVisibility = value;
+                    OnPropertyChanged(nameof(PrintButtonVisibility));
+                }
+            }
+        }
+
+        public ICommand Resize { get; }
 
         public int Sayfa
         {
@@ -251,7 +276,9 @@ namespace Extensions
         {
             if (d is ImageViewer imageViewer && imageViewer.Source is not null)
             {
-                imageViewer.Zoom = imageViewer.ActualWidth / imageViewer.Source.Width;
+                imageViewer.Zoom = !double.IsNaN(imageViewer.Width)
+                    ? imageViewer.Width == 0 ? 1 : imageViewer.Width / imageViewer.Source.Width
+                    : imageViewer.ActualWidth == 0 ? 1 : imageViewer.ActualWidth / imageViewer.Source.Width;
             }
         }
 

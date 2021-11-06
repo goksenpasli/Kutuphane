@@ -31,8 +31,6 @@ namespace TwainControl
 
         private bool? bw = false;
 
-        private double çözünürlük = 72d;
-
         private bool deskew;
 
         private bool disposedValue;
@@ -74,7 +72,7 @@ namespace TwainControl
                     ShowProgressIndicatorUi = ShowProgress,
                     UseDuplex = Duplex,
                     ShouldTransferAllPages = true,
-                    Resolution = new ResolutionSettings { ColourSetting = Bw ?? false ? ColourSetting.BlackAndWhite : ColourSetting.Colour, Dpi = (int)Çözünürlük },
+                    Resolution = new ResolutionSettings { ColourSetting = Bw ?? false ? ColourSetting.BlackAndWhite : ColourSetting.Colour, Dpi = (int)Properties.Settings.Default.Çözünürlük },
                     Rotation = new RotationSettings { AutomaticDeskew = Deskew, AutomaticRotate = AutoRotate, AutomaticBorderDetection = BorderDetect }
                 };
                 if (Tarayıcılar.Count > 0)
@@ -122,6 +120,13 @@ namespace TwainControl
                     }
                 }
             }, parameter => true);
+
+            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+        }
+
+        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -194,20 +199,6 @@ namespace TwainControl
                 {
                     bw = value;
                     OnPropertyChanged(nameof(Bw));
-                }
-            }
-        }
-
-        public double Çözünürlük
-        {
-            get => çözünürlük;
-
-            set
-            {
-                if (çözünürlük != value)
-                {
-                    çözünürlük = value;
-                    OnPropertyChanged(nameof(Çözünürlük));
                 }
             }
         }

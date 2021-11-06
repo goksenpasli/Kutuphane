@@ -271,7 +271,7 @@
             <Style TargetType="Extensions:ContentToggleButton">
                 <Setter Property="CornerRadius" Value="0" />
             </Style>
-            <Kutuphane:DataImageFilePathImageUriConverter x:Key="LocalDataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
+            <Kutuphane:DataImageFilePathImageUriConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
                     <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72"
@@ -283,7 +283,7 @@
                                     <DataTrigger Binding="{Binding KişiResimGöster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Value="true">
                                         <Setter Property="Source">
                                             <Setter.Value>
-                                                <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
+                                                <Binding Converter="{StaticResource PictureImageFilePathImageUriConverter}" Path="Resim" />
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -305,7 +305,7 @@
                                     <DataTrigger Binding="{Binding KişiResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
                                         <Setter Property="Source">
                                             <Setter.Value>
-                                                <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
+                                                <Binding Converter="{StaticResource PictureImageFilePathImageUriConverter}" Path="Resim" />
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -337,7 +337,7 @@
                                     <DataTrigger Binding="{Binding KitapResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
                                         <Setter Property="Source">
                                             <Setter.Value>
-                                                <Binding Converter="{StaticResource LocalDataImageFilePathImageUriConverter}" Path="Resim" />
+                                                <Binding Converter="{StaticResource PictureImageFilePathImageUriConverter}" Path="Resim" />
                                             </Setter.Value>
                                         </Setter>
                                     </DataTrigger>
@@ -407,6 +407,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
@@ -423,7 +424,19 @@
                                 </Image>
                             </Button.Content>
                         </Button>
-                        <StackPanel Grid.Column="1" Visibility="{Binding TifNavigasyonButtonEtkin, RelativeSource={RelativeSource TemplatedParent}}" Orientation="Horizontal">
+                        <Button Grid.Column="1" Command="{Binding Resize, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Button.Content>
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="159" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                            </Button.Content>
+                        </Button>
+                        <StackPanel Grid.Column="2" Visibility="{Binding TifNavigasyonButtonEtkin, RelativeSource={RelativeSource TemplatedParent}}" Orientation="Horizontal">
                             <RepeatButton Command="{Binding ViewerBack, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Önceki Sayfa">
                                 <Image Width="16" Height="16">
                                     <Image.Source>
@@ -452,7 +465,7 @@
                                 </Image>
                             </RepeatButton>
                         </StackPanel>
-                        <Button Grid.Column="2" Command="{Binding Yazdır, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Button Grid.Column="3" Visibility="{Binding PrintButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding Yazdır, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
                             <Button.Content>
                                 <Image Width="16" Height="16">
                                     <Image.Source>
@@ -464,24 +477,29 @@
                                 </Image>
                             </Button.Content>
                         </Button>
-                        <Slider Grid.Column="3"
+                        <Slider Grid.Column="4"
                             IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
                             Margin="2"
                             Style="{StaticResource Horizontal_Slider}"
                             AutoToolTipPlacement="TopLeft" Minimum="0.01" SmallChange="1"
                             Value="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}}" />
-                        <Slider Grid.Column="4"
+                        <Slider Grid.Column="5"
                             IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
                             Margin="2"
                             Style="{StaticResource Horizontal_Slider}"
                             AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="False" Maximum="360" SmallChange="1"
                             Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
-                        <ComboBox Grid.Column="5"
+                        <ComboBox Grid.Column="6"
                             ItemsSource="{Binding DpiList, RelativeSource={RelativeSource TemplatedParent}}"
                             ItemStringFormat="{}{0} Dpi"
                             SelectedItem="{Binding Dpi, StringFormat=Dpi, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                 </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.56" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
             </ControlTemplate>
             <ControlTemplate x:Key="RibbonMenuButtonEmptyTemplate" TargetType="{x:Type RibbonMenuItem}">
                 <ContentPresenter Content="{TemplateBinding Header}" />

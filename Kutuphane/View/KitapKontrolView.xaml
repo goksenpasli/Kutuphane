@@ -151,7 +151,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="KİTAP&#xA;DURUM" Extensions:GridViewSort.PropertyName="KitapDurumId">
+                        <GridViewColumn Header="KİTAP DURUM" Extensions:GridViewSort.PropertyName="KitapDurumId">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox IsEnabled="False"

@@ -17,12 +17,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ComboBox Grid.Row="0"
-                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
-                    IsTabStop="False"
-                    SelectedItem="{Binding Barkod.BarcodeFormat}" />
+            ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
+            IsTabStop="False"
+            SelectedItem="{Binding Barkod.BarcodeFormat}" />
         <Viewbox Grid.Row="1" Grid.Column="1"
-                    Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <Image Source="{Binding Barkod.BarkodImage}">
                 <Image.ContextMenu>
                     <ContextMenu>
