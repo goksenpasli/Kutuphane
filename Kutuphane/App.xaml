@@ -28,6 +28,8 @@
             <Extensions:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
             <Kutuphane:DataImageFilePathImageUriConverter x:Key="DataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+            <Kutuphane:DataImageFilePathImageUriConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="150" />
+            <Kutuphane:PdfImageFilePathImageUriConverter x:Key="PdfImageFilePathImageUriConverter" />
             <ObjectDataProvider x:Key="ColorList" MethodName="GetProperties" ObjectInstance="{x:Type Colors}" />
             <ObjectDataProvider x:Key="KitapDurumu" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
                 <ObjectDataProvider.MethodParameters>
@@ -414,6 +416,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Button Visibility="{Binding OpenButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding DosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
                             <Button.Content>
@@ -496,6 +499,18 @@
                             ItemsSource="{Binding DpiList, RelativeSource={RelativeSource TemplatedParent}}"
                             ItemStringFormat="{}{0} Dpi"
                             SelectedItem="{Binding Dpi, StringFormat=Dpi, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Button Grid.Column="7" Command="{Binding OrijinalPdfDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="{Binding PdfFilePath, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Button.Content>
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="24" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                            </Button.Content>
+                        </Button>
                     </Grid>
                 </Grid>
                 <ControlTemplate.Triggers>
@@ -504,14 +519,12 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-            <Kutuphane:DataImageFilePathImageUriConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="150" />
-            <Kutuphane:PdfImageFilePathImageUriConverter x:Key="PdfImageFilePathImageUriConverter" />
             <DataTemplate x:Key="ImageViewerTemplate">
-                <Extensions:ImageViewer Width="210" Height="297" Source="{Binding Converter={StaticResource ScannedImageFilePathImageUriConverter}, Mode=OneWay}" />
+                <Extensions:ImageViewer Width="315" Height="445" Source="{Binding Converter={StaticResource ScannedImageFilePathImageUriConverter}, Mode=OneWay}" />
             </DataTemplate>
             <DataTemplate x:Key="PdfiewerTemplate">
-                <ViewModel:PdfViewer Width="210" Height="297"
-                    Source="{Binding Converter={StaticResource PdfImageFilePathImageUriConverter}, Mode=OneWay}"
+                <ViewModel:PdfViewer Width="315" Height="445"
+                    PdfFilePath="{Binding Mode=OneWay, Converter={StaticResource PdfImageFilePathImageUriConverter}}"
                     Template="{StaticResource PdfViewerControlTemplate}" />
             </DataTemplate>
             <ViewModel:ViewerTemplateSelector x:Key="ViewerSelector" Image="{StaticResource ImageViewerTemplate}" Pdf="{StaticResource PdfiewerTemplate}" />

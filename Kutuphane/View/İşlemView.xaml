@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Kutuphane.Model"
     d:DataContext="{d:DesignInstance Type=model:İşlem}"
-    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="185" d:DesignWidth="185" UseLayoutRounding="True"
     mc:Ignorable="d">
     <GroupBox Header="İŞLEM" Grid.Row="1" Grid.Column="0">
         <StackPanel>
@@ -20,6 +20,7 @@
             </HeaderedContentControl>
             <TextBlock Foreground="Red" FontSize="16">
                 <Run Text="GETİRME TARİHİ" />
+                <LineBreak />
                 <Run Text="{Binding GeriGetirmeTarihi, StringFormat=\{0:D\}}" Language="tr-tr" />
             </TextBlock>
         </StackPanel>

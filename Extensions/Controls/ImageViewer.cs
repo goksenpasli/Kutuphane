@@ -93,7 +93,7 @@ namespace Extensions
 
             Resize = new RelayCommand<object>(parameter => Zoom = ActualWidth == 0 ? 1 : ActualWidth / Source.Width, parameter => Source is not null);
 
-            OrijinalDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(((BitmapImage)Source).UriSource.AbsolutePath), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && Source is not null && Source is BitmapImage image && File.Exists(image.UriSource.AbsolutePath));
+            OrijinalResimDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(((BitmapImage)Source).UriSource.AbsolutePath), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && Source is not null && Source is BitmapImage image && File.Exists(image.UriSource.AbsolutePath));
 
             Yazdır = new RelayCommand<object>(parameter =>
             {
@@ -194,7 +194,7 @@ namespace Extensions
             }
         }
 
-        public ICommand OrijinalDosyaAç { get; }
+        public ICommand OrijinalResimDosyaAç { get; }
 
         public IEnumerable<int> Pages
         {
@@ -300,7 +300,7 @@ namespace Extensions
 
         private void ImageViewer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is "Sayfa")
+            if (sender is ImageViewer && e.PropertyName is "Sayfa" && Decoder is not null)
             {
                 Source = Decoder.Frames[Sayfa - 1];
             }
