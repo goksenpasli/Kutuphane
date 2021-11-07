@@ -28,11 +28,14 @@ namespace Kutuphane.ViewModel
                 openFileDialog = new() { Multiselect = false, Filter = "Pdf Dosyaları (*.pdf)|*.pdf" };
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    pdf = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    pdf = new FileStream(openFileDialog.FileName, FileMode.Open);
                     ToplamSayfa = Pdf2Png.ConvertAllPages(pdf, 0).Count;
                     Pages = Enumerable.Range(1, ToplamSayfa);
                     Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, Sayfa, Dpi));
-                    TifNavigasyonButtonEtkin = Visibility.Visible;
+                    if (ToplamSayfa > 1)
+                    {
+                        TifNavigasyonButtonEtkin = Visibility.Visible;
+                    }
                 }
             });
 
@@ -79,6 +82,22 @@ namespace Kutuphane.ViewModel
 
         public new ICommand ViewerNext { get; }
 
+        public static BitmapSource BitmapSourceFromByteArray(byte[] buffer)
+        {
+            if (buffer != null)
+            {
+                var bitmap = new BitmapImage();
+                using var stream = new MemoryStream(buffer);
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+            }
+            return null;
+        }
+
         public void Dispose()
         {
             Dispose(disposing: true);
@@ -97,26 +116,14 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        private static BitmapSource BitmapSourceFromByteArray(byte[] buffer)
-        {
-            if (buffer != null)
-            {
-                var bitmap = new BitmapImage();
-                using var stream = new MemoryStream(buffer);
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.StreamSource = stream;
-                bitmap.EndInit();
-                bitmap.Freeze();
-                return bitmap;
-            }
-            return null;
-        }
-
         private static void DpiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is PdfViewer pdfViewer)
             {
+                if (pdf is null)
+                {
+                    pdf = new FileStream($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{pdfViewer.DataContext as string}", FileMode.Open);
+                }
                 pdfViewer.Source = BitmapSourceFromByteArray(Pdf2Png.Convert(pdf, pdfViewer.Sayfa, (int)e.NewValue));
             }
         }

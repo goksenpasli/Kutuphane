@@ -504,6 +504,17 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
+            <Kutuphane:DataImageFilePathImageUriConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="150" />
+            <Kutuphane:PdfImageFilePathImageUriConverter x:Key="PdfImageFilePathImageUriConverter" />
+            <DataTemplate x:Key="ImageViewerTemplate">
+                <Extensions:ImageViewer Width="210" Height="297" Source="{Binding Converter={StaticResource ScannedImageFilePathImageUriConverter}, Mode=OneWay}" />
+            </DataTemplate>
+            <DataTemplate x:Key="PdfiewerTemplate">
+                <ViewModel:PdfViewer Width="210" Height="297"
+                    Source="{Binding Converter={StaticResource PdfImageFilePathImageUriConverter}, Mode=OneWay}"
+                    Template="{StaticResource PdfViewerControlTemplate}" />
+            </DataTemplate>
+            <ViewModel:ViewerTemplateSelector x:Key="ViewerSelector" Image="{StaticResource ImageViewerTemplate}" Pdf="{StaticResource PdfiewerTemplate}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

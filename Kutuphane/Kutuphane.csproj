@@ -97,6 +97,7 @@
     <Compile Include="Converter\DoubleToThicknessConverter.cs" />
     <Compile Include="Converter\EqualityConverter.cs" />
     <Compile Include="Converter\ListViewCezaTutarConverter.cs" />
+    <Compile Include="Converter\PdfImageFilePathImageUriConverter.cs" />
     <Compile Include="Converter\ReverseBooleanConverter.cs" />
     <Compile Include="Converter\StringToBarCodeImageConverter.cs" />
     <Compile Include="Converter\StringToBrushConverter.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="ViewModel\Reporting.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ShadowedImage.cs" />
+    <Compile Include="ViewModel\ViewerTemplateSelector.cs" />
     <Compile Include="View\AppSettings.xaml.cs">
       <DependentUpon>AppSettings.xaml</DependentUpon>
     </Compile>

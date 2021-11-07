@@ -22,7 +22,8 @@
                 <ListView x:Name="listView"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                     Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKitaplar}"
-                    Extensions:ListBoxHelper.SelectedItemsMaxCount="30" VirtualizingPanel.VirtualizationMode="Recycling" IsSynchronizedWithCurrentItem="False">
+                    Extensions:ListBoxHelper.SelectedItemsMaxCount="30" IsSynchronizedWithCurrentItem="False"
+                    VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn>

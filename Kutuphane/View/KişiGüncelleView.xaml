@@ -17,7 +17,10 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListView x:Name="LvKişi" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" SelectedItem="{Binding SeçiliKişi}" SelectionMode="Single">
+            <ListView x:Name="LvKişi"
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
+                SelectedItem="{Binding SeçiliKişi}"
+                SelectionMode="Single">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="32" extensions:GridViewSort.PropertyName="Resim">
