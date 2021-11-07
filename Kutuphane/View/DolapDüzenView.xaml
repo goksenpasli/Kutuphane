@@ -29,7 +29,7 @@
                     Grid.Row="1"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Dolaplar}}"
                     ItemTemplate="{StaticResource ListViewDolapTemplate}"
-                    SelectedItem="{Binding SeçiliDolap}">
+                    SelectedItem="{Binding SeçiliDolap}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Extensions:VirtualizingWrapPanel />
@@ -70,7 +70,7 @@
                     </StackPanel>
                 </Button>
                 <GroupBox Header="DOLAPTAKİ TÜM KİTAPLAR" Grid.Row="4">
-                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="KİTAP ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
@@ -80,7 +80,7 @@
                                             <ComboBox IsEnabled="False"
                                                 Width="100"
                                                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                                SelectedIndex="{Binding KitapDurumId}" />
+                                                SelectedIndex="{Binding KitapDurumId}" Template="{StaticResource ComboBoxSimpleTemplate}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

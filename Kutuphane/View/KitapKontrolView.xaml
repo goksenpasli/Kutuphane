@@ -26,7 +26,7 @@
             <ListView x:Name="listView"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                 SelectedItem="{Binding SeçiliKitap}"
-                VirtualizingPanel.VirtualizationMode="Recycling">
+                VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Background" Value="{Binding KitapListeArkaPlanRengi}" />
@@ -157,7 +157,8 @@
                                     <ComboBox IsEnabled="False"
                                         Width="100"
                                         ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                        SelectedIndex="{Binding KitapDurumId}" />
+                                        SelectedIndex="{Binding KitapDurumId}"
+                                        Template="{StaticResource ComboBoxSimpleTemplate}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -176,8 +177,8 @@
                     <ListView x:Name="LvKişiler"
                         ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
                         ItemTemplate="{StaticResource KişiDetayTemplate}"
-                        SelectedItem="{Binding SeçiliKişi}" />
-                    <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                        SelectedItem="{Binding SeçiliKişi}" SelectionMode="Single" />
+                    <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectionMode="Single">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="CEZA TUTARI" DisplayMemberBinding="{Binding CezaTutar, StringFormat=\{0:C\}}" />

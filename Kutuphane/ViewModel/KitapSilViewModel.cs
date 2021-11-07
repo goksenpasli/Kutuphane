@@ -8,6 +8,8 @@ namespace Kutuphane.ViewModel
 {
     public class KitapSilViewModel : InpcBase
     {
+        private ObservableCollection<Kitap> seçiliKitaplar = new();
+
         public KitapSilViewModel()
         {
             KitapSil = new RelayCommand<object>(parameter =>
@@ -26,6 +28,7 @@ namespace Kutuphane.ViewModel
                         case (int)KitapDurumu.Okuyucuda:
                         case (int)KitapDurumu.Kütüphanede:
                             return false;
+
                         case (int)KitapDurumu.Kayıp:
                         case (int)KitapDurumu.Yıpranmış:
                             return true;
@@ -36,5 +39,19 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand KitapSil { get; }
+
+        public ObservableCollection<Kitap> SeçiliKitaplar
+        {
+            get => seçiliKitaplar;
+
+            set
+            {
+                if (seçiliKitaplar != value)
+                {
+                    seçiliKitaplar = value;
+                    OnPropertyChanged(nameof(SeçiliKitaplar));
+                }
+            }
+        }
     }
 }

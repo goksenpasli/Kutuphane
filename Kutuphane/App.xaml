@@ -262,6 +262,9 @@
                     </TextBlock>
                 </StackPanel>
             </DataTemplate>
+            <DataTemplate x:Key="ComboBoxDolapTemplate">
+                <TextBlock Text="{Binding Açıklama}" />
+            </DataTemplate>
             <Style TargetType="ListView">
                 <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Item" />
                 <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
@@ -500,9 +503,6 @@
                         <Setter Property="Opacity" Value="0.56" />
                     </Trigger>
                 </ControlTemplate.Triggers>
-            </ControlTemplate>
-            <ControlTemplate x:Key="RibbonMenuButtonEmptyTemplate" TargetType="{x:Type RibbonMenuItem}">
-                <ContentPresenter Content="{TemplateBinding Header}" />
             </ControlTemplate>
         </ResourceDictionary>
     </Application.Resources>

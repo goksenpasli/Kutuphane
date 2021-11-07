@@ -21,7 +21,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ListView x:Name="Lv" ItemsSource="{Binding Yaklaşanİşlemler}">
+        <ListView x:Name="Lv" ItemsSource="{Binding Yaklaşanİşlemler}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="AD" extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
@@ -49,9 +49,10 @@
                         <TextBlock Text="{Binding GeriGetirmeTarihi}" FontWeight="Bold" />
                         <ComboBox IsEnabled="False"
                             ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                            DisplayMemberPath="Ad"
+                            ItemTemplate="{StaticResource KitapTemplate}"
                             SelectedValue="{Binding KitapId}"
-                            SelectedValuePath="Id" />
+                            SelectedValuePath="Id"
+                            Template="{StaticResource ComboBoxSimpleTemplate}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

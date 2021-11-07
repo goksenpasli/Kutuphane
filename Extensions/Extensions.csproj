@@ -55,7 +55,6 @@
     <Compile Include="Controls\MediaViewer.xaml.cs">
       <DependentUpon>MediaViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\VirtualizingPanel.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\ReverseBooleanConverter.cs" />
     <Compile Include="Converters\StringNullableToBooleanConverter.cs" />

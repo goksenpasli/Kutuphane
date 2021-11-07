@@ -209,51 +209,50 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonMenuButton KeyTip="O" Label="Barkod Oluştur">
-                        <RibbonMenuButton.Resources>
-                            <Style TargetType="RibbonMenuItem">
-                                <Setter Property="Template" Value="{StaticResource RibbonMenuButtonEmptyTemplate}" />
-                            </Style>
-                        </RibbonMenuButton.Resources>
-                        <RibbonMenuButton.LargeImageSource>
+                    <RibbonToggleButton KeyTip="O" Label="Barkod Oluştur">
+                        <RibbonToggleButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Setupapi.dll" />
                                 <Binding Source="38" />
                             </MultiBinding>
-                        </RibbonMenuButton.LargeImageSource>
-                        <RibbonMenuButton.SmallImageSource>
+                        </RibbonToggleButton.LargeImageSource>
+                        <RibbonToggleButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Setupapi.dll" />
                                 <Binding Source="38" />
                             </MultiBinding>
-                        </RibbonMenuButton.SmallImageSource>
-                        <StackPanel Width="200">
-                            <TextBox x:Name="Tb" />
-                            <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
-                        </StackPanel>
-                    </RibbonMenuButton>
-                    <RibbonMenuButton KeyTip="TR" Label="Tarayıcı">
-                        <RibbonMenuButton.Resources>
-                            <Style TargetType="RibbonMenuItem">
-                                <Setter Property="Template" Value="{StaticResource RibbonMenuButtonEmptyTemplate}" />
-                            </Style>
-                        </RibbonMenuButton.Resources>
-                        <RibbonMenuButton.LargeImageSource>
+                        </RibbonToggleButton.SmallImageSource>
+                        <Popup AllowsTransparency="True"
+                            IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}">
+                            <GroupBox Header="BARKOD" Width="200">
+                                <StackPanel>
+                                    <TextBox x:Name="Tb" />
+                                    <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
+                                </StackPanel>
+                            </GroupBox>
+                        </Popup>
+                    </RibbonToggleButton>
+                    <RibbonToggleButton KeyTip="TR" Label="Tarayıcı">
+                        <RibbonToggleButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
                                 <Binding Source="201" />
                             </MultiBinding>
-                        </RibbonMenuButton.LargeImageSource>
-                        <RibbonMenuButton.SmallImageSource>
+                        </RibbonToggleButton.LargeImageSource>
+                        <RibbonToggleButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Shell32.dll" />
                                 <Binding Source="201" />
                             </MultiBinding>
-                        </RibbonMenuButton.SmallImageSource>
-                        <Extensions:ResizablePanel Width="600" Height="320" MinWidth="600" MinHeight="320">
-                            <TwainControl:TwainCtrl />
-                        </Extensions:ResizablePanel>
-                    </RibbonMenuButton>
+                        </RibbonToggleButton.SmallImageSource>
+                        <Popup IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}" Placement="Bottom" PlacementTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}">
+                            <Extensions:ResizablePanel Width="600" Height="320" MinWidth="600" MinHeight="320">
+                                <TwainControl:TwainCtrl />
+                            </Extensions:ResizablePanel>
+                        </Popup>
+                    </RibbonToggleButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Kütüphane">
                     <RibbonButton Command="{Binding DolapGirişiEkranı, Mode=OneWay}" KeyTip="C" Label="Dolap Gir">

@@ -35,7 +35,7 @@
                 <ListView x:Name="ListView"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
                     IsSynchronizedWithCurrentItem="False"
-                    ItemTemplate="{StaticResource KişiDetayTemplate}" />
+                    ItemTemplate="{StaticResource KişiDetayTemplate}" SelectionMode="Single" />
                 <GroupBox Header="KİTAP" Grid.Row="1">
                     <ListBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" IsSynchronizedWithCurrentItem="False">
                         <ListBox.ItemContainerStyle>

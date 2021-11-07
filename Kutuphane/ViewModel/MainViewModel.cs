@@ -23,6 +23,12 @@ namespace Kutuphane.ViewModel
 
         private InpcBase currentView;
 
+        static MainViewModel()
+        {
+            Yıllar = Enumerable.Range(DateTime.Now.Year - 50, 100);
+            TtsDilleri = synthesizer.GetInstalledVoices().Select(z => z.VoiceInfo.Name);
+        }
+
         public MainViewModel()
         {
             Kütüphane = new Kütüphane
@@ -178,9 +184,13 @@ namespace Kutuphane.ViewModel
 
         public static ICommand KitapKontrolEkranı { get; set; }
 
+        public static IEnumerable<string> TtsDilleri { get; }
+
         public static ICommand UygulamadanÇık { get; set; }
 
         public static ICommand VeritabanınıAç { get; set; }
+
+        public static IEnumerable<int> Yıllar { get; }
 
         public ICommand CloseView { get; }
 
@@ -258,12 +268,8 @@ namespace Kutuphane.ViewModel
 
         public ReportViewModel ReportViewModel { get; set; }
 
-        public IEnumerable<string> TtsDilleri { get; set; } = synthesizer.GetInstalledVoices().Select(z => z.VoiceInfo.Name);
-
         public ICommand TtsRegImport { get; }
 
         public ICommand WebAdreseGit { get; }
-
-        public IEnumerable<int> Yıllar { get; } = Enumerable.Range(DateTime.Now.Year - 50, 100);
     }
 }

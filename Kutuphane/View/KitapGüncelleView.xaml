@@ -23,7 +23,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
+                <ListView x:Name="listView"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                    IsSynchronizedWithCurrentItem="False" SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Resim">

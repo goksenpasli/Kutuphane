@@ -205,6 +205,7 @@ namespace Kutuphane.ViewModel
             Kitap.Açıklama = null;
             Kitap.Renk = "Transparent";
             Kitap.TopluKitapSayısı = 1;
+            Kitap.TopluKitapGirişi = false;
         }
     }
 }

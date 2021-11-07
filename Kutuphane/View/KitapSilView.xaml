@@ -11,16 +11,18 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
-
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP SİL">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ListView x:Name="listView" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
+                <ListView x:Name="listView"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                    Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKitaplar}"
+                    Extensions:ListBoxHelper.SelectedItemsMaxCount="30" VirtualizingPanel.VirtualizationMode="Recycling" IsSynchronizedWithCurrentItem="False">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn>
@@ -30,7 +32,7 @@
                                             <Image.Source>
                                                 <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                                     <Binding Source="Shell32.dll" />
-                                                    <Binding Source="117" />
+                                                    <Binding Source="127" />
                                                 </MultiBinding>
                                             </Image.Source>
                                         </Image>
@@ -53,9 +55,10 @@
                                         <StackPanel Orientation="Horizontal">
                                             <ComboBox IsEnabled="False"
                                                 ItemsSource="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}"
-                                                DisplayMemberPath="Açıklama"
+                                                ItemTemplate="{StaticResource ComboBoxDolapTemplate}"
                                                 SelectedValue="{Binding DolapId}"
-                                                SelectedValuePath="Id" />
+                                                SelectedValuePath="Id"
+                                                Template="{StaticResource ComboBoxSimpleTemplate}" />
                                             <TextBlock Text="{Binding DolapAltKod}" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </DataTemplate>
@@ -64,7 +67,7 @@
                             <GridViewColumn Header="KİTAP&#xA;DURUM" Width="110" Extensions:GridViewSort.PropertyName="KitapDurumId">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" SelectedIndex="{Binding KitapDurumId}">
+                                        <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}" SelectedIndex="{Binding KitapDurumId}" Template="{StaticResource ComboBoxSimpleTemplate}">
                                             <ComboBox.Style>
                                                 <Style TargetType="ComboBox">
                                                     <Style.Triggers>
@@ -113,10 +116,22 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <viewmodel:ShadowedImage Grid.Column="1"
-                    ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
-                    ShowShadow="True"
-                    Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                <ItemsControl Grid.Column="1"
+                    ItemsSource="{Binding SeçiliKitaplar}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Viewbox>
+                                <viewmodel:ShadowedImage ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Source="{Binding Resim, Converter={StaticResource DataImageFilePathImageUriConverter}}" />
+                            </Viewbox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </Grid>
         </GroupBox>
     </Grid>

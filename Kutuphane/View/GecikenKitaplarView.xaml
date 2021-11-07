@@ -30,7 +30,7 @@
             <ListView x:Name="listViewKişi"
                 Grid.RowSpan="2"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
-                VirtualizingPanel.VirtualizationMode="Recycling">
+                VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -62,7 +62,7 @@
                 </ListView.View>
             </ListView>
             <GroupBox Header="DURUM" Grid.Row="0" Grid.Column="1">
-                <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />

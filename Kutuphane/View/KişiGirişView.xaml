@@ -178,7 +178,9 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox.Header>
-            <ListView x:Name="listViewKitap" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling">
+            <ListView x:Name="listViewKitap"
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                IsSynchronizedWithCurrentItem="False" SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>

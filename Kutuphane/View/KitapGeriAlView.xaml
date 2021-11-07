@@ -23,7 +23,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}">
+            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -60,7 +60,7 @@
             </ListView>
             <ListView x:Name="listViewİşlem"
                 Grid.Column="1" Grid.RowSpan="2"
-                ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectionMode="Single">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>

@@ -25,8 +25,6 @@ namespace Kutuphane.Model
 
         private bool demirbaş;
 
-        private IEnumerable<string> diller;
-
         private int dolapAltKod = 1;
 
         private int dolapId;
@@ -72,6 +70,14 @@ namespace Kutuphane.Model
         private string yazar;
 
         private ObservableCollection<Yazar> yazarlar = new();
+
+        static Kitap()
+        {
+            Diller = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(z => !z.DisplayName.Contains('(')).Select(z => z.DisplayName);
+        }
+
+        [XmlIgnore]
+        public static IEnumerable<string> Diller { get; set; }
 
         [XmlAttribute(AttributeName = "Açıklama")]
         public string Açıklama
@@ -146,18 +152,6 @@ namespace Kutuphane.Model
                     OnPropertyChanged(nameof(Demirbaş));
                 }
             }
-        }
-
-        [XmlIgnore]
-        public IEnumerable<string> Diller
-        {
-            get
-            {
-                diller = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(z => !z.DisplayName.Contains('(')).Select(z => z.DisplayName);
-                return diller;
-            }
-
-            set => diller = value;
         }
 
         [XmlAttribute(AttributeName = "DolapAltKod")]
