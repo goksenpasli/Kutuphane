@@ -92,12 +92,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\CloneConverter.cs" />
-    <Compile Include="Converter\DataImageFilePathImageUriConverter.cs" />
+    <Compile Include="Converter\ImageFilePathToBitmapImageConverter.cs" />
     <Compile Include="Converter\DatePassedConverter.cs" />
     <Compile Include="Converter\DoubleToThicknessConverter.cs" />
     <Compile Include="Converter\EqualityConverter.cs" />
     <Compile Include="Converter\ListViewCezaTutarConverter.cs" />
-    <Compile Include="Converter\PdfImageFilePathImageUriConverter.cs" />
+    <Compile Include="Converter\FilePathMergeConverter.cs" />
     <Compile Include="Converter\ReverseBooleanConverter.cs" />
     <Compile Include="Converter\StringToBarCodeImageConverter.cs" />
     <Compile Include="Converter\StringToBrushConverter.cs" />

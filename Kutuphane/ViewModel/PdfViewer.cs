@@ -95,7 +95,7 @@ namespace Kutuphane.ViewModel
 
         public new ICommand ViewerNext { get; }
 
-        public static BitmapSource BitmapSourceFromByteArray(byte[] buffer)
+        public static BitmapImage BitmapSourceFromByteArray(byte[] buffer)
         {
             if (buffer != null)
             {
@@ -156,7 +156,7 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        private void PdfViewer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void PdfViewer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "Sayfa" && sender is PdfViewer pdfViewer)
             {

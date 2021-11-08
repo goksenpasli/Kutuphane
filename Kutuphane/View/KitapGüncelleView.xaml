@@ -292,7 +292,7 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource DataImageFilePathImageUriConverter}, ElementName=listView}" />
+                    <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}" ShowShadow="True" Source="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
                     <UniformGrid Grid.Row="1" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}" Columns="2">
                         <GroupBox>
                             <GroupBox.Header>

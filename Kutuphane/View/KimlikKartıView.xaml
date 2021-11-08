@@ -43,7 +43,7 @@
                             </ControlTemplate>
                         </ComboBoxItem.Template>
                         <ComboBoxItem.Background>
-                            <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource DataImageFilePathImageUriConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Opacity="{Binding ElementName=Sld, Path=Value}" Stretch="UniformToFill" />
+                            <ImageBrush ImageSource="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, Converter={StaticResource ImageFilePathToBitmapImageConverter}, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" Opacity="{Binding ElementName=Sld, Path=Value}" Stretch="UniformToFill" />
                         </ComboBoxItem.Background>
                         <ComboBoxItem.Content>
                             <Slider x:Name="Sld"

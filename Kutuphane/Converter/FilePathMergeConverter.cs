@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Kutuphane
 {
-    public class PdfImageFilePathImageUriConverter : IValueConverter
+    public class FilePathMergeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

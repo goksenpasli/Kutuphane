@@ -1,5 +1,4 @@
 ﻿using Kutuphane.ViewModel;
-using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -10,9 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace Kutuphane
 {
-    public class DataImageFilePathImageUriConverter : DependencyObject, IValueConverter
+    public class ImageFilePathToBitmapImageConverter : DependencyObject, IValueConverter
     {
-        public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.RegisterAttached("DecodeHeight", typeof(int), typeof(DataImageFilePathImageUriConverter), new PropertyMetadata(96));
+        public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.RegisterAttached("DecodeHeight", typeof(int), typeof(ImageFilePathToBitmapImageConverter), new PropertyMetadata(96));
 
         public static int GetDecodeHeight(DependencyObject obj) => (int)obj.GetValue(DecodeHeightProperty);
 

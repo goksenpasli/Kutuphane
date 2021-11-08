@@ -265,21 +265,34 @@
                             Grid.Row="1" Grid.Column="1"
                             MaxHeight="290"
                             Bw="True" />
-                        <Button Grid.Row="2" Grid.Column="1"
-                            Command="{Binding KitapTarananEvrakAktar, Mode=OneWay}"
-                            CommandParameter="{Binding ElementName=twainCtrl, Mode=OneWay, Path=SeçiliResimler}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Width="32" Height="32">
-                                    <Image.Source>
-                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                            <Binding Source="Shell32.dll" />
-                                            <Binding Source="45" />
-                                        </MultiBinding>
-                                    </Image.Source>
-                                </Image>
-                                <TextBlock Text="{Binding SeçiliResimler.Count, ElementName=twainCtrl, Mode=OneWay, StringFormat=TARANAN {0} BELGEYİ SEÇİLİ KİŞİYE EKLE}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Button>
+                        <UniformGrid Grid.Row="2" Grid.Column="1" Columns="2">
+                            <Button Command="{Binding KitapTarananEvrakAktar, Mode=OneWay}" CommandParameter="{Binding SeçiliResimler, ElementName=twainCtrl, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="32" Height="32">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="36" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock Text="{Binding SeçiliResimler.Count, ElementName=twainCtrl, Mode=OneWay, StringFormat=TARANAN \{0\} BELGEYİ SEÇİLİ KİŞİYE EKLE}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                            <Button Command="{Binding KitapSeçiliEvrakAktar, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="32" Height="32">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="45" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock Text="SEÇİLİ DOSYAYI EKLE" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </UniformGrid>
                         <Button Grid.Row="2" Command="{Binding KitapVer, Mode=OneWay}">
                             <Button.CommandParameter>
                                 <MultiBinding Converter="{StaticResource CloneConverter}">

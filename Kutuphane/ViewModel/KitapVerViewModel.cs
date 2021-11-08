@@ -2,6 +2,7 @@
 using Kutuphane.Model;
 using Kutuphane.Properties;
 using Kutuphane.View;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -89,6 +90,22 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => KitapAlabilir(parameter));
 
+            KitapSeçiliEvrakAktar = new RelayCommand<object>(parameter =>
+            {
+                if (SeçiliKişi is not null)
+                {
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf)|*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf" };
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                        File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                        SeçiliKişi.TutanakYolu.Add(filename);
+                        MainViewModel.DatabaseSave.Execute(null);
+                        _ = MessageBox.Show("Seçili Evrak Eklendi.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }, parameter => SeçiliKişi is not null);
+
             KitapTarananEvrakAktar = new RelayCommand<object>(parameter =>
             {
                 if (parameter is ObservableCollection<BitmapFrame> seçiliResimler && SeçiliKişi is not null)
@@ -148,6 +165,8 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        public ICommand KitapSeçiliEvrakAktar { get; }
 
         public ICommand KitapTarananEvrakAktar { get; }
 

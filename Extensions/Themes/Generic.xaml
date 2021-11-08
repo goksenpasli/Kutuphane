@@ -266,7 +266,7 @@
                                 Style="{StaticResource Horizontal_Slider}"
                                 AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="False" Maximum="360" SmallChange="1"
                                 Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Button Grid.Column="6" Command="{Binding OrijinalResimDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Button Grid.Column="6" Command="{Binding OrijinalResimDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="{Binding ImageFilePath, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
                                     <Image Width="16" Height="16">
                                         <Image.Source>

@@ -11,6 +11,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="SeçiliKitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding SeçiliKitaplar}" />
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP SİL">
@@ -118,12 +119,12 @@
                     </ListView.View>
                 </ListView>
                 <ItemsControl Grid.Column="1"
-                    ItemsSource="{Binding SeçiliKitaplar}"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource SeçiliKitaplar}}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Viewbox>
-                                <viewmodel:ShadowedImage ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Source="{Binding Resim, Converter={StaticResource DataImageFilePathImageUriConverter}}" />
+                                <viewmodel:ShadowedImage ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Source="{Binding Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
                             </Viewbox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

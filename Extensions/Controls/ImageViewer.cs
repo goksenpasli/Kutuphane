@@ -17,6 +17,10 @@ namespace Extensions
     {
         public static readonly DependencyProperty AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(ImageViewer), new PropertyMetadata(0.0));
 
+        public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.Register("DecodeHeight", typeof(int), typeof(ImageViewer), new PropertyMetadata(300));
+
+        public static readonly DependencyProperty ImageFilePathProperty = DependencyProperty.Register("ImageFilePath", typeof(string), typeof(ImageViewer), new PropertyMetadata(null, ImageFilePathChanged));
+
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageSource), typeof(ImageViewer), new PropertyMetadata(null, SourceChanged));
 
         public static readonly DependencyProperty ZoomProperty = DependencyProperty.Register("Zoom", typeof(double), typeof(ImageViewer), new PropertyMetadata(1.0));
@@ -47,35 +51,7 @@ namespace Extensions
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    Decoder = null;
-                    switch (Path.GetExtension(openFileDialog.FileName).ToLower())
-                    {
-                        case ".tiff":
-                        case ".tif":
-                            Sayfa = 1;
-                            Decoder = new TiffBitmapDecoder(new Uri(openFileDialog.FileName), BitmapCreateOptions.None, BitmapCacheOption.None);
-                            TifNavigasyonButtonEtkin = Visibility.Visible;
-                            Source = Decoder.Frames[0];
-                            Pages = Enumerable.Range(1, Decoder.Frames.Count);
-                            break;
-
-                        case ".png":
-                        case ".jpg":
-                        case ".jpeg":
-                            TifNavigasyonButtonEtkin = Visibility.Collapsed;
-                            BitmapImage image = new();
-                            image.BeginInit();
-                            image.CacheOption = BitmapCacheOption.None;
-                            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                            image.UriSource = new Uri(openFileDialog.FileName);
-                            image.EndInit();
-                            if (!image.IsFrozen && image.CanFreeze)
-                            {
-                                image.Freeze();
-                            }
-                            Source = image;
-                            break;
-                    }
+                    ImageFilePath = openFileDialog.FileName;
                 }
             });
 
@@ -93,7 +69,7 @@ namespace Extensions
 
             Resize = new RelayCommand<object>(parameter => Zoom = ActualWidth == 0 ? 1 : ActualWidth / Source.Width, parameter => Source is not null);
 
-            OrijinalResimDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(((BitmapImage)Source).UriSource.AbsolutePath), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && Source is not null && Source is BitmapImage image && File.Exists(image.UriSource.AbsolutePath));
+            OrijinalResimDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(parameter as string), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && File.Exists(parameter as string));
 
             Yazdır = new RelayCommand<object>(parameter =>
             {
@@ -164,6 +140,12 @@ namespace Extensions
             set => SetValue(AngleProperty, value);
         }
 
+        public int DecodeHeight
+        {
+            get => (int)GetValue(DecodeHeightProperty);
+            set => SetValue(DecodeHeightProperty, value);
+        }
+
         public TiffBitmapDecoder Decoder
         {
             get => decoder;
@@ -179,6 +161,12 @@ namespace Extensions
         }
 
         public ICommand DosyaAç { get; }
+
+        public string ImageFilePath
+        {
+            get => (string)GetValue(ImageFilePathProperty);
+            set => SetValue(ImageFilePathProperty, value);
+        }
 
         public Visibility OpenButtonVisibility
         {
@@ -288,6 +276,42 @@ namespace Extensions
 
         protected virtual void OnPropertyChanged(string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ImageViewer imageViewer && e.NewValue is not null)
+            {
+                switch (Path.GetExtension(e.NewValue as string).ToLower())
+                {
+                    case ".tiff":
+                    case ".tif":
+                        imageViewer.Sayfa = 1;
+                        imageViewer.Decoder = new TiffBitmapDecoder(new Uri(e.NewValue as string), BitmapCreateOptions.None, BitmapCacheOption.None);
+                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Visible;
+                        imageViewer.Source = imageViewer.Decoder.Frames[0];
+                        imageViewer.Pages = Enumerable.Range(1, imageViewer.Decoder.Frames.Count);
+                        break;
+
+                    case ".png":
+                    case ".jpg":
+                    case ".jpeg":
+                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Collapsed;
+                        BitmapImage image = new();
+                        image.BeginInit();
+                        image.DecodePixelHeight = imageViewer.DecodeHeight;
+                        image.CacheOption = BitmapCacheOption.None;
+                        image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                        image.UriSource = new Uri(e.NewValue as string);
+                        image.EndInit();
+                        if (!image.IsFrozen && image.CanFreeze)
+                        {
+                            image.Freeze();
+                        }
+                        imageViewer.Source = image;
+                        break;
+                }
+            }
+        }
+
         private static void SourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ImageViewer imageViewer && imageViewer.Source is not null)
@@ -300,7 +324,7 @@ namespace Extensions
 
         private void ImageViewer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (sender is ImageViewer && e.PropertyName is "Sayfa" && Decoder is not null)
+            if (e.PropertyName is "Sayfa" && Decoder is not null)
             {
                 Source = Decoder.Frames[Sayfa - 1];
             }

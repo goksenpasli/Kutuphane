@@ -27,9 +27,9 @@
             <Extensions:NullableToBooleanConverter x:Key="NullableToBooleanConverter" />
             <Extensions:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
-            <Kutuphane:DataImageFilePathImageUriConverter x:Key="DataImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
-            <Kutuphane:DataImageFilePathImageUriConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="150" />
-            <Kutuphane:PdfImageFilePathImageUriConverter x:Key="PdfImageFilePathImageUriConverter" />
+            <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ImageFilePathToBitmapImageConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+            <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="150" />
+            <Kutuphane:FilePathMergeConverter x:Key="FilePathMergeConverter" />
             <ObjectDataProvider x:Key="ColorList" MethodName="GetProperties" ObjectInstance="{x:Type Colors}" />
             <ObjectDataProvider x:Key="KitapDurumu" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
                 <ObjectDataProvider.MethodParameters>
@@ -276,7 +276,7 @@
             <Style TargetType="Extensions:ContentToggleButton">
                 <Setter Property="CornerRadius" Value="0" />
             </Style>
-            <Kutuphane:DataImageFilePathImageUriConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:DataImageFilePathImageUriConverter.DecodeHeight="120" />
+            <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
                     <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72"
@@ -520,11 +520,13 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
             <DataTemplate x:Key="ImageViewerTemplate">
-                <Extensions:ImageViewer Width="315" Height="445" Source="{Binding Converter={StaticResource ScannedImageFilePathImageUriConverter}, Mode=OneWay}" />
+                <Extensions:ImageViewer Width="315" Height="445"
+                    DecodeHeight="300"
+                    ImageFilePath="{Binding Converter={StaticResource FilePathMergeConverter}, Mode=OneWay}" />
             </DataTemplate>
             <DataTemplate x:Key="PdfiewerTemplate">
                 <ViewModel:PdfViewer Width="315" Height="445"
-                    PdfFilePath="{Binding Mode=OneWay, Converter={StaticResource PdfImageFilePathImageUriConverter}}"
+                    PdfFilePath="{Binding Mode=OneWay, Converter={StaticResource FilePathMergeConverter}}"
                     Template="{StaticResource PdfViewerControlTemplate}" />
             </DataTemplate>
             <ViewModel:ViewerTemplateSelector x:Key="ViewerSelector" Image="{StaticResource ImageViewerTemplate}" Pdf="{StaticResource PdfiewerTemplate}" />
