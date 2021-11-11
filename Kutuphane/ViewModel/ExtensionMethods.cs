@@ -121,25 +121,25 @@ namespace Kutuphane.ViewModel
 
         public static bool TcGeçerli(this string tcKimlikNo)
         {
-            var tekler = 0;
-            var ciftler = 0;
+            int tekler = 0;
+            int ciftler = 0;
             if (string.IsNullOrWhiteSpace(tcKimlikNo) || tcKimlikNo.Length != 11 || !tcKimlikNo.All(z => char.IsNumber(z)) || tcKimlikNo.Substring(0, 1) == "0")
             {
                 return false;
             }
 
-            for (var i = 0; i < 9; i += 2)
+            for (int i = 0; i < 9; i += 2)
             {
                 tekler += int.Parse(tcKimlikNo[i].ToString());
             }
 
-            for (var i = 1; i < 8; i += 2)
+            for (int i = 1; i < 8; i += 2)
             {
                 ciftler += int.Parse(tcKimlikNo[i].ToString());
             }
 
-            var k10 = (((tekler * 7) - ciftler) % 10).ToString();
-            var k11 = ((tekler + ciftler + int.Parse(tcKimlikNo[9].ToString())) % 10).ToString();
+            string k10 = (((tekler * 7) - ciftler) % 10).ToString();
+            string k11 = ((tekler + ciftler + int.Parse(tcKimlikNo[9].ToString())) % 10).ToString();
             return k10 == tcKimlikNo[9].ToString() && k11 == tcKimlikNo[10].ToString();
         }
 

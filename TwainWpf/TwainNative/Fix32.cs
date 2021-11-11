@@ -12,14 +12,14 @@ namespace TwainWpf.TwainNative
 
         public Fix32(float f)
         {
-            var val = (int)(f * 65536.0F);
+            int val = (int)(f * 65536.0F);
             Whole = Convert.ToInt16(val >> 16);    // most significant 16 bits
             Frac = Convert.ToUInt16(val & 0xFFFF); // least
         }
 
         public float ToFloat()
         {
-            var frac = Convert.ToSingle(Frac);
+            float frac = Convert.ToSingle(Frac);
             return Whole + frac / 65536.0F;
         }
     }

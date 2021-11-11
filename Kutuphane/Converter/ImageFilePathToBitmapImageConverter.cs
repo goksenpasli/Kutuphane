@@ -13,9 +13,15 @@ namespace Kutuphane
     {
         public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.RegisterAttached("DecodeHeight", typeof(int), typeof(ImageFilePathToBitmapImageConverter), new PropertyMetadata(96));
 
-        public static int GetDecodeHeight(DependencyObject obj) => (int)obj.GetValue(DecodeHeightProperty);
+        public static int GetDecodeHeight(DependencyObject obj)
+        {
+            return (int)obj.GetValue(DecodeHeightProperty);
+        }
 
-        public static void SetDecodeHeight(DependencyObject obj, int value) => obj.SetValue(DecodeHeightProperty, value);
+        public static void SetDecodeHeight(DependencyObject obj, int value)
+        {
+            obj.SetValue(DecodeHeightProperty, value);
+        }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -37,6 +43,9 @@ namespace Kutuphane
             return null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value as BitmapImage;
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value as BitmapImage;
+        }
     }
 }

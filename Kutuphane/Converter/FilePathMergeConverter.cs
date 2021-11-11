@@ -18,6 +18,9 @@ namespace Kutuphane
                 : null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value as BitmapSource;
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value as BitmapSource;
+        }
     }
 }

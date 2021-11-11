@@ -10,7 +10,7 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding ElementName=Lv, Path=SelectedItem.İşlem}">
+        <CollectionViewSource x:Key="İşlemler"   Source="{Binding ElementName=Lv, Path=SelectedItem.İşlem}">
             <CollectionViewSource.SortDescriptions>
                 <ComponentModel:SortDescription Direction="Ascending" PropertyName="GeriGetirmeTarihi" />
             </CollectionViewSource.SortDescriptions>
@@ -21,7 +21,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ListView x:Name="Lv" ItemsSource="{Binding Yaklaşanİşlemler}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
+        <ListView x:Name="Lv" ItemsSource="{Binding Yaklaşanİşlemler}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="AD" extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
@@ -30,7 +30,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListBox Grid.Column="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" IsSynchronizedWithCurrentItem="False">
+        <ListBox Grid.Column="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" IsSynchronizedWithCurrentItem="False" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>

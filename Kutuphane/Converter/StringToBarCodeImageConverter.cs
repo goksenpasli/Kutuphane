@@ -10,7 +10,7 @@ namespace Kutuphane
         {
             if (value is string metin)
             {
-                var barkod = new Barkod
+                Barkod barkod = new()
                 {
                     Metin = metin,
                     QrWidth = 350,
@@ -21,6 +21,9 @@ namespace Kutuphane
             return null;
         }
 
-        public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
+        public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
     }
 }

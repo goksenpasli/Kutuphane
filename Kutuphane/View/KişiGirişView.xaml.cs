@@ -28,7 +28,7 @@ namespace Kutuphane.View
         {
             if (DataContext is KişiGirişViewModel kişiGirişViewModel && e.PropertyName == "ResimData")
             {
-                var filename = Guid.NewGuid() + ".jpg";
+                string filename = Guid.NewGuid() + ".jpg";
                 File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", (sender as CameraUserControl)?.ResimData);
                 kişiGirişViewModel.Kişi.Resim = filename;
             }

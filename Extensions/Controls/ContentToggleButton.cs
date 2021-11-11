@@ -5,7 +5,7 @@ namespace Extensions
 {
     public class ContentToggleButton : ToggleButton
     {
-        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(ContentToggleButton), new PropertyMetadata(new CornerRadius(3d)));
+        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(ContentToggleButton), new PropertyMetadata(new CornerRadius(0d)));
 
         public static readonly DependencyProperty OverContentProperty = DependencyProperty.Register("OverContent", typeof(object), typeof(ContentToggleButton), new PropertyMetadata(null));
 
@@ -42,6 +42,9 @@ namespace Extensions
             set => SetValue(StaysOpenProperty, value);
         }
 
-        public override string ToString() => OverContent.ToString();
+        public override string ToString()
+        {
+            return OverContent.ToString();
+        }
     }
 }

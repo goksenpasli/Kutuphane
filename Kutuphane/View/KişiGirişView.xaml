@@ -12,8 +12,8 @@
     d:DesignHeight="800" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kitaplar"  Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kişiler"  Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
         <DrawingBrush x:Key="UserGroup" Stretch="Uniform">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
@@ -180,7 +180,7 @@
             </GroupBox.Header>
             <ListView x:Name="listViewKitap"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
-                IsSynchronizedWithCurrentItem="False" SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
+                IsSynchronizedWithCurrentItem="False" SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>

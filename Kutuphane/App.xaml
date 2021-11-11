@@ -265,16 +265,13 @@
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="ComboBoxDolapTemplate">
-                <TextBlock Text="{Binding Açıklama}" />
+                <TextBlock Text="{Binding Açıklama}"/>
             </DataTemplate>
             <Style TargetType="ListView">
                 <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Item" />
                 <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
-            </Style>
-            <Style TargetType="Extensions:ContentToggleButton">
-                <Setter Property="CornerRadius" Value="0" />
             </Style>
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
@@ -501,14 +498,7 @@
                             SelectedItem="{Binding Dpi, StringFormat=Dpi, RelativeSource={RelativeSource TemplatedParent}}" />
                         <Button Grid.Column="7" Command="{Binding OrijinalPdfDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="{Binding PdfFilePath, RelativeSource={RelativeSource TemplatedParent}}">
                             <Button.Content>
-                                <Image Width="16" Height="16">
-                                    <Image.Source>
-                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                            <Binding Source="Shell32.dll" />
-                                            <Binding Source="24" />
-                                        </MultiBinding>
-                                    </Image.Source>
-                                </Image>
+                                <Image Width="16" Height="16" Source="{Binding PdfFilePath, Converter={StaticResource FilePathToIconConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
                             </Button.Content>
                         </Button>
                     </Grid>
@@ -529,7 +519,15 @@
                     PdfFilePath="{Binding Mode=OneWay, Converter={StaticResource FilePathMergeConverter}}"
                     Template="{StaticResource PdfViewerControlTemplate}" />
             </DataTemplate>
-            <ViewModel:ViewerTemplateSelector x:Key="ViewerSelector" Image="{StaticResource ImageViewerTemplate}" Pdf="{StaticResource PdfiewerTemplate}" />
+            <DataTemplate x:Key="EmptyViewerTemplate">
+                <Extensions:ImageViewer Width="315" Height="445"
+                    DecodeHeight="300"
+                    ImageFilePath="{Binding Converter={StaticResource FilePathMergeConverter}, Mode=OneWay}" />
+            </DataTemplate>
+            <ViewModel:ViewerTemplateSelector x:Key="ViewerSelector"
+                Empty="{StaticResource EmptyViewerTemplate}"
+                Image="{StaticResource ImageViewerTemplate}"
+                Pdf="{StaticResource PdfiewerTemplate}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

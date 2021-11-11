@@ -10,8 +10,8 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Dolaplar" d:Source="{d:DesignInstance {x:Type model:Dolap}, CreateList=True}" Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Dolaplar"  Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kitaplar"  Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <GroupBox Header="DOLAP DÜZEN">
         <Grid>
@@ -28,8 +28,10 @@
                 <ListView x:Name="listView"
                     Grid.Row="1"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Dolaplar}}"
+                    IsSynchronizedWithCurrentItem="False"
                     ItemTemplate="{StaticResource ListViewDolapTemplate}"
-                    SelectedItem="{Binding SeçiliDolap}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
+                    SelectedItem="{Binding SeçiliDolap}"
+                    SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Extensions:VirtualizingWrapPanel />
@@ -70,7 +72,8 @@
                     </StackPanel>
                 </Button>
                 <GroupBox Header="DOLAPTAKİ TÜM KİTAPLAR" Grid.Row="4">
-                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}" VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single">
+                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                        IsSynchronizedWithCurrentItem="False" SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling" d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="KİTAP ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
@@ -80,7 +83,8 @@
                                             <ComboBox IsEnabled="False"
                                                 Width="100"
                                                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                                SelectedIndex="{Binding KitapDurumId}" Template="{StaticResource ComboBoxSimpleTemplate}" />
+                                                SelectedIndex="{Binding KitapDurumId}"
+                                                Template="{StaticResource ComboBoxSimpleTemplate}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

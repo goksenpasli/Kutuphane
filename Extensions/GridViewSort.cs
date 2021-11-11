@@ -25,8 +25,8 @@ namespace Extensions
                         {
                             if (GetCommand(listView) == null) // Don't change click handler if a command is set
                             {
-                                var oldValue = (bool)e.OldValue;
-                                var newValue = (bool)e.NewValue;
+                                bool oldValue = (bool)e.OldValue;
+                                bool newValue = (bool)e.NewValue;
                                 if (oldValue && !newValue)
                                 {
                                     listView.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
@@ -76,29 +76,65 @@ namespace Extensions
 
         public static readonly DependencyProperty SortGlyphDescendingProperty = DependencyProperty.RegisterAttached("SortGlyphDescending", typeof(ImageSource), typeof(GridViewSort), new UIPropertyMetadata(null));
 
-        public static bool GetAutoSort(DependencyObject obj) => (bool)obj.GetValue(AutoSortProperty);
+        public static bool GetAutoSort(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(AutoSortProperty);
+        }
 
-        public static ICommand GetCommand(DependencyObject obj) => (ICommand)obj.GetValue(CommandProperty);
+        public static ICommand GetCommand(DependencyObject obj)
+        {
+            return (ICommand)obj.GetValue(CommandProperty);
+        }
 
-        public static string GetPropertyName(DependencyObject obj) => (string)obj.GetValue(PropertyNameProperty);
+        public static string GetPropertyName(DependencyObject obj)
+        {
+            return (string)obj.GetValue(PropertyNameProperty);
+        }
 
-        public static bool GetShowSortGlyph(DependencyObject obj) => (bool)obj.GetValue(ShowSortGlyphProperty);
+        public static bool GetShowSortGlyph(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(ShowSortGlyphProperty);
+        }
 
-        public static ImageSource GetSortGlyphAscending(DependencyObject obj) => (ImageSource)obj.GetValue(SortGlyphAscendingProperty);
+        public static ImageSource GetSortGlyphAscending(DependencyObject obj)
+        {
+            return (ImageSource)obj.GetValue(SortGlyphAscendingProperty);
+        }
 
-        public static ImageSource GetSortGlyphDescending(DependencyObject obj) => (ImageSource)obj.GetValue(SortGlyphDescendingProperty);
+        public static ImageSource GetSortGlyphDescending(DependencyObject obj)
+        {
+            return (ImageSource)obj.GetValue(SortGlyphDescendingProperty);
+        }
 
-        public static void SetAutoSort(DependencyObject obj, bool value) => obj.SetValue(AutoSortProperty, value);
+        public static void SetAutoSort(DependencyObject obj, bool value)
+        {
+            obj.SetValue(AutoSortProperty, value);
+        }
 
-        public static void SetCommand(DependencyObject obj, ICommand value) => obj.SetValue(CommandProperty, value);
+        public static void SetCommand(DependencyObject obj, ICommand value)
+        {
+            obj.SetValue(CommandProperty, value);
+        }
 
-        public static void SetPropertyName(DependencyObject obj, string value) => obj.SetValue(PropertyNameProperty, value);
+        public static void SetPropertyName(DependencyObject obj, string value)
+        {
+            obj.SetValue(PropertyNameProperty, value);
+        }
 
-        public static void SetShowSortGlyph(DependencyObject obj, bool value) => obj.SetValue(ShowSortGlyphProperty, value);
+        public static void SetShowSortGlyph(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ShowSortGlyphProperty, value);
+        }
 
-        public static void SetSortGlyphAscending(DependencyObject obj, ImageSource value) => obj.SetValue(SortGlyphAscendingProperty, value);
+        public static void SetSortGlyphAscending(DependencyObject obj, ImageSource value)
+        {
+            obj.SetValue(SortGlyphAscendingProperty, value);
+        }
 
-        public static void SetSortGlyphDescending(DependencyObject obj, ImageSource value) => obj.SetValue(SortGlyphDescendingProperty, value);
+        public static void SetSortGlyphDescending(DependencyObject obj, ImageSource value)
+        {
+            obj.SetValue(SortGlyphDescendingProperty, value);
+        }
 
         #endregion Public attached properties
 
@@ -106,9 +142,15 @@ namespace Extensions
 
         private static readonly DependencyProperty SortedColumnHeaderProperty = DependencyProperty.RegisterAttached("SortedColumnHeader", typeof(GridViewColumnHeader), typeof(GridViewSort), new UIPropertyMetadata(null));
 
-        private static GridViewColumnHeader GetSortedColumnHeader(DependencyObject obj) => (GridViewColumnHeader)obj.GetValue(SortedColumnHeaderProperty);
+        private static GridViewColumnHeader GetSortedColumnHeader(DependencyObject obj)
+        {
+            return (GridViewColumnHeader)obj.GetValue(SortedColumnHeaderProperty);
+        }
 
-        private static void SetSortedColumnHeader(DependencyObject obj, GridViewColumnHeader value) => obj.SetValue(SortedColumnHeaderProperty, value);
+        private static void SetSortedColumnHeader(DependencyObject obj, GridViewColumnHeader value)
+        {
+            obj.SetValue(SortedColumnHeaderProperty, value);
+        }
 
         #endregion Private attached properties
 
@@ -118,13 +160,13 @@ namespace Extensions
         {
             if (e.OriginalSource is GridViewColumnHeader headerClicked && headerClicked.Column != null)
             {
-                var propertyName = GetPropertyName(headerClicked.Column);
+                string propertyName = GetPropertyName(headerClicked.Column);
                 if (!string.IsNullOrEmpty(propertyName))
                 {
-                    var listView = GetAncestor<ListView>(headerClicked);
+                    ListView listView = GetAncestor<ListView>(headerClicked);
                     if (listView != null)
                     {
-                        var command = GetCommand(listView);
+                        ICommand command = GetCommand(listView);
                         if (command != null)
                         {
                             if (command.CanExecute(propertyName))
@@ -147,17 +189,17 @@ namespace Extensions
 
         public static void ApplySort(ICollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
         {
-            var direction = ListSortDirection.Ascending;
+            ListSortDirection direction = ListSortDirection.Ascending;
             if (view.SortDescriptions.Count > 0)
             {
-                var currentSort = view.SortDescriptions[0];
+                SortDescription currentSort = view.SortDescriptions[0];
                 if (currentSort.PropertyName == propertyName)
                 {
                     direction = currentSort.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
                 }
                 view.SortDescriptions.Clear();
 
-                var currentSortedColumnHeader = GetSortedColumnHeader(listView);
+                GridViewColumnHeader currentSortedColumnHeader = GetSortedColumnHeader(listView);
                 if (currentSortedColumnHeader != null)
                 {
                     RemoveSortGlyph(currentSortedColumnHeader);
@@ -180,7 +222,7 @@ namespace Extensions
 
         public static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
-            var parent = VisualTreeHelper.GetParent(reference);
+            DependencyObject parent = VisualTreeHelper.GetParent(reference);
             while (parent is not T)
             {
                 parent = VisualTreeHelper.GetParent(parent);
@@ -190,7 +232,7 @@ namespace Extensions
 
         private static void AddSortGlyph(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
         {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
             adornerLayer.Add(
                 new SortGlyphAdorner(
                     columnHeader,
@@ -201,11 +243,11 @@ namespace Extensions
 
         private static void RemoveSortGlyph(GridViewColumnHeader columnHeader)
         {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
-            var adorners = adornerLayer.GetAdorners(columnHeader);
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
+            Adorner[] adorners = adornerLayer.GetAdorners(columnHeader);
             if (adorners != null)
             {
-                foreach (var adorner in adorners)
+                foreach (Adorner adorner in adorners)
                 {
                     if (adorner is SortGlyphAdorner)
                     {
@@ -241,8 +283,8 @@ namespace Extensions
 
                 if (_sortGlyph != null)
                 {
-                    var x = _columnHeader.ActualWidth - 13;
-                    var y = (_columnHeader.ActualHeight / 2) - 5;
+                    double x = _columnHeader.ActualWidth - 13;
+                    double y = (_columnHeader.ActualHeight / 2) - 5;
                     Rect rect = new(x, y, 10, 10);
                     drawingContext.DrawImage(_sortGlyph, rect);
                 }
@@ -254,15 +296,15 @@ namespace Extensions
 
             private Geometry GetDefaultGlyph()
             {
-                var x1 = (_columnHeader.ActualWidth / 2) - 5;
-                var x2 = x1 + 10;
-                var x3 = x1 + 5;
-                var y1 = 0;
-                var y2 = y1 + 5;
+                double x1 = (_columnHeader.ActualWidth / 2) - 5;
+                double x2 = x1 + 10;
+                double x3 = x1 + 5;
+                int y1 = 0;
+                int y2 = y1 + 5;
 
                 if (_direction == ListSortDirection.Ascending)
                 {
-                    var tmp = y1;
+                    int tmp = y1;
                     y1 = y2;
                     y2 = tmp;
                 }

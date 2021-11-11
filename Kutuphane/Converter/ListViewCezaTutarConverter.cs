@@ -10,12 +10,15 @@ namespace Kutuphane
         {
             if (value is DateTime gerigetirmetarihi && gerigetirmetarihi != DateTime.MinValue)
             {
-                var günfarkı = DateTime.Today - gerigetirmetarihi;
+                TimeSpan günfarkı = DateTime.Today - gerigetirmetarihi;
                 return günfarkı.TotalDays > 0 ? (günfarkı.TotalDays * Properties.Settings.Default.GünlükGecikmeBedeli).ToString("C") : "CEZA YOK";
             }
             return null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

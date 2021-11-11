@@ -9,9 +9,9 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding ElementName=LvKişiler, Path=SelectedItem.İşlem}" />
+        <CollectionViewSource x:Key="Kişiler"   Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kitaplar"  Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler"   Source="{Binding ElementName=LvKişiler, Path=SelectedItem.İşlem}" />
     </UserControl.Resources>
     <GroupBox Header="KİTAP KONTROL">
         <Grid>
@@ -26,7 +26,7 @@
             <ListView x:Name="listView"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                 SelectedItem="{Binding SeçiliKitap}"
-                VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single">
+                VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Background" Value="{Binding KitapListeArkaPlanRengi}" />
@@ -177,8 +177,8 @@
                     <ListView x:Name="LvKişiler"
                         ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
                         ItemTemplate="{StaticResource KişiDetayTemplate}"
-                        SelectedItem="{Binding SeçiliKişi}" SelectionMode="Single" />
-                    <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectionMode="Single">
+                        SelectedItem="{Binding SeçiliKişi}" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}" />
+                    <ListView Grid.Row="1" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="CEZA TUTARI" DisplayMemberBinding="{Binding CezaTutar, StringFormat=\{0:C\}}" />

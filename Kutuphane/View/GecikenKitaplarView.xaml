@@ -10,8 +10,8 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}">
+        <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler"  Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}">
             <CollectionViewSource.SortDescriptions>
                 <ComponentModel:SortDescription Direction="Ascending" PropertyName="GeriGetirmeTarihi" />
             </CollectionViewSource.SortDescriptions>
@@ -30,7 +30,7 @@
             <ListView x:Name="listViewKişi"
                 Grid.RowSpan="2"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
-                VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
+                VirtualizingPanel.VirtualizationMode="Recycling" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -62,7 +62,7 @@
                 </ListView.View>
             </ListView>
             <GroupBox Header="DURUM" Grid.Row="0" Grid.Column="1">
-                <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single">
+                <ListView x:Name="listViewİşlem" ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="KİTAP" extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" />

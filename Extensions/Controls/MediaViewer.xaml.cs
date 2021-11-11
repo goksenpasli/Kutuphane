@@ -67,7 +67,7 @@ namespace Extensions.Controls
             {
                 try
                 {
-                    var uriString = (string)e.NewValue;
+                    string uriString = (string)e.NewValue;
                     viewer.Player.Source = new Uri(uriString);
                     viewer.Player.MediaOpened += (f, g) =>
                     {
@@ -102,23 +102,35 @@ namespace Extensions.Controls
             }
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e) => Player.Position = Player.Position.Subtract(new TimeSpan(0, 0, 30));
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Player.Position = Player.Position.Subtract(new TimeSpan(0, 0, 30));
+        }
 
         private void Capture_Click(object sender, RoutedEventArgs e)
         {
             if (Player.NaturalVideoWidth > 0)
             {
-                var picturesfolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                var data = Player.ToRenderTargetBitmap().ToTiffJpegByteArray(ExtensionMethods.Format.Jpg);
+                string picturesfolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                byte[] data = Player.ToRenderTargetBitmap().ToTiffJpegByteArray(ExtensionMethods.Format.Jpg);
                 File.WriteAllBytes(picturesfolder.SetUniqueFile("Resim", "jpg"), data);
             }
         }
 
-        private void Forward_Click(object sender, RoutedEventArgs e) => Player.Position = Player.Position.Add(new TimeSpan(0, 0, 30));
+        private void Forward_Click(object sender, RoutedEventArgs e)
+        {
+            Player.Position = Player.Position.Add(new TimeSpan(0, 0, 30));
+        }
 
-        private void Mute_Checked(object sender, RoutedEventArgs e) => MediaVolume = 0;
+        private void Mute_Checked(object sender, RoutedEventArgs e)
+        {
+            MediaVolume = 0;
+        }
 
-        private void Mute_Unchecked(object sender, RoutedEventArgs e) => MediaVolume = 1;
+        private void Mute_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MediaVolume = 1;
+        }
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
@@ -130,8 +142,8 @@ namespace Extensions.Controls
 
         private double PixelsToValue(double pixels, double minValue, double maxValue, double width)
         {
-            var range = maxValue - minValue;
-            var percentage = pixels / width * 100;
+            double range = maxValue - minValue;
+            double percentage = pixels / width * 100;
             return (percentage / 100 * range) + minValue;
         }
 
@@ -184,14 +196,14 @@ namespace Extensions.Controls
                 {
                     _ = Task.Factory.StartNew(() =>
                       {
-                          _ = Dispatcher.BeginInvoke((Action)(() =>
+                          _ = Dispatcher.BeginInvoke(() =>
                           {
-                              var oran = SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight;
+                              double oran = SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight;
                               tooltip.Width = 96 * oran;
                               tooltip.Height = 96;
                               tooltip.PlacementTarget = Sld;
                               tooltip.Placement = PlacementMode.Mouse;
-                              var predictedValue = PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth);
+                              double predictedValue = PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth);
                               mediaElement.IsMuted = true;
                               mediaElement.Source = Player.Source;
                               mediaElement.Height = tooltip.Height;
@@ -204,7 +216,7 @@ namespace Extensions.Controls
                               {
                                   tooltip.IsOpen = true;
                               }
-                          }));
+                          });
                       }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
                 }
                 catch (Exception ex)

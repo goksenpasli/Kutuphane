@@ -10,8 +10,8 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}" />
+        <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler" Source="{Binding SelectedItem.İşlem, ElementName=listViewKişi}" />
     </UserControl.Resources>
     <GroupBox Header="KİTAP GERİ AL">
         <Grid>
@@ -23,7 +23,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False">
+            <ListView x:Name="listViewKişi" Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -60,7 +60,7 @@
             </ListView>
             <ListView x:Name="listViewİşlem"
                 Grid.Column="1" Grid.RowSpan="2"
-                ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectionMode="Single">
+                ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>

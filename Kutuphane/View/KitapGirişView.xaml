@@ -11,9 +11,9 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Diller" Source="{Binding Kitap.Diller}" />
-        <CollectionViewSource x:Key="Dolaplar" d:Source="{d:DesignInstance {x:Type model:Dolap}, CreateList=True}" Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="Yazarlar" d:Source="{d:DesignInstance {x:Type model:Yazar}, CreateList=True}" Source="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="KitapTürleri" d:Source="{d:DesignInstance {x:Type model:KitapTürü}, CreateList=True}" Source="{Binding Kütüphane.KitapTürleri, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Dolaplar"  Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Yazarlar"  Source="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="KitapTürleri"   Source="{Binding Kütüphane.KitapTürleri, Source={StaticResource MainViewModel}}" />
         <Style x:Key="ListViewItemStretchStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         </Style>
@@ -292,7 +292,7 @@
                     <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Dolaplar}}"
                         ItemTemplate="{StaticResource ListViewDolapTemplate}"
                         SelectedValue="{Binding Kitap.DolapId}"
-                        SelectedValuePath="Id" SelectionMode="Single">
+                        SelectedValuePath="Id" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Style.Triggers>

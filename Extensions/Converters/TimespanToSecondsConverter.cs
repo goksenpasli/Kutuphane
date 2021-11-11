@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Windows.Data;
 
 namespace Extensions
@@ -9,10 +8,13 @@ namespace Extensions
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var timeSpan = (TimeSpan)value;
+            TimeSpan timeSpan = (TimeSpan)value;
             return timeSpan.TotalSeconds;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => TimeSpan.FromSeconds((double)value);
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return TimeSpan.FromSeconds((double)value);
+        }
     }
 }

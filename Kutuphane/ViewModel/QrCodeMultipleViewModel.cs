@@ -65,7 +65,7 @@ namespace Kutuphane.ViewModel
             if (e.PropertyName is "En" or "Boy" or "BarcodeFormat" or "PureBarcode")
             {
                 Barkod.BarkodImage = Barkod.GenerateBarCodeImage(BarcodeFormat, PureBarcode);
-                for (var i = 0; i < En * Boy; i++)
+                for (int i = 0; i < En * Boy; i++)
                 {
                     BarkodResimler.Add(Barkod.BarkodImage);
                 }

@@ -10,8 +10,8 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="SeçiliKitaplar" d:Source="{d:DesignInstance {x:Type model:Kitap}, CreateList=True}" Source="{Binding SeçiliKitaplar}" />
+        <CollectionViewSource x:Key="Kitaplar"   Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="SeçiliKitaplar"   Source="{Binding SeçiliKitaplar}" />
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP SİL">
@@ -23,8 +23,7 @@
                 <ListView x:Name="listView"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                     Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKitaplar}"
-                    Extensions:ListBoxHelper.SelectedItemsMaxCount="30" IsSynchronizedWithCurrentItem="False"
-                    VirtualizingPanel.VirtualizationMode="Recycling">
+                    IsSynchronizedWithCurrentItem="False" VirtualizingPanel.VirtualizationMode="Recycling" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn>
@@ -118,22 +117,28 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ItemsControl Grid.Column="1"
+                <ListBox Grid.Column="1"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource SeçiliKitaplar}}"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <ItemsControl.ItemTemplate>
+                    IsSynchronizedWithCurrentItem="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    VirtualizingPanel.CacheLengthUnit="Item" VirtualizingPanel.ScrollUnit="Pixel"
+                    VirtualizingPanel.VirtualizationMode="Recycling" d:ItemsSource="{d:SampleData ItemCount=5}">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Viewbox>
-                                <viewmodel:ShadowedImage ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Source="{Binding Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
-                            </Viewbox>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Barkod}" />
+                                <viewmodel:ShadowedImage Width="210" Height="297"
+                                    ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Source="{Binding Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" ShowShadow="True" />
+                            </StackPanel>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid />
+                            <Extensions:VirtualizingWrapPanel />
                         </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                    </ListBox.ItemsPanel>
+                </ListBox>
             </Grid>
         </GroupBox>
     </Grid>

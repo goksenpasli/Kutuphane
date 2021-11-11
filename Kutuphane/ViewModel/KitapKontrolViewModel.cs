@@ -147,17 +147,17 @@ namespace Kutuphane.ViewModel
                 KitapKontrolView.cvskişi.Filter += (s, e) => e.Accepted = (e.Item as Kişi)?.İşlem?.Any(z => z.KitapId == SeçiliKitap.Id) == true;
             }
 
-            if (e.PropertyName is "SeçiliKişi" or "OkunanKitapRenkGöster" && SeçiliKişi is not null && OkunanKitapRenkGöster)
+            if (e.PropertyName is "SeçiliKişi" or "OkunanKitapRenkGöster" && SeçiliKişi is not null)
             {
-                foreach (var kitap in KitapKontrolView.cvs.View.Cast<Kitap>())
+                foreach (Kitap kitap in KitapKontrolView.cvs.View.Cast<Kitap>())
                 {
                     if (kitap.KitapListeArkaPlanRengi != Brushes.Transparent)
                     {
                         kitap.KitapListeArkaPlanRengi = Brushes.Transparent;
                     }
-                    foreach (var _ in SeçiliKişi.İşlem.Where(işlem => işlem.KitapId == kitap.Id))
+                    foreach (İşlem _ in SeçiliKişi.İşlem.Where(işlem => işlem.KitapId == kitap.Id))
                     {
-                        kitap.KitapListeArkaPlanRengi = Brushes.Yellow;
+                        kitap.KitapListeArkaPlanRengi = OkunanKitapRenkGöster ? Brushes.Yellow : Brushes.Transparent;
                     }
                 }
             }

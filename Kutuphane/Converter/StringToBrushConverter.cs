@@ -16,6 +16,9 @@ namespace Kutuphane
                 : (value is string renk) ? !string.IsNullOrEmpty(renk) ? new BrushConverter().ConvertFromString(renk) : null : null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => (value as SolidColorBrush)?.ToString();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (value as SolidColorBrush)?.ToString();
+        }
     }
 }

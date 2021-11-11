@@ -47,7 +47,7 @@ namespace TwainWpf
         /// <param name="sourceName">The source product name.</param>
         public void SelectSource(string sourceName)
         {
-            var source = DataSource.GetSource(
+            DataSource source = DataSource.GetSource(
                 sourceName,
                 _dataSourceManager.ApplicationId,
                 _dataSourceManager.MessageHook);
@@ -62,7 +62,7 @@ namespace TwainWpf
         {
             get
             {
-                using (var source = DataSource.GetDefault(_dataSourceManager.ApplicationId, _dataSourceManager.MessageHook))
+                using (DataSource source = DataSource.GetDefault(_dataSourceManager.ApplicationId, _dataSourceManager.MessageHook))
                 {
                     return source.SourceId.ProductName;
                 }
@@ -76,12 +76,12 @@ namespace TwainWpf
         {
             get
             {
-                var result = new List<string>();
-                var sources = DataSource.GetAllSources(
+                List<string> result = new List<string>();
+                List<DataSource> sources = DataSource.GetAllSources(
                     _dataSourceManager.ApplicationId,
                     _dataSourceManager.MessageHook);
 
-                foreach (var source in sources)
+                foreach (DataSource source in sources)
                 {
                     result.Add(source.SourceId.ProductName);
                     source.Dispose();

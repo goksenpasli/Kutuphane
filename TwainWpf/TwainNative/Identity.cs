@@ -26,7 +26,7 @@ namespace TwainWpf.TwainNative
 
         public Identity Clone()
         {
-            var id = (Identity)MemberwiseClone();
+            Identity id = (Identity)MemberwiseClone();
             id.Version = Version.Clone();
             return id;
         }

@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Kutuphane.ViewModel
 {
-    internal class ShadowedImage : Image
+    public class ShadowedImage : Image
     {
         public static readonly DependencyProperty LocationProperty = DependencyProperty.Register("Location", typeof(Point), typeof(ShadowedImage), new PropertyMetadata(new Point(2.5, 2.5)));
 
@@ -18,16 +18,18 @@ namespace Kutuphane.ViewModel
 
         private readonly Pen pen = new() { Thickness = 3 };
 
-        public Point Location
-        {
-            get => (Point)GetValue(LocationProperty);
-            set => SetValue(LocationProperty, value);
-        }
         public ShadowedImage()
         {
             pen.Brush = OverlayColor;
             pen.Freeze();
         }
+
+        public Point Location
+        {
+            get => (Point)GetValue(LocationProperty);
+            set => SetValue(LocationProperty, value);
+        }
+
         public SolidColorBrush OverlayColor
         {
             get => (SolidColorBrush)GetValue(OverlayColorProperty);

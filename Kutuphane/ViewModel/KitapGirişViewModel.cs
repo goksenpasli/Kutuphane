@@ -23,10 +23,10 @@ namespace Kutuphane.ViewModel
 
             KitapEkle = new RelayCommand<object>(parameter =>
             {
-                var kitap = KitapOluştur();
+                Kitap kitap = KitapOluştur();
                 if (Kitap.TopluKitapGirişi)
                 {
-                    for (var i = 0; i < Kitap.TopluKitapSayısı; i++)
+                    for (int i = 0; i < Kitap.TopluKitapSayısı; i++)
                     {
                         kitap = KitapOluştur();
                         if (Kitap.OtomatikBarkod)
@@ -59,7 +59,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is Kütüphane kütüphane)
                 {
-                    var tür = new KitapTürü() { Açıklama = Kitap.Tür, Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue) };
+                    KitapTürü tür = new() { Açıklama = Kitap.Tür, Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue) };
                     kütüphane?.KitapTürleri.Add(tür);
                     MainViewModel.DatabaseSave.Execute(null);
                 }
@@ -69,7 +69,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is Kütüphane kütüphane)
                 {
-                    var yazar = new Yazar() { Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue), Ad = Kitap.Yazar };
+                    Yazar yazar = new() { Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue), Ad = Kitap.Yazar };
                     kütüphane?.Yazarlar.Add(yazar);
                     MainViewModel.DatabaseSave.Execute(null);
                 }
@@ -80,7 +80,7 @@ namespace Kutuphane.ViewModel
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                 if (openFileDialog.ShowDialog() == true && parameter is Kitap kitap)
                 {
-                    var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                     if (Settings.Default.ResimKüçült)
                     {
                         BitmapSource image = new BitmapImage(new Uri(openFileDialog.FileName));
@@ -102,8 +102,8 @@ namespace Kutuphane.ViewModel
                 {
                     try
                     {
-                        using var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                        using var reader = ExcelReaderFactory.CreateReader(stream);
+                        using FileStream stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        using IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
                         do
                         {
                             while (reader.Read())
@@ -167,7 +167,7 @@ namespace Kutuphane.ViewModel
 
         private Kitap KitapOluştur()
         {
-            var kitap = new Kitap
+            Kitap kitap = new()
             {
                 Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                 Ad = Kitap.Ad,
@@ -186,11 +186,11 @@ namespace Kutuphane.ViewModel
                 KitapDili = Kitap.KitapDili,
                 Renk = Kitap.Renk
             };
-            foreach (var item in Kitap.SeçiliYazarlar)
+            foreach (Yazar item in Kitap.SeçiliYazarlar)
             {
                 kitap.Yazarlar.Add(item);
             }
-            foreach (var item in Kitap.SeçiliKitapTürleri)
+            foreach (KitapTürü item in Kitap.SeçiliKitapTürleri)
             {
                 kitap.Türler.Add(item);
             }

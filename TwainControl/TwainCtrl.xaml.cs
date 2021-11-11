@@ -350,7 +350,10 @@ namespace TwainControl
             }
         }
 
-        public void Dispose() => Dispose(true);
+        public void Dispose()
+        {
+            Dispose(true);
+        }
 
         protected virtual void Dispose(bool disposing)
         {
@@ -366,7 +369,10 @@ namespace TwainControl
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -388,7 +394,7 @@ namespace TwainControl
                 {
                     if (args.Image != null)
                     {
-                        using (var bmp = args.Image)
+                        using (System.Drawing.Bitmap bmp = args.Image)
                         {
                             BitmapImage evrak = null;
                             switch (Bw)
@@ -407,9 +413,9 @@ namespace TwainControl
                             }
 
                             evrak.Freeze();
-                            var önizleme = evrak.Resize(42, 59);
+                            BitmapSource önizleme = evrak.Resize(42, 59);
                             önizleme.Freeze();
-                            var bitmapFrame = BitmapFrame.Create(evrak, önizleme);
+                            BitmapFrame bitmapFrame = BitmapFrame.Create(evrak, önizleme);
                             bitmapFrame.Freeze();
                             Resimler.Add(bitmapFrame);
                             if (SeperateSave && Bw == true)

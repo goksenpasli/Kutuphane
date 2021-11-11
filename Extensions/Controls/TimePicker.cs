@@ -46,17 +46,20 @@ namespace Extensions
         private static void GenerateTime(int interval)
         {
             Saatler = new List<string>();
-            for (var i = DateTime.Today; i < DateTime.Today.AddDays(1); i = i.AddMinutes(interval))
+            for (DateTime i = DateTime.Today; i < DateTime.Today.AddDays(1); i = i.AddMinutes(interval))
             {
                 Saatler.Add(i.ToShortTimeString());
             }
         }
 
-        private static void IntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => GenerateTime(Convert.ToInt32(e.NewValue));
+        private static void IntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            GenerateTime(Convert.ToInt32(e.NewValue));
+        }
 
         private static bool IsValidInterval(object value)
         {
-            var v = (int)value;
+            int v = (int)value;
             return v is > 0 and <= 1440;
         }
     }

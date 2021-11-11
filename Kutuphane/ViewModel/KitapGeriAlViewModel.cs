@@ -19,7 +19,7 @@ namespace Kutuphane.ViewModel
             {
                 if (MessageBox.Show("Seçili Kitabı Geri Almak İstiyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes && parameter is İşlem işlem)
                 {
-                    var günfarkı = DateTime.Today - işlem.GeriGetirmeTarihi;
+                    TimeSpan günfarkı = DateTime.Today - işlem.GeriGetirmeTarihi;
                     işlem.CezaTutar = günfarkı.TotalDays > 0 ? (günfarkı.TotalDays * Properties.Settings.Default.GünlükGecikmeBedeli) : 0;
 
                     if (işlem.CezaTutar > 0)

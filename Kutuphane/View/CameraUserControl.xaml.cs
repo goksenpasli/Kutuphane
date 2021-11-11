@@ -43,10 +43,10 @@ namespace Kutuphane.View
 
             Kaydet = new RelayCommand<object>(parameter =>
             {
-                var saveFileDialog = new SaveFileDialog { Filter = "Jpg Dosyası (*.jpg)|*.jpg", AddExtension = true, Title = "Kaydet" };
+                SaveFileDialog saveFileDialog = new() { Filter = "Jpg Dosyası (*.jpg)|*.jpg", AddExtension = true, Title = "Kaydet" };
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    using var ms = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write);
+                    using FileStream ms = new(saveFileDialog.FileName, FileMode.Create, FileAccess.Write);
                     EncodeBitmapImage(ms);
                 }
             }, parameter => SeçiliKamera is not null);
@@ -142,7 +142,10 @@ namespace Kutuphane.View
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         private void CameraUserControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

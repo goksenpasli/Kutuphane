@@ -39,13 +39,7 @@ namespace TwainWpf.Wpf
             }
         }
 
-        public IntPtr WindowHandle
-        {
-            get
-            {
-                return _interopHelper.Handle;
-            }
-        }
+        public IntPtr WindowHandle => _interopHelper.Handle;
 
         public IntPtr FilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

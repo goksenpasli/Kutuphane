@@ -20,10 +20,10 @@ namespace TwainWpf
 
         public BasicCapabilityResult GetBasicValue()
         {
-            var oneValue = new CapabilityOneValue(_twainType, 0);
-            var twainCapability = TwainCapability.From(_capability, oneValue);
+            CapabilityOneValue oneValue = new CapabilityOneValue(_twainType, 0);
+            TwainCapability twainCapability = TwainCapability.From(_capability, oneValue);
 
-            var result = Twain32Native.DsCapability(
+            TwainResult result = Twain32Native.DsCapability(
                     _applicationId,
                     _sourceId,
                     DataGroup.Control,
@@ -33,7 +33,7 @@ namespace TwainWpf
 
             if (result != TwainResult.Success)
             {
-                var conditionCode = GetStatus();
+                ConditionCode conditionCode = GetStatus();
 
                 return new BasicCapabilityResult()
                 {
@@ -62,11 +62,11 @@ namespace TwainWpf
 
         protected void SetValue<T>(T value)
         {
-            var rawValue = Convert.ToInt32(value);
-            var oneValue = new CapabilityOneValue(_twainType, rawValue);
-            var twainCapability = TwainCapability.From(_capability, oneValue);
+            int rawValue = Convert.ToInt32(value);
+            CapabilityOneValue oneValue = new CapabilityOneValue(_twainType, rawValue);
+            TwainCapability twainCapability = TwainCapability.From(_capability, oneValue);
 
-            var result = Twain32Native.DsCapability(
+            TwainResult result = Twain32Native.DsCapability(
                 _applicationId,
                 _sourceId,
                 DataGroup.Control,
@@ -95,8 +95,8 @@ namespace TwainWpf
 
         public static int SetBasicCapability(Capabilities capability, int rawValue, TwainType twainType, Identity applicationId, Identity sourceId)
         {
-            var c = new Capability(capability, twainType, applicationId, sourceId);
-            var basicValue = c.GetBasicValue();
+            Capability c = new Capability(capability, twainType, applicationId, sourceId);
+            BasicCapabilityResult basicValue = c.GetBasicValue();
 
             // Check that the device supports the capability
             if (basicValue.ConditionCode != ConditionCode.Success)
@@ -131,8 +131,8 @@ namespace TwainWpf
 
         public static void SetCapability(Capabilities capability, bool value, Identity applicationId, Identity sourceId)
         {
-            var c = new Capability(capability, TwainType.Bool, applicationId, sourceId);
-            var capResult = c.GetBasicValue();
+            Capability c = new Capability(capability, TwainType.Bool, applicationId, sourceId);
+            BasicCapabilityResult capResult = c.GetBasicValue();
 
             // Check that the device supports the capability
             if (capResult.ConditionCode != ConditionCode.Success)
@@ -168,8 +168,8 @@ namespace TwainWpf
         public static bool GetBoolCapability(Capabilities capability, Identity applicationId,
             Identity sourceId)
         {
-            var c = new Capability(capability, TwainType.Int16, applicationId, sourceId);
-            var capResult = c.GetBasicValue();
+            Capability c = new Capability(capability, TwainType.Int16, applicationId, sourceId);
+            BasicCapabilityResult capResult = c.GetBasicValue();
 
             // Check that the device supports the capability
             if (capResult.ConditionCode != ConditionCode.Success)

@@ -27,7 +27,7 @@ namespace Kutuphane.View
         {
             if (Properties.Settings.Default.Aktarma)
             {
-                var kitapVerViewModel = DataContext as KitapVerViewModel;
+                KitapVerViewModel kitapVerViewModel = DataContext as KitapVerViewModel;
                 kitapVerViewModel.Kişi.KişiTcArama = kitapVerViewModel.Kişi.AktarmaTC;
             }
         }

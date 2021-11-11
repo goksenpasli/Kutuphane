@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -73,15 +74,15 @@ namespace Extensions
 
             Yazdır = new RelayCommand<object>(parameter =>
             {
-                var pd = new PrintDialog();
-                var dv = new DrawingVisual();
+                PrintDialog pd = new();
+                DrawingVisual dv = new();
                 if (Decoder == null)
                 {
                     if (pd.ShowDialog() == true)
                     {
-                        using (var dc = dv.RenderOpen())
+                        using (DrawingContext dc = dv.RenderOpen())
                         {
-                            var imagesource = Source.Width > Source.Height
+                            BitmapSource imagesource = Source.Width > Source.Height
                                 ? ((BitmapSource)Source)?.Resize((int)pd.PrintableAreaHeight, (int)pd.PrintableAreaWidth, 90, 300, 300)
                                 : ((BitmapSource)Source)?.Resize((int)pd.PrintableAreaWidth, (int)pd.PrintableAreaHeight, 0, 300, 300);
                             imagesource.Freeze();
@@ -112,11 +113,11 @@ namespace Extensions
                             bitiş = pd.PageRange.PageTo - 1;
                         }
 
-                        for (var i = başlangıç; i <= bitiş; i++)
+                        for (int i = başlangıç; i <= bitiş; i++)
                         {
-                            using (var dc = dv.RenderOpen())
+                            using (DrawingContext dc = dv.RenderOpen())
                             {
-                                var imagesource = Source.Width > Source.Height
+                                BitmapSource imagesource = Source.Width > Source.Height
                                     ? Decoder.Frames[i]?.Resize((int)pd.PrintableAreaHeight, (int)pd.PrintableAreaWidth, 90, 300, 300)
                                     : Decoder.Frames[i]?.Resize((int)pd.PrintableAreaWidth, (int)pd.PrintableAreaHeight, 0, 300, 300);
                                 imagesource.Freeze();
@@ -274,7 +275,10 @@ namespace Extensions
             set => SetValue(ZoomProperty, value);
         }
 
-        protected virtual void OnPropertyChanged(string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -307,6 +311,19 @@ namespace Extensions
                             image.Freeze();
                         }
                         imageViewer.Source = image;
+                        break;
+
+                    default:
+                        FormattedText formattedText = new("ÖNİZLEME YOK EVRAKI DİREKT AÇIN", CultureInfo.GetCultureInfo("tr-TR"), FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Red) { TextAlignment = TextAlignment.Left };
+                        DrawingVisual dv = new();
+                        using (DrawingContext dc = dv.RenderOpen())
+                        {
+                            dc.DrawText(formattedText, new Point(10, 200));
+                        }
+                        RenderTargetBitmap rtb = new(315, 445, 96, 96, PixelFormats.Default);
+                        rtb.Render(dv);
+                        rtb.Freeze();
+                        imageViewer.Source = rtb;
                         break;
                 }
             }

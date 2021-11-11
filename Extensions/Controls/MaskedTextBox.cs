@@ -96,9 +96,15 @@ namespace Extensions
             base.OnGotKeyboardFocus(e);
         }
 
-        protected virtual void OnIncludeLiteralsChanged(bool oldValue, bool newValue) => UpdateMaskProvider(Mask);
+        protected virtual void OnIncludeLiteralsChanged(bool oldValue, bool newValue)
+        {
+            UpdateMaskProvider(Mask);
+        }
 
-        protected virtual void OnIncludePromptChanged(bool oldValue, bool newValue) => UpdateMaskProvider(Mask);
+        protected virtual void OnIncludePromptChanged(bool oldValue, bool newValue)
+        {
+            UpdateMaskProvider(Mask);
+        }
 
         protected override void OnInitialized(EventArgs e)
         {
@@ -136,7 +142,10 @@ namespace Extensions
             base.OnPreviewTextInput(e);
         }
 
-        protected virtual void OnPromptCharChanged(char oldValue, char newValue) => UpdateMaskProvider(Mask);
+        protected virtual void OnPromptCharChanged(char oldValue, char newValue)
+        {
+            UpdateMaskProvider(Mask);
+        }
 
         protected virtual void OnTextChanged(string oldValue, string newValue)
         {
@@ -167,43 +176,43 @@ namespace Extensions
 
         private static void OnIncludeLiteralsPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBox = o as MaskedTextBox;
+            MaskedTextBox maskedTextBox = o as MaskedTextBox;
             maskedTextBox?.OnIncludeLiteralsChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void OnIncludePromptPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBox = o as MaskedTextBox;
+            MaskedTextBox maskedTextBox = o as MaskedTextBox;
             maskedTextBox?.OnIncludePromptChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void OnMaskPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBox = o as MaskedTextBox;
+            MaskedTextBox maskedTextBox = o as MaskedTextBox;
             maskedTextBox?.OnMaskChanged((string)e.OldValue, (string)e.NewValue);
         }
 
         private static void OnPromptCharChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBox = o as MaskedTextBox;
+            MaskedTextBox maskedTextBox = o as MaskedTextBox;
             maskedTextBox?.OnPromptCharChanged((char)e.OldValue, (char)e.NewValue);
         }
 
         private static void OnTextChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var inputBase = o as MaskedTextBox;
+            MaskedTextBox inputBase = o as MaskedTextBox;
             inputBase?.OnTextChanged((string)e.OldValue, (string)e.NewValue);
         }
 
         private static void OnValueChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBox = o as MaskedTextBox;
+            MaskedTextBox maskedTextBox = o as MaskedTextBox;
             maskedTextBox?.OnValueChanged(e.OldValue, e.NewValue);
         }
 
         private static void OnValueTypeChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBox = o as MaskedTextBox;
+            MaskedTextBox maskedTextBox = o as MaskedTextBox;
             maskedTextBox?.OnValueTypeChanged((Type)e.OldValue, (Type)e.NewValue);
         }
 
@@ -216,8 +225,8 @@ namespace Extensions
         private object ConvertTextToValue()
         {
             object convertedValue = null;
-            var dataType = ValueType;
-            var valueToConvert = MaskProvider.ToString().Trim();
+            Type dataType = ValueType;
+            string valueToConvert = MaskProvider.ToString().Trim();
             try
             {
                 if (valueToConvert.GetType() == dataType || dataType.IsInstanceOfType(valueToConvert))
@@ -272,22 +281,22 @@ namespace Extensions
 
         private int GetNextCharacterPosition(int startPosition)
         {
-            var position = MaskProvider.FindEditPositionFrom(startPosition, true);
+            int position = MaskProvider.FindEditPositionFrom(startPosition, true);
             return position == -1 ? startPosition : position;
         }
 
         private bool HandleKeyDownBack()
         {
-            var modifiers = Keyboard.Modifiers;
-            var handled = true;
+            ModifierKeys modifiers = Keyboard.Modifiers;
+            bool handled = true;
             if (modifiers is ModifierKeys.None or ModifierKeys.Shift)
             {
                 if (!RemoveSelectedText())
                 {
-                    var position = SelectionStart;
+                    int position = SelectionStart;
                     if (position > 0)
                     {
-                        var newPosition = position - 1;
+                        int newPosition = position - 1;
                         RemoveText(newPosition, 1);
                         UpdateText(newPosition);
                     }
@@ -319,13 +328,13 @@ namespace Extensions
 
         private bool HandleKeyDownDelete()
         {
-            var modifiers = Keyboard.Modifiers;
-            var handled = true;
+            ModifierKeys modifiers = Keyboard.Modifiers;
+            bool handled = true;
             if (modifiers == ModifierKeys.None)
             {
                 if (!RemoveSelectedText())
                 {
-                    var position = SelectionStart;
+                    int position = SelectionStart;
                     if (position < Text.Length)
                     {
                         RemoveText(position, 1);
@@ -341,7 +350,7 @@ namespace Extensions
             {
                 if (!RemoveSelectedText())
                 {
-                    var position = SelectionStart;
+                    int position = SelectionStart;
                     RemoveTextToEnd(position);
                     UpdateText(position);
                 }
@@ -430,9 +439,9 @@ namespace Extensions
 
         private void InsertText(string text)
         {
-            var position = SelectionStart;
-            var provider = MaskProvider;
-            var textRemoved = RemoveSelectedText();
+            int position = SelectionStart;
+            MaskedTextProvider provider = MaskProvider;
+            bool textRemoved = RemoveSelectedText();
             position = GetNextCharacterPosition(position);
             if (!textRemoved && Keyboard.IsKeyToggled(Key.Insert))
             {
@@ -460,13 +469,13 @@ namespace Extensions
                 return;
             }
 
-            var data = Clipboard.GetData(DataFormats.Text);
+            object data = Clipboard.GetData(DataFormats.Text);
             if (data != null)
             {
-                var text = data.ToString().Trim();
+                string text = data.ToString().Trim();
                 if (text.Length > 0)
                 {
-                    var position = SelectionStart;
+                    int position = SelectionStart;
                     _ = MaskProvider.Set(text);
                     UpdateText(position);
                 }
@@ -475,13 +484,13 @@ namespace Extensions
 
         private bool RemoveSelectedText()
         {
-            var length = SelectionLength;
+            int length = SelectionLength;
             if (length == 0)
             {
                 return false;
             }
 
-            var position = SelectionStart;
+            int position = SelectionStart;
             return MaskProvider.RemoveAt(position, position + length - 1);
         }
 
@@ -495,11 +504,20 @@ namespace Extensions
             _ = MaskProvider.RemoveAt(position, position + length - 1);
         }
 
-        private void RemoveTextFromStart(int endPosition) => RemoveText(0, endPosition);
+        private void RemoveTextFromStart(int endPosition)
+        {
+            RemoveText(0, endPosition);
+        }
 
-        private void RemoveTextToEnd(int startPosition) => RemoveText(startPosition, Text.Length - startPosition);
+        private void RemoveTextToEnd(int startPosition)
+        {
+            RemoveText(startPosition, Text.Length - startPosition);
+        }
 
-        private void ResetCommand(object sender, ExecutedRoutedEventArgs e) => Value = null;
+        private void ResetCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Value = null;
+        }
 
         private void SyncTextAndValueProperties(DependencyProperty p, object newValue)
         {
@@ -539,11 +557,14 @@ namespace Extensions
             };
         }
 
-        private void UpdateText() => UpdateText(SelectionStart);
+        private void UpdateText()
+        {
+            UpdateText(SelectionStart);
+        }
 
         private void UpdateText(int position)
         {
-            var provider = MaskProvider;
+            MaskedTextProvider provider = MaskProvider;
             if (provider == null)
             {
                 throw new InvalidOperationException();

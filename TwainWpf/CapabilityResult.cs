@@ -13,10 +13,10 @@ namespace TwainWpf
     {
         public int RawBasicValue { get; set; }
 
-        public bool BoolValue { get { return RawBasicValue == 1; } }
+        public bool BoolValue => RawBasicValue == 1;
 
-        public short Int16Value { get { return (short)RawBasicValue; } }
+        public short Int16Value => (short)RawBasicValue;
 
-        public int Int32Value { get { return RawBasicValue; } }
+        public int Int32Value => RawBasicValue;
     }
 }

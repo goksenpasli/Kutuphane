@@ -9,7 +9,7 @@
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kişiler"  Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <GroupBox Header="KİŞİ GÜNCELLE">
         <Grid>
@@ -20,7 +20,7 @@
             <ListView x:Name="LvKişi"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
                 SelectedItem="{Binding SeçiliKişi}"
-                SelectionMode="Single">
+                SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="32" extensions:GridViewSort.PropertyName="Resim">

@@ -101,9 +101,9 @@ namespace TwainWpf
                 return IntPtr.Zero;
             }
 
-            var pos = User32Native.GetMessagePos();
+            int pos = User32Native.GetMessagePos();
 
-            var message = new WindowsMessage
+            WindowsMessage message = new WindowsMessage
             {
                 hwnd = hwnd,
                 message = msg,
@@ -117,7 +117,7 @@ namespace TwainWpf
             Marshal.StructureToPtr(message, _eventMessage.EventPtr, false);
             _eventMessage.Message = 0;
 
-            var result = Twain32Native.DsEvent(
+            TwainResult result = Twain32Native.DsEvent(
                 ApplicationId,
                 DataSource.SourceId,
                 DataGroup.Control,
@@ -167,17 +167,17 @@ namespace TwainWpf
                 return;
             }
 
-            var pendingTransfer = new PendingXfers();
+            PendingXfers pendingTransfer = new PendingXfers();
             try
             {
                 do
                 {
                     pendingTransfer.Count = 0;
-                    var hbitmap = IntPtr.Zero;
+                    IntPtr hbitmap = IntPtr.Zero;
 
                     // Get the image info
-                    var imageInfo = new ImageInfo();
-                    var result = Twain32Native.DsImageInfo(
+                    ImageInfo imageInfo = new ImageInfo();
+                    TwainResult result = Twain32Native.DsImageInfo(
                         ApplicationId,
                         DataSource.SourceId,
                         DataGroup.Image,
@@ -223,12 +223,14 @@ namespace TwainWpf
 
                     if (hbitmap != IntPtr.Zero)
                     {
-                        using (var renderer = new BitmapRenderer(hbitmap))
+                        using (BitmapRenderer renderer = new BitmapRenderer(hbitmap))
                         {
-                            var args = new TransferImageEventArgs(renderer.RenderToBitmap(), pendingTransfer.Count != 0);
+                            TransferImageEventArgs args = new TransferImageEventArgs(renderer.RenderToBitmap(), pendingTransfer.Count != 0);
                             TransferImage?.Invoke(this, args);
                             if (!args.ContinueScanning)
+                            {
                                 break;
+                            }
                         }
                     }
                 }

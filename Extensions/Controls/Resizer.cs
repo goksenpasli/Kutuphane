@@ -67,14 +67,14 @@ namespace Extensions
 
         private static double ResizeBottom(DragDeltaEventArgs e, Control designerItem)
         {
-            var deltaVertical = Math.Min(-e.VerticalChange, designerItem.ActualHeight - designerItem.MinHeight);
+            double deltaVertical = Math.Min(-e.VerticalChange, designerItem.ActualHeight - designerItem.MinHeight);
             designerItem.Height -= deltaVertical;
             return deltaVertical;
         }
 
         private static double ResizeLeft(DragDeltaEventArgs e, Control designerItem)
         {
-            var deltaHorizontal = Math.Min(e.HorizontalChange, designerItem.ActualWidth - designerItem.MinWidth);
+            double deltaHorizontal = Math.Min(e.HorizontalChange, designerItem.ActualWidth - designerItem.MinWidth);
             Canvas.SetLeft(designerItem, Canvas.GetLeft(designerItem) + deltaHorizontal);
             designerItem.Width -= deltaHorizontal;
             return deltaHorizontal;
@@ -82,14 +82,14 @@ namespace Extensions
 
         private static double ResizeRight(DragDeltaEventArgs e, Control designerItem)
         {
-            var deltaHorizontal = Math.Min(-e.HorizontalChange, designerItem.ActualWidth - designerItem.MinWidth);
+            double deltaHorizontal = Math.Min(-e.HorizontalChange, designerItem.ActualWidth - designerItem.MinWidth);
             designerItem.Width -= deltaHorizontal;
             return deltaHorizontal;
         }
 
         private static double ResizeTop(DragDeltaEventArgs e, Control designerItem)
         {
-            var deltaVertical = Math.Min(e.VerticalChange, designerItem.ActualHeight - designerItem.MinHeight);
+            double deltaVertical = Math.Min(e.VerticalChange, designerItem.ActualHeight - designerItem.MinHeight);
             Canvas.SetTop(designerItem, Canvas.GetTop(designerItem) + deltaVertical);
             designerItem.Height -= deltaVertical;
             return deltaVertical;

@@ -105,7 +105,10 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) => TarihEtkin = İşlem?.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
+        private void GecikenKitaplarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            TarihEtkin = İşlem?.UzatmaSayısı < Properties.Settings.Default.MaksimumUzatmaSayısı;
+        }
 
         private void Kişi_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

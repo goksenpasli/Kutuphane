@@ -60,7 +60,7 @@
             <CheckBox Content="OTOMATİK TUTANAK" IsChecked="{Binding Path=OtomatikTutanak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
             <HeaderedContentControl>
                 <HeaderedContentControl.Header>
-                    <Button Command="{Binding TtsRegImport, Mode=OneWay}" CommandParameter="{Binding Path=TtsReg, Mode=OneWay, Source={x:Static properties:Settings.Default}}">
+                    <Button Command="{Binding TtsRegImport, Mode=OneWay}" >
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="32" Height="32">

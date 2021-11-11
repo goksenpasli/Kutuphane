@@ -39,7 +39,7 @@ namespace Kutuphane.ViewModel
 
                     if (saveFileDialog.ShowDialog() == true)
                     {
-                        var bytes = bitmapimage.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Png);
+                        byte[] bytes = bitmapimage.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Png);
                         using FileStream imageFile = new(saveFileDialog.FileName, FileMode.Create);
                         imageFile.Write(bytes, 0, bytes.Length);
                         imageFile.Flush();

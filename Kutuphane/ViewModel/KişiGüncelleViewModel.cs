@@ -27,7 +27,7 @@ namespace Kutuphane.ViewModel
                     OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                     if (openFileDialog.ShowDialog() == true)
                     {
-                        var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                        string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                         File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
                         kişi.Resim = filename;
                     }

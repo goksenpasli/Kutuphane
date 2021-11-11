@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using TwainWpf.TwainNative;
 
 namespace TwainWpf
@@ -135,7 +133,7 @@ namespace TwainWpf
             {
                 try
                 {
-                    var cap = new Capability(Capabilities.Duplex, TwainType.Int16, _applicationId, SourceId);
+                    Capability cap = new Capability(Capabilities.Duplex, TwainType.Int16, _applicationId, SourceId);
                     return ((Duplex)cap.GetBasicValue().Int16Value) != Duplex.None;
                 }
                 catch
@@ -151,7 +149,7 @@ namespace TwainWpf
             {
                 try
                 {
-                    var cap = new Capability(Capabilities.Lightpath, TwainType.Int16, _applicationId, SourceId);
+                    Capability cap = new Capability(Capabilities.Lightpath, TwainType.Int16, _applicationId, SourceId);
                     //return ((Lightpath)cap.GetBasicValue().Int16Value) != Lightpath.Transmissive;
                     return true;
                 }
@@ -247,7 +245,7 @@ namespace TwainWpf
             // Set orientation (default is portrait)
             try
             {
-                var cap = new Capability(Capabilities.Orientation, TwainType.Int16, _applicationId, SourceId);
+                Capability cap = new Capability(Capabilities.Orientation, TwainType.Int16, _applicationId, SourceId);
                 if ((Orientation)cap.GetBasicValue().Int16Value != Orientation.Default)
                 {
                     Capability.SetBasicCapability(Capabilities.Orientation, (ushort)scanSettings.Page.Orientation, TwainType.UInt16, _applicationId, SourceId);
@@ -267,7 +265,7 @@ namespace TwainWpf
         {
             try
             {
-                var cap = new Capability(Capabilities.Supportedsizes, TwainType.Int16, _applicationId, SourceId);
+                Capability cap = new Capability(Capabilities.Supportedsizes, TwainType.Int16, _applicationId, SourceId);
                 if ((PageType)cap.GetBasicValue().Int16Value != PageType.UsLetter)
                 {
                     Capability.SetBasicCapability(Capabilities.Supportedsizes, (ushort)scanSettings.Page.Size, TwainType.UInt16, _applicationId, SourceId);
@@ -341,7 +339,9 @@ namespace TwainWpf
             OpenSource();
 
             if (settings.AbortWhenNoPaperDetectable && !PaperDetectable)
+            {
                 throw new FeederEmptyException();
+            }
 
             // Set whether or not to show progress window
             NegotiateProgressIndicator(settings);
@@ -380,7 +380,7 @@ namespace TwainWpf
 
         private bool NegotiateArea(ScanSettings scanSettings)
         {
-            var area = scanSettings.Area;
+            AreaSettings area = scanSettings.Area;
 
             if (area == null)
             {
@@ -389,7 +389,7 @@ namespace TwainWpf
 
             try
             {
-                var cap = new Capability(Capabilities.IUnits, TwainType.Int16, _applicationId, SourceId);
+                Capability cap = new Capability(Capabilities.IUnits, TwainType.Int16, _applicationId, SourceId);
                 if ((Units)cap.GetBasicValue().Int16Value != area.Units)
                 {
                     Capability.SetCapability(Capabilities.IUnits, (short)area.Units, _applicationId, SourceId);
@@ -400,7 +400,7 @@ namespace TwainWpf
                 // Do nothing if the data source does not support the requested capability
             }
 
-            var imageLayout = new ImageLayout
+            ImageLayout imageLayout = new ImageLayout
             {
                 Frame = new Frame
                 {
@@ -411,7 +411,7 @@ namespace TwainWpf
                 }
             };
 
-            var result = Twain32Native.DsImageLayout(
+            TwainResult result = Twain32Native.DsImageLayout(
                 _applicationId,
                 SourceId,
                 DataGroup.Image,
@@ -429,7 +429,7 @@ namespace TwainWpf
 
         public void OpenSource()
         {
-            var result = Twain32Native.DsmIdentity(
+            TwainResult result = Twain32Native.DsmIdentity(
                    _applicationId,
                    IntPtr.Zero,
                    DataGroup.Control,
@@ -445,14 +445,14 @@ namespace TwainWpf
 
         public bool Enable(ScanSettings settings)
         {
-            var ui = new UserInterface
+            UserInterface ui = new UserInterface
             {
                 ShowUI = (short)(settings.ShowTwainUi ? 1 : 0),
                 ModalUI = 1,
                 ParentHand = _messageHook.WindowHandle
             };
 
-            var result = Twain32Native.DsUserInterface(
+            TwainResult result = Twain32Native.DsUserInterface(
                 _applicationId,
                 SourceId,
                 DataGroup.Control,
@@ -470,10 +470,10 @@ namespace TwainWpf
 
         public static DataSource GetDefault(Identity applicationId, IWindowsMessageHook messageHook)
         {
-            var defaultSourceId = new Identity();
+            Identity defaultSourceId = new Identity();
 
             // Attempt to get information about the system default source
-            var result = Twain32Native.DsmIdentity(
+            TwainResult result = Twain32Native.DsmIdentity(
                 applicationId,
                 IntPtr.Zero,
                 DataGroup.Control,
@@ -483,7 +483,7 @@ namespace TwainWpf
 
             if (result != TwainResult.Success)
             {
-                var status = DataSourceManager.GetConditionCode(applicationId, null);
+                ConditionCode status = DataSourceManager.GetConditionCode(applicationId, null);
                 throw new TwainException("Error getting information about the default source: " + result, result, status);
             }
 
@@ -492,7 +492,7 @@ namespace TwainWpf
 
         public static DataSource UserSelected(Identity applicationId, IWindowsMessageHook messageHook)
         {
-            var defaultSourceId = new Identity();
+            Identity defaultSourceId = new Identity();
 
             // Show the TWAIN interface to allow the user to select a source
             Twain32Native.DsmIdentity(
@@ -508,11 +508,11 @@ namespace TwainWpf
 
         public static List<DataSource> GetAllSources(Identity applicationId, IWindowsMessageHook messageHook)
         {
-            var sources = new List<DataSource>();
+            List<DataSource> sources = new List<DataSource>();
             Identity id = new Identity();
 
             // Get the first source
-            var result = Twain32Native.DsmIdentity(
+            TwainResult result = Twain32Native.DsmIdentity(
                 applicationId,
                 IntPtr.Zero,
                 DataGroup.Control,
@@ -562,7 +562,7 @@ namespace TwainWpf
         public static DataSource GetSource(string sourceProductName, Identity applicationId, IWindowsMessageHook messageHook)
         {
             // A little slower than it could be, if enumerating unnecessary sources is slow. But less code duplication.
-            foreach (var source in GetAllSources(applicationId, messageHook))
+            foreach (DataSource source in GetAllSources(applicationId, messageHook))
             {
                 if (sourceProductName.Equals(source.SourceId.ProductName, StringComparison.InvariantCultureIgnoreCase))
                 {

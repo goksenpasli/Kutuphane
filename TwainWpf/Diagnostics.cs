@@ -7,18 +7,18 @@ namespace TwainWpf
     {
         public Diagnostics(IWindowsMessageHook messageHook)
         {
-            using (var dataSourceManager = new DataSourceManager(DataSourceManager.DefaultApplicationId, messageHook))
+            using (DataSourceManager dataSourceManager = new DataSourceManager(DataSourceManager.DefaultApplicationId, messageHook))
             {
                 dataSourceManager.SelectSource();
 
-                var dataSource = dataSourceManager.DataSource;
+                DataSource dataSource = dataSourceManager.DataSource;
                 dataSource.OpenSource();
 
                 foreach (Capabilities capability in Enum.GetValues(typeof(Capabilities)))
                 {
                     try
                     {
-                        var result = Capability.GetBoolCapability(capability, dataSourceManager.ApplicationId, dataSource.SourceId);
+                        bool result = Capability.GetBoolCapability(capability, dataSourceManager.ApplicationId, dataSource.SourceId);
 
                         Console.WriteLine("{0}: {1}", capability, result);
                     }

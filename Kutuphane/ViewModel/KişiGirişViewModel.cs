@@ -39,7 +39,7 @@ namespace Kutuphane.ViewModel
                         _ = MessageBox.Show("Bu TC İle Giriş Yapılmıştır.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
                     }
-                    var kişi = new Kişi
+                    Kişi kişi = new()
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         Ad = Kişi.Ad,
@@ -66,7 +66,7 @@ namespace Kutuphane.ViewModel
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                     File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
                     Kişi.Resim = filename;
                 }

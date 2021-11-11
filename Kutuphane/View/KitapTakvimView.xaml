@@ -9,8 +9,8 @@
     d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Kişiler" d:Source="{d:DesignInstance {x:Type model:Kişi}, CreateList=True}" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="İşlemler" d:Source="{d:DesignInstance {x:Type model:İşlem}, CreateList=True}" Source="{Binding ElementName=ListView, Path=SelectedItem.İşlem}" />
+        <CollectionViewSource x:Key="Kişiler"   Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler"   Source="{Binding ElementName=ListView, Path=SelectedItem.İşlem}" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,9 +35,9 @@
                 <ListView x:Name="ListView"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
                     IsSynchronizedWithCurrentItem="False"
-                    ItemTemplate="{StaticResource KişiDetayTemplate}" SelectionMode="Single" />
+                    ItemTemplate="{StaticResource KişiDetayTemplate}" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}" />
                 <GroupBox Header="KİTAP" Grid.Row="1">
-                    <ListBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" IsSynchronizedWithCurrentItem="False">
+                    <ListBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}" IsSynchronizedWithCurrentItem="False" d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Style.Triggers>

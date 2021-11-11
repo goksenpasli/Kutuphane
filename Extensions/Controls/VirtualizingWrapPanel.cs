@@ -81,7 +81,7 @@ namespace Extensions
 
         private static bool IsWidthHeightValid(object value)
         {
-            var d = (double)value;
+            double d = (double)value;
             return double.IsNaN(d) || (d >= 0 && !double.IsPositiveInfinity(d));
         }
 
@@ -117,14 +117,14 @@ namespace Extensions
         {
             foreach (UIElement child in InternalChildren)
             {
-                var gen = ItemContainerGenerator as ItemContainerGenerator;
-                var index = gen?.IndexFromContainer(child) ?? InternalChildren.IndexOf(child);
+                ItemContainerGenerator gen = ItemContainerGenerator as ItemContainerGenerator;
+                int index = gen?.IndexFromContainer(child) ?? InternalChildren.IndexOf(child);
                 if (!_containerLayouts.ContainsKey(index))
                 {
                     continue;
                 }
 
-                var layout = _containerLayouts[index];
+                Rect layout = _containerLayouts[index];
                 layout.Offset(_offset.X * -1, _offset.Y * -1);
                 child.Arrange(layout);
             }
@@ -135,26 +135,26 @@ namespace Extensions
         protected override Size MeasureOverride(Size availableSize)
         {
             _containerLayouts.Clear();
-            var isAutoWidth = double.IsNaN(ItemWidth);
-            var isAutoHeight = double.IsNaN(ItemHeight);
+            bool isAutoWidth = double.IsNaN(ItemWidth);
+            bool isAutoHeight = double.IsNaN(ItemHeight);
             Size childAvailable = new(isAutoWidth ? double.PositiveInfinity : ItemWidth, isAutoHeight ? double.PositiveInfinity : ItemHeight);
-            var isHorizontal = Orientation == Orientation.Horizontal;
-            var childrenCount = InternalChildren.Count;
-            var itemsControl = ItemsControl.GetItemsOwner(this);
+            bool isHorizontal = Orientation == Orientation.Horizontal;
+            int childrenCount = InternalChildren.Count;
+            ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
             if (itemsControl != null)
             {
                 childrenCount = itemsControl.Items.Count;
             }
 
             using ChildGenerator generator = new(this);
-            var x = 0.0;
-            var y = 0.0;
+            double x = 0.0;
+            double y = 0.0;
             Size lineSize = default;
             Size maxSize = default;
-            for (var i = 0; i < childrenCount; i++)
+            for (int i = 0; i < childrenCount; i++)
             {
-                var childSize = ContainerSizeForIndex(i);
-                var isWrapped = isHorizontal ? lineSize.Width + childSize.Width > availableSize.Width : lineSize.Height + childSize.Height > availableSize.Height;
+                Size childSize = ContainerSizeForIndex(i);
+                bool isWrapped = isHorizontal ? lineSize.Width + childSize.Width > availableSize.Width : lineSize.Height + childSize.Height > availableSize.Height;
                 if (isWrapped)
                 {
                     x = isHorizontal ? 0 : x + lineSize.Width;
@@ -165,7 +165,7 @@ namespace Extensions
                 Rect viewportRect = new(_offset, availableSize);
                 if (itemRect.IntersectsWith(viewportRect))
                 {
-                    var child = generator.GetOrCreateChild(i);
+                    UIElement child = generator.GetOrCreateChild(i);
                     child.Measure(childAvailable);
                     childSize = ContainerSizeForIndex(i);
                 }
@@ -217,11 +217,11 @@ namespace Extensions
                     return;
                 }
 
-                var children = _owner.InternalChildren;
-                for (var i = children.Count - 1; i >= 0; i--)
+                UIElementCollection children = _owner.InternalChildren;
+                for (int i = children.Count - 1; i >= 0; i--)
                 {
                     GeneratorPosition childPos = new(i, 0);
-                    var index = _generator.IndexFromGeneratorPosition(childPos);
+                    int index = _generator.IndexFromGeneratorPosition(childPos);
                     if (index >= _firstGeneratedIndex && index <= _lastGeneratedIndex)
                     {
                         continue;
@@ -264,7 +264,10 @@ namespace Extensions
                 Dispose();
             }
 
-            public void Dispose() => _generatorTracker?.Dispose();
+            public void Dispose()
+            {
+                _generatorTracker?.Dispose();
+            }
 
             #endregion _ctor
 
@@ -282,7 +285,7 @@ namespace Extensions
                     BeginGenerate(index);
                 }
 
-                var child = _generator.GenerateNext(out var newlyRealized) as UIElement;
+                UIElement child = _generator.GenerateNext(out bool newlyRealized) as UIElement;
                 if (newlyRealized)
                 {
                     if (_currentGenerateIndex >= _owner.InternalChildren.Count)
@@ -308,7 +311,7 @@ namespace Extensions
             private void BeginGenerate(int index)
             {
                 _firstGeneratedIndex = index;
-                var startPos = _generator.GeneratorPositionFromIndex(index);
+                GeneratorPosition startPos = _generator.GeneratorPositionFromIndex(index);
                 _currentGenerateIndex = startPos.Offset == 0 ? startPos.Index : startPos.Index + 1;
                 _generatorTracker = _generator.StartAt(startPos, GeneratorDirection.Forward, true);
             }
@@ -329,7 +332,7 @@ namespace Extensions
             Func<int, Size> getSize = new(idx =>
             {
                 UIElement item = null;
-                var itemsOwner = ItemsControl.GetItemsOwner(this);
+                ItemsControl itemsOwner = ItemsControl.GetItemsOwner(this);
                 if (itemsOwner == null || ItemContainerGenerator is not ItemContainerGenerator generator)
                 {
                     if (InternalChildren.Count > idx)
@@ -369,7 +372,7 @@ namespace Extensions
 
                 return _prevSize;
             });
-            var size = getSize(index);
+            Size size = getSize(index);
             if (!double.IsNaN(ItemWidth))
             {
                 size.Width = ItemWidth;
@@ -437,73 +440,109 @@ namespace Extensions
 
         #region LineUp
 
-        public void LineUp() => SetVerticalOffset(VerticalOffset - SystemParameters.ScrollHeight);
+        public void LineUp()
+        {
+            SetVerticalOffset(VerticalOffset - SystemParameters.ScrollHeight);
+        }
 
         #endregion LineUp
 
         #region LineDown
 
-        public void LineDown() => SetVerticalOffset(VerticalOffset + SystemParameters.ScrollHeight);
+        public void LineDown()
+        {
+            SetVerticalOffset(VerticalOffset + SystemParameters.ScrollHeight);
+        }
 
         #endregion LineDown
 
         #region LineLeft
 
-        public void LineLeft() => SetHorizontalOffset(HorizontalOffset - SystemParameters.ScrollWidth);
+        public void LineLeft()
+        {
+            SetHorizontalOffset(HorizontalOffset - SystemParameters.ScrollWidth);
+        }
 
         #endregion LineLeft
 
         #region LineRight
 
-        public void LineRight() => SetHorizontalOffset(HorizontalOffset + SystemParameters.ScrollWidth);
+        public void LineRight()
+        {
+            SetHorizontalOffset(HorizontalOffset + SystemParameters.ScrollWidth);
+        }
 
         #endregion LineRight
 
         #region PageUp
 
-        public void PageUp() => SetVerticalOffset(VerticalOffset - _viewport.Height);
+        public void PageUp()
+        {
+            SetVerticalOffset(VerticalOffset - _viewport.Height);
+        }
 
         #endregion PageUp
 
         #region PageDown
 
-        public void PageDown() => SetVerticalOffset(VerticalOffset + _viewport.Height);
+        public void PageDown()
+        {
+            SetVerticalOffset(VerticalOffset + _viewport.Height);
+        }
 
         #endregion PageDown
 
         #region PageLeft
 
-        public void PageLeft() => SetHorizontalOffset(HorizontalOffset - _viewport.Width);
+        public void PageLeft()
+        {
+            SetHorizontalOffset(HorizontalOffset - _viewport.Width);
+        }
 
         #endregion PageLeft
 
         #region PageRight
 
-        public void PageRight() => SetHorizontalOffset(HorizontalOffset + _viewport.Width);
+        public void PageRight()
+        {
+            SetHorizontalOffset(HorizontalOffset + _viewport.Width);
+        }
 
         #endregion PageRight
 
         #region MouseWheelUp
 
-        public void MouseWheelUp() => SetVerticalOffset(VerticalOffset - (SystemParameters.ScrollHeight * SystemParameters.WheelScrollLines));
+        public void MouseWheelUp()
+        {
+            SetVerticalOffset(VerticalOffset - (SystemParameters.ScrollHeight * SystemParameters.WheelScrollLines));
+        }
 
         #endregion MouseWheelUp
 
         #region MouseWheelDown
 
-        public void MouseWheelDown() => SetVerticalOffset(VerticalOffset + (SystemParameters.ScrollHeight * SystemParameters.WheelScrollLines));
+        public void MouseWheelDown()
+        {
+            SetVerticalOffset(VerticalOffset + (SystemParameters.ScrollHeight * SystemParameters.WheelScrollLines));
+        }
 
         #endregion MouseWheelDown
 
         #region MouseWheelLeft
 
-        public void MouseWheelLeft() => SetHorizontalOffset(HorizontalOffset - (SystemParameters.ScrollWidth * SystemParameters.WheelScrollLines));
+        public void MouseWheelLeft()
+        {
+            SetHorizontalOffset(HorizontalOffset - (SystemParameters.ScrollWidth * SystemParameters.WheelScrollLines));
+        }
 
         #endregion MouseWheelLeft
 
         #region MouseWheelRight
 
-        public void MouseWheelRight() => SetHorizontalOffset(HorizontalOffset + (SystemParameters.ScrollWidth * SystemParameters.WheelScrollLines));
+        public void MouseWheelRight()
+        {
+            SetHorizontalOffset(HorizontalOffset + (SystemParameters.ScrollWidth * SystemParameters.WheelScrollLines));
+        }
 
         #endregion MouseWheelRight
 
@@ -511,8 +550,8 @@ namespace Extensions
 
         public Rect MakeVisible(Visual visual, Rect rectangle)
         {
-            var idx = InternalChildren.IndexOf(visual as UIElement);
-            var generator = ItemContainerGenerator;
+            int idx = InternalChildren.IndexOf(visual as UIElement);
+            IItemContainerGenerator generator = ItemContainerGenerator;
             if (generator != null)
             {
                 GeneratorPosition pos = new(idx, 0);
@@ -529,7 +568,7 @@ namespace Extensions
                 return Rect.Empty;
             }
 
-            var layout = _containerLayouts[idx];
+            Rect layout = _containerLayouts[idx];
             if (HorizontalOffset + ViewportWidth < layout.X + layout.Width)
             {
                 SetHorizontalOffset(layout.X + layout.Width - ViewportWidth);

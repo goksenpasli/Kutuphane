@@ -4,7 +4,6 @@ using Kutuphane.Properties;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -136,7 +135,7 @@ namespace Kutuphane.ViewModel
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                     File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(xmldatapath)}\\{filename}");
                     Settings.Default.KimlikArkaPlanResim = filename;
                 }
@@ -153,9 +152,9 @@ namespace Kutuphane.ViewModel
             {
                 try
                 {
-                    var path = $"{Path.GetTempPath()}\\{Guid.NewGuid() + ".reg"}";
-                    File.WriteAllLines(path, (parameter as StringCollection).Cast<string>());
-                    _ = Process.Start("regedit.exe", "/s" + path);
+                    string path = $"{Path.GetTempPath()}{Guid.NewGuid()}.reg";
+                    File.WriteAllText(path, Resources.TtsReg);
+                    _ = Process.Start("regedit.exe", path);
                 }
                 catch (Exception ex)
                 {

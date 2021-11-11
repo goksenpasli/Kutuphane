@@ -28,7 +28,7 @@ namespace Extensions
 
         private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var maskedTextBlock = d as MaskedTextBlock;
+            MaskedTextBlock maskedTextBlock = d as MaskedTextBlock;
             maskedTextBlock._provider = new MaskedTextProvider(maskedTextBlock.InputMask, CultureInfo.CurrentCulture);
             _ = maskedTextBlock._provider.Set(string.IsNullOrWhiteSpace(maskedTextBlock.UnmaskedText) ? string.Empty : e.NewValue as string);
             maskedTextBlock.Text = maskedTextBlock._provider.ToDisplayString();

@@ -16,7 +16,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is Kütüphane kütüphane)
                 {
-                    var dolap = new Dolap() { Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue), Açıklama = Dolap.Açıklama, Kod = Dolap.Kod };
+                    Dolap dolap = new() { Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue), Açıklama = Dolap.Açıklama, Kod = Dolap.Kod };
                     kütüphane.Dolaplar?.Add(dolap);
                     MainViewModel.DatabaseSave.Execute(null);
                 }

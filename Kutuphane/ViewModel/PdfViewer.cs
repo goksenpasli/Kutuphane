@@ -55,8 +55,6 @@ namespace Kutuphane.ViewModel
 
         public new ICommand DosyaAç { get; }
 
-        public ICommand OrijinalPdfDosyaAç { get; }
-
         public int Dpi
         {
             get => (int)GetValue(DpiProperty);
@@ -64,6 +62,8 @@ namespace Kutuphane.ViewModel
         }
 
         public int[] DpiList { get; set; } = new int[] { 96, 150, 225, 300, 600 };
+
+        public ICommand OrijinalPdfDosyaAç { get; }
 
         public string PdfFilePath
         {
@@ -99,8 +99,8 @@ namespace Kutuphane.ViewModel
         {
             if (buffer != null)
             {
-                var bitmap = new BitmapImage();
-                using var stream = new MemoryStream(buffer);
+                BitmapImage bitmap = new();
+                using MemoryStream stream = new(buffer);
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;

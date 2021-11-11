@@ -36,15 +36,22 @@ namespace Kutuphane.ViewModel
                 const string filepath = @"\Raporlar\TUTANAK.docx";
                 if (File.Exists(ExeFolder + filepath) && parameter is object[] data && data[0] is Kişi kişi && data[1] is İşlem işlem)
                 {
-                    var kişidata = new Data
-                    {
-                        Ad = kişi.Ad + " " + kişi.Soyad,
-                        KitapAdı = işlem.SeçiliKitap.Ad,
-                        Gün = işlem.KitapGün,
-                        Tarih = işlem.GeriGetirmeTarihi,
-                        Ceza = Properties.Settings.Default.GünlükGecikmeBedeli
-                    };
+                    Data kişidata = GenerateData(kişi, işlem);
                     kişidata.CreateDocReport(ExeFolder + filepath);
+                }
+            }, parameter => true);
+
+            KitapTutanakEkle = new RelayCommand<object>(parameter =>
+            {
+                const string filepath = @"\Raporlar\TUTANAK.docx";
+                if (File.Exists(ExeFolder + filepath) && parameter is object[] data && data[0] is Kişi kişi && data[1] is İşlem işlem)
+                {
+                    Data kişidata = GenerateData(kişi, işlem);
+                    string tempfilepath = kişidata.ProcessReportDoc(ExeFolder + filepath, out _, out _);
+                    string filename = Path.GetFileName(tempfilepath);
+                    File.Copy(tempfilepath, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                    kişi.TutanakYolu.Add(filename);
+                    MainViewModel.DatabaseSave.Execute(null);
                 }
             }, parameter => true);
         }
@@ -53,18 +60,31 @@ namespace Kutuphane.ViewModel
 
         public ICommand KitapListesiRaporu { get; }
 
+        public ICommand KitapTutanakEkle { get; }
+
         public ICommand KitapTutanakRaporu { get; }
 
-        private string ExeFolder { get; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+        private static string ExeFolder { get; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+
+        private static Data GenerateData(Kişi kişi, İşlem işlem)
+        {
+            return new()
+            {
+                Ad = $"{kişi.Ad} {kişi.Soyad}",
+                KitapAdı = işlem.SeçiliKitap.Ad,
+                Gün = işlem.KitapGün,
+                Tarih = işlem.GeriGetirmeTarihi,
+                Ceza = Properties.Settings.Default.GünlükGecikmeBedeli
+            };
+        }
 
         private static ObservableCollection<Data> KitapAlanlarListesi()
         {
-            var data = new ObservableCollection<Data>();
-            foreach (var (kişi, kitap) in ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.SelectMany(işlem => ExtensionMethods.KitaplarıYükle().Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
+            ObservableCollection<Data> data = new();
+            foreach ((Kişi kişi, Kitap kitap) in ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.SelectMany(işlem => ExtensionMethods.KitaplarıYükle().Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
             {
                 data.Add(new Data() { Ad = kişi.Ad, Soyad = kişi.Soyad, KitapAdı = kitap.Ad });
             }
-
             return data;
         }
 

@@ -25,6 +25,7 @@
     <StreamGeometry x:Key="ArrowGeometry">M0,0L4,4 8,0z</StreamGeometry>
     <local:SystemFileIconConverter x:Key="SystemFileIconConverter" />
     <local:NullableToBooleanConverter x:Key="NullableToBooleanConverter" />
+    <local:FilePathToIconConverter x:Key="FilePathToIconConverter" />
     <Style x:Key="RightRepeatButton" TargetType="RepeatButton">
         <Setter Property="Focusable" Value="false" />
         <Setter Property="IsTabStop" Value="false" />
@@ -268,14 +269,7 @@
                                 Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Button Grid.Column="6" Command="{Binding OrijinalResimDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="{Binding ImageFilePath, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
-                                    <Image Width="16" Height="16">
-                                        <Image.Source>
-                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                <Binding Source="Shell32.dll" />
-                                                <Binding Source="24" />
-                                            </MultiBinding>
-                                        </Image.Source>
-                                    </Image>
+                                    <Image Width="16" Height="16" Source="{Binding ImageFilePath, Converter={StaticResource FilePathToIconConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.Content>
                             </Button>
                         </Grid>

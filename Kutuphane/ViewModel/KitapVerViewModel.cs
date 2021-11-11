@@ -36,7 +36,7 @@ namespace Kutuphane.ViewModel
                         _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
                     }
-                    var işlem = new İşlem
+                    İşlem işlem = new()
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = İşlem.KitapGün,
@@ -69,7 +69,7 @@ namespace Kutuphane.ViewModel
                         _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
                     }
-                    var işlem = new İşlem
+                    İşlem işlem = new()
                     {
                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                         KitapGün = Settings.Default.HızlıKitapGirişGünSüresi,
@@ -97,7 +97,7 @@ namespace Kutuphane.ViewModel
                     OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf)|*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf" };
                     if (openFileDialog.ShowDialog() == true)
                     {
-                        var filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                        string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                         File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
                         SeçiliKişi.TutanakYolu.Add(filename);
                         MainViewModel.DatabaseSave.Execute(null);
@@ -110,7 +110,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is ObservableCollection<BitmapFrame> seçiliResimler && SeçiliKişi is not null)
                 {
-                    foreach (var resim in seçiliResimler)
+                    foreach (BitmapFrame resim in seçiliResimler)
                     {
                         string filename = null;
                         if (resim.Format == PixelFormats.Bgr32)
@@ -186,7 +186,10 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        private static bool KitapAlabilir(object parameter) => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir;
+        private static bool KitapAlabilir(object parameter)
+        {
+            return parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir;
+        }
 
         private void İşlem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
