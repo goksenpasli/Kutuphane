@@ -9,7 +9,24 @@ namespace TwainWpf
     /// </summary>
     public class PageSettings : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Default Page setup - A4 Letter and Portrait orientation
+        /// </summary>
+        public static readonly PageSettings Default = new PageSettings()
+        {
+            Size = PageType.UsLetter,
+            Orientation = Orientation.Default
+        };
+
         private Orientation _orientation;
+
+        private PageType _size;
+
+        public PageSettings()
+        {
+            Size = PageType.UsLetter;
+            Orientation = Orientation.Default;
+        }
 
         /// <summary>
         /// Gets or sets the page orientation.
@@ -18,6 +35,7 @@ namespace TwainWpf
         public Orientation Orientation
         {
             get => _orientation;
+
             set
             {
                 if (value != _orientation)
@@ -28,7 +46,6 @@ namespace TwainWpf
             }
         }
 
-        private PageType _size;
         /// <summary>
         /// Gets or sets the Page Size.
         /// </summary>
@@ -36,6 +53,7 @@ namespace TwainWpf
         public PageType Size
         {
             get => _size;
+
             set
             {
                 if (value != _size)
@@ -46,21 +64,6 @@ namespace TwainWpf
             }
         }
 
-        public PageSettings()
-        {
-            Size = PageType.UsLetter;
-            Orientation = Orientation.Default;
-        }
-
-        /// <summary>
-        /// Default Page setup - A4 Letter and Portrait orientation
-        /// </summary>
-        public static readonly PageSettings Default = new PageSettings()
-        {
-            Size = PageType.UsLetter,
-            Orientation = Orientation.Default
-        };
-
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -70,6 +73,6 @@ namespace TwainWpf
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion
+        #endregion INotifyPropertyChanged Members
     }
 }

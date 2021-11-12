@@ -54,14 +54,6 @@ namespace Kutuphane.View
             PropertyChanged += CameraUserControl_PropertyChanged;
         }
 
-        private void EncodeBitmapImage(Stream ms)
-        {
-            JpegBitmapEncoder encoder = new();
-            encoder.Frames.Add(BitmapFrame.Create(new TransformedBitmap(Device.BitmapSource, new RotateTransform(Rotation))));
-            encoder.QualityLevel = 90;
-            encoder.Save(ms);
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public CapDevice Device
@@ -156,6 +148,14 @@ namespace Kutuphane.View
                     MaxHeightInPixels = 1080
                 };
             }
+        }
+
+        private void EncodeBitmapImage(Stream ms)
+        {
+            JpegBitmapEncoder encoder = new();
+            encoder.Frames.Add(BitmapFrame.Create(new TransformedBitmap(Device.BitmapSource, new RotateTransform(Rotation))));
+            encoder.QualityLevel = 90;
+            encoder.Save(ms);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Extensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF" />
@@ -34,8 +36,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border Height="5"
-                        Background="Red" BorderBrush="Gray" BorderThickness="0,1,1,1"
+                    <Border
+                        Height="5"
+                        Background="Red"
+                        BorderBrush="Gray"
+                        BorderThickness="0,1,1,1"
                         CornerRadius="0.5" />
                 </ControlTemplate>
             </Setter.Value>
@@ -49,8 +54,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border Height="5"
-                        Background="#FFE22828" BorderBrush="Gray" BorderThickness="1,1,0,1"
+                    <Border
+                        Height="5"
+                        Background="#FFE22828"
+                        BorderBrush="Gray"
+                        BorderThickness="1,1,0,1"
                         CornerRadius="0.5" />
                 </ControlTemplate>
             </Setter.Value>
@@ -62,9 +70,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Ellipse Width="16" Height="16"
-                        Stroke="Gray" StrokeThickness="1"
-                        Fill="Blue" />
+                    <Ellipse
+                        Width="16"
+                        Height="16"
+                        Fill="Blue"
+                        Stroke="Gray"
+                        StrokeThickness="1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -122,16 +133,20 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ProgressBar}">
-                    <Border x:Name="PART_Track"
+                    <Border
+                        x:Name="PART_Track"
                         MinHeight="14"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        ClipToBounds="True" CornerRadius="2">
-                        <Border x:Name="PART_Indicator"
+                        ClipToBounds="True"
+                        CornerRadius="2">
+                        <Border
+                            x:Name="PART_Indicator"
+                            Margin="1"
+                            HorizontalAlignment="Left"
                             Background="{TemplateBinding Foreground}"
                             BorderBrush="{x:Null}"
-                            Margin="1" HorizontalAlignment="Left"
                             CornerRadius="1" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -147,8 +162,13 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ThicknessAnimation AutoReverse="False" RepeatBehavior="Forever"
-                                            Storyboard.TargetName="PART_Indicator" Storyboard.TargetProperty="Margin" From="-40,1,1,1" To="40,1,1,1"
+                                        <ThicknessAnimation
+                                            AutoReverse="False"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="PART_Indicator"
+                                            Storyboard.TargetProperty="Margin"
+                                            From="-40,1,1,1"
+                                            To="40,1,1,1"
                                             Duration="0:0:2" />
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -169,7 +189,9 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <Image RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True"
+                            <Image
+                                RenderTransformOrigin="0.5,0.5"
+                                ScrollViewer.CanContentScroll="True"
                                 Source="{Binding Source, RelativeSource={RelativeSource TemplatedParent}}"
                                 Stretch="None">
                                 <Image.LayoutTransform>
@@ -190,7 +212,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button Visibility="{Binding OpenButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding DosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Button Command="{Binding DosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding OpenButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
                                     <Image Width="16" Height="16">
                                         <Image.Source>
@@ -214,7 +236,7 @@
                                     </Image>
                                 </Button.Content>
                             </Button>
-                            <StackPanel Grid.Column="2" Visibility="{Binding TifNavigasyonButtonEtkin, RelativeSource={RelativeSource TemplatedParent}}" Orientation="Horizontal">
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding TifNavigasyonButtonEtkin, RelativeSource={RelativeSource TemplatedParent}}">
                                 <RepeatButton Command="{Binding ViewerBack, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ToolTip="Önceki Sayfa">
                                     <Image Width="16" Height="16">
                                         <Image.Source>
@@ -243,7 +265,7 @@
                                     </Image>
                                 </RepeatButton>
                             </StackPanel>
-                            <Button Grid.Column="3" Visibility="{Binding PrintButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}" Command="{Binding Yazdır, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Button Grid.Column="3" Command="{Binding Yazdır, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding PrintButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
                                     <Image Width="16" Height="16">
                                         <Image.Source>
@@ -255,17 +277,24 @@
                                     </Image>
                                 </Button.Content>
                             </Button>
-                            <Slider Grid.Column="4"
-                                IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
+                            <Slider
+                                Grid.Column="4"
                                 Margin="2"
+                                AutoToolTipPlacement="TopLeft"
+                                IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
+                                Minimum="0.01"
+                                SmallChange="1"
                                 Style="{StaticResource Horizontal_Slider}"
-                                AutoToolTipPlacement="TopLeft" Minimum="0.01" SmallChange="1"
                                 Value="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Slider Grid.Column="5"
-                                IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
+                            <Slider
+                                Grid.Column="5"
                                 Margin="2"
+                                AutoToolTipPlacement="TopLeft"
+                                IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
+                                IsSnapToTickEnabled="False"
+                                Maximum="360"
+                                SmallChange="1"
                                 Style="{StaticResource Horizontal_Slider}"
-                                AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="False" Maximum="360" SmallChange="1"
                                 Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Button Grid.Column="6" Command="{Binding OrijinalResimDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" CommandParameter="{Binding ImageFilePath, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
@@ -287,7 +316,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border x:Name="border"
+                    <Border
+                        x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -297,12 +327,16 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
-                            <Border Grid.Column="1"
-                                Visibility="{Binding ClearButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}"
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden" />
+                            <Border
+                                Grid.Column="1"
                                 Background="{TemplateBinding Background}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Visibility="{Binding ClearButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                                 <TextBlock FontWeight="Bold"><Hyperlink Command="{Binding Reset, RelativeSource={RelativeSource TemplatedParent}}">
                                         <Run Text="X" />
                                     </Hyperlink></TextBlock>
@@ -336,23 +370,28 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="14" />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="btn" Content="{TemplateBinding Content}"
+                        <Button
+                            x:Name="btn"
                             Grid.Column="0"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Command="{TemplateBinding Command}"
                             CommandParameter="{TemplateBinding CommandParameter}"
+                            Content="{TemplateBinding Content}"
                             IsTabStop="{TemplateBinding IsTabStop}" />
-                        <ToggleButton x:Name="Tb"
+                        <ToggleButton
+                            x:Name="Tb"
                             Grid.Column="1"
                             IsEnabled="{TemplateBinding SplitContentPartIsEnabled}"
                             IsTabStop="{TemplateBinding IsTabStop}">
-                            <Path x:Name="path"
-                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                            <Path
+                                x:Name="path"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 Data="{StaticResource ArrowGeometry}"
                                 Focusable="False">
                                 <Path.Style>
@@ -367,14 +406,16 @@
                                 </Path.Style>
                             </Path>
                         </ToggleButton>
-                        <Popup x:Name="PART_Popup"
+                        <Popup
+                            x:Name="PART_Popup"
                             Grid.ColumnSpan="2"
-                            AllowsTransparency="True" Focusable="False"
+                            AllowsTransparency="True"
+                            Focusable="False"
                             IsOpen="{Binding IsChecked, ElementName=Tb}"
                             Placement="{TemplateBinding PlacementMode}"
                             PopupAnimation="Slide"
                             StaysOpen="{TemplateBinding StayOpen}">
-                            <ContentPresenter Content="{TemplateBinding InternalContent}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding InternalContent}" />
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -394,16 +435,20 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ContentToggleButton">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid>
-                            <ContentPresenter Content="{TemplateBinding OverContent}"
+                            <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False" RecognizesAccessKey="True" />
-                            <Popup AllowsTransparency="True"
+                                Content="{TemplateBinding OverContent}"
+                                Focusable="False"
+                                RecognizesAccessKey="True" />
+                            <Popup
+                                AllowsTransparency="True"
                                 IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
                                 Placement="{TemplateBinding PlacementMode}"
                                 PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
@@ -426,14 +471,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <ComboBox Text="{Binding TimeValue, RelativeSource={RelativeSource TemplatedParent}}"
-                        ItemsSource="{Binding Saatler, RelativeSource={RelativeSource TemplatedParent}}"
+                    <ComboBox
                         IsEditable="True"
                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
                         ItemTemplate="{TemplateBinding ItemTemplate}"
                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                        ItemsPanel="{TemplateBinding ItemsPanel}">
+                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                        ItemsSource="{Binding Saatler, RelativeSource={RelativeSource TemplatedParent}}"
+                        Text="{Binding TimeValue, RelativeSource={RelativeSource TemplatedParent}}">
                         <ComboBox.Template>
                             <ControlTemplate TargetType="{x:Type ComboBox}">
                                 <Grid>
@@ -441,12 +487,17 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
                                     </Grid.ColumnDefinitions>
-                                    <ToggleButton Grid.Column="2"
-                                        ClickMode="Press" Focusable="false"
+                                    <ToggleButton
+                                        Grid.Column="2"
+                                        ClickMode="Press"
+                                        Focusable="false"
                                         IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                        <Path HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        <Path
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
                                             Data="{StaticResource ArrowGeometry}"
-                                            Fill="Black" RenderTransformOrigin="0.5,0.5">
+                                            Fill="Black"
+                                            RenderTransformOrigin="0.5,0.5">
                                             <Path.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform />
@@ -457,12 +508,15 @@
                                             </Path.RenderTransform>
                                         </Path>
                                     </ToggleButton>
-                                    <Popup x:Name="PART_Popup"
+                                    <Popup
+                                        x:Name="PART_Popup"
                                         Grid.ColumnSpan="2"
                                         Focusable="False"
                                         IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Placement="Right" PopupAnimation="Slide">
-                                        <Border Height="{TemplateBinding MaxDropDownHeight}"
+                                        Placement="Right"
+                                        PopupAnimation="Slide">
+                                        <Border
+                                            Height="{TemplateBinding MaxDropDownHeight}"
                                             Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="1">
@@ -471,12 +525,15 @@
                                             </ScrollViewer>
                                         </Border>
                                     </Popup>
-                                    <local:MaskedTextBox x:Name="PART_EditableTextBox"
+                                    <local:MaskedTextBox
+                                        x:Name="PART_EditableTextBox"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         ClearButtonVisibility="{Binding ClearButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type local:TimePicker}}}"
-                                        IncludePrompt="False" Mask="00:00" PromptChar="_" />
+                                        IncludePrompt="False"
+                                        Mask="00:00"
+                                        PromptChar="_" />
                                 </Grid>
                             </ControlTemplate>
                         </ComboBox.Template>
@@ -496,25 +553,34 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="9.5" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Row="0" Grid.Column="1"
-                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
                 MinWidth="18"
+                VerticalContentAlignment="Center"
                 Background="{TemplateBinding Background}"
                 BorderThickness="1"
-                VerticalContentAlignment="Center"
+                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                 Style="{StaticResource NumericUpdownTextBoxStyle}" />
-            <RepeatButton x:Name="PART_LineUpButton"
-                Grid.Row="0" Grid.Column="0"
-                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}"
+            <RepeatButton
+                x:Name="PART_LineUpButton"
+                Grid.Row="0"
+                Grid.Column="0"
                 Command="{x:Static ScrollBar.LineLeftCommand}"
-                Style="{StaticResource ScrollBarButton}">
+                Style="{StaticResource ScrollBarButton}"
+                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                 <RepeatButton.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
-                            <Path x:Name="Up"
-                                Width="9.5" Height="8.5"
-                                StrokeLineJoin="Round"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Path
+                                x:Name="Up"
+                                Width="9.5"
+                                Height="8.5"
+                                Data="M0,0L5,5 10,0z"
+                                Fill="Black"
+                                RenderTransformOrigin="0.5,0.5"
+                                Stretch="Fill"
+                                StrokeLineJoin="Round">
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="90" />
                                 </Path.RenderTransform>
@@ -523,18 +589,25 @@
                     </VisualBrush>
                 </RepeatButton.Background>
             </RepeatButton>
-            <RepeatButton x:Name="PART_LineDownButton"
-                Grid.Row="1" Grid.Column="2"
-                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}"
+            <RepeatButton
+                x:Name="PART_LineDownButton"
+                Grid.Row="1"
+                Grid.Column="2"
                 Command="{x:Static ScrollBar.LineRightCommand}"
-                Style="{StaticResource ScrollBarButton}">
+                Style="{StaticResource ScrollBarButton}"
+                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                 <RepeatButton.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
-                            <Path x:Name="Down"
-                                Width="9.5" Height="8.5"
-                                StrokeLineJoin="Round"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Path
+                                x:Name="Down"
+                                Width="9.5"
+                                Height="8.5"
+                                Data="M0,0L5,5 10,0z"
+                                Fill="Black"
+                                RenderTransformOrigin="0.5,0.5"
+                                Stretch="Fill"
+                                StrokeLineJoin="Round">
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="-90" />
                                 </Path.RenderTransform>
@@ -563,25 +636,35 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+            <TextBox
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
                 MinWidth="18"
+                VerticalContentAlignment="Center"
                 Background="{TemplateBinding Background}"
                 BorderThickness="1"
-                VerticalContentAlignment="Center"
+                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                 Style="{StaticResource NumericUpdownTextBoxStyle}" />
-            <RepeatButton x:Name="PART_LineUpButton"
-                Grid.Row="0" Grid.Column="1"
-                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}"
+            <RepeatButton
+                x:Name="PART_LineUpButton"
+                Grid.Row="0"
+                Grid.Column="1"
                 Command="{x:Static ScrollBar.LineDownCommand}"
-                Style="{StaticResource ScrollBarButton}">
+                Style="{StaticResource ScrollBarButton}"
+                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                 <RepeatButton.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
-                            <Path x:Name="Up"
-                                Width="9.5" Height="8.5"
-                                StrokeLineJoin="Round"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Path
+                                x:Name="Up"
+                                Width="9.5"
+                                Height="8.5"
+                                Data="M0,0L5,5 10,0z"
+                                Fill="Black"
+                                RenderTransformOrigin="0.5,0.5"
+                                Stretch="Fill"
+                                StrokeLineJoin="Round">
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="-180" />
                                 </Path.RenderTransform>
@@ -590,18 +673,25 @@
                     </VisualBrush>
                 </RepeatButton.Background>
             </RepeatButton>
-            <RepeatButton x:Name="PART_LineDownButton"
-                Grid.Row="1" Grid.Column="1"
-                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}"
+            <RepeatButton
+                x:Name="PART_LineDownButton"
+                Grid.Row="1"
+                Grid.Column="1"
                 Command="{x:Static ScrollBar.LineUpCommand}"
-                Style="{StaticResource ScrollBarButton}">
+                Style="{StaticResource ScrollBarButton}"
+                Visibility="{Binding NumericUpDownButtonsVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                 <RepeatButton.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
-                            <Path x:Name="Down"
-                                Width="9.5" Height="8.5"
-                                StrokeLineJoin="Round"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill" />
+                            <Path
+                                x:Name="Down"
+                                Width="9.5"
+                                Height="8.5"
+                                Data="M0,0L5,5 10,0z"
+                                Fill="Black"
+                                RenderTransformOrigin="0.5,0.5"
+                                Stretch="Fill"
+                                StrokeLineJoin="Round" />
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </RepeatButton.Background>
@@ -632,21 +722,29 @@
     </ItemsPanelTemplate>
     <ControlTemplate x:Key="HorizontalScrollViewerControlTemplate" TargetType="{x:Type ScrollViewer}">
         <Grid x:Name="Grid" Background="{TemplateBinding Background}">
-            <ScrollBar x:Name="PART_HorizontalScrollBar"
-                Grid.Row="0" Grid.Column="0"
-                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+            <ScrollBar
+                x:Name="PART_HorizontalScrollBar"
+                Grid.Row="0"
+                Grid.Column="0"
                 Height="{TemplateBinding ViewportHeight}"
-                Style="{DynamicResource HorizontalScrollBarStyle}"
-                AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow"
+                AutomationProperties.AutomationId="HorizontalScrollBar"
+                Cursor="Arrow"
                 Maximum="{TemplateBinding ScrollableWidth}"
-                Minimum="0" Orientation="Horizontal"
+                Minimum="0"
+                Orientation="Horizontal"
+                Style="{DynamicResource HorizontalScrollBarStyle}"
                 ViewportSize="{TemplateBinding ViewportWidth}"
+                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
                 Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Content="{TemplateBinding Content}"
-                Grid.Row="0" Grid.RowSpan="2"
+            <ScrollContentPresenter
+                x:Name="PART_ScrollContentPresenter"
+                Grid.Row="0"
+                Grid.RowSpan="2"
                 Margin="25,0"
                 CanContentScroll="{TemplateBinding CanContentScroll}"
-                CanHorizontallyScroll="False" CanVerticallyScroll="False"
+                CanHorizontallyScroll="False"
+                CanVerticallyScroll="False"
+                Content="{TemplateBinding Content}"
                 ContentTemplate="{TemplateBinding ContentTemplate}" />
         </Grid>
     </ControlTemplate>
@@ -665,11 +763,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HorizontalListBox}">
-                    <Border x:Name="Bd"
+                    <Border
+                        x:Name="Bd"
+                        Padding="1"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        Padding="1"
                         SnapsToDevicePixels="true">
                         <ScrollViewer Padding="{TemplateBinding Padding}" Focusable="false" Template="{StaticResource HorizontalScrollViewerControlTemplate}">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -712,18 +811,21 @@
                             <ColumnDefinition Width="0.00001*" />
                             <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
                         </Grid.ColumnDefinitions>
-                        <RepeatButton x:Name="PART_LineLeftButton" IsEnabled="{TemplateBinding IsMouseOver}" Command="{x:Static ScrollBar.LineLeftCommand}">
-                            <Path x:Name="ArrowLeft"
+                        <RepeatButton x:Name="PART_LineLeftButton" Command="{x:Static ScrollBar.LineLeftCommand}" IsEnabled="{TemplateBinding IsMouseOver}">
+                            <Path
+                                x:Name="ArrowLeft"
                                 Margin="3"
                                 Data="M 3.18,7 C3.18,7 5,7 5,7 5,7 1.81,3.5 1.81,3.5 1.81,3.5 5,0 5,0 5,0 3.18,0 3.18,0 3.18,0 0,3.5 0,3.5 0,3.5 3.18,7 3.18,7 z"
                                 Fill="{StaticResource ScrollBar.Static.Glyph}"
                                 Stretch="Uniform" />
                         </RepeatButton>
-                        <RepeatButton x:Name="PART_LineRightButton"
+                        <RepeatButton
+                            x:Name="PART_LineRightButton"
                             Grid.Column="2"
-                            IsEnabled="{TemplateBinding IsMouseOver}"
-                            Command="{x:Static ScrollBar.LineRightCommand}">
-                            <Path x:Name="ArrowRight"
+                            Command="{x:Static ScrollBar.LineRightCommand}"
+                            IsEnabled="{TemplateBinding IsMouseOver}">
+                            <Path
+                                x:Name="ArrowRight"
                                 Margin="3"
                                 Data="M 1.81,7 C1.81,7 0,7 0,7 0,7 3.18,3.5 3.18,3.5 3.18,3.5 0,0 0,0 0,0 1.81,0 1.81,0 1.81,0 5,3.5 5,3.5 5,3.5 1.81,7 1.81,7 z"
                                 Fill="{StaticResource ScrollBar.Static.Glyph}"
@@ -802,33 +904,63 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="3" />
                         </Grid.RowDefinitions>
-                        <local:Resizer Grid.Row="0" Grid.Column="0"
-                            Width="2" Height="2"
-                            Cursor="SizeNWSE" ThumbDirection="TopLeft" />
-                        <local:Resizer Grid.Row="1" Grid.Column="0"
+                        <local:Resizer
+                            Grid.Row="0"
+                            Grid.Column="0"
                             Width="2"
-                            Cursor="SizeWE" ThumbDirection="Left" />
-                        <local:Resizer Grid.Row="2" Grid.Column="0"
-                            Width="2" Height="2"
-                            Cursor="SizeNESW" ThumbDirection="BottomLeft" />
-                        <local:Resizer Grid.Row="2" Grid.Column="1"
                             Height="2"
-                            Cursor="SizeNS" ThumbDirection="Bottom" />
-                        <local:Resizer Grid.Row="2" Grid.Column="2"
-                            Width="2" Height="2"
-                            Cursor="SizeNWSE" ThumbDirection="BottomRight" />
-                        <local:Resizer Grid.Row="1" Grid.Column="2"
+                            Cursor="SizeNWSE"
+                            ThumbDirection="TopLeft" />
+                        <local:Resizer
+                            Grid.Row="1"
+                            Grid.Column="0"
                             Width="2"
-                            Cursor="SizeWE" ThumbDirection="Right" />
-                        <local:Resizer Grid.Row="0" Grid.Column="2"
-                            Width="2" Height="2"
-                            Cursor="SizeNESW" ThumbDirection="TopRight" />
-                        <local:Resizer Grid.Row="0" Grid.Column="1"
+                            Cursor="SizeWE"
+                            ThumbDirection="Left" />
+                        <local:Resizer
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Width="2"
                             Height="2"
-                            Cursor="SizeNS" ThumbDirection="Top" />
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                            Grid.Row="1" Grid.Column="1"
-                            Margin="{TemplateBinding Padding}" />
+                            Cursor="SizeNESW"
+                            ThumbDirection="BottomLeft" />
+                        <local:Resizer
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Height="2"
+                            Cursor="SizeNS"
+                            ThumbDirection="Bottom" />
+                        <local:Resizer
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Width="2"
+                            Height="2"
+                            Cursor="SizeNWSE"
+                            ThumbDirection="BottomRight" />
+                        <local:Resizer
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Width="2"
+                            Cursor="SizeWE"
+                            ThumbDirection="Right" />
+                        <local:Resizer
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Width="2"
+                            Height="2"
+                            Cursor="SizeNESW"
+                            ThumbDirection="TopRight" />
+                        <local:Resizer
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Height="2"
+                            Cursor="SizeNS"
+                            ThumbDirection="Top" />
+                        <ContentPresenter
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            Content="{TemplateBinding Content}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -839,22 +971,28 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:GraphControl">
                     <Grid>
-                        <local:ContentToggleButton Width="16" Height="16"
-                            Background="{x:Null}"
-                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <local:ContentToggleButton
+                            Width="16"
+                            Height="16"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Background="{x:Null}">
                             <local:ContentToggleButton.OverContent>
-                                <TextBlock Text="N" FontFamily="Webdings" />
+                                <TextBlock FontFamily="Webdings" Text="N" />
                             </local:ContentToggleButton.OverContent>
                             <local:ContentToggleButton.Content>
-                                <ItemsControl Width="250" Height="250"
+                                <ItemsControl
+                                    Width="250"
+                                    Height="250"
                                     ItemsSource="{TemplateBinding Series}"
-                                    ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    ScrollViewer.CanContentScroll="True"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
                                     VirtualizingStackPanel.IsVirtualizing="True">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock>
-                                                <Run Text="{Binding Description, Mode=OneWay}" Foreground="{Binding ChartBrush, Mode=OneWay}" />
-                                                <Run Text="{Binding ChartValue, Mode=OneWay}" Foreground="Black" />
+                                                <Run Foreground="{Binding ChartBrush, Mode=OneWay}" Text="{Binding Description, Mode=OneWay}" />
+                                                <Run Foreground="Black" Text="{Binding ChartValue, Mode=OneWay}" />
                                             </TextBlock>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>

@@ -15,11 +15,6 @@ namespace TwainWpf
         {
         }
 
-        protected FeederEmptyException(SerializationInfo info, StreamingContext context) :
-            base(info, context)
-        {
-        }
-
         public FeederEmptyException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -30,6 +25,11 @@ namespace TwainWpf
         }
 
         public FeederEmptyException(string message, TwainNative.TwainResult returnCode, TwainNative.ConditionCode conditionCode) : base(message, returnCode, conditionCode)
+        {
+        }
+
+        protected FeederEmptyException(SerializationInfo info, StreamingContext context) :
+                                    base(info, context)
         {
         }
     }

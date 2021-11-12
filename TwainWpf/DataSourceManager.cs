@@ -12,10 +12,26 @@ namespace TwainWpf
     /// <seealso cref="IDisposable" />
     public class DataSourceManager : IDisposable
     {
-        private Event _eventMessage;
+        public static readonly Identity DefaultApplicationId = new Identity()
+        {
+            Id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0),
+            Version = new TwainVersion()
+            {
+                MajorNum = 1,
+                MinorNum = 1,
+                Language = Language.USA,
+                Country = Country.USA,
+                Info = Assembly.GetExecutingAssembly().FullName
+            },
+            ProtocolMajor = TwainConstants.ProtocolMajor,
+            ProtocolMinor = TwainConstants.ProtocolMinor,
+            SupportedGroups = (int)(DataGroup.Image | DataGroup.Control),
+            Manufacturer = "TwainDotNet",
+            ProductFamily = "TwainDotNet",
+            ProductName = "TwainDotNet",
+        };
 
-        public Identity ApplicationId { get; }
-        public DataSource DataSource { get; private set; }
+        private Event _eventMessage;
 
         public DataSourceManager(Identity applicationId, IWindowsMessageHook messageHook)
         {
@@ -42,7 +58,7 @@ namespace TwainWpf
 
             if (result == TwainResult.Success)
             {
-                //according to the 2.0 spec (2-10) if (applicationId.SupportedGroups | DataGroup.Dsm2) > 0 
+                //according to the 2.0 spec (2-10) if (applicationId.SupportedGroups | DataGroup.Dsm2) > 0
                 //then we should call DM_Entry(id, 0, DG_Control, DAT_Entrypoint, MSG_Get, wh)
                 //right here
                 DataSource = DataSource.GetDefault(ApplicationId, MessageHook);
@@ -65,7 +81,44 @@ namespace TwainWpf
 
         public event EventHandler<TransferImageEventArgs> TransferImage;
 
+        public Identity ApplicationId { get; }
+
+        public DataSource DataSource { get; private set; }
+
         public IWindowsMessageHook MessageHook { get; }
+
+        public static ConditionCode GetConditionCode(Identity applicationId, Identity sourceId)
+        {
+            Status status = new Status();
+
+            Twain32Native.DsmStatus(
+                applicationId,
+                sourceId,
+                DataGroup.Control,
+                DataArgumentType.Status,
+                Message.Get,
+                status);
+
+            return status.ConditionCode;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void SelectSource()
+        {
+            DataSource.Dispose();
+            DataSource = DataSource.UserSelected(ApplicationId, MessageHook);
+        }
+
+        public void SelectSource(DataSource dataSource)
+        {
+            DataSource.Dispose();
+            DataSource = dataSource;
+        }
 
         public void StartScan(ScanSettings settings)
         {
@@ -90,6 +143,51 @@ namespace TwainWpf
                     EndingScan();
                 }
             }
+        }
+
+        internal void CloseDsAndCompleteScanning(Exception exception)
+        {
+            EndingScan();
+            DataSource.Close();
+            try
+            {
+                ScanningComplete?.Invoke(this, new ScanningCompleteEventArgs(exception));
+            }
+            catch
+            {
+                //
+            }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            Marshal.FreeHGlobal(_eventMessage.EventPtr);
+
+            if (disposing)
+            {
+                DataSource.Dispose();
+
+                IntPtr windowHandle = MessageHook.WindowHandle;
+
+                if (ApplicationId.Id != 0)
+                {
+                    // Close down the data source manager
+                    Twain32Native.DsmParent(
+                        ApplicationId,
+                        IntPtr.Zero,
+                        DataGroup.Control,
+                        DataArgumentType.Parent,
+                        Message.CloseDSM,
+                        ref windowHandle);
+                }
+
+                ApplicationId.Id = 0;
+            }
+        }
+
+        protected void EndingScan()
+        {
+            MessageHook.UseFilter = false;
         }
 
         // ReSharper disable once RedundantAssignment
@@ -248,102 +346,5 @@ namespace TwainWpf
                     pendingTransfer);
             }
         }
-
-        internal void CloseDsAndCompleteScanning(Exception exception)
-        {
-            EndingScan();
-            DataSource.Close();
-            try
-            {
-                ScanningComplete?.Invoke(this, new ScanningCompleteEventArgs(exception));
-            }
-            catch
-            {
-                //
-            }
-        }
-
-        protected void EndingScan()
-        {
-            MessageHook.UseFilter = false;
-        }
-
-        public void SelectSource()
-        {
-            DataSource.Dispose();
-            DataSource = DataSource.UserSelected(ApplicationId, MessageHook);
-        }
-
-        public void SelectSource(DataSource dataSource)
-        {
-            DataSource.Dispose();
-            DataSource = dataSource;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            Marshal.FreeHGlobal(_eventMessage.EventPtr);
-
-            if (disposing)
-            {
-                DataSource.Dispose();
-
-                IntPtr windowHandle = MessageHook.WindowHandle;
-
-                if (ApplicationId.Id != 0)
-                {
-                    // Close down the data source manager
-                    Twain32Native.DsmParent(
-                        ApplicationId,
-                        IntPtr.Zero,
-                        DataGroup.Control,
-                        DataArgumentType.Parent,
-                        Message.CloseDSM,
-                        ref windowHandle);
-                }
-
-                ApplicationId.Id = 0;
-            }
-        }
-
-        public static ConditionCode GetConditionCode(Identity applicationId, Identity sourceId)
-        {
-            Status status = new Status();
-
-            Twain32Native.DsmStatus(
-                applicationId,
-                sourceId,
-                DataGroup.Control,
-                DataArgumentType.Status,
-                Message.Get,
-                status);
-
-            return status.ConditionCode;
-        }
-
-        public static readonly Identity DefaultApplicationId = new Identity()
-        {
-            Id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0),
-            Version = new TwainVersion()
-            {
-                MajorNum = 1,
-                MinorNum = 1,
-                Language = Language.USA,
-                Country = Country.USA,
-                Info = Assembly.GetExecutingAssembly().FullName
-            },
-            ProtocolMajor = TwainConstants.ProtocolMajor,
-            ProtocolMinor = TwainConstants.ProtocolMinor,
-            SupportedGroups = (int)(DataGroup.Image | DataGroup.Control),
-            Manufacturer = "TwainDotNet",
-            ProductFamily = "TwainDotNet",
-            ProductName = "TwainDotNet",
-        };
     }
 }

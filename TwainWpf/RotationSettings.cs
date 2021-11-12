@@ -9,27 +9,13 @@ namespace TwainWpf
     /// </summary>
     public class RotationSettings : INotifyPropertyChanged
     {
-        private bool _automaticDeskew;
         private bool _automaticBorderDetection;
-        private bool _automaticRotate;
-        private FlipRotation _flipSideRotation;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether [automatic deskew].
-        /// </summary>
-        /// <value><c>true</c> if [automatic deskew]; otherwise, <c>false</c>.</value>
-        public bool AutomaticDeskew
-        {
-            get => _automaticDeskew;
-            set
-            {
-                if (value != _automaticDeskew)
-                {
-                    _automaticDeskew = value;
-                    OnPropertyChanged(nameof(AutomaticDeskew));
-                }
-            }
-        }
+        private bool _automaticDeskew;
+
+        private bool _automaticRotate;
+
+        private FlipRotation _flipSideRotation;
 
         /// <summary>
         /// Gets or sets a value indicating whether [automatic border detection].
@@ -40,6 +26,7 @@ namespace TwainWpf
         public bool AutomaticBorderDetection
         {
             get => _automaticBorderDetection;
+
             set
             {
                 if (value != _automaticBorderDetection)
@@ -51,12 +38,31 @@ namespace TwainWpf
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [automatic deskew].
+        /// </summary>
+        /// <value><c>true</c> if [automatic deskew]; otherwise, <c>false</c>.</value>
+        public bool AutomaticDeskew
+        {
+            get => _automaticDeskew;
+
+            set
+            {
+                if (value != _automaticDeskew)
+                {
+                    _automaticDeskew = value;
+                    OnPropertyChanged(nameof(AutomaticDeskew));
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [automatic rotate].
         /// </summary>
         /// <value><c>true</c> if [automatic rotate]; otherwise, <c>false</c>.</value>
         public bool AutomaticRotate
         {
             get => _automaticRotate;
+
             set
             {
                 if (value != _automaticRotate)
@@ -74,6 +80,7 @@ namespace TwainWpf
         public FlipRotation FlipSideRotation
         {
             get => _flipSideRotation;
+
             set
             {
                 if (value != _flipSideRotation)
@@ -86,13 +93,13 @@ namespace TwainWpf
 
         #region INotifyPropertyChanged Members
 
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-        #endregion
+        #endregion INotifyPropertyChanged Members
     }
 }

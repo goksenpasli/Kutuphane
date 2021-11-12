@@ -1,17 +1,22 @@
-﻿<UserControl x:Class="Kutuphane.View.DolapDüzenView"
+﻿<UserControl
+    x:Class="Kutuphane.View.DolapDüzenView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:model="clr-namespace:Kutuphane.Model"
+    xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:DolapDüzenViewModel}}"
-    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="450"
+    d:DesignWidth="1280"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Dolaplar"  Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="Kitaplar"  Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Dolaplar" Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <GroupBox Header="DOLAP DÜZEN">
         <Grid>
@@ -25,13 +30,15 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBox Text="{Binding DolapAdı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <ListView x:Name="listView"
+                <ListView
+                    x:Name="listView"
                     Grid.Row="1"
-                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Dolaplar}}"
+                    d:ItemsSource="{d:SampleData ItemCount=5}"
                     IsSynchronizedWithCurrentItem="False"
                     ItemTemplate="{StaticResource ListViewDolapTemplate}"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Dolaplar}}"
                     SelectedItem="{Binding SeçiliDolap}"
-                    SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
+                    SelectionMode="Single">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Extensions:VirtualizingWrapPanel />
@@ -50,12 +57,16 @@
                 <HeaderedContentControl Header="DOLAP AÇIKLAMA">
                     <TextBox Text="{Binding SelectedItem.Açıklama, ElementName=listView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </HeaderedContentControl>
-                <HeaderedContentControl Header="DOLAP KODU" Grid.Row="1">
-                    <Extensions:NumericUpDownControl Maximum="999" Minimum="1" SmallChange="1"
+                <HeaderedContentControl Grid.Row="1" Header="DOLAP KODU">
+                    <Extensions:NumericUpDownControl
+                        Maximum="999"
+                        Minimum="1"
+                        SmallChange="1"
                         Value="{Binding SelectedItem.Kod, ElementName=listView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </HeaderedContentControl>
-                <CheckBox Content="DOLAP ETKİN" Grid.Row="2" IsChecked="{Binding SelectedItem.Etkin, ElementName=listView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Grid.Row="3"
+                <CheckBox Grid.Row="2" Content="DOLAP ETKİN" IsChecked="{Binding SelectedItem.Etkin, ElementName=listView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Grid.Row="3"
                     HorizontalAlignment="Stretch"
                     Command="{Binding DolapGüncelle, Mode=OneWay}"
                     CommandParameter="{Binding SelectedItem, ElementName=listView}">
@@ -68,27 +79,32 @@
                                 </MultiBinding>
                             </Image.Source>
                         </Image>
-                        <TextBlock Text="DOLAP GÜNCELLE" VerticalAlignment="Center" />
+                        <TextBlock VerticalAlignment="Center" Text="DOLAP GÜNCELLE" />
                     </StackPanel>
                 </Button>
-                <GroupBox Header="DOLAPTAKİ TÜM KİTAPLAR" Grid.Row="4">
-                    <ListView ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
-                        IsSynchronizedWithCurrentItem="False" SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <GroupBox Grid.Row="4" Header="DOLAPTAKİ TÜM KİTAPLAR">
+                    <ListView
+                        d:ItemsSource="{d:SampleData ItemCount=5}"
+                        IsSynchronizedWithCurrentItem="False"
+                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                        SelectionMode="Single"
+                        VirtualizingPanel.VirtualizationMode="Recycling">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="KİTAP ADI" Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" />
-                                <GridViewColumn Header="KİTAP DURUM" Extensions:GridViewSort.PropertyName="KitapDurumId">
+                                <GridViewColumn Extensions:GridViewSort.PropertyName="Ad" DisplayMemberBinding="{Binding Ad}" Header="KİTAP ADI" />
+                                <GridViewColumn Extensions:GridViewSort.PropertyName="KitapDurumId" Header="KİTAP DURUM">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ComboBox IsEnabled="False"
+                                            <ComboBox
                                                 Width="100"
+                                                IsEnabled="False"
                                                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
                                                 SelectedIndex="{Binding KitapDurumId}"
                                                 Template="{StaticResource ComboBoxSimpleTemplate}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="RAF NO" Extensions:GridViewSort.PropertyName="DolapAltKod" DisplayMemberBinding="{Binding DolapAltKod}" />
+                                <GridViewColumn Extensions:GridViewSort.PropertyName="DolapAltKod" DisplayMemberBinding="{Binding DolapAltKod}" Header="RAF NO" />
                             </GridView>
                         </ListView.View>
                     </ListView>

@@ -7,8 +7,10 @@ namespace Extensions
     {
         [field: NonSerialized]
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
+
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
+
         [field: NonSerialized]
         public event PropertyChangingEventHandler PropertyChanging;
 

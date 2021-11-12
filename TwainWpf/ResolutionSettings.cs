@@ -2,54 +2,25 @@ using System.ComponentModel;
 
 namespace TwainWpf
 {
+    public enum ColourSetting
+    {
+        BlackAndWhite = 0,
+
+        GreyScale = 1,
+
+        Colour = 2
+    }
+
     public class ResolutionSettings : INotifyPropertyChanged
     {
-        private int? _dpi;
-
         /// <summary>
-        /// The DPI to scan at. Set to null to use the current default setting.
+        /// Colour photocopier quality resolution.
         /// </summary>
-        public int? Dpi
+        public static readonly ResolutionSettings ColourPhotocopier = new ResolutionSettings()
         {
-            get => _dpi;
-            set
-            {
-                if (value != _dpi)
-                {
-                    _dpi = value;
-                    OnPropertyChanged(nameof(Dpi));
-                }
-            }
-        }
-
-        private ColourSetting _colourSettings;
-
-        /// <summary>
-        /// The colour settings to use.
-        /// </summary>
-        public ColourSetting ColourSetting
-        {
-            get => _colourSettings;
-            set
-            {
-                if (value != _colourSettings)
-                {
-                    _colourSettings = value;
-                    OnPropertyChanged(nameof(ColourSetting));
-                }
-            }
-        }
-
-        #region INotifyPropertyChanged Members
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-        #endregion
+            Dpi = 300,
+            ColourSetting = ColourSetting.Colour
+        };
 
         /// <summary>
         /// Fax quality resolution.
@@ -69,22 +40,53 @@ namespace TwainWpf
             ColourSetting = ColourSetting.GreyScale
         };
 
+        private ColourSetting _colourSettings;
+
+        private int? _dpi;
+
         /// <summary>
-        /// Colour photocopier quality resolution.
+        /// The colour settings to use.
         /// </summary>
-        public static readonly ResolutionSettings ColourPhotocopier = new ResolutionSettings()
+        public ColourSetting ColourSetting
         {
-            Dpi = 300,
-            ColourSetting = ColourSetting.Colour
-        };
-    }
+            get => _colourSettings;
 
-    public enum ColourSetting
-    {
-        BlackAndWhite = 0,
+            set
+            {
+                if (value != _colourSettings)
+                {
+                    _colourSettings = value;
+                    OnPropertyChanged(nameof(ColourSetting));
+                }
+            }
+        }
 
-        GreyScale = 1,
+        /// <summary>
+        /// The DPI to scan at. Set to null to use the current default setting.
+        /// </summary>
+        public int? Dpi
+        {
+            get => _dpi;
 
-        Colour = 2
+            set
+            {
+                if (value != _dpi)
+                {
+                    _dpi = value;
+                    OnPropertyChanged(nameof(Dpi));
+                }
+            }
+        }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion INotifyPropertyChanged Members
     }
 }
