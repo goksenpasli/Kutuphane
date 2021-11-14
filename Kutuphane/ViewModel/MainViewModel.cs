@@ -21,6 +21,10 @@ namespace Kutuphane.ViewModel
 
         private static readonly SpeechSynthesizer synthesizer = new() { Volume = 100 };
 
+        private string arşivYolu;
+
+        private bool compress;
+
         private InpcBase currentView;
 
         static MainViewModel()
@@ -136,7 +140,7 @@ namespace Kutuphane.ViewModel
                 OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    string filename = $"{Guid.NewGuid()}{Path.GetExtension(openFileDialog.FileName)}";
                     File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(xmldatapath)}\\{filename}");
                     Settings.Default.KimlikArkaPlanResim = filename;
                 }
@@ -173,6 +177,15 @@ namespace Kutuphane.ViewModel
 
             CloseView = new RelayCommand<object>(parameter => CurrentView = null);
 
+            ArşivAç = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Zip Dosyaları (*.zip)|*.zip" };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ArşivYolu = openFileDialog.FileName;
+                }
+            });
+
             Yedekle = new RelayCommand<object>(parameter =>
             {
                 SaveFileDialog saveFileDialog = new()
@@ -182,7 +195,14 @@ namespace Kutuphane.ViewModel
                 };
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    ZipFile.CreateFromDirectory(Path.GetDirectoryName(xmldatapath), saveFileDialog.FileName, CompressionLevel.Fastest, false);
+                    if (Compress)
+                    {
+                        ZipFile.CreateFromDirectory(Path.GetDirectoryName(xmldatapath), saveFileDialog.FileName, CompressionLevel.Fastest, false);
+                    }
+                    else
+                    {
+                        ZipFile.CreateFromDirectory(Path.GetDirectoryName(xmldatapath), saveFileDialog.FileName, CompressionLevel.NoCompression, false);
+                    }
                 }
             }, parameter => File.Exists(xmldatapath));
 
@@ -205,7 +225,37 @@ namespace Kutuphane.ViewModel
 
         public static IEnumerable<int> Yıllar { get; }
 
+        public ICommand ArşivAç { get; }
+
+        public string ArşivYolu
+        {
+            get => arşivYolu;
+
+            set
+            {
+                if (arşivYolu != value)
+                {
+                    arşivYolu = value;
+                    OnPropertyChanged(nameof(ArşivYolu));
+                }
+            }
+        }
+
         public ICommand CloseView { get; }
+
+        public bool Compress
+        {
+            get => compress;
+
+            set
+            {
+                if (compress != value)
+                {
+                    compress = value;
+                    OnPropertyChanged(nameof(Compress));
+                }
+            }
+        }
 
         public InpcBase CurrentView
         {
