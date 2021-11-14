@@ -183,7 +183,7 @@ namespace Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    _ = MessageBox.Show(ex.Message, "EBYS", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(ex.Message, Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -221,7 +221,7 @@ namespace Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    _ = MessageBox.Show(ex.Message, "EBYS", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(ex.Message, Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

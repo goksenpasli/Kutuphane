@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Windows;
@@ -172,6 +173,19 @@ namespace Kutuphane.ViewModel
 
             CloseView = new RelayCommand<object>(parameter => CurrentView = null);
 
+            Yedekle = new RelayCommand<object>(parameter =>
+            {
+                SaveFileDialog saveFileDialog = new()
+                {
+                    Title = "SAKLA",
+                    Filter = "Zip Dosyası (*.zip)|*.zip",
+                };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    ZipFile.CreateFromDirectory(Path.GetDirectoryName(xmldatapath), saveFileDialog.FileName, CompressionLevel.Fastest, false);
+                }
+            }, parameter => File.Exists(xmldatapath));
+
             Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
         }
 
@@ -270,5 +284,7 @@ namespace Kutuphane.ViewModel
         public ICommand TtsRegImport { get; }
 
         public ICommand WebAdreseGit { get; }
+
+        public ICommand Yedekle { get; }
     }
 }

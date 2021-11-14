@@ -1,5 +1,4 @@
-﻿<UserControl
-    x:Class="Kutuphane.View.QrCodeMultipleView"
+﻿<UserControl x:Class="Kutuphane.View.QrCodeMultipleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Kutuphane="clr-namespace:Kutuphane"
@@ -9,12 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
-    Width="640"
-    Height="480"
+    Width="640" Height="480"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:QrCodeMultipleViewModel}}"
-    d:DesignHeight="1600"
-    d:DesignWidth="1200"
-    UseLayoutRounding="True"
+    d:DesignHeight="1600" d:DesignWidth="1200" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Kutuphane:DoubleToThicknessConverter x:Key="DoubleToThicknessConverter" />
@@ -35,35 +31,24 @@
                 <TextBlock HorizontalAlignment="Center" Text="KALINLIK" />
                 <TextBlock HorizontalAlignment="Center" Text="BİÇİM" />
                 <TextBlock HorizontalAlignment="Center" Text="ALT METİN GİZLE" />
-                <extensions:NumericUpDownControl
-                    Maximum="100"
-                    Minimum="1"
-                    SmallChange="1"
+                <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
                     Value="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <extensions:NumericUpDownControl
-                    Maximum="100"
-                    Minimum="1"
-                    SmallChange="1"
+                <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
                     Value="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <extensions:NumericUpDownControl
-                    Maximum="100"
-                    Minimum="0"
-                    SmallChange="1"
+                <extensions:NumericUpDownControl Maximum="100" Minimum="0" SmallChange="1"
                     Value="{Binding QrMultipleBorderThickness, Mode=TwoWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" />
-                <ComboBox
-                    Grid.Row="1"
+                <ComboBox Grid.Row="1"
                     IsTabStop="False"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
                     SelectedItem="{Binding BarcodeFormat}" />
-                <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding PureBarcode}" />
+                <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
+                    IsChecked="{Binding PureBarcode}" />
             </UniformGrid>
             <FlowDocumentScrollViewer Grid.Row="1">
                 <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">
                     <BlockUIContainer>
-                        <ItemsControl
-                            x:Name="ItemsCtrl"
-                            Width="21cm"
-                            Height="29.7cm"
+                        <ItemsControl x:Name="ItemsCtrl"
+                            Width="21cm" Height="29.7cm"
                             ItemsSource="{Binding BarkodResimler}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -84,7 +69,9 @@
                     </BlockUIContainer>
                 </FlowDocument>
             </FlowDocumentScrollViewer>
-            <Button Grid.Row="2" Command="{Binding KareKodYazdır}" CommandParameter="{Binding ElementName=ItemsCtrl}">
+            <Button Grid.Row="2"
+                Command="{Binding KareKodYazdır}"
+                CommandParameter="{Binding ElementName=ItemsCtrl}">
                 <StackPanel Orientation="Horizontal">
                     <Image Width="32" Height="32">
                         <Image.Source>

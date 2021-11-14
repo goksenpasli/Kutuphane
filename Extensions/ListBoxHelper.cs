@@ -39,7 +39,7 @@ namespace Extensions
                 if (listBox.SelectedItems.Count > GetSelectedItemsMaxCount(listBox))
                 {
                     listBox.SelectedItems.Clear();
-                    MessageBox.Show($"En Fazla {GetSelectedItemsMaxCount(listBox)} Adet Seçim Yapabilirsiniz.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show($"En Fazla {GetSelectedItemsMaxCount(listBox)} Adet Seçim Yapabilirsiniz.", Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
                 ReSetSelectedItems(listBox);
             };

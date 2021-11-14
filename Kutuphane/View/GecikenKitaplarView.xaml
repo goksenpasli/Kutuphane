@@ -1,5 +1,4 @@
-﻿<UserControl
-    x:Class="Kutuphane.View.GecikenKitaplarView"
+﻿<UserControl x:Class="Kutuphane.View.GecikenKitaplarView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
@@ -8,12 +7,9 @@
     xmlns:extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model"
-    xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:GecikenKitaplarViewModel}}"
-    d:DesignHeight="450"
-    d:DesignWidth="1280"
-    UseLayoutRounding="True"
+    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
@@ -33,32 +29,36 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ListView
-                x:Name="listViewKişi"
+            <ListView x:Name="listViewKişi"
                 Grid.RowSpan="2"
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsSynchronizedWithCurrentItem="False"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
-                SelectionMode="Single"
-                VirtualizingPanel.VirtualizationMode="Recycling">
+                SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;ADI" />
-                                <TextBox Width="55" VerticalContentAlignment="Center" Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Width="55"
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                <TextBox Width="55" VerticalContentAlignment="Center" Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Width="55"
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;TC" />
-                                <TextBox Width="55" VerticalContentAlignment="Center" Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Width="55"
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Telefon" Header="TELEFON">
@@ -71,24 +71,29 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <GroupBox Grid.Row="0" Grid.Column="1" Header="DURUM">
-                <ListView
-                    x:Name="listViewİşlem"
+            <GroupBox Grid.Row="0" Grid.Column="1"
+                Header="DURUM">
+                <ListView x:Name="listViewİşlem"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}"
                     SelectedItem="{Binding İşlem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectionMode="Single">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn extensions:GridViewSort.PropertyName="KitapId" CellTemplate="{StaticResource KitapComboBoxTemplate}" Header="KİTAP" />
-                            <GridViewColumn extensions:GridViewSort.PropertyName="BaşlangıçTarihi" DisplayMemberBinding="{Binding BaşlangıçTarihi, StringFormat=\{0:d\}}" Header="İŞLEM TARİHİ" />
-                            <GridViewColumn extensions:GridViewSort.PropertyName="GeriGetirmeTarihi" DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}" Header="GETİRME TARİHİ" />
+                            <GridViewColumn extensions:GridViewSort.PropertyName="KitapId"
+                                CellTemplate="{StaticResource KitapComboBoxTemplate}"
+                                Header="KİTAP" />
+                            <GridViewColumn extensions:GridViewSort.PropertyName="BaşlangıçTarihi"
+                                DisplayMemberBinding="{Binding BaşlangıçTarihi, StringFormat=\{0:d\}}"
+                                Header="İŞLEM TARİHİ" />
+                            <GridViewColumn extensions:GridViewSort.PropertyName="GeriGetirmeTarihi"
+                                DisplayMemberBinding="{Binding GeriGetirmeTarihi, StringFormat=\{0:d\}}"
+                                Header="GETİRME TARİHİ" />
                             <GridViewColumn DisplayMemberBinding="{Binding GeriGetirmeTarihi, Converter={StaticResource ListViewCezaTutarConverter}}" Header="ŞU ANKİ CEZA TUTARI" />
                             <GridViewColumn Header="UZATMA">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox
-                                            Content="{Binding UzatmaSayısı}"
+                                        <CheckBox Content="{Binding UzatmaSayısı}"
                                             ContentStringFormat="{}{0} Kez"
                                             IsChecked="{Binding Uzatıldı}"
                                             IsEnabled="False" />
@@ -115,9 +120,12 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
             </GroupBox>
-            <GroupBox Grid.Row="2" Grid.Column="1" Header="UZATMA">
+            <GroupBox Grid.Row="2" Grid.Column="1"
+                Header="UZATMA">
                 <StackPanel>
-                    <DatePicker DisplayDateStart="{Binding İşlem.GeriGetirmeTarihi}" IsEnabled="{Binding TarihEtkin}" SelectedDate="{Binding UzatılmaTarihi}" />
+                    <DatePicker DisplayDateStart="{Binding İşlem.GeriGetirmeTarihi}"
+                        IsEnabled="{Binding TarihEtkin}"
+                        SelectedDate="{Binding UzatılmaTarihi}" />
                     <Button Command="{Binding UzatmaGir}">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="32" Height="32">

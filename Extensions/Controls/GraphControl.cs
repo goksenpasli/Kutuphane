@@ -7,9 +7,11 @@ using System.Windows.Media;
 
 namespace Extensions
 {
-    public partial class GraphControl : Control
+    public partial class GraphControl : Control, INotifyPropertyChanged
     {
         public static readonly DependencyProperty SeriesProperty = DependencyProperty.Register("Series", typeof(ObservableCollection<Chart>), typeof(GraphControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+        
+        private Visibility seriesListVisibility=Visibility.Visible;
 
         static GraphControl()
         {
@@ -21,6 +23,26 @@ namespace Extensions
             get => (ObservableCollection<Chart>)GetValue(SeriesProperty);
             set => SetValue(SeriesProperty, value);
         }
+
+        public Visibility SeriesListVisibility
+        {
+            get => seriesListVisibility;
+            set
+            {
+                if (seriesListVisibility != value)
+                {
+                    seriesListVisibility = value;
+                    OnPropertyChanged(nameof(SeriesListVisibility));
+                }
+            }
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected override void OnRender(DrawingContext drawingContext)
         {

@@ -10,11 +10,17 @@ namespace Kutuphane.ViewModel
     {
         private readonly string[] imageext = new string[] { ".jpg", ".jpeg", ".tif", ".tiff", ".png" };
 
+        private readonly string[] videoext = new string[] { ".mp4", ".wmv", ".avi", ".mpg", ".3gp" };
+
         public DataTemplate Empty { get; set; }
 
         public DataTemplate Image { get; set; }
 
         public DataTemplate Pdf { get; set; }
+
+        public DataTemplate Video { get; set; }
+
+        public DataTemplate Xps { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -25,10 +31,15 @@ namespace Kutuphane.ViewModel
                 {
                     return Pdf;
                 }
-                else
+                if (string.Equals(ext, ".xps", StringComparison.OrdinalIgnoreCase))
                 {
-                    return imageext.Contains(ext.ToLower()) ? Image : Empty;
+                    return Xps;
                 }
+                if (imageext.Contains(ext.ToLower()))
+                {
+                    return Image;
+                }
+                return videoext.Contains(ext.ToLower()) ? Video : Empty;
             }
             return Empty;
         }
