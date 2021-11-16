@@ -41,7 +41,7 @@ namespace Extensions.Controls
                 {
                     _ = MessageBox.Show($"Dosya Açılamadı.\n{ex.Message}", Application.Current.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
-            }, parameter => true);
+            }, parameter => !string.IsNullOrWhiteSpace(ArchivePath));
         }
 
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
@@ -91,19 +91,21 @@ namespace Extensions.Controls
             if (d is ArchiveViewer archiveViewer)
             {
                 archiveViewer.Arşivİçerik = new();
-                ZipArchive archive = ZipFile.Open((string)e.NewValue, ZipArchiveMode.Read);
-                foreach (ZipArchiveEntry item in archive.Entries.Where(z => z.Length > 0))
+                using (ZipArchive archive = ZipFile.Open((string)e.NewValue, ZipArchiveMode.Read))
                 {
-                    ArchiveData archiveData = new()
+                    foreach (ZipArchiveEntry item in archive.Entries.Where(z => z.Length > 0))
                     {
-                        SıkıştırılmışBoyut = item.CompressedLength,
-                        DosyaAdı = item.Name,
-                        TamYol = item.FullName,
-                        Boyut = item.Length,
-                        Oran = (double)item.CompressedLength / item.Length,
-                        DüzenlenmeZamanı = item.LastWriteTime.Date
-                    };
-                    archiveViewer.Arşivİçerik.Add(archiveData);
+                        ArchiveData archiveData = new()
+                        {
+                            SıkıştırılmışBoyut = item.CompressedLength,
+                            DosyaAdı = item.Name,
+                            TamYol = item.FullName,
+                            Boyut = item.Length,
+                            Oran = (double)item.CompressedLength / item.Length,
+                            DüzenlenmeZamanı = item.LastWriteTime.Date
+                        };
+                        archiveViewer.Arşivİçerik.Add(archiveData);
+                    }
                 }
                 ToplamOran = (double)archiveViewer.Arşivİçerik.Sum(z => z.SıkıştırılmışBoyut) / archiveViewer.Arşivİçerik.Sum(z => z.Boyut) * 100;
             }

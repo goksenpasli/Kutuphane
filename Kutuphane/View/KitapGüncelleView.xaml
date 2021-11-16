@@ -349,7 +349,7 @@
                                 </StackPanel>
                             </GroupBox.Header>
                             <UniformGrid Columns="2" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                                <local:QrCodeView Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                                <local:QrCodeView d:Barkod="Barkod" Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                                 <Extensions:ContentToggleButton Width="96" Height="96"
                                     Background="{StaticResource QrCode}">
                                     <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />

@@ -8,7 +8,7 @@ namespace Extensions
 
         private string dosyaAdı;
 
-        private DateTime? düzenlenmeZamanı;
+        private DateTime düzenlenmeZamanı;
 
         private double oran;
 
@@ -44,7 +44,7 @@ namespace Extensions
             }
         }
 
-        public DateTime? DüzenlenmeZamanı
+        public DateTime DüzenlenmeZamanı
         {
             get => düzenlenmeZamanı;
 

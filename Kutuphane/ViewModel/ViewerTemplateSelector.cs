@@ -22,6 +22,8 @@ namespace Kutuphane.ViewModel
 
         public DataTemplate Xps { get; set; }
 
+        public DataTemplate Zip { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is string dosya)
@@ -35,11 +37,22 @@ namespace Kutuphane.ViewModel
                 {
                     return Xps;
                 }
+                if (string.Equals(ext, ".zip", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Zip;
+                }
                 if (imageext.Contains(ext.ToLower()))
                 {
                     return Image;
                 }
-                return videoext.Contains(ext.ToLower()) ? Video : Empty;
+                if (videoext.Contains(ext.ToLower()))
+                {
+                    return Video;
+                }
+                else
+                {
+                    return Empty;
+                }
             }
             return Empty;
         }

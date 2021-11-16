@@ -94,7 +94,7 @@ namespace Kutuphane.ViewModel
             {
                 if (SeçiliKişi is not null)
                 {
-                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf;*.xps)|*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf;*.xps" };
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Dosyalar (*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf;*.xps;*.zip)|*.jpg;*.jpeg;*.tif;*.tiff;*.png;*.pdf;*.xps;*.zip" };
                     if (openFileDialog.ShowDialog() == true)
                     {
                         string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);

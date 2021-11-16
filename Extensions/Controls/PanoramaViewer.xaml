@@ -7,6 +7,22 @@
     d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
     mc:Ignorable="d">
     <Viewport3D MouseWheel="Viewport3D_MouseWheel">
+        <Viewport3D.ContextMenu>
+            <ContextMenu>
+                <MenuItem Command="{Binding DosyaAç}" Header="PANORAMA AÇ">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16">
+                            <Image.Source>
+                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                    <Binding Source="Shell32.dll" />
+                                    <Binding Source="129" />
+                                </MultiBinding>
+                            </Image.Source>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Viewport3D.ContextMenu>
         <Viewport3D.Camera>
             <PerspectiveCamera FieldOfView="{Binding Fov}"
                 LookDirection="0,0,1" Position="0,0,0" UpDirection="0,1,0" />

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,9 +28,13 @@ namespace Extensions.Controls
 
         public static Geometry3D SphereModel = CreateGeometry();
 
+        private readonly string[] imageext = new string[] { ".jpg", ".jpeg", ".tif", ".tiff", ".png" };
+
+        private readonly string[] videoext = new string[] { ".mp4", ".wmv", ".avi", ".mpg", ".3gp" };
+
         private bool _isOnDrag;
 
-        private Point _startPoiint;
+        private System.Windows.Point _startPoiint;
 
         private double _startRotateX;
 
@@ -38,7 +44,27 @@ namespace Extensions.Controls
         {
             InitializeComponent();
             DataContext = this;
+
+            DosyaAç = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png| Video Dosyaları (*.mp4;*.mpg;*.wmv;*.avi;*.3gp)|*.mp4;*.mpg;*.wmv;*.avi;*.3gp" };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string file = openFileDialog.FileName.ToLower();
+                    if (imageext.Contains(Path.GetExtension(file)))
+                    {
+                        PanoramaImage = file;
+                        return;
+                    }
+                    if (videoext.Contains(Path.GetExtension(file)))
+                    {
+                        PanoramaVideo = file;
+                    }
+                }
+            }, parameter => true);
         }
+
+        public ICommand DosyaAç { get; }
 
         public double Fov { get => (double)GetValue(FovProperty); set => SetValue(FovProperty, value); }
 
@@ -151,11 +177,11 @@ namespace Extensions.Controls
             return (Vector3D)GetPosition(t, y);
         }
 
-        private static Point GetTextureCoordinate(double t, double y)
+        private static System.Windows.Point GetTextureCoordinate(double t, double y)
         {
             Matrix TYtoUV = new();
             TYtoUV.Scale(1 / (2 * Math.PI), -0.5);
-            Point p = new(t, y);
+            System.Windows.Point p = new(t, y);
             p *= TYtoUV;
             return p;
         }

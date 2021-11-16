@@ -181,9 +181,45 @@
                             Value="{Binding Kitap.Fiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
                     <StackPanel Grid.Row="9">
-                        <CheckBox Content="DEMİRBAŞ" IsChecked="{Binding Kitap.Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <CheckBox Content="FAVORİ" IsChecked="{Binding Kitap.Favori, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <CheckBox Content="ÖDÜNÇ VERİLEBİLİR" IsChecked="{Binding Kitap.ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox IsChecked="{Binding Kitap.Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Moricons.dll" />
+                                            <Binding Source="65" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock VerticalAlignment="Center" Text="DEMİRBAŞ" />
+                            </StackPanel>
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding Kitap.Favori, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="208" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock VerticalAlignment="Center" Text="FAVORİ" />
+                            </StackPanel>
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding Kitap.ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="28" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock VerticalAlignment="Center" Text="ÖDÜNÇ VERİLEBİLİR" />
+                            </StackPanel>
+                        </CheckBox>
                     </StackPanel>
                     <Grid Grid.Row="10">
                         <Grid.RowDefinitions>
@@ -195,7 +231,7 @@
                             <Run Text="{Binding Kitap.Açıklama.Length, Mode=OneWay, StringFormat={}{0}/500, FallbackValue=0}" />
                         </TextBlock>
                         <TextBox Grid.Row="1"
-                            AcceptsReturn="True" MaxLength="500"
+                            d:Text="Buraya açıklama yazabilirsiniz." AcceptsReturn="True" MaxLength="500"
                             Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="Wrap" />
                     </Grid>

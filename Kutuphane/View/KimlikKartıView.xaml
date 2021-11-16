@@ -135,7 +135,7 @@
                                 </TableCell>
                                 <TableCell>
                                     <Paragraph>
-                                        <Run Text="{Binding Ad}" />
+                                        <Run d:Text="Gökşen" Text="{Binding Ad}" />
                                     </Paragraph>
                                 </TableCell>
                                 <TableCell RowSpan="4">
@@ -154,7 +154,7 @@
                                 </TableCell>
                                 <TableCell>
                                     <Paragraph>
-                                        <Run Text="{Binding Soyad}" />
+                                        <Run d:Text="Paslı" Text="{Binding Soyad}" />
                                     </Paragraph>
                                 </TableCell>
                             </TableRow>
@@ -166,7 +166,7 @@
                                 </TableCell>
                                 <TableCell>
                                     <Paragraph>
-                                        <Run Text="{Binding TC}" />
+                                        <Run d:Text="11111111110" Text="{Binding TC}" />
                                     </Paragraph>
                                 </TableCell>
                             </TableRow>
@@ -181,6 +181,7 @@
                                         <Image x:Name="ImgBarkod"
                                             Width="150" Height="32"
                                             Margin="0,10"
+                                            d:Source="{Binding Source='11111111110', Converter={StaticResource StringToBarCodeImageConverter}}"
                                             Source="{Binding TC, ValidatesOnDataErrors=True, Converter={StaticResource StringToBarCodeImageConverter}}"
                                             Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" />
                                     </BlockUIContainer>
