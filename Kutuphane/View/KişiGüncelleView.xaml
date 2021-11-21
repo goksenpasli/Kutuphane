@@ -83,7 +83,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <extensions:MaskedTextBox IncludeLiterals="False" IncludePrompt="False" Mask="(000) 000 00 00"
-                                        Value="{Binding Telefon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        Value="{Binding DataContext.Telefon, RelativeSource={RelativeSource AncestorType=ListViewItem}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
