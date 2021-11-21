@@ -63,6 +63,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <local:AppSettings />
                     </RibbonApplicationMenu.AuxiliaryPaneContent>

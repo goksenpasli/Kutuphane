@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
-    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
-    d:DesignHeight="450" d:DesignWidth="400" UseLayoutRounding="True"
+    d:DataContext="{d:DesignInstance Type=viewmodel:AppSettingsViewModel}"
+    d:DesignHeight="550" d:DesignWidth="400"
+    DataContext="{Binding AppSettingsViewModel, Source={StaticResource MainViewModel}}"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
     <GroupBox Header="AYARLAR">
         <StackPanel>
@@ -60,6 +62,17 @@
                     Maximum="1" Minimum="0.10" SmallChange="0.01"
                     ToolTip="Kitap Resim Küçültme Oranı"
                     Value="{Binding Path=ResimKüçültmeOranı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+            </HeaderedContentControl>
+            <HeaderedContentControl>
+                <HeaderedContentControl.Header>
+                    <CheckBox Content="OTOMATİK YEDEKLEME"
+                        IsChecked="{Binding Path=OtomatikYedek, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"
+                        ToolTip="Bu İşaretliyse Uygulama 10 Dakika Boş Bırakılırsa Uygulama Verileri İçin Otomatik Yedekleme İşlemi Başlar." />
+                </HeaderedContentControl.Header>
+                <Extensions:NumericUpDownControl IsEnabled="{Binding Path=OtomatikYedek, Mode=OneWay, Source={x:Static properties:Settings.Default}}"
+                    Maximum="60" Minimum="7" SmallChange="1"
+                    ToolTip="Son Yedi Günkü Yedekler Hariç Belirtilen Gün Sayısına Kadar Önceki Yedekleri Otomatik Siler"
+                    Value="{Binding Path=EskiYedekGün, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             </HeaderedContentControl>
             <CheckBox Content="KİTAP VERMEDE İŞ GÜNÜ SAY"
                 IsChecked="{Binding Path=KitapVermeİşGünüSay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"

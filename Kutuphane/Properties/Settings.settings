@@ -62,5 +62,11 @@
     <Setting Name="KitapVermeİşGünüSay" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="OtomatikYedek" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EskiYedekGün" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

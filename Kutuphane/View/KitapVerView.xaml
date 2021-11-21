@@ -120,7 +120,7 @@
                         Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}"
                         TextWrapping="Wrap" />
                     <Button Grid.Column="1"
-                        Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                        Command="{Binding AppSettingsViewModel.MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}"
                         CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="32" Height="32">

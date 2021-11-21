@@ -63,13 +63,13 @@ namespace Kutuphane.ViewModel
                 if (SeçiliVeri == nameof(Durum.Aylık))
                 {
                     Veriler = new ObservableCollection<Chart>(XDocument.Load(MainViewModel.xmldatapath).Descendants("İşlem").Where(z => ((DateTime)z.Attribute("BaşlangıçTarihi")).Year == DateTime.Now.Year).
-                    GroupBy(z => ((DateTime)z.Attribute("BaşlangıçTarihi")).Month).
+                    GroupBy(z => ((DateTime)z.Attribute("BaşlangıçTarihi")).Month).OrderBy(z => z.Key).
                     Select(z => new Chart() { ChartBrush = new SolidColorBrush(Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256))), ChartValue = z.Count(), Description = ((DateTime)z.FirstOrDefault()?.Attribute("BaşlangıçTarihi")).ToString("MMMM") }));
                 }
                 if (SeçiliVeri == nameof(Durum.Yıllık))
                 {
                     Veriler = new ObservableCollection<Chart>(XDocument.Load(MainViewModel.xmldatapath).Descendants("İşlem").
-                    GroupBy(z => ((DateTime)z.Attribute("BaşlangıçTarihi")).Year).
+                    GroupBy(z => ((DateTime)z.Attribute("BaşlangıçTarihi")).Year).OrderBy(z => z.Key).
                     Select(z => new Chart() { ChartBrush = new SolidColorBrush(Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256))), ChartValue = z.Count(), Description = ((DateTime)z.FirstOrDefault()?.Attribute("BaşlangıçTarihi")).ToString("yyyy") }));
                 }
             }

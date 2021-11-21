@@ -322,7 +322,7 @@
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock VerticalAlignment="Center" Text="AÇIKLAMA" />
-                                    <Button Command="{Binding MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listView, Path=SelectedItem.Açıklama}">
+                                    <Button Command="{Binding AppSettingsViewModel.MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=listView, Path=SelectedItem.Açıklama}">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Width="16" Height="16">
                                                 <Image.Source>

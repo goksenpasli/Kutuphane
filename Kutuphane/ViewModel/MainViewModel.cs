@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Speech.Synthesis;
 using System.Windows;
 using System.Windows.Input;
 
@@ -18,8 +17,6 @@ namespace Kutuphane.ViewModel
     public class MainViewModel : InpcBase
     {
         public static readonly string xmldatapath = Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath) + @"\Data.xml";
-
-        private static readonly SpeechSynthesizer synthesizer = new() { Volume = 100 };
 
         private string arşivYolu;
 
@@ -30,7 +27,6 @@ namespace Kutuphane.ViewModel
         static MainViewModel()
         {
             Yıllar = Enumerable.Range(DateTime.Now.Year - 50, 100);
-            TtsDilleri = synthesizer.GetInstalledVoices().Select(z => z.VoiceInfo.Name);
         }
 
         public MainViewModel()
@@ -73,6 +69,8 @@ namespace Kutuphane.ViewModel
             DolapDüzenViewModel = new DolapDüzenViewModel();
 
             QrCodeViewModel = new QrCodeViewModel();
+
+            AppSettingsViewModel = new AppSettingsViewModel();
 
             QrCodeMultipleViewModel = new QrCodeMultipleViewModel();
 
@@ -126,54 +124,17 @@ namespace Kutuphane.ViewModel
                 }
             });
 
-            MetinOku = new RelayCommand<object>(parameter =>
-            {
-                if (parameter is string metin)
-                {
-                    synthesizer.SelectVoice(Settings.Default.SeçiliTts);
-                    _ = synthesizer.SpeakAsync(metin);
-                }
-            }, parameter => !string.IsNullOrEmpty(Settings.Default.SeçiliTts));
-
-            KimlikArkaplanResimGüncelle = new RelayCommand<object>(parameter =>
-            {
-                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    string filename = $"{Guid.NewGuid()}{Path.GetExtension(openFileDialog.FileName)}";
-                    File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(xmldatapath)}\\{filename}");
-                    Settings.Default.KimlikArkaPlanResim = filename;
-                }
-            }, parameter => true);
-
             if (Settings.Default.KişiGirişEkranıVarsayılan)
             {
                 CurrentView = KişiGirişViewModel;
             }
 
+            if (Settings.Default.OtomatikYedek)
+            {
+                AppSettingsViewModel.OtomatikYedekle();
+            }
+
             WebAdreseGit = new RelayCommand<object>(parameter => Process.Start(parameter as string), parameter => true);
-
-            TtsRegImport = new RelayCommand<object>(parameter =>
-            {
-                try
-                {
-                    string path = $"{Path.GetTempPath()}{Guid.NewGuid()}.reg";
-                    File.WriteAllText(path, Resources.TtsReg);
-                    _ = Process.Start("regedit.exe", path);
-                }
-                catch (Exception ex)
-                {
-                    _ = MessageBox.Show(ex.Message);
-                }
-            }, parameter => true);
-
-            AyarlarıSıfırla = new RelayCommand<object>(parameter =>
-            {
-                if (MessageBox.Show("Ayarlar varsayılana döndürülecek devam edilsin mi?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
-                {
-                    Settings.Default.Reset();
-                }
-            });
 
             CloseView = new RelayCommand<object>(parameter => CurrentView = null);
 
@@ -206,10 +167,15 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => File.Exists(xmldatapath));
 
-            Settings.Default.PropertyChanged += (s, e) => Settings.Default.Save();
+            Settings.Default.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName is "OtomatikYedek" && Settings.Default.OtomatikYedek)
+                {
+                    AppSettingsViewModel.OtomatikYedekle();
+                }
+                Settings.Default.Save();
+            };
         }
-
-        public static ICommand AyarlarıSıfırla { get; set; }
 
         public static ICommand DatabaseSave { get; set; }
 
@@ -217,13 +183,13 @@ namespace Kutuphane.ViewModel
 
         public static ICommand KitapKontrolEkranı { get; set; }
 
-        public static IEnumerable<string> TtsDilleri { get; }
-
         public static ICommand UygulamadanÇık { get; set; }
 
         public static ICommand VeritabanınıAç { get; set; }
 
         public static IEnumerable<int> Yıllar { get; }
+
+        public AppSettingsViewModel AppSettingsViewModel { get; set; }
 
         public ICommand ArşivAç { get; }
 
@@ -285,8 +251,6 @@ namespace Kutuphane.ViewModel
 
         public GecikenKitaplarViewModel GecikenKitaplarViewModel { get; set; }
 
-        public ICommand KimlikArkaplanResimGüncelle { get; }
-
         public ICommand KişiGirişiEkranı { get; }
 
         public KişiGirişViewModel KişiGirişViewModel { get; set; }
@@ -323,15 +287,11 @@ namespace Kutuphane.ViewModel
 
         public Kütüphane Kütüphane { get; set; }
 
-        public ICommand MetinOku { get; }
-
         public QrCodeMultipleViewModel QrCodeMultipleViewModel { get; set; }
 
         public QrCodeViewModel QrCodeViewModel { get; set; }
 
         public ReportViewModel ReportViewModel { get; set; }
-
-        public ICommand TtsRegImport { get; }
 
         public ICommand WebAdreseGit { get; }
 

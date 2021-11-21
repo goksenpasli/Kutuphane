@@ -112,10 +112,12 @@
     <Compile Include="Model\Yazar.cs" />
     <Compile Include="Model\İşlem.cs" />
     <Compile Include="Model\Barkod.cs" />
+    <Compile Include="ViewModel\AppSettingsViewModel.cs" />
     <Compile Include="ViewModel\DolapDüzenViewModel.cs" />
     <Compile Include="ViewModel\DolapGirişViewModel.cs" />
     <Compile Include="ViewModel\ExtensionMethods.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
+    <Compile Include="ViewModel\IdleTimeFinder.cs" />
     <Compile Include="ViewModel\PdfViewer.cs" />
     <Compile Include="ViewModel\GecikenKitaplarSimpleViewModel.cs" />
     <Compile Include="ViewModel\GecikenKitaplarViewModel.cs" />
