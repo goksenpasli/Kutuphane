@@ -8,7 +8,7 @@ namespace Extensions
     {
         public static readonly DependencyProperty SelectedItemsMaxCountProperty = DependencyProperty.RegisterAttached("SelectedItemsMaxCount", typeof(int), typeof(ListBoxHelper), new PropertyMetadata(int.MaxValue, OnSelectedItemsChanged));
 
-        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.RegisterAttached("SelectedItems", typeof(IList), typeof(ListBoxHelper), new PropertyMetadata(default(IList), OnSelectedItemsChanged));
+        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.RegisterAttached("SelectedItems", typeof(IList), typeof(ListBoxHelper), new FrameworkPropertyMetadata(default(IList), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedItemsChanged));
 
         public static IList GetSelectedItems(DependencyObject d)
         {
@@ -32,29 +32,23 @@ namespace Extensions
 
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ListBox listBox = (ListBox)d;
-            ReSetSelectedItems(listBox);
-            listBox.SelectionChanged += delegate
+            if (d is ListBox listBox)
             {
-                if (listBox.SelectedItems.Count > GetSelectedItemsMaxCount(listBox))
+                listBox.SelectionChanged += delegate
                 {
-                    listBox.SelectedItems.Clear();
-                    MessageBox.Show($"En Fazla {GetSelectedItemsMaxCount(listBox)} Adet Seçim Yapabilirsiniz.", Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                }
-                ReSetSelectedItems(listBox);
-            };
-        }
+                    if (listBox.SelectedItems.Count > GetSelectedItemsMaxCount(listBox))
+                    {
+                        listBox.SelectedItems.Clear();
+                        MessageBox.Show($"En Fazla {GetSelectedItemsMaxCount(listBox)} Adet Seçim Yapabilirsiniz.", Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
 
-        private static void ReSetSelectedItems(ListBox listBox)
-        {
-            IList selectedItems = GetSelectedItems(listBox);
-            selectedItems?.Clear();
-            if (listBox.SelectedItems != null)
-            {
-                foreach (object item in listBox.SelectedItems)
-                {
-                    _ = selectedItems?.Add(item);
-                }
+                    IList selectedItems = GetSelectedItems(listBox);
+                    selectedItems?.Clear();
+                    foreach (object item in listBox.SelectedItems)
+                    {
+                        _ = selectedItems?.Add(item);
+                    }
+                };
             }
         }
     }

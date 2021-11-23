@@ -15,6 +15,10 @@
     </UserControl.Resources>
     <GroupBox Header="KİŞİ GÜNCELLE">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
@@ -149,6 +153,9 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <viewmodel:ShadowedImage Grid.RowSpan="2" Grid.Column="1"
+                ShowShadow="True"
+                Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
             <Button Grid.Row="1"
                 Command="{Binding KişiGüncelleViewModel.KişiGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
                 CommandParameter="{Binding SelectedItem, ElementName=LvKişi}">

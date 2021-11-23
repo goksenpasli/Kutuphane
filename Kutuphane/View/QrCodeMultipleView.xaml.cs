@@ -1,4 +1,7 @@
-﻿using Kutuphane.ViewModel;
+﻿using Kutuphane.Model;
+using Kutuphane.ViewModel;
+using System.Collections;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,11 +12,19 @@ namespace Kutuphane.View
     /// </summary>
     public partial class QrCodeMultipleView : UserControl
     {
+        public static readonly DependencyProperty SeçiliKitaplarBarkodProperty = DependencyProperty.Register("SeçiliKitaplarBarkod", typeof(IList), typeof(QrCodeMultipleView), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty TopluBarkodMetinProperty = DependencyProperty.Register("TopluBarkodMetin", typeof(string), typeof(QrCodeMultipleView), new PropertyMetadata(null, Changed));
 
         public QrCodeMultipleView()
         {
             InitializeComponent();
+        }
+
+        public IList SeçiliKitaplarBarkod
+        {
+            get => (IList)GetValue(SeçiliKitaplarBarkodProperty);
+            set => SetValue(SeçiliKitaplarBarkodProperty, value);
         }
 
         public string TopluBarkodMetin
@@ -24,17 +35,17 @@ namespace Kutuphane.View
 
         private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is QrCodeMultipleView qrCodeMultipleView)
+            if (d is QrCodeMultipleView qrCodeMultipleView && qrCodeMultipleView.DataContext is QrCodeMultipleViewModel dc)
             {
-                QrCodeMultipleViewModel dc = qrCodeMultipleView.DataContext as QrCodeMultipleViewModel;
+                dc.BarkodResimler.Clear();
                 dc.Barkod.Metin = qrCodeMultipleView.TopluBarkodMetin;
                 dc.Barkod.BarkodImage = dc.Barkod.GenerateBarCodeImage(dc.Barkod.BarcodeFormat);
-                dc.BarkodResimler = new();
+                dc.BarkodResimler.Clear();
                 for (int i = 0; i < dc.En * dc.Boy; i++)
                 {
                     dc.BarkodResimler.Add(dc.Barkod.BarkodImage);
                 }
             }
-        }
+        }       
     }
 }

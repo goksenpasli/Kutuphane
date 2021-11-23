@@ -6,7 +6,7 @@ namespace Kutuphane.ViewModel
 {
     public class QrCodeMultipleViewModel : QrCodeViewModel
     {
-        private ObservableCollection<BitmapSource> barkodResimler;
+        private ObservableCollection<BitmapSource> barkodResimler = new();
 
         private int boy = 4;
 
@@ -61,9 +61,9 @@ namespace Kutuphane.ViewModel
 
         private void QrCodeMultipleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            BarkodResimler.Clear();
             if (e.PropertyName is "En" or "Boy" or "BarcodeFormat" or "PureBarcode")
             {
+                BarkodResimler.Clear();
                 Barkod.BarkodImage = Barkod.GenerateBarCodeImage(BarcodeFormat, PureBarcode);
                 for (int i = 0; i < En * Boy; i++)
                 {

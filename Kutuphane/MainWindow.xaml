@@ -341,22 +341,7 @@
                         </Popup>
                     </RibbonToggleButton>
                 </RibbonGroup>
-                <RibbonGroup Header="Hakkında">
-                    <RibbonButton Command="{Binding WebAdreseGit, Mode=OneWay}"
-                        CommandParameter="https://github.com/goksenpasli" KeyTip="H" Label="Hakkında">
-                        <RibbonButton.LargeImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="14" />
-                            </MultiBinding>
-                        </RibbonButton.LargeImageSource>
-                        <RibbonButton.SmallImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="14" />
-                            </MultiBinding>
-                        </RibbonButton.SmallImageSource>
-                    </RibbonButton>
+                <RibbonGroup Header="Veriler">
                     <RibbonSplitButton Command="{Binding Yedekle, Mode=OneWay}"
                         KeyTip="Y" Label="Verileri Yedekle">
                         <RibbonSplitButton.LargeImageSource>
@@ -404,6 +389,23 @@
                             </GroupBox>
                         </Popup>
                     </RibbonToggleButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Hakkında">
+                    <RibbonButton Command="{Binding WebAdreseGit, Mode=OneWay}"
+                        CommandParameter="https://github.com/goksenpasli" KeyTip="H" Label="Hakkında">
+                        <RibbonButton.LargeImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="14" />
+                            </MultiBinding>
+                        </RibbonButton.LargeImageSource>
+                        <RibbonButton.SmallImageSource>
+                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="14" />
+                            </MultiBinding>
+                        </RibbonButton.SmallImageSource>
+                    </RibbonButton>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

@@ -98,6 +98,7 @@
     <Compile Include="Converter\DatePassedConverter.cs" />
     <Compile Include="Converter\DoubleToThicknessConverter.cs" />
     <Compile Include="Converter\EqualityConverter.cs" />
+    <Compile Include="Converter\KitapBarkodToBarCodeImageConverter.cs" />
     <Compile Include="Converter\ListViewCezaTutarConverter.cs" />
     <Compile Include="Converter\FilePathMergeConverter.cs" />
     <Compile Include="Converter\ReverseBooleanConverter.cs" />

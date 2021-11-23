@@ -7,11 +7,10 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:QrCodeViewModel}"
-    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="450" d:DesignWidth="1280"
+    DataContext="{Binding QrCodeViewModel, Source={StaticResource MainViewModel}}"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
-    <UserControl.DataContext>
-        <viewmodel:QrCodeViewModel />
-    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

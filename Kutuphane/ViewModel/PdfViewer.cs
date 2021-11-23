@@ -139,9 +139,16 @@ namespace Kutuphane.ViewModel
 
         private static void PdfFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is PdfViewer pdfViewer && e.NewValue is not null)
+            if (d is PdfViewer pdfViewer)
             {
-                pdfViewer.PdfFileStream = new FileStream(e.NewValue as string, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                if (e.NewValue is not null)
+                {
+                    pdfViewer.PdfFileStream = new FileStream(e.NewValue as string, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                }
+                else
+                {
+                    pdfViewer.Source = null;
+                }
             }
         }
 

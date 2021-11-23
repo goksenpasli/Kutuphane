@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="Kutuphane.View.QrCodeMultipleView"
+﻿<UserControl x:Name="userControl"
+    x:Class="Kutuphane.View.QrCodeMultipleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Kutuphane="clr-namespace:Kutuphane"
@@ -10,20 +11,19 @@
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     Width="640" Height="480"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:QrCodeMultipleViewModel}}"
-    d:DesignHeight="1600" d:DesignWidth="1200" UseLayoutRounding="True"
+    d:DesignHeight="500" d:DesignWidth="640"
+    DataContext="{Binding QrCodeMultipleViewModel, Source={StaticResource MainViewModel}}"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <Kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />
         <Kutuphane:DoubleToThicknessConverter x:Key="DoubleToThicknessConverter" />
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <viewmodel:QrCodeMultipleViewModel />
-    </UserControl.DataContext>
     <GroupBox Header="BARKODLAR">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="365" />
-                <RowDefinition Height="42.4" />
+                <RowDefinition Height="400" />
             </Grid.RowDefinitions>
             <UniformGrid Columns="5" Rows="2">
                 <TextBlock HorizontalAlignment="Center" Text="EN" />
@@ -47,43 +47,99 @@
             <FlowDocumentScrollViewer Grid.Row="1">
                 <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">
                     <BlockUIContainer>
-                        <ItemsControl x:Name="ItemsCtrl"
-                            Width="21cm" Height="29.7cm"
-                            ItemsSource="{Binding BarkodResimler}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Viewbox>
-                                        <Border BorderBrush="Black" BorderThickness="{Binding QrMultipleBorderThickness, Source={x:Static properties:Settings.Default}, Converter={StaticResource DoubleToThicknessConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <Image Margin="2" Source="{Binding}" />
-                                        </Border>
-                                    </Viewbox>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Rows="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-
+                        <TabControl FontFamily="Segoe UI" FontSize="12">
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="KOPYA BARKOD" />
+                                        <Button Grid.Row="2"
+                                            Command="{Binding KareKodYazdır}"
+                                            CommandParameter="{Binding ElementName=ItemsCtrl}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="16" Height="16">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                            <Binding Source="Shell32.dll" />
+                                                            <Binding Source="136" />
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                                <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <ItemsControl x:Name="ItemsCtrl"
+                                    Width="21cm" Height="29.7cm"
+                                    ItemsSource="{Binding BarkodResimler}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Viewbox>
+                                                <Border BorderBrush="Black" BorderThickness="{Binding QrMultipleBorderThickness, Source={x:Static properties:Settings.Default}, Converter={StaticResource DoubleToThicknessConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <Image Margin="2" Source="{Binding}" />
+                                                </Border>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Rows="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </TabItem>
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="SEÇİLİ KİTAPLAR BARKOD" />
+                                        <Button Grid.Row="2"
+                                            Command="{Binding KareKodYazdır}"
+                                            CommandParameter="{Binding ElementName=ItemsCtrlSelected}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="16" Height="16">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                            <Binding Source="Shell32.dll" />
+                                                            <Binding Source="136" />
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                                <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <ItemsControl x:Name="ItemsCtrlSelected"
+                                    Width="21cm" Height="29.7cm"
+                                    ItemsSource="{Binding SeçiliKitaplarBarkod, ElementName=userControl}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Viewbox>
+                                                <Border BorderBrush="Black" BorderThickness="{Binding QrMultipleBorderThickness, Source={x:Static properties:Settings.Default}, Converter={StaticResource DoubleToThicknessConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <Image Margin="2">
+                                                        <Image.Source>
+                                                            <MultiBinding Converter="{StaticResource KitapBarkodToBarCodeImageConverter}">
+                                                                <Binding Mode="OneWay" />
+                                                                <Binding ElementName="userControl" Path="DataContext.BarcodeFormat" />
+                                                                <Binding ElementName="userControl" Path="DataContext.PureBarcode" />
+                                                            </MultiBinding>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </Border>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Rows="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </TabItem>
+                        </TabControl>
                     </BlockUIContainer>
                 </FlowDocument>
             </FlowDocumentScrollViewer>
-            <Button Grid.Row="2"
-                Command="{Binding KareKodYazdır}"
-                CommandParameter="{Binding ElementName=ItemsCtrl}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Width="32" Height="32">
-                        <Image.Source>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="136" />
-                            </MultiBinding>
-                        </Image.Source>
-                    </Image>
-                    <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
-                </StackPanel>
-            </Button>
         </Grid>
     </GroupBox>
 </UserControl>

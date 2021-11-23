@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,24 +27,24 @@ namespace Kutuphane.ViewModel
         {
             if (item is string dosya)
             {
-                string ext = new FileInfo(dosya).Extension;
-                if (string.Equals(ext, ".pdf", StringComparison.OrdinalIgnoreCase))
+                string ext = new FileInfo(dosya).Extension.ToLower();
+                if (ext == ".pdf")
                 {
                     return Pdf;
                 }
-                if (string.Equals(ext, ".xps", StringComparison.OrdinalIgnoreCase))
+                if (ext == ".xps")
                 {
                     return Xps;
                 }
-                if (string.Equals(ext, ".zip", StringComparison.OrdinalIgnoreCase))
+                if (ext == ".zip")
                 {
                     return Zip;
                 }
-                if (imageext.Contains(ext.ToLower()))
+                if (imageext.Contains(ext))
                 {
                     return Image;
                 }
-                if (videoext.Contains(ext.ToLower()))
+                if (videoext.Contains(ext))
                 {
                     return Video;
                 }

@@ -5,13 +5,14 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Kutuphane.View"
+    xmlns:kutuphane="clr-namespace:Kutuphane" xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Kutuphane.Model"
     d:DataContext="{d:DesignInstance Type=ViewModel:KitapGüncelleViewModel}"
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />
         <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <Grid>
@@ -26,10 +27,10 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ListView x:Name="listView"
+                    Extensions:ListBoxHelper.SelectedItemsMaxCount="150"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
-                    IsSynchronizedWithCurrentItem="False"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
-                    SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
+                    SelectionMode="Extended" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Resim">
@@ -352,7 +353,7 @@
                                 <local:QrCodeView d:Barkod="Barkod" Barkod="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                                 <Extensions:ContentToggleButton Width="96" Height="96"
                                     Background="{StaticResource QrCode}">
-                                    <local:QrCodeMultipleView TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                                    <local:QrCodeMultipleView SeçiliKitaplarBarkod="{Binding Path=SelectedItems, ElementName=listView, Mode=OneWay}" TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
                                 </Extensions:ContentToggleButton>
                             </UniformGrid>
                         </GroupBox>

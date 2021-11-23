@@ -97,31 +97,34 @@ namespace Kutuphane.ViewModel
 
             TopluKitapEkle = new RelayCommand<object>(parameter =>
             {
-                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Excel Dosyaları (*.xls;*.xlsx)|*.xls;*.xlsx" };
-                if (openFileDialog.ShowDialog() == true)
+                if (parameter is Kütüphane kütüphane)
                 {
-                    try
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Excel Dosyaları (*.xls;*.xlsx)|*.xls;*.xlsx" };
+                    if (openFileDialog.ShowDialog() == true)
                     {
-                        using FileStream stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                        using IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
-                        do
+                        try
                         {
-                            while (reader.Read())
+                            using FileStream stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                            using IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
+                            do
                             {
-                                (parameter as Kütüphane)?.Kitaplar.Add(new Kitap
+                                while (reader.Read())
                                 {
-                                    Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
-                                    Ad = reader.GetValue(0).ToString(),
-                                    Barkod = reader.GetValue(1).ToString(),
-                                    DolapId = Kitap.DolapId
-                                });
-                            }
-                        } while (reader.NextResult());
-                        MainViewModel.DatabaseSave.Execute(null);
-                    }
-                    catch (Exception ex)
-                    {
-                        _ = MessageBox.Show(ex.Message, "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                    kütüphane.Kitaplar.Add(new Kitap
+                                    {
+                                        Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
+                                        Ad = reader.GetValue(0).ToString(),
+                                        Barkod = reader.GetValue(1).ToString(),
+                                        DolapId = Kitap.DolapId
+                                    });
+                                }
+                            } while (reader.NextResult());
+                            MainViewModel.DatabaseSave.Execute(null);
+                        }
+                        catch (Exception ex)
+                        {
+                            _ = MessageBox.Show(ex.Message, "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        }
                     }
                 }
             }, parameter => Kitap.DolapId != 0);

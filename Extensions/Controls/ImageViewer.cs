@@ -282,50 +282,58 @@ namespace Extensions
 
         private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ImageViewer imageViewer && e.NewValue is not null)
+            if (d is ImageViewer imageViewer)
             {
-                switch (Path.GetExtension(e.NewValue as string).ToLower())
+                if (e.NewValue is not null)
                 {
-                    case ".tiff":
-                    case ".tif":
-                        imageViewer.Sayfa = 1;
-                        imageViewer.Decoder = new TiffBitmapDecoder(new Uri(e.NewValue as string), BitmapCreateOptions.None, BitmapCacheOption.None);
-                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Visible;
-                        imageViewer.Source = imageViewer.Decoder.Frames[0];
-                        imageViewer.Pages = Enumerable.Range(1, imageViewer.Decoder.Frames.Count);
-                        break;
+                    switch (Path.GetExtension(e.NewValue as string).ToLower())
+                    {
+                        case ".tiff":
+                        case ".tif":
+                            imageViewer.Sayfa = 1;
+                            imageViewer.Decoder = new TiffBitmapDecoder(new Uri(e.NewValue as string), BitmapCreateOptions.None, BitmapCacheOption.None);
+                            imageViewer.TifNavigasyonButtonEtkin = Visibility.Visible;
+                            imageViewer.Source = imageViewer.Decoder.Frames[0];
+                            imageViewer.Pages = Enumerable.Range(1, imageViewer.Decoder.Frames.Count);
+                            break;
 
-                    case ".png":
-                    case ".jpg":
-                    case ".jpeg":
-                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Collapsed;
-                        BitmapImage image = new();
-                        image.BeginInit();
-                        image.DecodePixelHeight = imageViewer.DecodeHeight;
-                        image.CacheOption = BitmapCacheOption.None;
-                        image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                        image.UriSource = new Uri(e.NewValue as string);
-                        image.EndInit();
-                        if (!image.IsFrozen && image.CanFreeze)
-                        {
-                            image.Freeze();
-                        }
-                        imageViewer.Source = image;
-                        break;
+                        case ".png":
+                        case ".jpg":
+                        case ".jpeg":
+                            imageViewer.TifNavigasyonButtonEtkin = Visibility.Collapsed;
+                            BitmapImage image = new();
+                            image.BeginInit();
+                            image.DecodePixelHeight = imageViewer.DecodeHeight;
+                            image.CacheOption = BitmapCacheOption.None;
+                            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                            image.UriSource = new Uri(e.NewValue as string);
+                            image.EndInit();
+                            if (!image.IsFrozen && image.CanFreeze)
+                            {
+                                image.Freeze();
+                            }
+                            imageViewer.Source = image;
+                            break;
 
-                    default:
-                        FormattedText formattedText = new("ÖNİZLEME YOK EVRAKI DİREKT AÇIN", CultureInfo.GetCultureInfo("tr-TR"), FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Red) { TextAlignment = TextAlignment.Left };
-                        DrawingVisual dv = new();
-                        using (DrawingContext dc = dv.RenderOpen())
-                        {
-                            dc.DrawText(formattedText, new Point(10, 200));
-                        }
-                        RenderTargetBitmap rtb = new(315, 445, 96, 96, PixelFormats.Default);
-                        rtb.Render(dv);
-                        rtb.Freeze();
-                        imageViewer.Source = rtb;
-                        break;
+                        default:
+                            FormattedText formattedText = new("ÖNİZLEME YOK EVRAKI DİREKT AÇIN", CultureInfo.GetCultureInfo("tr-TR"), FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Red) { TextAlignment = TextAlignment.Left };
+                            DrawingVisual dv = new();
+                            using (DrawingContext dc = dv.RenderOpen())
+                            {
+                                dc.DrawText(formattedText, new Point(10, 200));
+                            }
+                            RenderTargetBitmap rtb = new(315, 445, 96, 96, PixelFormats.Default);
+                            rtb.Render(dv);
+                            rtb.Freeze();
+                            imageViewer.Source = rtb;
+                            break;
+                    }
                 }
+                else
+                {
+                    imageViewer.Source = null;
+                }
+
             }
         }
 
