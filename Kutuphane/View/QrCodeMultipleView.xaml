@@ -44,31 +44,32 @@
                 <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
                     IsChecked="{Binding PureBarcode}" />
             </UniformGrid>
-            <FlowDocumentScrollViewer Grid.Row="1">
-                <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">
-                    <BlockUIContainer>
-                        <TabControl FontFamily="Segoe UI" FontSize="12">
-                            <TabItem>
-                                <TabItem.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center" Text="KOPYA BARKOD" />
-                                        <Button Grid.Row="2"
-                                            Command="{Binding KareKodYazdır}"
-                                            CommandParameter="{Binding ElementName=ItemsCtrl}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Width="16" Height="16">
-                                                    <Image.Source>
-                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                            <Binding Source="Shell32.dll" />
-                                                            <Binding Source="136" />
-                                                        </MultiBinding>
-                                                    </Image.Source>
-                                                </Image>
-                                                <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
-                                            </StackPanel>
-                                        </Button>
-                                    </StackPanel>
-                                </TabItem.Header>
+            <TabControl Grid.Row="1"
+                FontFamily="Segoe UI" FontSize="12">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="KOPYA BARKOD" />
+                            <Button Grid.Row="2"
+                                Command="{Binding KareKodYazdır}"
+                                CommandParameter="{Binding ElementName=ItemsCtrl}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="136" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <FlowDocumentScrollViewer>
+                        <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">
+                            <BlockUIContainer>
                                 <ItemsControl x:Name="ItemsCtrl"
                                     Width="21cm" Height="29.7cm"
                                     ItemsSource="{Binding BarkodResimler}">
@@ -87,28 +88,34 @@
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
-                            </TabItem>
-                            <TabItem>
-                                <TabItem.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center" Text="SEÇİLİ KİTAPLAR BARKOD" />
-                                        <Button Grid.Row="2"
-                                            Command="{Binding KareKodYazdır}"
-                                            CommandParameter="{Binding ElementName=ItemsCtrlSelected}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Width="16" Height="16">
-                                                    <Image.Source>
-                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                            <Binding Source="Shell32.dll" />
-                                                            <Binding Source="136" />
-                                                        </MultiBinding>
-                                                    </Image.Source>
-                                                </Image>
-                                                <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
-                                            </StackPanel>
-                                        </Button>
-                                    </StackPanel>
-                                </TabItem.Header>
+                            </BlockUIContainer>
+                        </FlowDocument>
+                    </FlowDocumentScrollViewer>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="SEÇİLİ KİTAPLAR BARKOD" />
+                            <Button Grid.Row="2"
+                                Command="{Binding KareKodYazdır}"
+                                CommandParameter="{Binding ElementName=ItemsCtrlSelected}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="136" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Text="YAZDIR" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <FlowDocumentScrollViewer>
+                        <FlowDocument PageHeight="29.7cm" PagePadding="0" PageWidth="21cm">
+                            <BlockUIContainer>
                                 <ItemsControl x:Name="ItemsCtrlSelected"
                                     Width="21cm" Height="29.7cm"
                                     ItemsSource="{Binding SeçiliKitaplarBarkod, ElementName=userControl}">
@@ -135,11 +142,11 @@
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
-                            </TabItem>
-                        </TabControl>
-                    </BlockUIContainer>
-                </FlowDocument>
-            </FlowDocumentScrollViewer>
+                            </BlockUIContainer>
+                        </FlowDocument>
+                    </FlowDocumentScrollViewer>
+                </TabItem>
+            </TabControl>
         </Grid>
     </GroupBox>
 </UserControl>

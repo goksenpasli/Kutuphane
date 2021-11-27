@@ -33,6 +33,7 @@
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ImageFilePathToBitmapImageConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="150" />
             <Kutuphane:FilePathMergeConverter x:Key="FilePathMergeConverter" />
+            <Kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />
             <ObjectDataProvider x:Key="ColorList"
                 MethodName="GetProperties"
                 ObjectInstance="{x:Type Colors}" />

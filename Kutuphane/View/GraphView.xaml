@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:GraphViewModel}"
-    d:DesignHeight="450" d:DesignWidth="800" UseLayoutRounding="True"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="GraphControlStyle" TargetType="{x:Type extensions:GraphControl}">
@@ -14,39 +14,53 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type extensions:GraphControl}">
                         <Grid>
-                            <extensions:ContentToggleButton Width="16" Height="16"
-                                HorizontalAlignment="Right" VerticalAlignment="Top"
-                                Background="{x:Null}"
-                                Visibility="{Binding SeriesListVisibility, RelativeSource={RelativeSource TemplatedParent}}">
-                                <extensions:ContentToggleButton.OverContent>
-                                    <TextBlock FontFamily="Webdings" Text="N" />
-                                </extensions:ContentToggleButton.OverContent>
-                                <ItemsControl Width="250" Height="250"
-                                    ItemsSource="{TemplateBinding Series}"
-                                    ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                    VirtualizingPanel.IsVirtualizing="True">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Background="Black">
-                                                <Run Foreground="{Binding ChartBrush, Mode=OneWay}" Text="{Binding Description, Mode=OneWay}" />
-                                                <Run Foreground="White" Text="{Binding ChartValue, Mode=OneWay, StringFormat={}{0} Adet Kitap}" />
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                    <ItemsControl.Template>
-                                        <ControlTemplate TargetType="{x:Type ItemsControl}">
-                                            <ScrollViewer Padding="{TemplateBinding Padding}">
-                                                <ItemsPresenter />
-                                            </ScrollViewer>
-                                        </ControlTemplate>
-                                    </ItemsControl.Template>
-                                </ItemsControl>
-                            </extensions:ContentToggleButton>
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <extensions:ContentToggleButton Width="16" Height="16"
+                                    Background="{x:Null}"
+                                    Visibility="{Binding SeriesListVisibility, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <extensions:ContentToggleButton.OverContent>
+                                        <TextBlock FontFamily="Webdings" Text="N" />
+                                    </extensions:ContentToggleButton.OverContent>
+                                    <ItemsControl Width="250" Height="250"
+                                        ItemsSource="{TemplateBinding Series}"
+                                        ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                        VirtualizingPanel.IsVirtualizing="True">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Background="Black">
+                                                    <Run Foreground="{Binding ChartBrush, Mode=OneWay}" Text="{Binding Description, Mode=OneWay}" />
+                                                    <Run Foreground="White" Text="{Binding ChartValue, Mode=OneWay, StringFormat={}{0} Adet Kitap}" />
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.Template>
+                                            <ControlTemplate TargetType="{x:Type ItemsControl}">
+                                                <ScrollViewer Padding="{TemplateBinding Padding}">
+                                                    <ItemsPresenter />
+                                                </ScrollViewer>
+                                            </ControlTemplate>
+                                        </ItemsControl.Template>
+                                    </ItemsControl>
+                                </extensions:ContentToggleButton>
+                                <Button Width="16" Height="16"
+                                    Command="{Binding SaveGraph}"
+                                    CommandParameter="{Binding Mode=OneWay, ElementName=Graph}">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="4" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -58,7 +72,10 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <extensions:GraphControl Series="{Binding Veriler}" Style="{StaticResource GraphControlStyle}" />
+        <extensions:GraphControl x:Name="Graph"
+            Width="480" Height="360"
+            Series="{Binding Veriler}"
+            Style="{StaticResource GraphControlStyle}" />
         <ComboBox Grid.Row="1"
             ItemsSource="{Binding Mode=OneWay, Source={StaticResource Durum}}"
             SelectedItem="{Binding SeçiliVeri}" />

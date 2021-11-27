@@ -1,8 +1,10 @@
 ﻿using Extensions;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
 using static Extensions.GraphControl;
@@ -24,8 +26,22 @@ namespace Kutuphane.ViewModel
 
         public GraphViewModel()
         {
+            SaveGraph = new RelayCommand<object>(parameter =>
+            {
+                SaveFileDialog saveFileDialog = new()
+                {
+                    Title = "SAKLA",
+                    Filter = "Png Dosyası (*.png)|*.png",
+                };
+                if (saveFileDialog.ShowDialog() == true && parameter is GraphControl graphControl)
+                {
+                    File.WriteAllBytes(saveFileDialog.FileName, graphControl.ToRenderTargetBitmap(300).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Png));
+                }
+            }, parameter => true);
             PropertyChanged += GraphViewModel_PropertyChanged;
         }
+
+        public ICommand SaveGraph { get; }
 
         public string SeçiliVeri
         {

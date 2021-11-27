@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
@@ -21,6 +22,8 @@ namespace Kutuphane.ViewModel
 
         private ObservableCollection<Dolap> seçiliDolaplar = new();
 
+        private Kitap seçiliKitap;
+
         public KitapGüncelleViewModel()
         {
             KitapGüncelle = new RelayCommand<object>(parameter =>
@@ -35,6 +38,14 @@ namespace Kutuphane.ViewModel
                     {
                         MessageBox.Show("Hatalı Girişleri Düzeltin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
+                }
+            }, parameter => true);
+
+            KitapGit = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is ListView lv && SeçiliKitap is not null)
+                {
+                    lv.ScrollIntoView(SeçiliKitap);
                 }
             }, parameter => true);
 
@@ -101,6 +112,8 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public ICommand KitapGit { get; }
+
         public ICommand KitapGüncelle { get; }
 
         public ObservableCollection<Dolap> SeçiliDolaplar
@@ -113,6 +126,20 @@ namespace Kutuphane.ViewModel
                 {
                     seçiliDolaplar = value;
                     OnPropertyChanged(nameof(SeçiliDolaplar));
+                }
+            }
+        }
+
+        public Kitap SeçiliKitap
+        {
+            get { return seçiliKitap; }
+
+            set
+            {
+                if (seçiliKitap != value)
+                {
+                    seçiliKitap = value;
+                    OnPropertyChanged(nameof(SeçiliKitap));
                 }
             }
         }

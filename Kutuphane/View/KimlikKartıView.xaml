@@ -16,7 +16,7 @@
                 <TextBox x:Name="Tb"
                     Width="80"
                     VerticalAlignment="Center"
-                    CharacterCasing="Upper"
+                    d:Text="KURUM ADI" CharacterCasing="Upper"
                     Text="{Binding Path=KurumAdı, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                 <ComboBox VerticalContentAlignment="Center"
                     ItemTemplate="{StaticResource ColorItemTemplate}"

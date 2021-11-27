@@ -5,14 +5,12 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:kutuphane="clr-namespace:Kutuphane" xmlns:local="clr-namespace:Kutuphane.View"
+    xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model"
     d:DataContext="{d:DesignInstance Type=ViewModel:KitapGüncelleViewModel}"
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />
         <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <Grid>
@@ -20,6 +18,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -30,6 +29,7 @@
                     Extensions:ListBoxHelper.SelectedItemsMaxCount="150"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                    SelectedItem="{Binding SeçiliKitap}"
                     SelectionMode="Extended" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
@@ -293,7 +293,20 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Grid.Row="1"
+                <StackPanel Grid.Row="1">
+                    <TextBlock VerticalAlignment="Center">
+                        <Hyperlink Command="{Binding KitapGit}" CommandParameter="{Binding ElementName=listView}">
+                            <Run Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItem.Barkod}" />
+                        </Hyperlink>
+                        <Run Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItems.Count, StringFormat={}{0} Seçili Kitap}" />
+                        <Run Language="tr-tr" Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItem.SistemKayıtTarihi, StringFormat=\{0:d\}}" />
+                    </TextBlock>
+                    <ComboBox IsEnabled="False"
+                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
+                        SelectedIndex="{Binding SelectedItem.KitapDurumId, ElementName=listView}"
+                        Template="{StaticResource ComboBoxSimpleTemplate}" />
+                </StackPanel>
+                <Button Grid.Row="2"
                     Command="{Binding KitapGüncelleViewModel.KitapGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
                     CommandParameter="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}">
                     <StackPanel Orientation="Horizontal">
@@ -308,7 +321,7 @@
                         <TextBlock VerticalAlignment="Center" Text="GÜNCELLE" />
                     </StackPanel>
                 </Button>
-                <Grid Grid.RowSpan="2" Grid.Column="1">
+                <Grid Grid.RowSpan="3" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
@@ -357,7 +370,6 @@
                                 </Extensions:ContentToggleButton>
                             </UniformGrid>
                         </GroupBox>
-
                     </UniformGrid>
                 </Grid>
             </Grid>

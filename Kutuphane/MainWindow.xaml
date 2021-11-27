@@ -334,7 +334,7 @@
                             IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}"
                             Placement="Bottom"
                             PlacementTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}">
-                            <GroupBox Width="480" Height="360"
+                            <GroupBox 
                                 Header="GRAFİK">
                                 <viewmodel:GraphViewModel />
                             </GroupBox>

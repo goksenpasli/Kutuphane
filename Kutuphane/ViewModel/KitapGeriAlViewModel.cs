@@ -44,7 +44,7 @@ namespace Kutuphane.ViewModel
                         işlem = null;
                     }
                 }
-            }, parameter => parameter is İşlem işlem && işlem.SeçiliKitap.KitapDurumId == (int)KitapDurumu.Okuyucuda);
+            }, parameter => parameter is İşlem işlem && işlem.SeçiliKitap?.KitapDurumId == (int)KitapDurumu.Okuyucuda);
 
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }

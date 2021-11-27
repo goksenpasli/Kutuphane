@@ -21,8 +21,7 @@
                     Device="{Binding Device}"
                     Rotation="{Binding Rotation}" />
                 <StackPanel Grid.Row="1">
-                    <ComboBox x:Name="ComboBox"
-                        DisplayMemberPath="Name"
+                    <ComboBox DisplayMemberPath="Name"
                         ItemsSource="{Binding Liste}"
                         SelectedItem="{Binding SeçiliKamera}" />
                     <UniformGrid Columns="5" IsEnabled="{Binding SeçiliKamera, Converter={StaticResource NullableToBooleanConverter}}">
