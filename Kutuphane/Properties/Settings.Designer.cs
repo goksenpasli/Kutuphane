@@ -286,5 +286,17 @@ namespace Kutuphane.Properties {
                 this["EskiYedekGün"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bu Kimlik Kaybolursa İlgili İdareye Teslim Edin.")]
+        public string KimlikNotu {
+            get {
+                return ((string)(this["KimlikNotu"]));
+            }
+            set {
+                this["KimlikNotu"] = value;
+            }
+        }
     }
 }

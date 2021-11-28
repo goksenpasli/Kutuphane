@@ -33,28 +33,6 @@
                     SelectionMode="Extended" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Resim">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <Hyperlink Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                                                CommandParameter="{Binding Mode=OneWay}"
-                                                TextDecorations="None">
-                                                <InlineUIContainer>
-                                                    <Image Width="16" Height="16">
-                                                        <Image.Source>
-                                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                                <Binding Source="Shell32.dll" />
-                                                                <Binding Source="117" />
-                                                            </MultiBinding>
-                                                        </Image.Source>
-                                                    </Image>
-                                                </InlineUIContainer>
-                                            </Hyperlink>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
                             <GridViewColumn Extensions:GridViewSort.PropertyName="Favori">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -126,9 +104,7 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox d:SelectedIndex="0"
-                                            ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}"
-                                            SelectedItem="{Binding BasımYılı}">
+                                        <ComboBox ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding BasımYılı}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
@@ -328,9 +304,16 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
-                        ShowShadow="True"
-                        Source="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
+                    <GroupBox Header="KİTAP RESİM">
+                        <GroupBox.InputBindings>
+                            <MouseBinding Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                                CommandParameter="{Binding SeçiliKitap}"
+                                Gesture="LeftClick" />
+                        </GroupBox.InputBindings>
+                        <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
+                            ShowShadow="True"
+                            Source="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
+                    </GroupBox>
                     <UniformGrid Grid.Row="1"
                         Columns="2"
                         IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">

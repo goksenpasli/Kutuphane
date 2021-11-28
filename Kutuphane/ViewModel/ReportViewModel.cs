@@ -81,7 +81,9 @@ namespace Kutuphane.ViewModel
         private static ObservableCollection<Data> KitapAlanlarListesi()
         {
             ObservableCollection<Data> data = new();
-            foreach ((Kişi kişi, Kitap kitap) in ExtensionMethods.KişileriYükle().SelectMany(kişi => kişi.İşlem.SelectMany(işlem => ExtensionMethods.KitaplarıYükle().Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
+            ObservableCollection<Kitap> Kitaplar = ExtensionMethods.KitaplarıYükle();
+            ObservableCollection<Kişi> Kişiler = ExtensionMethods.KişileriYükle();
+            foreach ((Kişi kişi, Kitap kitap) in Kişiler.SelectMany(kişi => kişi.İşlem.SelectMany(işlem => Kitaplar.Where(kitap => kitap.Id == işlem.KitapId)).Select(kitap => (kişi, kitap))))
             {
                 data.Add(new Data() { Ad = kişi.Ad, Soyad = kişi.Soyad, KitapAdı = kitap.Ad });
             }

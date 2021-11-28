@@ -205,8 +205,7 @@ namespace Extensions
         {
             if (filepath != null)
             {
-                string defaultIcon = filepath;
-                IntPtr hIcon = hwnd.ExtractIcon(defaultIcon, iconindex);
+                IntPtr hIcon = hwnd.ExtractIcon(filepath, iconindex);
                 if (hIcon != IntPtr.Zero)
                 {
                     BitmapSource icon = Imaging.CreateBitmapSourceFromHIcon(hIcon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());

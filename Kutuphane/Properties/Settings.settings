@@ -68,5 +68,8 @@
     <Setting Name="EskiYedekGün" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">14</Value>
     </Setting>
+    <Setting Name="KimlikNotu" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bu Kimlik Kaybolursa İlgili İdareye Teslim Edin.</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

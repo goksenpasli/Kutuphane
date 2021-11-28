@@ -8,7 +8,7 @@
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:KişiGüncelleViewModel}"
-    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="600" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
@@ -31,28 +31,6 @@
                 SelectionMode="Single">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="32" extensions:GridViewSort.PropertyName="Resim">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <Hyperlink Command="{Binding KişiGüncelleViewModel.KişiResimGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                                            CommandParameter="{Binding Mode=OneWay}"
-                                            TextDecorations="None">
-                                            <InlineUIContainer>
-                                                <Image Width="16" Height="16">
-                                                    <Image.Source>
-                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                            <Binding Source="Shell32.dll" />
-                                                            <Binding Source="117" />
-                                                        </MultiBinding>
-                                                    </Image.Source>
-                                                </Image>
-                                            </InlineUIContainer>
-                                        </Hyperlink>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" Text="KİŞİ ADI" />
@@ -98,7 +76,7 @@
             </ListView>
             <Button Grid.Row="1"
                 Command="{Binding KişiGüncelleViewModel.KişiGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                CommandParameter="{Binding SelectedItem, ElementName=LvKişi}">
+                CommandParameter="{Binding SeçiliKişi}">
                 <StackPanel Orientation="Horizontal">
                     <Image Width="32" Height="32">
                         <Image.Source>
@@ -120,9 +98,16 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <viewmodel:ShadowedImage Grid.Column="0"
-                    ShowShadow="True"
-                    Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
+                <GroupBox Header="RESİM">
+                    <GroupBox.InputBindings>
+                        <MouseBinding Command="{Binding KişiGüncelleViewModel.KişiResimGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                            CommandParameter="{Binding SeçiliKişi}"
+                            Gesture="LeftClick" />
+                    </GroupBox.InputBindings>
+                    <viewmodel:ShadowedImage ShowOverlayColor="{Binding SeçiliKişi.KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowShadow="True"
+                        Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
+                </GroupBox>
                 <ListBox Grid.Column="1"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     IsSynchronizedWithCurrentItem="False"
@@ -143,7 +128,7 @@
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
-                <Grid Grid.Row="1" DataContext="{Binding ElementName=LvKişi, Path=SelectedItem}">
+                <Grid Grid.Row="1" DataContext="{Binding SeçiliKişi}">
                     <local:KimlikKartıView />
                 </Grid>
                 <local:CameraUserControl Grid.Row="1" Grid.Column="1"

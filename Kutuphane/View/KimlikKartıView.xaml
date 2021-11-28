@@ -8,7 +8,7 @@
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=model:Kişi}"
-    d:DesignHeight="260" d:DesignWidth="380" UseLayoutRounding="True"
+    d:DesignHeight="280" d:DesignWidth="380" UseLayoutRounding="True"
     mc:Ignorable="d">
     <GroupBox Grid.Row="1" Grid.Column="1">
         <GroupBox.Header>
@@ -205,6 +205,15 @@
                                             Width="270" Height="48"
                                             Background="Transparent" />
                                     </BlockUIContainer>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell ColumnSpan="3">
+                                    <Paragraph>
+                                        <Run d:Text="Bu Kimlik Kaybolursa İlgili İdareye Teslim Edin." FontSize="11" FontStyle="Italic"
+                                            Foreground="Red"
+                                            Text="{Binding Path=KimlikNotu, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                    </Paragraph>
                                 </TableCell>
                             </TableRow>
                         </TableRowGroup>

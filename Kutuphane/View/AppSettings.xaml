@@ -8,7 +8,7 @@
     xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:AppSettingsViewModel}"
-    d:DesignHeight="550" d:DesignWidth="400"
+    d:DesignHeight="580" d:DesignWidth="400"
     DataContext="{Binding AppSettingsViewModel, Source={StaticResource MainViewModel}}"
     UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -16,6 +16,9 @@
         <StackPanel>
             <HeaderedContentControl Header="KURUM ADI">
                 <TextBox CharacterCasing="Upper" Text="{Binding Path=KurumAdı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+            </HeaderedContentControl>
+            <HeaderedContentControl Header="KİMLİK NOTU">
+                <TextBox Text="{Binding Path=KimlikNotu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             </HeaderedContentControl>
             <HeaderedContentControl Header="RESİM ÇÖZÜNÜRLÜK AYARI">
                 <Slider AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96"

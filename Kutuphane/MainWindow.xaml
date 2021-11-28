@@ -64,6 +64,7 @@
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenuItem IsEnabled="False" />
+                    <RibbonApplicationMenuItem IsEnabled="False" />
                     <RibbonApplicationMenu.AuxiliaryPaneContent>
                         <local:AppSettings />
                     </RibbonApplicationMenu.AuxiliaryPaneContent>
@@ -334,8 +335,7 @@
                             IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}"
                             Placement="Bottom"
                             PlacementTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}">
-                            <GroupBox 
-                                Header="GRAFİK">
+                            <GroupBox Header="GRAFİK">
                                 <viewmodel:GraphViewModel />
                             </GroupBox>
                         </Popup>
@@ -410,7 +410,7 @@
             </RibbonTab>
         </Ribbon>
         <ContentPresenter Grid.Row="1" Content="{Binding CurrentView}" />
-        <StatusBar Grid.Row="2">
+        <StatusBar Background="Maroon" Grid.Row="2">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel.Style>
@@ -440,7 +440,7 @@
                             </GroupBox>
                         </Extensions:ContentToggleButton.Content>
                     </Extensions:ContentToggleButton>
-                    <TextBlock Text="SÜRESİ YAKLAŞAN KİTAPLAR" />
+                    <TextBlock Foreground="White" Text="SÜRESİ YAKLAŞAN KİTAPLAR" />
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>

@@ -77,21 +77,24 @@ namespace Kutuphane.ViewModel
 
             KitapResimEkle = new RelayCommand<object>(parameter =>
             {
-                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
-                if (openFileDialog.ShowDialog() == true && parameter is Kitap kitap)
+                if (parameter is Kitap kitap)
                 {
-                    string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
-                    if (Settings.Default.ResimKüçült)
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
+                    if (openFileDialog.ShowDialog() == true)
                     {
-                        BitmapSource image = new BitmapImage(new Uri(openFileDialog.FileName));
-                        File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", image.Resize(Settings.Default.ResimKüçültmeOranı).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
-                    }
-                    else
-                    {
-                        File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
-                    }
+                        string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                        if (Settings.Default.ResimKüçült)
+                        {
+                            BitmapSource image = new BitmapImage(new Uri(openFileDialog.FileName));
+                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", image.Resize(Settings.Default.ResimKüçültmeOranı).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                        }
+                        else
+                        {
+                            File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                        }
 
-                    kitap.Resim = filename;
+                        kitap.Resim = filename;
+                    }
                 }
             }, parameter => true);
 
