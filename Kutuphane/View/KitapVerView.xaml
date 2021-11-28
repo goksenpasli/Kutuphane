@@ -210,7 +210,7 @@
                                                             <ListBox ItemTemplateSelector="{StaticResource ViewerSelector}" ItemsSource="{Binding TutanakYolu}">
                                                                 <ListBox.ItemsPanel>
                                                                     <ItemsPanelTemplate>
-                                                                        <extensions:VirtualizingWrapPanel />
+                                                                        <extensions:VirtualizingWrapPanel VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" />
                                                                     </ItemsPanelTemplate>
                                                                 </ListBox.ItemsPanel>
                                                             </ListBox>

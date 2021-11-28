@@ -25,12 +25,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="400" />
             </Grid.RowDefinitions>
-            <UniformGrid Columns="5" Rows="2">
+            <UniformGrid Columns="6" Rows="2">
                 <TextBlock HorizontalAlignment="Center" Text="EN" />
                 <TextBlock HorizontalAlignment="Center" Text="BOY" />
                 <TextBlock HorizontalAlignment="Center" Text="KALINLIK" />
                 <TextBlock HorizontalAlignment="Center" Text="BİÇİM" />
                 <TextBlock HorizontalAlignment="Center" Text="ALT METİN GİZLE" />
+                <TextBlock HorizontalAlignment="Center" Text="KİTAP RENK" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
                     Value="{Binding En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="1" SmallChange="1"
@@ -43,6 +44,9 @@
                     SelectedItem="{Binding BarcodeFormat}" />
                 <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
                     IsChecked="{Binding PureBarcode}" />
+                <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
+                    IsChecked="{Binding KitapRenkKullan}"
+                    IsEnabled="{Binding IsVisible, ElementName=ItemsCtrlSelected}" />
             </UniformGrid>
             <TabControl Grid.Row="1"
                 FontFamily="Segoe UI" FontSize="12">
@@ -52,7 +56,8 @@
                             <TextBlock VerticalAlignment="Center" Text="KOPYA BARKOD" />
                             <Button Grid.Row="2"
                                 Command="{Binding KareKodYazdır}"
-                                CommandParameter="{Binding ElementName=ItemsCtrl}">
+                                CommandParameter="{Binding ElementName=ItemsCtrl}"
+                                IsEnabled="{Binding IsVisible, ElementName=ItemsCtrl}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="16" Height="16">
                                         <Image.Source>
@@ -72,6 +77,7 @@
                             <BlockUIContainer>
                                 <ItemsControl x:Name="ItemsCtrl"
                                     Width="21cm" Height="29.7cm"
+                                    d:ItemsSource="{d:SampleData ItemCount=5}"
                                     ItemsSource="{Binding BarkodResimler}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -98,7 +104,8 @@
                             <TextBlock VerticalAlignment="Center" Text="SEÇİLİ KİTAPLAR BARKOD" />
                             <Button Grid.Row="2"
                                 Command="{Binding KareKodYazdır}"
-                                CommandParameter="{Binding ElementName=ItemsCtrlSelected}">
+                                CommandParameter="{Binding ElementName=ItemsCtrlSelected}"
+                                IsEnabled="{Binding IsVisible, ElementName=ItemsCtrlSelected}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="16" Height="16">
                                         <Image.Source>
@@ -118,11 +125,22 @@
                             <BlockUIContainer>
                                 <ItemsControl x:Name="ItemsCtrlSelected"
                                     Width="21cm" Height="29.7cm"
+                                    d:ItemsSource="{d:SampleData ItemCount=5}"
                                     ItemsSource="{Binding SeçiliKitaplarBarkod, ElementName=userControl}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Viewbox>
-                                                <Border BorderBrush="Black" BorderThickness="{Binding QrMultipleBorderThickness, Source={x:Static properties:Settings.Default}, Converter={StaticResource DoubleToThicknessConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <Border BorderThickness="{Binding QrMultipleBorderThickness, Source={x:Static properties:Settings.Default}, Converter={StaticResource DoubleToThicknessConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="BorderBrush" Value="Black" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding DataContext.KitapRenkKullan, ElementName=userControl}" Value="true">
+                                                                    <Setter Property="BorderBrush" Value="{Binding Renk, Converter={StaticResource StringToBrushConverter}}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
                                                     <Image Margin="2">
                                                         <Image.Source>
                                                             <MultiBinding Converter="{StaticResource KitapBarkodToBarCodeImageConverter}">

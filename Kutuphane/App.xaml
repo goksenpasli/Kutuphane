@@ -320,14 +320,15 @@
             </DrawingBrush>
             <DataTemplate x:Key="ListViewDolapTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="32" Height="32">
-                        <Image.Source>
+                    <ViewModel:ShadowedImage Width="32" Height="32"
+                        ShowOverlayColor="{Binding Etkin, Converter={StaticResource ReverseBooleanConverter}}">
+                        <ViewModel:ShadowedImage.Source>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="Moricons.dll" />
                                 <Binding Source="105" />
                             </MultiBinding>
-                        </Image.Source>
-                    </Image>
+                        </ViewModel:ShadowedImage.Source>
+                    </ViewModel:ShadowedImage>
                     <TextBlock VerticalAlignment="Center">
                         <Run FontStyle="Italic" Foreground="Blue"
                             Text="{Binding Açıklama}" />
@@ -402,26 +403,28 @@
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="KitapTemplate">
-                <StackPanel Background="{Binding Renk, Converter={StaticResource StringToBrushConverter}}">
-                    <TextBlock Text="{Binding Ad}" />
-                    <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145"
-                        ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
-                        ShowShadow="True">
-                        <Image.Style>
-                            <Style TargetType="Image">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding KitapResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
-                                        <Setter Property="Source">
-                                            <Setter.Value>
-                                                <Binding Converter="{StaticResource PictureImageFilePathImageUriConverter}" Path="Resim" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                    </ViewModel:ShadowedImage>
-                </StackPanel>
+                <Border BorderBrush="{Binding Renk, Converter={StaticResource StringToBrushConverter}}" BorderThickness="2">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Ad}" />
+                        <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145"
+                            ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
+                            ShowShadow="True">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding KitapResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <Binding Converter="{StaticResource PictureImageFilePathImageUriConverter}" Path="Resim" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </ViewModel:ShadowedImage>
+                    </StackPanel>
+                </Border>
             </DataTemplate>
             <ControlTemplate x:Key="ComboBoxSimpleTemplate" TargetType="{x:Type ComboBox}">
                 <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"

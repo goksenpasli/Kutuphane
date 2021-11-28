@@ -126,7 +126,9 @@
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding BasımYılı}">
+                                        <ComboBox d:SelectedIndex="0"
+                                            ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}"
+                                            SelectedItem="{Binding BasımYılı}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />

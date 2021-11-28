@@ -12,12 +12,13 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
+        <CollectionViewSource x:Key="İşlemler" Source="{Binding SelectedItem.İşlem, ElementName=LvKişi}" />
     </UserControl.Resources>
     <GroupBox Header="KİŞİ GÜNCELLE">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -83,7 +84,8 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn extensions:GridViewSort.PropertyName="Telefon" Header="KİŞİ TELEFON">
+                        <GridViewColumn Width="100"
+                            extensions:GridViewSort.PropertyName="Telefon" Header="KİŞİ TELEFON">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <extensions:MaskedTextBox IncludeLiterals="False" IncludePrompt="False" Mask="(000) 000 00 00"
@@ -91,71 +93,9 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="İŞLEM">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <extensions:ContentToggleButton OverContent="İŞLEM">
-                                        <ListBox Width="480" Height="360"
-                                            ItemTemplate="{StaticResource KitapComboBoxTemplate}"
-                                            ItemsSource="{Binding İşlem}">
-                                            <ListBox.ItemContainerStyle>
-                                                <Style TargetType="ListBoxItem">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding İşlemBitti}" Value="false">
-                                                            <Setter Property="Background" Value="Green" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ListBox.ItemContainerStyle>
-                                            <ListBox.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <extensions:VirtualizingWrapPanel VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Pixel"
-                                                        VirtualizingPanel.VirtualizationMode="Recycling" />
-                                                </ItemsPanelTemplate>
-                                            </ListBox.ItemsPanel>
-                                        </ListBox>
-                                    </extensions:ContentToggleButton>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="KİMLİK">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <extensions:ContentToggleButton OverContent="KİMLİK">
-                                        <local:KimlikKartıView />
-                                    </extensions:ContentToggleButton>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="KAMERA">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <extensions:ContentToggleButton IsTabStop="False">
-                                        <extensions:ContentToggleButton.OverContent>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Width="16" Height="16">
-                                                    <Image.Source>
-                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                            <Binding Source="Shell32.dll" />
-                                                            <Binding Source="203" />
-                                                        </MultiBinding>
-                                                    </Image.Source>
-                                                </Image>
-                                                <TextBlock VerticalAlignment="Center" Text="KAMERA" />
-                                            </StackPanel>
-                                        </extensions:ContentToggleButton.OverContent>
-                                        <local:CameraUserControl Width="480" Height="360"
-                                            PropertyChanged="CameraUserControl_PropertyChanged" />
-                                    </extensions:ContentToggleButton>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <viewmodel:ShadowedImage Grid.RowSpan="2" Grid.Column="1"
-                ShowShadow="True"
-                Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
             <Button Grid.Row="1"
                 Command="{Binding KişiGüncelleViewModel.KişiGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
                 CommandParameter="{Binding SelectedItem, ElementName=LvKişi}">
@@ -171,6 +111,44 @@
                     <TextBlock VerticalAlignment="Center" Text="GÜNCELLE" />
                 </StackPanel>
             </Button>
+            <Grid Grid.RowSpan="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <viewmodel:ShadowedImage Grid.Column="0"
+                    ShowShadow="True"
+                    Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
+                <ListBox Grid.Column="1"
+                    d:ItemsSource="{d:SampleData ItemCount=5}"
+                    IsSynchronizedWithCurrentItem="False"
+                    ItemTemplate="{StaticResource KitapComboBoxTemplate}"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding İşlemBitti}" Value="false">
+                                    <Setter Property="Background" Value="Green" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <extensions:VirtualizingWrapPanel VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                <Grid Grid.Row="1" DataContext="{Binding ElementName=LvKişi, Path=SelectedItem}">
+                    <local:KimlikKartıView />
+                </Grid>
+                <local:CameraUserControl Grid.Row="1" Grid.Column="1"
+                    PropertyChanged="CameraUserControl_PropertyChanged" />
+            </Grid>
         </Grid>
     </GroupBox>
 </UserControl>

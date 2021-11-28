@@ -12,6 +12,8 @@ namespace Kutuphane.ViewModel
 
         private int en = 4;
 
+        private bool kitapRenkKullan;
+
         public QrCodeMultipleViewModel()
         {
             PropertyChanged += QrCodeMultipleViewModel_PropertyChanged;
@@ -55,6 +57,20 @@ namespace Kutuphane.ViewModel
                 {
                     en = value;
                     OnPropertyChanged(nameof(En));
+                }
+            }
+        }
+
+        public bool KitapRenkKullan
+        {
+            get => kitapRenkKullan;
+
+            set
+            {
+                if (kitapRenkKullan != value)
+                {
+                    kitapRenkKullan = value;
+                    OnPropertyChanged(nameof(KitapRenkKullan));
                 }
             }
         }
