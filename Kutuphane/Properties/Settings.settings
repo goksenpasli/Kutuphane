@@ -71,5 +71,8 @@
     <Setting Name="KimlikNotu" Type="System.String" Scope="User">
       <Value Profile="(Default)">Bu Kimlik Kaybolursa İlgili İdareye Teslim Edin.</Value>
     </Setting>
+    <Setting Name="SeçiliBarkod" Type="ZXing.BarcodeFormat" Scope="User">
+      <Value Profile="(Default)">CODE_128</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -359,7 +359,7 @@
                         <RibbonSplitMenuItem Header="SIKIŞTIRMA UYGULA" IsCheckable="True"
                             IsChecked="{Binding Compress}" />
                     </RibbonSplitButton>
-                    <RibbonToggleButton KeyTip="GY" Label="Yedekten Geri Yükle">
+                    <RibbonToggleButton KeyTip="GY" Label="Yedekten Dosya Aç">
                         <RibbonToggleButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                 <Binding Source="zipfldr.dll" />
@@ -410,7 +410,7 @@
             </RibbonTab>
         </Ribbon>
         <ContentPresenter Grid.Row="1" Content="{Binding CurrentView}" />
-        <StatusBar Background="Maroon" Grid.Row="2">
+        <StatusBar Grid.Row="2" Background="Maroon">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel.Style>

@@ -1,5 +1,6 @@
 ﻿using Extensions;
 using Kutuphane.Model;
+using Kutuphane.Properties;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
@@ -48,6 +49,7 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => true);
 
+            Settings.Default.PropertyChanged += Default_PropertyChanged;
             Barkod.PropertyChanged += Barkod_PropertyChanged;
         }
 
@@ -71,9 +73,17 @@ namespace Kutuphane.ViewModel
 
         private void Barkod_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is "BarcodeFormat" or "PureBarcode")
+            if (e.PropertyName is "PureBarcode")
             {
-                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Barkod.BarcodeFormat, Barkod.PureBarcode);
+                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Settings.Default.SeçiliBarkod, Barkod.PureBarcode);
+            }
+        }
+
+        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "SeçiliBarkod")
+            {
+                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Settings.Default.SeçiliBarkod, Barkod.PureBarcode);
             }
         }
     }

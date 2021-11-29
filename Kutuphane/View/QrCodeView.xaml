@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:QrCodeViewModel}"
@@ -20,7 +21,7 @@
         <ComboBox Grid.Row="0"
             IsTabStop="False"
             ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
-            SelectedItem="{Binding Barkod.BarcodeFormat}" />
+            SelectedItem="{Binding Path=SeçiliBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
         <Viewbox Grid.Row="1" Grid.Column="1"
             Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

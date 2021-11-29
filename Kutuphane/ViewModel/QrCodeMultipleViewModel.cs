@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Kutuphane.Properties;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
@@ -16,6 +17,7 @@ namespace Kutuphane.ViewModel
 
         public QrCodeMultipleViewModel()
         {
+            Settings.Default.PropertyChanged += Default_PropertyChanged;
             PropertyChanged += QrCodeMultipleViewModel_PropertyChanged;
         }
 
@@ -75,16 +77,29 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "SeçiliBarkod")
+            {
+                GenerateBarcode();
+            }
+        }
+
+        private void GenerateBarcode()
+        {
+            BarkodResimler.Clear();
+            Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Settings.Default.SeçiliBarkod, PureBarcode);
+            for (int i = 0; i < En * Boy; i++)
+            {
+                BarkodResimler.Add(Barkod.BarkodImage);
+            }
+        }
+
         private void QrCodeMultipleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is "En" or "Boy" or "BarcodeFormat" or "PureBarcode")
+            if (e.PropertyName is "En" or "Boy" or "PureBarcode")
             {
-                BarkodResimler.Clear();
-                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(BarcodeFormat, PureBarcode);
-                for (int i = 0; i < En * Boy; i++)
-                {
-                    BarkodResimler.Add(Barkod.BarkodImage);
-                }
+                GenerateBarcode();
             }
         }
     }

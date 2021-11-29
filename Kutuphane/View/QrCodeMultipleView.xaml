@@ -38,10 +38,10 @@
                     Value="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="0" SmallChange="1"
                     Value="{Binding QrMultipleBorderThickness, Mode=TwoWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" />
-                <ComboBox Grid.Row="1"
+                <ComboBox Grid.Row="1" x:Name="Cb"
                     IsTabStop="False"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
-                    SelectedItem="{Binding BarcodeFormat}" />
+                    SelectedItem="{Binding Path=SeçiliBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
                 <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
                     IsChecked="{Binding PureBarcode}" />
                 <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -145,7 +145,7 @@
                                                         <Image.Source>
                                                             <MultiBinding Converter="{StaticResource KitapBarkodToBarCodeImageConverter}">
                                                                 <Binding Mode="OneWay" />
-                                                                <Binding ElementName="userControl" Path="DataContext.BarcodeFormat" />
+                                                                <Binding ElementName="Cb" Path="SelectedItem" />
                                                                 <Binding ElementName="userControl" Path="DataContext.PureBarcode" />
                                                             </MultiBinding>
                                                         </Image.Source>

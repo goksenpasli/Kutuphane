@@ -298,5 +298,17 @@ namespace Kutuphane.Properties {
                 this["KimlikNotu"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CODE_128")]
+        public global::ZXing.BarcodeFormat SeçiliBarkod {
+            get {
+                return ((global::ZXing.BarcodeFormat)(this["SeçiliBarkod"]));
+            }
+            set {
+                this["SeçiliBarkod"] = value;
+            }
+        }
     }
 }

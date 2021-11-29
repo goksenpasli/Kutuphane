@@ -8,7 +8,7 @@
     xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:AppSettingsViewModel}"
-    d:DesignHeight="580" d:DesignWidth="400"
+    d:DesignHeight="620" d:DesignWidth="400"
     DataContext="{Binding AppSettingsViewModel, Source={StaticResource MainViewModel}}"
     UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -97,7 +97,7 @@
                 ToolTip="Bu İşaretliyse Kitap Verdikten Sonra Otomatik Tutanak Oluşturulur." />
             <HeaderedContentControl>
                 <HeaderedContentControl.Header>
-                    <Button Command="{Binding TtsRegImport, Mode=OneWay}">
+                    <Button Command="{Binding TtsRegImport, Mode=OneWay}" ToolTip="Türkçe TTS Seçimi İçin Registry Ayarı Yalnızca Aşağıda Comboboxda Micro$oft Tolga Yoksa Kullanın">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="32" Height="32">

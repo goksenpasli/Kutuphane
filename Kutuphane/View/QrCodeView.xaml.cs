@@ -1,6 +1,7 @@
 ﻿using Kutuphane.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
+using Kutuphane.Properties;
 
 namespace Kutuphane.View
 {
@@ -28,7 +29,7 @@ namespace Kutuphane.View
             {
                 QrCodeViewModel dc = qrCodeView.DataContext as QrCodeViewModel;
                 dc.Barkod.Metin = e.NewValue as string;
-                dc.Barkod.BarkodImage = dc.Barkod.GenerateBarCodeImage(dc.Barkod.BarcodeFormat);
+                dc.Barkod.BarkodImage = dc.Barkod.GenerateBarCodeImage(Settings.Default.SeçiliBarkod);
             }
         }
     }

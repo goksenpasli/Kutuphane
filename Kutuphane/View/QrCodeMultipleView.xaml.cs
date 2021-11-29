@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using Kutuphane.Properties;
 
 namespace Kutuphane.View
 {
@@ -39,7 +40,7 @@ namespace Kutuphane.View
             {
                 dc.BarkodResimler.Clear();
                 dc.Barkod.Metin = qrCodeMultipleView.TopluBarkodMetin;
-                dc.Barkod.BarkodImage = dc.Barkod.GenerateBarCodeImage(dc.Barkod.BarcodeFormat);
+                dc.Barkod.BarkodImage = dc.Barkod.GenerateBarCodeImage(Settings.Default.SeçiliBarkod);
                 dc.BarkodResimler.Clear();
                 for (int i = 0; i < dc.En * dc.Boy; i++)
                 {

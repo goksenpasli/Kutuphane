@@ -1,13 +1,10 @@
 ﻿using Extensions;
 using System.Windows.Media.Imaging;
-using ZXing;
 
 namespace Kutuphane.Model
 {
     public class Barkod : InpcBase
     {
-        private BarcodeFormat barcodeFormat = BarcodeFormat.CODE_128;
-
         private string barkodError;
 
         private BitmapSource barkodImage;
@@ -19,20 +16,6 @@ namespace Kutuphane.Model
         private int qrHeight = 75;
 
         private int qrWidth = 150;
-
-        public BarcodeFormat BarcodeFormat
-        {
-            get => barcodeFormat;
-
-            set
-            {
-                if (barcodeFormat != value)
-                {
-                    barcodeFormat = value;
-                    OnPropertyChanged(nameof(BarcodeFormat));
-                }
-            }
-        }
 
         public string BarkodError
         {
