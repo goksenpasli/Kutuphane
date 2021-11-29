@@ -22,7 +22,7 @@ namespace Kutuphane.View
 
         private void CameraUserControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (DataContext is KişiGüncelleViewModel kişiGüncelleViewModel && e.PropertyName == "ResimData")
+            if (DataContext is KişiGüncelleViewModel kişiGüncelleViewModel && kişiGüncelleViewModel.SeçiliKişi is not null && e.PropertyName == "ResimData")
             {
                 string filename = Guid.NewGuid() + ".jpg";
                 File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", (sender as CameraUserControl)?.ResimData);
