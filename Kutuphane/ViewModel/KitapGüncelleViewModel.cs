@@ -1,6 +1,8 @@
 ﻿using Extensions;
 using Kutuphane.Model;
 using Kutuphane.View;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -20,9 +22,23 @@ namespace Kutuphane.ViewModel
 
         private int kişiKitapYılArama;
 
+        private string kitapTopluAd;
+
+        private string kitapTopluBarkod;
+
+        private int? kitapTopluBasımYılı;
+
+        private bool? kitapTopluDemirbaş;
+
+        private int? kitapTopluDolapId;
+
+        private bool? kitapTopluÖdünç;
+
         private ObservableCollection<Dolap> seçiliDolaplar = new();
 
         private Kitap seçiliKitap;
+
+        private List<Kitap> seçiliKitaplar = new();
 
         public KitapGüncelleViewModel()
         {
@@ -116,6 +132,90 @@ namespace Kutuphane.ViewModel
 
         public ICommand KitapGüncelle { get; }
 
+        public string KitapTopluAd
+        {
+            get => kitapTopluAd;
+
+            set
+            {
+                if (kitapTopluAd != value)
+                {
+                    kitapTopluAd = value;
+                    OnPropertyChanged(nameof(KitapTopluAd));
+                }
+            }
+        }
+
+        public string KitapTopluBarkod
+        {
+            get => kitapTopluBarkod;
+
+            set
+            {
+                if (kitapTopluBarkod != value)
+                {
+                    kitapTopluBarkod = value;
+                    OnPropertyChanged(nameof(KitapTopluBarkod));
+                }
+            }
+        }
+
+        public int? KitapTopluBasımYılı
+        {
+            get => kitapTopluBasımYılı;
+
+            set
+            {
+                if (kitapTopluBasımYılı != value)
+                {
+                    kitapTopluBasımYılı = value;
+                    OnPropertyChanged(nameof(KitapTopluBasımYılı));
+                }
+            }
+        }
+
+        public bool? KitapTopluDemirbaş
+        {
+            get => kitapTopluDemirbaş;
+
+            set
+            {
+                if (kitapTopluDemirbaş != value)
+                {
+                    kitapTopluDemirbaş = value;
+                    OnPropertyChanged(nameof(KitapTopluDemirbaş));
+                }
+            }
+        }
+
+        public int? KitapTopluDolapId
+        {
+            get => kitapTopluDolapId;
+
+            set
+            {
+                if (kitapTopluDolapId != value)
+                {
+                    kitapTopluDolapId = value;
+                    OnPropertyChanged(nameof(KitapTopluDolapId));
+                }
+            }
+        }
+
+        public bool? KitapTopluÖdünç
+        {
+            get => kitapTopluÖdünç;
+
+            set
+            {
+                if (kitapTopluÖdünç != value)
+                {
+                    kitapTopluÖdünç = value;
+                    OnPropertyChanged(nameof(KitapTopluÖdünç));
+                }
+            }
+        }
+
         public ObservableCollection<Dolap> SeçiliDolaplar
         {
             get => seçiliDolaplar;
@@ -132,7 +232,7 @@ namespace Kutuphane.ViewModel
 
         public Kitap SeçiliKitap
         {
-            get { return seçiliKitap; }
+            get => seçiliKitap;
 
             set
             {
@@ -140,6 +240,20 @@ namespace Kutuphane.ViewModel
                 {
                     seçiliKitap = value;
                     OnPropertyChanged(nameof(SeçiliKitap));
+                }
+            }
+        }
+
+        public List<Kitap> SeçiliKitaplar
+        {
+            get => seçiliKitaplar;
+
+            set
+            {
+                if (seçiliKitaplar != value)
+                {
+                    seçiliKitaplar = value;
+                    OnPropertyChanged(nameof(SeçiliKitaplar));
                 }
             }
         }
@@ -168,6 +282,54 @@ namespace Kutuphane.ViewModel
                     else
                     {
                         KitapGüncelleView.cvs.View.Filter = null;
+                    }
+                    break;
+
+                case "KitapTopluAd":
+                    foreach (Kitap kitap in SeçiliKitaplar)
+                    {
+                        kitap.Ad = KitapTopluAd;
+                    }
+                    break;
+
+                case "KitapTopluBarkod":
+                    foreach (Kitap kitap in SeçiliKitaplar)
+                    {
+                        kitap.Barkod = KitapTopluBarkod;
+                    }
+                    break;
+
+                case "KitapTopluBasımYılı":
+                    foreach (Kitap kitap in SeçiliKitaplar)
+                    {
+                        if (KitapTopluBasımYılı is not null)
+                        {
+                            kitap.BasımYılı = KitapTopluBasımYılı ?? DateTime.Now.Year;
+                        }
+                    }
+                    break;
+
+                case "KitapTopluDemirbaş":
+                    foreach (Kitap kitap in SeçiliKitaplar)
+                    {
+                        kitap.Demirbaş = KitapTopluDemirbaş == true;
+                    }
+                    break;
+
+                case "KitapTopluÖdünç":
+                    foreach (Kitap kitap in SeçiliKitaplar)
+                    {
+                        kitap.ÖdünçVerilebilir = KitapTopluÖdünç == true;
+                    }
+                    break;
+
+                case "KitapTopluDolapId":
+                    foreach (Kitap kitap in SeçiliKitaplar)
+                    {
+                        if (KitapTopluDolapId is not null)
+                        {
+                            kitap.DolapId = KitapTopluDolapId ?? 0;
+                        }
                     }
                     break;
             }

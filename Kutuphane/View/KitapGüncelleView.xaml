@@ -12,6 +12,9 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
+        <Style x:Key="ComboBoxItemDolapEtkinStyle" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="IsEnabled" Value="{Binding Etkin}" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP GÜNCELLE">
@@ -26,6 +29,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ListView x:Name="listView"
+                    Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKitaplar}"
                     Extensions:ListBoxHelper.SelectedItemsMaxCount="150"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
@@ -36,26 +40,7 @@
                             <GridViewColumn Extensions:GridViewSort.PropertyName="Favori">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ToggleButton IsChecked="{Binding Favori}">
-                                            <Image Width="16" Height="16">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Favori}" Value="true">
-                                                                <Setter Property="Source">
-                                                                    <Setter.Value>
-                                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                                            <Binding Source="Shell32.dll" />
-                                                                            <Binding Source="208" />
-                                                                        </MultiBinding>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                        </ToggleButton>
+                                        <ToggleButton Content="{StaticResource Favori}" IsChecked="{Binding Favori}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -124,26 +109,7 @@
                             <GridViewColumn Extensions:GridViewSort.PropertyName="ÖdünçVerilebilir" Header="ÖDÜNÇ&#xA;VERİLEBİLİR">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ToggleButton IsChecked="{Binding ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <Image Width="16" Height="16">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="true">
-                                                                <Setter Property="Source">
-                                                                    <Setter.Value>
-                                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                                            <Binding Source="Shell32.dll" />
-                                                                            <Binding Source="28" />
-                                                                        </MultiBinding>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                        </ToggleButton>
+                                        <ToggleButton Content="{StaticResource ÖdünçVerilebilir}" IsChecked="{Binding ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -200,15 +166,10 @@
                                             </StackPanel.Style>
                                             <ComboBox Width="70"
                                                 DisplayMemberPath="Açıklama"
+                                                ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
                                                 ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                                 SelectedValue="{Binding DolapId}"
-                                                SelectedValuePath="Id">
-                                                <ComboBox.ItemContainerStyle>
-                                                    <Style TargetType="ComboBoxItem">
-                                                        <Setter Property="IsEnabled" Value="{Binding Etkin}" />
-                                                    </Style>
-                                                </ComboBox.ItemContainerStyle>
-                                            </ComboBox>
+                                                SelectedValuePath="Id" />
                                             <Extensions:NumericUpDownControl Width="40"
                                                 Maximum="1000000" Minimum="1" SmallChange="1"
                                                 Value="{Binding DolapAltKod}" />
@@ -303,8 +264,9 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <GroupBox Header="KİTAP RESİM">
+                    <GroupBox Grid.Row="0" Header="KİTAP RESİM">
                         <GroupBox.InputBindings>
                             <MouseBinding Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                 CommandParameter="{Binding SeçiliKitap}"
@@ -314,7 +276,64 @@
                             ShowShadow="True"
                             Source="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
                     </GroupBox>
-                    <UniformGrid Grid.Row="1"
+                    <GroupBox Grid.Row="1" Header="SEÇİLİ KİTAPLAR TOPLU İŞLEM">
+                        <Grid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="AD DEĞİŞTİR" />
+                            <TextBox Grid.Column="1" Text="{Binding KitapTopluAd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="1" Text="BASIM YILI DEĞİŞTİR" />
+                            <ComboBox Grid.Row="1" Grid.Column="1"
+                                ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}"
+                                SelectedItem="{Binding KitapTopluBasımYılı}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <TextBlock Grid.Row="2" Text="DEMİRBAŞ" />
+                            <CheckBox Grid.Row="2" Grid.Column="1"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                IsChecked="{Binding KitapTopluDemirbaş}" />
+                            <TextBlock Grid.Row="3" Text="ÖDÜNÇ VERİLEBİLİR" />
+                            <CheckBox Grid.Row="3" Grid.Column="1"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                IsChecked="{Binding KitapTopluÖdünç}" />
+                            <TextBlock Grid.Row="4" Text="DOLAP DEĞİŞTİR" />
+                            <ComboBox Grid.Row="4" Grid.Column="1"
+                                DisplayMemberPath="Açıklama"
+                                ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
+                                ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                                SelectedValue="{Binding KitapTopluDolapId}"
+                                SelectedValuePath="Id">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <TextBlock Grid.Row="5" Text="BARKOD DEĞİŞTİR" />
+                            <TextBox Grid.Row="5" Grid.Column="1"
+                                Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </GroupBox>
+                    <UniformGrid Grid.Row="2"
                         Columns="2"
                         IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
                         <GroupBox>
@@ -340,7 +359,7 @@
                                 Text="{Binding ElementName=listView, Path=SelectedItem.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 TextWrapping="Wrap" />
                         </GroupBox>
-                        <GroupBox Grid.Row="2" Grid.Column="1">
+                        <GroupBox Grid.Row="2">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock VerticalAlignment="Center" Text="BARKOD" />

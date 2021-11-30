@@ -466,6 +466,46 @@
                     </Style>
                 </Image.Style>
             </Image>
+            <Image x:Key="ÖdünçVerilebilir"
+                Width="16" Height="16"
+                x:Shared="false">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="true">
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="28" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image x:Key="Favori"
+                Width="16" Height="16"
+                x:Shared="false">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Favori}" Value="true">
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="208" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
             <ControlTemplate x:Key="PdfViewerControlTemplate">
                 <Grid>
                     <Grid.RowDefinitions>
