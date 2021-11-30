@@ -2,13 +2,13 @@
 using Kutuphane.Model;
 using Kutuphane.View;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Kutuphane.ViewModel
 {
@@ -34,11 +34,13 @@ namespace Kutuphane.ViewModel
 
         private bool? kitapTopluÖdünç;
 
+        private string kitapTopluRenk;
+
         private ObservableCollection<Dolap> seçiliDolaplar = new();
 
         private Kitap seçiliKitap;
 
-        private List<Kitap> seçiliKitaplar = new();
+        private ObservableCollection<Kitap> seçiliKitaplar = new();
 
         public KitapGüncelleViewModel()
         {
@@ -216,6 +218,20 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public string KitapTopluRenk
+        {
+            get => kitapTopluRenk;
+
+            set
+            {
+                if (kitapTopluRenk != value)
+                {
+                    kitapTopluRenk = value;
+                    OnPropertyChanged(nameof(KitapTopluRenk));
+                }
+            }
+        }
+
         public ObservableCollection<Dolap> SeçiliDolaplar
         {
             get => seçiliDolaplar;
@@ -244,7 +260,7 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        public List<Kitap> SeçiliKitaplar
+        public ObservableCollection<Kitap> SeçiliKitaplar
         {
             get => seçiliKitaplar;
 
@@ -260,6 +276,7 @@ namespace Kutuphane.ViewModel
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            List<Kitap> Kitaplar = SeçiliKitaplar.ToList();
             switch (e.PropertyName)
             {
                 case "KişiKitapAdArama":
@@ -286,21 +303,21 @@ namespace Kutuphane.ViewModel
                     break;
 
                 case "KitapTopluAd":
-                    foreach (Kitap kitap in SeçiliKitaplar)
+                    foreach (Kitap kitap in Kitaplar)
                     {
                         kitap.Ad = KitapTopluAd;
                     }
                     break;
 
                 case "KitapTopluBarkod":
-                    foreach (Kitap kitap in SeçiliKitaplar)
+                    foreach (Kitap kitap in Kitaplar)
                     {
                         kitap.Barkod = KitapTopluBarkod;
                     }
                     break;
 
                 case "KitapTopluBasımYılı":
-                    foreach (Kitap kitap in SeçiliKitaplar)
+                    foreach (Kitap kitap in Kitaplar)
                     {
                         if (KitapTopluBasımYılı is not null)
                         {
@@ -310,26 +327,33 @@ namespace Kutuphane.ViewModel
                     break;
 
                 case "KitapTopluDemirbaş":
-                    foreach (Kitap kitap in SeçiliKitaplar)
+                    foreach (Kitap kitap in Kitaplar)
                     {
                         kitap.Demirbaş = KitapTopluDemirbaş == true;
                     }
                     break;
 
                 case "KitapTopluÖdünç":
-                    foreach (Kitap kitap in SeçiliKitaplar)
+                    foreach (Kitap kitap in Kitaplar)
                     {
                         kitap.ÖdünçVerilebilir = KitapTopluÖdünç == true;
                     }
                     break;
 
                 case "KitapTopluDolapId":
-                    foreach (Kitap kitap in SeçiliKitaplar)
+                    foreach (Kitap kitap in Kitaplar)
                     {
                         if (KitapTopluDolapId is not null)
                         {
                             kitap.DolapId = KitapTopluDolapId ?? 0;
                         }
+                    }
+                    break;
+
+                case "KitapTopluRenk":
+                    foreach (Kitap kitap in Kitaplar)
+                    {
+                        kitap.Renk = KitapTopluRenk;
                     }
                     break;
             }

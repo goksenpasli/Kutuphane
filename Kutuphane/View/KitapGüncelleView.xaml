@@ -44,6 +44,18 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Header="KİTAP&#xA;RENK">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
+                                            ItemTemplate="{StaticResource ColorItemTemplate}"
+                                            ItemsPanel="{StaticResource ColorPanelTemplate}"
+                                            ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                                            SelectedValue="{Binding Renk}"
+                                            SelectedValuePath="Name" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Width="170" Extensions:GridViewSort.PropertyName="Ad">
                                 <GridViewColumn.Header>
                                     <StackPanel>
@@ -294,6 +306,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Text="AD DEĞİŞTİR" />
                             <TextBox Grid.Column="1" Text="{Binding KitapTopluAd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -331,6 +344,14 @@
                             <TextBlock Grid.Row="5" Text="BARKOD DEĞİŞTİR" />
                             <TextBox Grid.Row="5" Grid.Column="1"
                                 Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="6" Text="RENK DEĞİŞTİR" />
+                            <ComboBox Grid.Row="6" Grid.Column="1"
+                                ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
+                                ItemTemplate="{StaticResource ColorItemTemplate}"
+                                ItemsPanel="{StaticResource ColorPanelTemplate}"
+                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                                SelectedValue="{Binding KitapTopluRenk}"
+                                SelectedValuePath="Name" />
                         </Grid>
                     </GroupBox>
                     <UniformGrid Grid.Row="2"
