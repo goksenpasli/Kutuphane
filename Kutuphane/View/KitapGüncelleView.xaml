@@ -306,7 +306,7 @@
                         </GroupBox.Header>
                         <Extensions:ImageViewer FitImageOrientation="Height" OrijinalResimDosyaAçButtonVisibility="Collapsed"
                             PrintButtonVisibility="Visible"
-                            Source="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
+                            ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
                     </GroupBox>
                     <GroupBox Grid.Row="1" Header="SEÇİLİ KİTAPLAR TOPLU İŞLEM">
                         <Grid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
