@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:Kutuphane.Properties"
     d:DataContext="{d:DesignInstance Type=ViewModel:KitapGüncelleViewModel}"
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -44,7 +45,22 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="KİTAP&#xA;RENK">
+                            <GridViewColumn Width="100">
+                                <GridViewColumn.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock>
+                                            <Hyperlink Command="{Binding ResetFilter}">
+                                                <Run Text="KİTAP&#xA;RENK" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <ComboBox ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
+                                            ItemTemplate="{StaticResource ColorItemTemplate}"
+                                            ItemsPanel="{StaticResource ColorPanelTemplate}"
+                                            ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                                            SelectedValue="{Binding KişiKitapRenkArama}"
+                                            SelectedValuePath="Name" />
+                                    </StackPanel>
+                                </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
@@ -89,7 +105,11 @@
                             <GridViewColumn Extensions:GridViewSort.PropertyName="BasımYılı">
                                 <GridViewColumn.Header>
                                     <StackPanel>
-                                        <TextBlock Text="KİTAP BASIM YILI" />
+                                        <TextBlock>
+                                            <Hyperlink Command="{Binding ResetFilter}">
+                                                <Run Text="KİTAP BASIM YILI" />
+                                            </Hyperlink>
+                                        </TextBlock>
                                         <ComboBox ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}" SelectedItem="{Binding KişiKitapYılArama}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
@@ -278,14 +298,14 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" Header="KİTAP RESİM">
-                        <GroupBox.InputBindings>
-                            <MouseBinding Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                    <GroupBox Grid.Row="0" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                        <GroupBox.Header>
+                            <Button Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                 CommandParameter="{Binding SeçiliKitap}"
-                                Gesture="LeftClick" />
-                        </GroupBox.InputBindings>
-                        <ViewModel:ShadowedImage ShowOverlayColor="{Binding SelectedItem.ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ElementName=listView}"
-                            ShowShadow="True"
+                                Content="KİTAP RESİM YÜKLE" />
+                        </GroupBox.Header>
+                        <Extensions:ImageViewer FitImageOrientation="Height" OrijinalResimDosyaAçButtonVisibility="Collapsed"
+                            PrintButtonVisibility="Visible"
                             Source="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}" />
                     </GroupBox>
                     <GroupBox Grid.Row="1" Header="SEÇİLİ KİTAPLAR TOPLU İŞLEM">
@@ -300,6 +320,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -352,6 +373,10 @@
                                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
                                 SelectedValue="{Binding KitapTopluRenk}"
                                 SelectedValuePath="Name" />
+                            <TextBlock Grid.Row="7" Text="RESİM DEĞİŞTİR" />
+                            <Button Grid.Row="7" Grid.Column="1"
+                                Command="{Binding KitapTopluResimGüncelle}"
+                                Content="TOPLU RESİM YÜKLE" />
                         </Grid>
                     </GroupBox>
                     <UniformGrid Grid.Row="2"

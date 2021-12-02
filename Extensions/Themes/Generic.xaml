@@ -274,7 +274,8 @@
                                 Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Button Grid.Column="6"
                                 Command="{Binding OrijinalResimDosyaAç, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                CommandParameter="{Binding ImageFilePath, RelativeSource={RelativeSource TemplatedParent}}">
+                                CommandParameter="{Binding ImageFilePath, RelativeSource={RelativeSource TemplatedParent}}"
+                                Visibility="{Binding OrijinalResimDosyaAçButtonVisibility, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Button.Content>
                                     <Image Width="16" Height="16"
                                         Source="{Binding ImageFilePath, Converter={StaticResource FilePathToIconConverter}, RelativeSource={RelativeSource TemplatedParent}}" />

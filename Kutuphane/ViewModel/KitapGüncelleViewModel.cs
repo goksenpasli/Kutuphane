@@ -1,14 +1,16 @@
 ﻿using Extensions;
 using Kutuphane.Model;
 using Kutuphane.View;
+using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Collections.Generic;
 
 namespace Kutuphane.ViewModel
 {
@@ -19,6 +21,8 @@ namespace Kutuphane.ViewModel
         private string kişiKitapBarkodArama;
 
         private int kişiKitapKonumArama = 4;
+
+        private string kişiKitapRenkArama;
 
         private int kişiKitapYılArama;
 
@@ -69,6 +73,22 @@ namespace Kutuphane.ViewModel
 
             DolapAra = new RelayCommand<object>(parameter => KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= SeçiliDolaplar.Any(z => z.Seçili && z.Id == (e.Item as Kitap)?.DolapId), parameter => SeçiliDolaplar?.Any(z => z.Seçili) == true);
 
+            ResetFilter = new RelayCommand<object>(parameter => KitapGüncelleView.cvs.View.Filter = null, parameter => true);
+
+            KitapTopluResimGüncelle = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                    File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                    foreach (Kitap kitap in SeçiliKitaplar.ToList())
+                    {
+                        kitap.Resim = filename;
+                    }
+                }
+            }, parameter => true);
+
             PropertyChanged += KitapGüncelleViewModel_PropertyChanged;
         }
 
@@ -112,6 +132,20 @@ namespace Kutuphane.ViewModel
                 {
                     kişiKitapKonumArama = value;
                     OnPropertyChanged(nameof(KişiKitapKonumArama));
+                }
+            }
+        }
+
+        public string KişiKitapRenkArama
+        {
+            get => kişiKitapRenkArama;
+
+            set
+            {
+                if (kişiKitapRenkArama != value)
+                {
+                    kişiKitapRenkArama = value;
+                    OnPropertyChanged(nameof(KişiKitapRenkArama));
                 }
             }
         }
@@ -232,6 +266,10 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public ICommand KitapTopluResimGüncelle { get; }
+
+        public ICommand ResetFilter { get; }
+
         public ObservableCollection<Dolap> SeçiliDolaplar
         {
             get => seçiliDolaplar;
@@ -291,6 +329,10 @@ namespace Kutuphane.ViewModel
                     KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.BasımYılı == KişiKitapYılArama;
                     break;
 
+                case "KişiKitapRenkArama":
+                    KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Renk == KişiKitapRenkArama;
+                    break;
+
                 case "KişiKitapKonumArama":
                     if (KişiKitapKonumArama != 4)
                     {
@@ -298,7 +340,7 @@ namespace Kutuphane.ViewModel
                     }
                     else
                     {
-                        KitapGüncelleView.cvs.View.Filter = null;
+                        ResetFilter.Execute(null);
                     }
                     break;
 

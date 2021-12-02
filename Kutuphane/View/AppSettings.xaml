@@ -23,7 +23,7 @@
             <HeaderedContentControl Header="RESİM ÇÖZÜNÜRLÜK AYARI">
                 <Slider AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96"
                     SmallChange="1" TickFrequency="32"
-                    ToolTip="Resim Çözünürlük Ayarı Yüksek Ayarlarda Daha Net Görüntü Oluşturulur. Ancak Bellek Kullanımı Artar. Sadece Kitap Güncelle Ve Sil Ekranı İçindir."
+                    ToolTip="Resim Çözünürlük Ayarı Yüksek Ayarlarda Daha Net Görüntü Oluşturulur. Ancak Bellek Kullanımı Artar."
                     Value="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             </HeaderedContentControl>
             <HeaderedContentControl Header="GÜNLÜK GECİKME BEDELİ">
