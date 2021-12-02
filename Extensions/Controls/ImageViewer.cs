@@ -384,30 +384,9 @@ namespace Extensions
         {
             if (d is ImageViewer imageViewer && imageViewer.Source is not null)
             {
-                if (e.NewValue is BitmapImage bitmapImage)
-                {
-                    if (Path.GetExtension(bitmapImage.UriSource.AbsolutePath).ToLower() is ".tiff" or ".tif")
-                    {
-                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Visible;
-                        imageViewer.Sayfa = 1;
-                        imageViewer.Decoder = new TiffBitmapDecoder(bitmapImage.UriSource, BitmapCreateOptions.None, BitmapCacheOption.None);
-                        imageViewer.Source = imageViewer.Decoder.Frames[0];
-                        imageViewer.Pages = Enumerable.Range(1, imageViewer.Decoder.Frames.Count);
-                    }
-                    else
-                    {
-                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Collapsed;
-                    }
-                }
-
-                if (imageViewer.FitImageOrientation == FitImageOrientation.Width)
-                {
-                    imageViewer.Zoom = !double.IsNaN(imageViewer.Width) ? imageViewer.Width == 0 ? 1 : imageViewer.Width / imageViewer.Source.Width : imageViewer.ActualWidth == 0 ? 1 : imageViewer.ActualWidth / imageViewer.Source.Width;
-                }
-                else
-                {
-                    imageViewer.Zoom = !double.IsNaN(imageViewer.Height) ? imageViewer.Height == 0 ? 1 : imageViewer.Height / imageViewer.Source.Height : imageViewer.ActualHeight == 0 ? 1 : imageViewer.ActualHeight / imageViewer.Source.Height;
-                }
+                imageViewer.Zoom = imageViewer.FitImageOrientation == FitImageOrientation.Width
+                    ? !double.IsNaN(imageViewer.Width) ? imageViewer.Width == 0 ? 1 : imageViewer.Width / imageViewer.Source.Width : imageViewer.ActualWidth == 0 ? 1 : imageViewer.ActualWidth / imageViewer.Source.Width
+                    : !double.IsNaN(imageViewer.Height) ? imageViewer.Height == 0 ? 1 : imageViewer.Height / imageViewer.Source.Height : imageViewer.ActualHeight == 0 ? 1 : imageViewer.ActualHeight / imageViewer.Source.Height;
             }
         }
 
