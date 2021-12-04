@@ -221,7 +221,7 @@
                 </FlowDocument>
             </FlowDocumentScrollViewer>
             <Button Grid.Row="2"
-                Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                Command="{Binding QrCodeMultipleViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}"
                 CommandParameter="{Binding ElementName=Fd}">
                 <Button.Style>
                     <Style TargetType="Button">

@@ -1,10 +1,8 @@
-﻿using Kutuphane.Model;
+﻿using Kutuphane.Properties;
 using Kutuphane.ViewModel;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using Kutuphane.Properties;
 
 namespace Kutuphane.View
 {
@@ -47,6 +45,6 @@ namespace Kutuphane.View
                     dc.BarkodResimler.Add(dc.Barkod.BarkodImage);
                 }
             }
-        }       
+        }
     }
 }

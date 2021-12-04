@@ -225,31 +225,6 @@
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
-                    <RibbonToggleButton KeyTip="O" Label="Barkod Oluştur">
-                        <RibbonToggleButton.LargeImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Setupapi.dll" />
-                                <Binding Source="38" />
-                            </MultiBinding>
-                        </RibbonToggleButton.LargeImageSource>
-                        <RibbonToggleButton.SmallImageSource>
-                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Setupapi.dll" />
-                                <Binding Source="38" />
-                            </MultiBinding>
-                        </RibbonToggleButton.SmallImageSource>
-                        <Popup AllowsTransparency="True"
-                            IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}"
-                            Placement="Bottom"
-                            PlacementTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}">
-                            <GroupBox Width="200" Header="BARKOD">
-                                <StackPanel>
-                                    <TextBox x:Name="Tb" />
-                                    <local:QrCodeView Barkod="{Binding ElementName=Tb, Path=Text}" />
-                                </StackPanel>
-                            </GroupBox>
-                        </Popup>
-                    </RibbonToggleButton>
                     <RibbonToggleButton KeyTip="TR" Label="Tarayıcı">
                         <RibbonToggleButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">

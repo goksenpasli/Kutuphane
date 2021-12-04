@@ -32,6 +32,7 @@
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ImageFilePathToBitmapImageConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="150" />
+            <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="120" />
             <Kutuphane:FilePathMergeConverter x:Key="FilePathMergeConverter" />
             <Kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />
             <ObjectDataProvider x:Key="ColorList"
@@ -73,9 +74,6 @@
             <DataTemplate DataType="{x:Type ViewModel:KitapGüncelleViewModel}">
                 <View:KitapGüncelleView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type ViewModel:QrCodeViewModel}">
-                <View:QrCodeView />
-            </DataTemplate>
             <DataTemplate DataType="{x:Type ViewModel:KişiGirişViewModel}">
                 <View:KişiGirişView />
             </DataTemplate>
@@ -92,16 +90,16 @@
                 <View:KitapKontrolView />
             </DataTemplate>
             <Style x:Key="ComboBoxBlockedColorItemContainerStyle" TargetType="{x:Type ComboBoxItem}">
-                <Setter Property="ToolTip" Value="Renk Seçin. Bazı Renkleri Arkaplanda Kullanıldıklarından Dolayı Seçemezsiniz."/>
+                <Setter Property="ToolTip" Value="Renk Seçin. Bazı Renkleri Arkaplanda Kullanıldıklarından Dolayı Seçemezsiniz." />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Name}" Value="Black">
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Name}" Value="Red">
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Name}" Value="Yellow">
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -360,7 +358,6 @@
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
             </Style>
-            <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="120" />
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
                     <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72"

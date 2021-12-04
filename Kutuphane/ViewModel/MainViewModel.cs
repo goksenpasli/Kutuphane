@@ -68,8 +68,6 @@ namespace Kutuphane.ViewModel
 
             DolapDüzenViewModel = new DolapDüzenViewModel();
 
-            QrCodeViewModel = new QrCodeViewModel();
-
             AppSettingsViewModel = new AppSettingsViewModel();
 
             QrCodeMultipleViewModel = new QrCodeMultipleViewModel();
@@ -288,8 +286,6 @@ namespace Kutuphane.ViewModel
         public Kütüphane Kütüphane { get; set; }
 
         public QrCodeMultipleViewModel QrCodeMultipleViewModel { get; set; }
-
-        public QrCodeViewModel QrCodeViewModel { get; set; }
 
         public ReportViewModel ReportViewModel { get; set; }
 

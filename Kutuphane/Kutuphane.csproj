@@ -133,7 +133,6 @@
     <Compile Include="ViewModel\KişiGüncelleViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\QrCodeMultipleViewModel.cs" />
-    <Compile Include="ViewModel\QrCodeViewModel.cs" />
     <Compile Include="ViewModel\Reporting.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ShadowedImage.cs" />
@@ -158,6 +157,9 @@
     </Compile>
     <Compile Include="View\GraphView.xaml.cs">
       <DependentUpon>GraphView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KimlikKartıMultipleView.xaml.cs">
+      <DependentUpon>KimlikKartıMultipleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KimlikKartıView.xaml.cs">
       <DependentUpon>KimlikKartıView.xaml</DependentUpon>
@@ -191,9 +193,6 @@
     </Compile>
     <Compile Include="View\QrCodeMultipleView.xaml.cs">
       <DependentUpon>QrCodeMultipleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\QrCodeView.xaml.cs">
-      <DependentUpon>QrCodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\İşlemView.xaml.cs">
       <DependentUpon>İşlemView.xaml</DependentUpon>
@@ -238,6 +237,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\KimlikKartıMultipleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\KimlikKartıView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,10 +282,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\QrCodeMultipleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\QrCodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

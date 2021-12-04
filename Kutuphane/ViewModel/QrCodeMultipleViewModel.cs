@@ -1,12 +1,21 @@
-﻿using Kutuphane.Properties;
+﻿using Extensions;
+using Kutuphane.Model;
+using Kutuphane.Properties;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Kutuphane.ViewModel
 {
-    public class QrCodeMultipleViewModel : QrCodeViewModel
+    public class QrCodeMultipleViewModel : InpcBase
     {
+        private Barkod barkod;
+
         private ObservableCollection<BitmapSource> barkodResimler = new();
 
         private int boy = 4;
@@ -15,10 +24,59 @@ namespace Kutuphane.ViewModel
 
         private bool kitapRenkKullan;
 
+        private bool pureBarcode;
+
         public QrCodeMultipleViewModel()
         {
+            Barkod = new Barkod();
+
+            KareKodYazdır = new RelayCommand<object>(parameter =>
+            {
+                PrintDialog printDlg = new();
+                if (printDlg.ShowDialog() == true)
+                {
+                    printDlg.PrintVisual(parameter as Visual, "KareKod Yazdır.");
+                }
+            }, parameter => true);
+
+            KareKodSakla = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is BitmapImage bitmapimage)
+                {
+                    SaveFileDialog saveFileDialog = new()
+                    {
+                        Title = "SAKLA",
+                        Filter = "Resim Dosyaları (*.png)|*.png",
+                    };
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        byte[] bytes = bitmapimage.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Png);
+                        using FileStream imageFile = new(saveFileDialog.FileName, FileMode.Create);
+                        imageFile.Write(bytes, 0, bytes.Length);
+                        imageFile.Flush();
+                        bytes = null;
+                    }
+                }
+            }, parameter => true);
+
+            Barkod.PropertyChanged += Barkod_PropertyChanged;
             Settings.Default.PropertyChanged += Default_PropertyChanged;
             PropertyChanged += QrCodeMultipleViewModel_PropertyChanged;
+        }
+
+        public Barkod Barkod
+        {
+            get => barkod;
+
+            set
+            {
+                if (barkod != value)
+                {
+                    barkod = value;
+                    OnPropertyChanged(nameof(Barkod));
+                }
+            }
         }
 
         public ObservableCollection<BitmapSource> BarkodResimler
@@ -63,6 +121,10 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public ICommand KareKodSakla { get; }
+
+        public ICommand KareKodYazdır { get; }
+
         public bool KitapRenkKullan
         {
             get => kitapRenkKullan;
@@ -74,6 +136,28 @@ namespace Kutuphane.ViewModel
                     kitapRenkKullan = value;
                     OnPropertyChanged(nameof(KitapRenkKullan));
                 }
+            }
+        }
+
+        public bool PureBarcode
+        {
+            get => pureBarcode;
+
+            set
+            {
+                if (pureBarcode != value)
+                {
+                    pureBarcode = value;
+                    OnPropertyChanged(nameof(PureBarcode));
+                }
+            }
+        }
+
+        private void Barkod_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "PureBarcode")
+            {
+                Barkod.BarkodImage = Barkod.GenerateBarCodeImage(Settings.Default.SeçiliBarkod, PureBarcode);
             }
         }
 

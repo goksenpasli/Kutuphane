@@ -154,7 +154,7 @@
                                                             </Table>
                                                         </FlowDocument>
                                                     </FlowDocumentScrollViewer>
-                                                    <Button Command="{Binding QrCodeViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                                                    <Button Command="{Binding QrCodeMultipleViewModel.KareKodYazdır, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                                         CommandParameter="{Binding ElementName=Fd}"
                                                         Content="YAZDIR" />
                                                 </StackPanel>

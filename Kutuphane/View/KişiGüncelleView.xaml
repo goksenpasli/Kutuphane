@@ -26,9 +26,11 @@
             </Grid.RowDefinitions>
             <ListView x:Name="LvKişi"
                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKişiler}"
+                extensions:ListBoxHelper.SelectedItemsMaxCount="10"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
                 SelectedItem="{Binding SeçiliKişi}"
-                SelectionMode="Single">
+                SelectionMode="Extended">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -93,6 +95,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -108,30 +111,50 @@
                         ShowShadow="True"
                         Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
                 </GroupBox>
-                <ListBox Grid.Column="1"
-                    d:ItemsSource="{d:SampleData ItemCount=5}"
-                    IsSynchronizedWithCurrentItem="False"
-                    ItemTemplate="{StaticResource KitapComboBoxTemplate}"
-                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding İşlemBitti}" Value="false">
-                                    <Setter Property="Background" Value="Green" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <extensions:VirtualizingWrapPanel VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
+                <GroupBox Grid.Column="1" Header="İŞLEM">
+                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}"
+                        IsSynchronizedWithCurrentItem="False"
+                        ItemTemplate="{StaticResource KitapComboBoxTemplate}"
+                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding İşlemBitti}" Value="false">
+                                        <Setter Property="Background" Value="Green" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <extensions:VirtualizingWrapPanel VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </GroupBox>
                 <Grid Grid.Row="1" DataContext="{Binding SeçiliKişi}">
                     <local:KimlikKartıView />
                 </Grid>
-                <local:CameraUserControl Grid.Row="1" Grid.Column="1"
+                <extensions:ContentToggleButton Grid.Row="2"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=LvKişi}"
+                    >
+                    <extensions:ContentToggleButton.OverContent>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="32" Height="32">
+                                <Image.Source>
+                                    <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                        <Binding Source="Shell32.dll" />
+                                        <Binding Source="111" />
+                                    </MultiBinding>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock VerticalAlignment="Center" Text="TOPLU KİMLİK" />
+                        </StackPanel>
+                    </extensions:ContentToggleButton.OverContent>
+                    <local:KimlikKartıMultipleView Width="640" Height="480"
+                        DataContext="{Binding SeçiliKişiler}" />
+                </extensions:ContentToggleButton>
+                <local:CameraUserControl Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
                     PropertyChanged="CameraUserControl_PropertyChanged" />
             </Grid>
         </Grid>

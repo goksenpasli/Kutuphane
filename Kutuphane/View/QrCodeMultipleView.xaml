@@ -38,7 +38,8 @@
                     Value="{Binding Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <extensions:NumericUpDownControl Maximum="100" Minimum="0" SmallChange="1"
                     Value="{Binding QrMultipleBorderThickness, Mode=TwoWay, Source={x:Static properties:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" />
-                <ComboBox Grid.Row="1" x:Name="Cb"
+                <ComboBox x:Name="Cb"
+                    Grid.Row="1"
                     IsTabStop="False"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Barcodes}}"
                     SelectedItem="{Binding Path=SeçiliBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
@@ -50,6 +51,58 @@
             </UniformGrid>
             <TabControl Grid.Row="1"
                 FontFamily="Segoe UI" FontSize="12">
+                <TabItem Header="TEK BARKOD">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Row="1" Grid.Column="1"
+                            Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Image Source="{Binding Barkod.BarkodImage}">
+                                <Image.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="{Binding KareKodSakla, Mode=OneWay}"
+                                            CommandParameter="{Binding Barkod.BarkodImage}"
+                                            Header="RESİM OLARAK SAKLA">
+                                            <MenuItem.Icon>
+                                                <Image Width="16" Height="16">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                            <Binding Source="Shell32.dll" />
+                                                            <Binding Source="122" />
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Command="{Binding KareKodYazdır}"
+                                            CommandParameter="{Binding Parent.PlacementTarget, RelativeSource={RelativeSource Mode=Self}}"
+                                            Header="KOD YAZDIR">
+                                            <MenuItem.Icon>
+                                                <Image Width="16" Height="16">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                            <Binding Source="Shell32.dll" />
+                                                            <Binding Source="136" />
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="ALT METİN GİZLE" IsCheckable="True"
+                                            IsChecked="{Binding PureBarcode}" />
+                                    </ContextMenu>
+                                </Image.ContextMenu>
+                            </Image>
+                        </Viewbox>
+                        <TextBlock Grid.Row="2"
+                            Foreground="Red"
+                            Text="{Binding Barkod.BarkodError}" />
+                    </Grid>
+                </TabItem>
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">

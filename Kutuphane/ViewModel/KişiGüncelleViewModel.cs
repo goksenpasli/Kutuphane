@@ -3,6 +3,7 @@ using Kutuphane.Model;
 using Kutuphane.View;
 using Microsoft.Win32;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 
@@ -13,6 +14,8 @@ namespace Kutuphane.ViewModel
         private Kişi kişi;
 
         private Kişi seçiliKişi;
+
+        private ObservableCollection<Kişi> seçiliKişiler = new();
 
         public KişiGüncelleViewModel()
         {
@@ -64,6 +67,20 @@ namespace Kutuphane.ViewModel
                 {
                     seçiliKişi = value;
                     OnPropertyChanged(nameof(SeçiliKişi));
+                }
+            }
+        }
+
+        public ObservableCollection<Kişi> SeçiliKişiler
+        {
+            get => seçiliKişiler;
+
+            set
+            {
+                if (seçiliKişiler != value)
+                {
+                    seçiliKişiler = value;
+                    OnPropertyChanged(nameof(SeçiliKişiler));
                 }
             }
         }
