@@ -85,6 +85,11 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public override string ToString()
+        {
+            return "KİŞİ GÜNCELLE";
+        }
+
         private void Kişi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "KişiAdArama")

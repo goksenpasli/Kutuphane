@@ -95,6 +95,11 @@ namespace Kutuphane.ViewModel
 
         public ICommand KişiResimYükle { get; }
 
+        public override string ToString()
+        {
+            return "KİŞİ GİRİŞ";
+        }
+
         private void KişiGirişViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "KişiKitapAdArama")

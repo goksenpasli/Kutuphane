@@ -310,5 +310,17 @@ namespace Kutuphane.Properties {
                 this["SeçiliBarkod"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int VarsayılanEkran {
+            get {
+                return ((int)(this["VarsayılanEkran"]));
+            }
+            set {
+                this["VarsayılanEkran"] = value;
+            }
+        }
     }
 }

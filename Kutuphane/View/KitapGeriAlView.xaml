@@ -1,12 +1,10 @@
-﻿<UserControl x:Class="Kutuphane.View.KitapGeriAlView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="Kutuphane.View.KitapGeriAlView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:extensions="clr-namespace:Extensions;assembly=Extensions"
-    xmlns:local="clr-namespace:Kutuphane.View"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:extensions="clr-namespace:Extensions;assembly=Extensions" xmlns:local="clr-namespace:Kutuphane.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:model="clr-namespace:Kutuphane.Model"
+    xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:KitapGeriAlViewModel}}"
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -35,32 +33,29 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;ADI" />
-                                <TextBox Width="55"
-                                    VerticalContentAlignment="Center"
+                                <TextBox Width="55" VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                <TextBox Width="55"
-                                    VerticalContentAlignment="Center"
+                                <TextBox Width="55" VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;TC" />
-                                <TextBox Width="55"
-                                    VerticalContentAlignment="Center"
+                                <TextBox Width="55" VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GridViewColumn>
                         <GridViewColumn extensions:GridViewSort.PropertyName="KitapCezasıAdeti">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ProgressBar Width="48"
-                                        Background="Green" BorderBrush="Transparent" Foreground="Red"
+                                    <ProgressBar Width="48" Background="Green" BorderBrush="Transparent"
+                                        Foreground="Red"
                                         Maximum="{Binding İşlem.Count, Mode=OneWay}"
                                         Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
                                         Value="{Binding KitapCezasıAdeti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

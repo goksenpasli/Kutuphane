@@ -44,7 +44,7 @@ namespace Kutuphane.ViewModel
                         işlem = null;
                     }
                 }
-            }, parameter => parameter is İşlem işlem && işlem.SeçiliKitap?.KitapDurumId == (int)KitapDurumu.Okuyucuda);
+            }, parameter => parameter is İşlem işlem && !işlem.İşlemBitti && işlem.SeçiliKitap?.KitapDurumId == (int)KitapDurumu.Okuyucuda);
 
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }
@@ -64,6 +64,11 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand KitapGeriAl { get; }
+
+        public override string ToString()
+        {
+            return "KİTAP GERİ AL";
+        }
 
         private void Kişi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

@@ -29,66 +29,62 @@ namespace Kutuphane.ViewModel
 
             KitapVer = new RelayCommand<object>(parameter =>
             {
-                if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && MessageBox.Show($"{kitap.Ad} Adlı Kitap {kişi.Ad} {kişi.Soyad} Adlı Kişiye {İşlem.KitapGün} Günlüğüne Verilecek Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (parameter is Kitap kitap && MessageBox.Show($"{kitap.Ad} Adlı Kitap {SeçiliKişi.Ad} {SeçiliKişi.Soyad} Adlı Kişiye {İşlem.KitapGün} Günlüğüne Verilecek Onaylıyor musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
-                    if (Settings.Default.KişiKitapKritikKontrol && kişi.KitapCezasıOranı > Settings.Default.KişiKitapKritikOran)
+                    if (!Settings.Default.KişiKitapKritikKontrol || SeçiliKişi.KitapCezasıOranı <= Settings.Default.KişiKitapKritikOran || MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Yine De Bu Kişiye Kitap Vermek İstiyormusunuz?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                        return;
-                    }
-                    İşlem işlem = new()
-                    {
-                        Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
-                        KitapGün = İşlem.KitapGün,
-                        GeriGetirmeTarihi = İşlem.GeriGetirmeTarihi,
-                        KitapId = kitap.Id,
-                        KişiId = kişi.Id,
-                        BaşlangıçTarihi = İşlem.BaşlangıçTarihi,
-                    };
-                    kişi.İşlem.Add(işlem);
-                    kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
-                    MainViewModel.DatabaseSave.Execute(null);
+                        İşlem işlem = new()
+                        {
+                            Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
+                            KitapGün = İşlem.KitapGün,
+                            GeriGetirmeTarihi = İşlem.GeriGetirmeTarihi,
+                            KitapId = kitap.Id,
+                            KişiId = SeçiliKişi.Id,
+                            BaşlangıçTarihi = İşlem.BaşlangıçTarihi,
+                        };
+                        SeçiliKişi.İşlem.Add(işlem);
+                        kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
+                        MainViewModel.DatabaseSave.Execute(null);
 
-                    İşlem.KitapGün = 1;
-                    İşlem.BaşlangıçTarihi = DateTime.Today;
+                        İşlem.KitapGün = 1;
+                        İşlem.BaşlangıçTarihi = DateTime.Today;
 
-                    if (Settings.Default.OtomatikTutanak)
-                    {
-                        işlem.SeçiliKitap = kitap;
-                        new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { kişi, işlem });
+                        if (Settings.Default.OtomatikTutanak)
+                        {
+                            işlem.SeçiliKitap = kitap;
+                            new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { SeçiliKişi, işlem });
+                        }
                     }
                 }
-            }, parameter => KitapAlabilir(parameter));
+            }, parameter => parameter is Kitap kitap && SeçiliKişi?.KitapAlabilir == true && kitap.ÖdünçVerilebilir);
 
             HızlıKitapVer = new RelayCommand<object>(parameter =>
             {
                 if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap)
                 {
-                    if (Settings.Default.KişiKitapKritikKontrol && kişi.KitapCezasıOranı > Settings.Default.KişiKitapKritikOran)
+                    if (!Settings.Default.KişiKitapKritikKontrol || kişi.KitapCezasıOranı <= Settings.Default.KişiKitapKritikOran || MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Yine De Bu Kişiye Kitap Vermek İstiyormusunuz?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        _ = MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Bu Kişiye Kitap Verilmez.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                        return;
-                    }
-                    İşlem işlem = new()
-                    {
-                        Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
-                        KitapGün = Settings.Default.HızlıKitapGirişGünSüresi,
-                        GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? DateTime.Today.İşGünüEkle(Settings.Default.HızlıKitapGirişGünSüresi) : DateTime.Today.AddDays(Settings.Default.HızlıKitapGirişGünSüresi),
-                        KitapId = kitap.Id,
-                        KişiId = kişi.Id,
-                        BaşlangıçTarihi = DateTime.Today,
-                    };
-                    kişi.İşlem.Add(işlem);
-                    kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
-                    MainViewModel.DatabaseSave.Execute(null);
+                        İşlem işlem = new()
+                        {
+                            Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
+                            KitapGün = Settings.Default.HızlıKitapGirişGünSüresi,
+                            GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? DateTime.Today.İşGünüEkle(Settings.Default.HızlıKitapGirişGünSüresi) : DateTime.Today.AddDays(Settings.Default.HızlıKitapGirişGünSüresi),
+                            KitapId = kitap.Id,
+                            KişiId = kişi.Id,
+                            BaşlangıçTarihi = DateTime.Today,
+                        };
+                        kişi.İşlem.Add(işlem);
+                        kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
+                        MainViewModel.DatabaseSave.Execute(null);
 
-                    if (Settings.Default.OtomatikTutanak)
-                    {
-                        işlem.SeçiliKitap = kitap;
-                        new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { kişi, işlem });
+                        if (Settings.Default.OtomatikTutanak)
+                        {
+                            işlem.SeçiliKitap = kitap;
+                            new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { kişi, işlem });
+                        }
                     }
                 }
-            }, parameter => KitapAlabilir(parameter));
+            }, parameter => parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir);
 
             KitapSeçiliEvrakAktar = new RelayCommand<object>(parameter =>
             {
@@ -186,11 +182,6 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        private static bool KitapAlabilir(object parameter)
-        {
-            return parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap && kişi.KitapAlabilir && kitap.ÖdünçVerilebilir;
-        }
-
         private void İşlem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "BaşlangıçTarihi" or "KitapGün")
@@ -225,6 +216,11 @@ namespace Kutuphane.ViewModel
             {
                 KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.TC.Contains(Kişi.KişiTcArama) == true;
             }
+        }
+
+        public override string ToString()
+        {
+            return "KİTAP VER";
         }
     }
 }

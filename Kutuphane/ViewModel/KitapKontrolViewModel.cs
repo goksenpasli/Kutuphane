@@ -130,6 +130,11 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public override string ToString()
+        {
+            return "KİTAP KONTROL";
+        }
+
         private void KitapKontrolViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "KişiKitapAdArama")

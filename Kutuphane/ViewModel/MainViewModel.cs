@@ -122,9 +122,18 @@ namespace Kutuphane.ViewModel
                 }
             });
 
+            DefaultScreen = new Dictionary<int, InpcBase>
+            {
+                [0] = KişiGirişViewModel,
+                [1] = KitapVerViewModel,
+                [2] = KitapKontrolViewModel,
+                [3] = KişiGüncelleViewModel,
+                [4] = KitapGeriAlViewModel,
+            };
+
             if (Settings.Default.KişiGirişEkranıVarsayılan)
             {
-                CurrentView = KişiGirişViewModel;
+                CurrentView = DefaultScreen[Settings.Default.VarsayılanEkran];
             }
 
             if (Settings.Default.OtomatikYedek)
@@ -176,6 +185,8 @@ namespace Kutuphane.ViewModel
         }
 
         public static ICommand DatabaseSave { get; set; }
+
+        public static Dictionary<int, InpcBase> DefaultScreen { get; set; }
 
         public static ICommand KitapCezaEkranı { get; set; }
 

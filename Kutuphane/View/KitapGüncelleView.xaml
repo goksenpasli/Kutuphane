@@ -1,11 +1,7 @@
-﻿<UserControl x:Class="Kutuphane.View.KitapGüncelleView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
-    xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Kutuphane.View"
+﻿<UserControl x:Class="Kutuphane.View.KitapGüncelleView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
+    xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties"
     d:DataContext="{d:DesignInstance Type=ViewModel:KitapGüncelleViewModel}"
@@ -76,8 +72,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP ADI" />
-                                        <TextBox Width="160"
-                                            VerticalContentAlignment="Center"
+                                        <TextBox Width="160" VerticalContentAlignment="Center"
                                             Text="{Binding KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
@@ -91,8 +86,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP BARKOD" />
-                                        <TextBox Width="110"
-                                            VerticalContentAlignment="Center"
+                                        <TextBox Width="110" VerticalContentAlignment="Center"
                                             Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </GridViewColumn.Header>
@@ -196,14 +190,13 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <ComboBox Width="70"
-                                                DisplayMemberPath="Açıklama"
+                                            <ComboBox Width="70" DisplayMemberPath="Açıklama"
                                                 ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
                                                 ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                                 SelectedValue="{Binding DolapId}"
                                                 SelectedValuePath="Id" />
-                                            <Extensions:NumericUpDownControl Width="40"
-                                                Maximum="1000000" Minimum="1" SmallChange="1"
+                                            <Extensions:NumericUpDownControl Width="40" Maximum="1000000" Minimum="1"
+                                                SmallChange="1"
                                                 Value="{Binding DolapAltKod}" />
                                         </StackPanel>
                                     </DataTemplate>
@@ -213,8 +206,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock HorizontalAlignment="Center" Text="KİTAP DURUM" />
-                                        <ComboBox Width="100"
-                                            VerticalContentAlignment="Center"
+                                        <ComboBox Width="100" VerticalContentAlignment="Center"
                                             SelectedIndex="{Binding KişiKitapKonumArama}">
                                             <ComboBox.ItemsSource>
                                                 <CompositeCollection>
@@ -336,10 +328,12 @@
                             ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}"
                             OrijinalResimDosyaAçButtonVisibility="Collapsed" PrintButtonVisibility="Visible" />
                     </GroupBox>
-                    <UniformGrid Grid.Row="1"
-                        Columns="2"
+                    <UniformGrid Grid.Row="1" Columns="2"
                         IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                        <GroupBox Header="SEÇİLİ KİTAPLAR TOPLU İŞLEM">
+                        <GroupBox>
+                            <GroupBox.Header>
+                                <TextBlock Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItems.Count, StringFormat={}{0} SEÇİLİ KİTAP TOPLU İŞLEM}" />
+                            </GroupBox.Header>
                             <Grid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
                                 <Grid.Resources>
                                     <Style TargetType="TextBlock">
@@ -373,16 +367,15 @@
                                     </ComboBox.ItemsPanel>
                                 </ComboBox>
                                 <TextBlock Grid.Row="2" Text="DEMİRBAŞ" />
-                                <CheckBox Grid.Row="2" Grid.Column="1"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
                                     IsChecked="{Binding KitapTopluDemirbaş}" />
                                 <TextBlock Grid.Row="3" Text="ÖDÜNÇ VERİLEBİLİR" />
-                                <CheckBox Grid.Row="3" Grid.Column="1"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
                                     IsChecked="{Binding KitapTopluÖdünç}" />
                                 <TextBlock Grid.Row="4" Text="DOLAP DEĞİŞTİR" />
-                                <ComboBox Grid.Row="4" Grid.Column="1"
-                                    DisplayMemberPath="Açıklama"
+                                <ComboBox Grid.Row="4" Grid.Column="1" DisplayMemberPath="Açıklama"
                                     ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
                                     ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                     SelectedValue="{Binding KitapTopluDolapId}"
@@ -410,7 +403,6 @@
                                     Content="TOPLU RESİM YÜKLE" />
                             </Grid>
                         </GroupBox>
-
                         <GroupBox Grid.Row="2">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">

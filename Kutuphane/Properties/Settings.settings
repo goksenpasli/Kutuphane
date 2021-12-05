@@ -74,5 +74,8 @@
     <Setting Name="SeçiliBarkod" Type="ZXing.BarcodeFormat" Scope="User">
       <Value Profile="(Default)">CODE_128</Value>
     </Setting>
+    <Setting Name="VarsayılanEkran" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
