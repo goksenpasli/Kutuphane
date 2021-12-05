@@ -34,13 +34,13 @@ namespace TwainWpf
         {
         }
 
-        protected TwainException(SerializationInfo info, StreamingContext context) :
-                    base(info, context)
-        {
-        }
-
         public ConditionCode? ConditionCode { get; private set; }
 
         public TwainResult? ReturnCode { get; private set; }
+
+        protected TwainException(SerializationInfo info, StreamingContext context) :
+                                    base(info, context)
+        {
+        }
     }
 }

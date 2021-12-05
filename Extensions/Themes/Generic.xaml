@@ -35,8 +35,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
                     <Border Height="5"
-                        Background="Red" BorderBrush="Gray" BorderThickness="0,1,1,1"
-                        CornerRadius="0.5" />
+                        Background="Red" BorderBrush="Gray" BorderThickness="0,1,1,1" CornerRadius="0.5" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -50,8 +49,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
                     <Border Height="5"
-                        Background="#FFE22828" BorderBrush="Gray" BorderThickness="1,1,0,1"
-                        CornerRadius="0.5" />
+                        Background="#FFE22828" BorderBrush="Gray" BorderThickness="1,1,0,1" CornerRadius="0.5" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -525,8 +523,8 @@
                         <VisualBrush.Visual>
                             <Path x:Name="Up"
                                 Width="9.5" Height="8.5"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5"
-                                Stretch="Fill" StrokeLineJoin="Round">
+                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+                                StrokeLineJoin="Round">
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="90" />
                                 </Path.RenderTransform>
@@ -545,8 +543,8 @@
                         <VisualBrush.Visual>
                             <Path x:Name="Down"
                                 Width="9.5" Height="8.5"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5"
-                                Stretch="Fill" StrokeLineJoin="Round">
+                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+                                StrokeLineJoin="Round">
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="-90" />
                                 </Path.RenderTransform>
@@ -592,8 +590,8 @@
                         <VisualBrush.Visual>
                             <Path x:Name="Up"
                                 Width="9.5" Height="8.5"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5"
-                                Stretch="Fill" StrokeLineJoin="Round">
+                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+                                StrokeLineJoin="Round">
                                 <Path.RenderTransform>
                                     <RotateTransform Angle="-180" />
                                 </Path.RenderTransform>
@@ -612,8 +610,8 @@
                         <VisualBrush.Visual>
                             <Path x:Name="Down"
                                 Width="9.5" Height="8.5"
-                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5"
-                                Stretch="Fill" StrokeLineJoin="Round" />
+                                Data="M0,0L5,5 10,0z" Fill="Black" RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+                                StrokeLineJoin="Round" />
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </RepeatButton.Background>

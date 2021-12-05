@@ -13,64 +13,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Kitap")]
     public class Kitap : InpcBase, IDataErrorInfo
     {
-        private Brush _KitapListeArkaPlanRengi = Brushes.Transparent;
-
-        private string açıklama;
-
-        private string ad;
-
-        private string barkod;
-
-        private int basımYılı = DateTime.Now.Year;
-
-        private bool demirbaş;
-
-        private int dolapAltKod = 1;
-
-        private int dolapId;
-
-        private bool favori;
-
-        private double fiyat = 1;
-
-        private int ıd;
-
-        private ObservableCollection<Kişi> kişiler = new();
-
-        private string kitapDili;
-
-        private int kitapDurumId;
-
-        private bool kitapSayıOtomatikArttır;
-
-        private bool otomatikBarkod;
-
-        private bool ödünçVerilebilir = true;
-
-        private string renk = "Transparent";
-
-        private string resim;
-
-        private ObservableCollection<KitapTürü> seçiliKitapTürleri = new();
-
-        private ObservableCollection<Yazar> seçiliYazarlar = new();
-
-        private DateTime sistemKayıtTarihi = DateTime.Now;
-
-        private bool topluKitapGirişi;
-
-        private double topluKitapSayısı = 1;
-
-        private bool tutanak;
-
-        private string tür;
-
-        private ObservableCollection<KitapTürü> türler = new();
-
-        private string yazar;
-
-        private ObservableCollection<Yazar> yazarlar = new();
-
         static Kitap()
         {
             Diller = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(z => !z.DisplayName.Contains('(')).Select(z => z.DisplayName);
@@ -523,5 +465,63 @@ namespace Kutuphane.Model
             "Barkod" when string.IsNullOrWhiteSpace(Barkod) => "Barkod Boş Geçmeyin.",
             _ => null
         };
+
+        private Brush _KitapListeArkaPlanRengi = Brushes.Transparent;
+
+        private string açıklama;
+
+        private string ad;
+
+        private string barkod;
+
+        private int basımYılı = DateTime.Now.Year;
+
+        private bool demirbaş;
+
+        private int dolapAltKod = 1;
+
+        private int dolapId;
+
+        private bool favori;
+
+        private double fiyat = 1;
+
+        private int ıd;
+
+        private ObservableCollection<Kişi> kişiler = new();
+
+        private string kitapDili;
+
+        private int kitapDurumId;
+
+        private bool kitapSayıOtomatikArttır;
+
+        private bool otomatikBarkod;
+
+        private bool ödünçVerilebilir = true;
+
+        private string renk = "Transparent";
+
+        private string resim;
+
+        private ObservableCollection<KitapTürü> seçiliKitapTürleri = new();
+
+        private ObservableCollection<Yazar> seçiliYazarlar = new();
+
+        private DateTime sistemKayıtTarihi = DateTime.Now;
+
+        private bool topluKitapGirişi;
+
+        private double topluKitapSayısı = 1;
+
+        private bool tutanak;
+
+        private string tür;
+
+        private ObservableCollection<KitapTürü> türler = new();
+
+        private string yazar;
+
+        private ObservableCollection<Yazar> yazarlar = new();
     }
 }

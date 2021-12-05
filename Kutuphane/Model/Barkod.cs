@@ -5,16 +5,6 @@ namespace Kutuphane.Model
 {
     public class Barkod : InpcBase
     {
-        private string barkodError;
-
-        private BitmapSource barkodImage;
-
-        private string metin;
-
-        private int qrHeight = 75;
-
-        private int qrWidth = 150;
-
         public string BarkodError
         {
             get => barkodError;
@@ -84,5 +74,15 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        private string barkodError;
+
+        private BitmapSource barkodImage;
+
+        private string metin;
+
+        private int qrHeight = 75;
+
+        private int qrWidth = 150;
     }
 }

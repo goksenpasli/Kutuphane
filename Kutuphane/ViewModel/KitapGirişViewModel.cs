@@ -15,8 +15,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapGirişViewModel : InpcBase
     {
-        private Kitap kitap;
-
         public KitapGirişViewModel()
         {
             Kitap = new Kitap();
@@ -158,6 +156,8 @@ namespace Kutuphane.ViewModel
         public ICommand KitapYazarEkle { get; }
 
         public ICommand TopluKitapEkle { get; }
+
+        private Kitap kitap;
 
         private void Kitap_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

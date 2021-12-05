@@ -9,8 +9,6 @@ namespace Extensions.Controls
     {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(CircularProgress), valueMetadata);
 
-        private static readonly FrameworkPropertyMetadata valueMetadata = new(0.0, null, new CoerceValueCallback(CoerceValue));
-
         static CircularProgress()
         {
             Brush brush = new SolidColorBrush(Color.FromArgb(255, 6, 176, 37));
@@ -53,6 +51,8 @@ namespace Extensions.Controls
                 return geom;
             }
         }
+
+        private static readonly FrameworkPropertyMetadata valueMetadata = new(0.0, null, new CoerceValueCallback(CoerceValue));
 
         private static object CoerceValue(DependencyObject depObj, object baseVal)
         {

@@ -18,10 +18,6 @@ namespace Extensions.Controls
     {
         public static readonly DependencyProperty ArchivePathProperty = DependencyProperty.Register("ArchivePath", typeof(string), typeof(ArchiveViewer), new PropertyMetadata(null, Changed));
 
-        private static double toplamOran;
-
-        private ObservableCollection<ArchiveData> arşivİçerik;
-
         public ArchiveViewer()
         {
             InitializeComponent();
@@ -85,6 +81,10 @@ namespace Extensions.Controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private static double toplamOran;
+
+        private ObservableCollection<ArchiveData> arşivİçerik;
 
         private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

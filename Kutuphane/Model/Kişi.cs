@@ -11,48 +11,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Kişi")]
     public class Kişi : InpcBase, IDataErrorInfo
     {
-        private string ad;
-
-        private string adres;
-
-        private int cinsiyet = -1;
-
-        private DateTime doğumTarihi = DateTime.Today;
-
-        private int ıd;
-
-        private ObservableCollection<İşlem> işlem = new();
-
-        private DateTime kayıtTarihi = DateTime.Now;
-
-        private string kişiAdArama;
-
-        private string kişiKitapAdArama;
-
-        private string kişiKitapBarkodArama;
-
-        private string kişiSoyadArama;
-
-        private string kişiTcArama;
-
-        private bool kitapAlabilir = true;
-
-        private int kitapCezasıAdeti;
-
-        private double kitapCezasıOranı;
-
-        private string resim;
-
-        private Kişi sonKaydedilenKişi;
-
-        private string soyad;
-
-        private string tC;
-
-        private string telefon;
-
-        private ObservableCollection<string> tutanakYolu = new();
-
         [XmlAttribute(AttributeName = "Ad")]
         public string Ad
         {
@@ -390,5 +348,47 @@ namespace Kutuphane.Model
             "TC" when !TC.TcGeçerli() => "TC Geçerli Değil.",
             _ => null
         };
+
+        private string ad;
+
+        private string adres;
+
+        private int cinsiyet = -1;
+
+        private DateTime doğumTarihi = DateTime.Today;
+
+        private int ıd;
+
+        private ObservableCollection<İşlem> işlem = new();
+
+        private DateTime kayıtTarihi = DateTime.Now;
+
+        private string kişiAdArama;
+
+        private string kişiKitapAdArama;
+
+        private string kişiKitapBarkodArama;
+
+        private string kişiSoyadArama;
+
+        private string kişiTcArama;
+
+        private bool kitapAlabilir = true;
+
+        private int kitapCezasıAdeti;
+
+        private double kitapCezasıOranı;
+
+        private string resim;
+
+        private Kişi sonKaydedilenKişi;
+
+        private string soyad;
+
+        private string tC;
+
+        private string telefon;
+
+        private ObservableCollection<string> tutanakYolu = new();
     }
 }

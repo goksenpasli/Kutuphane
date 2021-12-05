@@ -7,18 +7,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Kütüphane")]
     public class Kütüphane : InpcBase
     {
-        private ObservableCollection<Dolap> dolaplar = new();
-
-        private ObservableCollection<İşlem> işlemler = new();
-
-        private ObservableCollection<Kişi> kişiler = new();
-
-        private ObservableCollection<Kitap> kitaplar = new();
-
-        private ObservableCollection<KitapTürü> kitapTürleri = new();
-
-        private ObservableCollection<Yazar> yazarlar = new();
-
         [XmlElement(ElementName = "Dolap")]
         public ObservableCollection<Dolap> Dolaplar
         {
@@ -108,5 +96,17 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        private ObservableCollection<Dolap> dolaplar = new();
+
+        private ObservableCollection<İşlem> işlemler = new();
+
+        private ObservableCollection<Kişi> kişiler = new();
+
+        private ObservableCollection<Kitap> kitaplar = new();
+
+        private ObservableCollection<KitapTürü> kitapTürleri = new();
+
+        private ObservableCollection<Yazar> yazarlar = new();
     }
 }

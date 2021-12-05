@@ -111,8 +111,6 @@ namespace Extensions
 
         #region MeasureOverride, ArrangeOverride
 
-        private readonly Dictionary<int, Rect> _containerLayouts = new();
-
         protected override Size ArrangeOverride(Size finalSize)
         {
             foreach (UIElement child in InternalChildren)
@@ -204,6 +202,8 @@ namespace Extensions
             return maxSize;
         }
 
+        private readonly Dictionary<int, Rect> _containerLayouts = new();
+
         #region ChildGenerator
 
         private class ChildGenerator : IDisposable
@@ -259,14 +259,14 @@ namespace Extensions
                 _generator = owner.ItemContainerGenerator;
             }
 
-            ~ChildGenerator()
-            {
-                Dispose();
-            }
-
             public void Dispose()
             {
                 _generatorTracker?.Dispose();
+            }
+
+            ~ChildGenerator()
+            {
+                Dispose();
             }
 
             #endregion _ctor
@@ -392,31 +392,31 @@ namespace Extensions
 
         #region Extent
 
-        private Size _extent;
-
         public double ExtentHeight => _extent.Height;
 
         public double ExtentWidth => _extent.Width;
+
+        private Size _extent;
 
         #endregion Extent
 
         #region Viewport
 
-        private Size _viewport;
-
         public double ViewportHeight => _viewport.Height;
 
         public double ViewportWidth => _viewport.Width;
+
+        private Size _viewport;
 
         #endregion Viewport
 
         #region Offset
 
-        private Point _offset;
-
         public double HorizontalOffset => _offset.X;
 
         public double VerticalOffset => _offset.Y;
+
+        private Point _offset;
 
         #endregion Offset
 

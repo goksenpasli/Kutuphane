@@ -19,32 +19,6 @@ namespace TwainWpf
             Rotation = new RotationSettings()
         };
 
-        private bool _abortWhenNoPaperDetectable;
-
-        private AreaSettings _area;
-
-        private PageSettings _page;
-
-        private ResolutionSettings _resolution;
-
-        private RotationSettings _rotation;
-
-        private bool? _showProgressIndicatorUi;
-
-        private bool _showTwainUi;
-
-        private short _transferCount;
-
-        private bool? _useAutoFeeder;
-
-        private bool? _useAutoScanCache;
-
-        private bool? _useDocumentFeeder;
-
-        private bool? _useDuplex;
-
-        private bool? _useFilmScanner;
-
         public ScanSettings()
         {
             ShouldTransferAllPages = true;
@@ -284,6 +258,32 @@ namespace TwainWpf
                 }
             }
         }
+
+        private bool _abortWhenNoPaperDetectable;
+
+        private AreaSettings _area;
+
+        private PageSettings _page;
+
+        private ResolutionSettings _resolution;
+
+        private RotationSettings _rotation;
+
+        private bool? _showProgressIndicatorUi;
+
+        private bool _showTwainUi;
+
+        private short _transferCount;
+
+        private bool? _useAutoFeeder;
+
+        private bool? _useAutoScanCache;
+
+        private bool? _useDocumentFeeder;
+
+        private bool? _useDuplex;
+
+        private bool? _useFilmScanner;
 
         #region INotifyPropertyChanged Members
 

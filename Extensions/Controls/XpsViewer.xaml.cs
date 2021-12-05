@@ -18,12 +18,6 @@ namespace Extensions.Controls
     /// </summary>
     public class PageRangeDocumentPaginator : DocumentPaginator
     {
-        private readonly int _endIndex;
-
-        private readonly DocumentPaginator _paginator;
-
-        private readonly int _startIndex;
-
         public PageRangeDocumentPaginator(DocumentPaginator paginator, PageRange pageRange)
         {
             _startIndex = pageRange.PageFrom - 1;
@@ -62,13 +56,17 @@ namespace Extensions.Controls
 
             return page;
         }
+
+        private readonly int _endIndex;
+
+        private readonly DocumentPaginator _paginator;
+
+        private readonly int _startIndex;
     }
 
     public partial class XpsViewer : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty XpsDataFilePathProperty = DependencyProperty.Register("XpsDataFilePath", typeof(string), typeof(XpsViewer), new PropertyMetadata(null, XpsDataFilePathChanged));
-
-        private IDocumentPaginatorSource document;
 
         public XpsViewer()
         {
@@ -98,6 +96,8 @@ namespace Extensions.Controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private IDocumentPaginatorSource document;
 
         [HandleProcessCorruptedStateExceptions]
         [SecurityCritical]

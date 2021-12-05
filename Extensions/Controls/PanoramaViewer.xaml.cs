@@ -28,18 +28,6 @@ namespace Extensions.Controls
 
         public static Geometry3D SphereModel = CreateGeometry();
 
-        private readonly string[] imageext = new string[] { ".jpg", ".jpeg", ".tif", ".tiff", ".png" };
-
-        private readonly string[] videoext = new string[] { ".mp4", ".wmv", ".avi", ".mpg", ".3gp" };
-
-        private bool _isOnDrag;
-
-        private System.Windows.Point _startPoiint;
-
-        private double _startRotateX;
-
-        private double _startRotateY;
-
         public PanoramaViewer()
         {
             InitializeComponent();
@@ -112,6 +100,18 @@ namespace Extensions.Controls
 
             base.OnMouseMove(e);
         }
+
+        private readonly string[] imageext = new string[] { ".jpg", ".jpeg", ".tif", ".tiff", ".png" };
+
+        private readonly string[] videoext = new string[] { ".mp4", ".wmv", ".avi", ".mpg", ".3gp" };
+
+        private bool _isOnDrag;
+
+        private System.Windows.Point _startPoiint;
+
+        private double _startRotateX;
+
+        private double _startRotateY;
 
         private static Geometry3D CreateGeometry()
         {

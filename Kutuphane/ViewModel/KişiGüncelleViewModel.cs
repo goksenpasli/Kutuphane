@@ -11,12 +11,6 @@ namespace Kutuphane.ViewModel
 {
     public class KişiGüncelleViewModel : InpcBase
     {
-        private Kişi kişi;
-
-        private Kişi seçiliKişi;
-
-        private ObservableCollection<Kişi> seçiliKişiler = new();
-
         public KişiGüncelleViewModel()
         {
             Kişi = new Kişi();
@@ -89,6 +83,12 @@ namespace Kutuphane.ViewModel
         {
             return "KİŞİ GÜNCELLE";
         }
+
+        private Kişi kişi;
+
+        private Kişi seçiliKişi;
+
+        private ObservableCollection<Kişi> seçiliKişiler = new();
 
         private void Kişi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

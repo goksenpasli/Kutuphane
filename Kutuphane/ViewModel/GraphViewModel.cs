@@ -20,10 +20,6 @@ namespace Kutuphane.ViewModel
 
     public class GraphViewModel : InpcBase
     {
-        private string seçiliVeri;
-
-        private ObservableCollection<Chart> veriler;
-
         public GraphViewModel()
         {
             SaveGraph = new RelayCommand<object>(parameter =>
@@ -70,6 +66,10 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private string seçiliVeri;
+
+        private ObservableCollection<Chart> veriler;
 
         private void GraphViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

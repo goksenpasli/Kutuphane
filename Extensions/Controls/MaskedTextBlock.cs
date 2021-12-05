@@ -13,8 +13,6 @@ namespace Extensions
 
         public static readonly DependencyProperty UnmaskedTextProperty = DependencyProperty.Register("UnmaskedText", typeof(string), typeof(MaskedTextBlock), new UIPropertyMetadata(string.Empty, Changed));
 
-        private MaskedTextProvider _provider;
-
         public MaskedTextBlock()
         {
             Loaded += MaskedTextBlock_Loaded;
@@ -25,6 +23,8 @@ namespace Extensions
         public char PromptChar { get => (char)GetValue(PromptCharProperty); set => SetValue(PromptCharProperty, value); }
 
         public string UnmaskedText { get => (string)GetValue(UnmaskedTextProperty); set => SetValue(UnmaskedTextProperty, value); }
+
+        private MaskedTextProvider _provider;
 
         private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

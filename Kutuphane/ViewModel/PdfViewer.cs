@@ -20,10 +20,6 @@ namespace Kutuphane.ViewModel
 
         public static readonly DependencyProperty PdfFileStreamProperty = DependencyProperty.Register("PdfFileStream", typeof(FileStream), typeof(PdfViewer), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.NotDataBindable, PdfStreamChanged));
 
-        private bool disposedValue;
-
-        private int toplamSayfa;
-
         public PdfViewer()
         {
             OpenFileDialog openFileDialog = null;
@@ -128,6 +124,10 @@ namespace Kutuphane.ViewModel
                 disposedValue = true;
             }
         }
+
+        private bool disposedValue;
+
+        private int toplamSayfa;
 
         private static void DpiChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

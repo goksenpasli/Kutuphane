@@ -81,8 +81,8 @@
                                                 <StackPanel>
                                                     <FlowDocumentScrollViewer x:Name="Fd" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                                         <FlowDocument d:DataContext="{d:DesignInstance Type={x:Type model:Kitap}}"
-                                                            Block.LineHeight="1" FontFamily="Times New Roman" FontSize="16"
-                                                            Language="tr-tr" PagePadding="10">
+                                                            Block.LineHeight="1" FontFamily="Times New Roman" FontSize="16" Language="tr-tr"
+                                                            PagePadding="10">
                                                             <FlowDocument.Resources>
                                                                 <Style TargetType="{x:Type TableCell}">
                                                                     <Setter Property="BorderBrush" Value="Black" />

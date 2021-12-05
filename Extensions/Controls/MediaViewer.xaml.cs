@@ -25,16 +25,6 @@ namespace Extensions.Controls
 
         public static readonly DependencyProperty ThumbnailsVisibleProperty = DependencyProperty.Register("ThumbnailsVisible", typeof(bool), typeof(MediaViewer), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        private static readonly Image image = new();
-
-        private static readonly MediaElement mediaElement = new() { UnloadedBehavior = MediaState.Manual, ScrubbingEnabled = true };
-
-        private static readonly ToolTip tooltip = new();
-
-        private static bool dragging;
-
-        private static DispatcherTimer timer;
-
         public MediaViewer()
         {
             InitializeComponent();
@@ -54,6 +44,16 @@ namespace Extensions.Controls
         }
 
         public bool ThumbnailsVisible { get => (bool)GetValue(ThumbnailsVisibleProperty); set => SetValue(ThumbnailsVisibleProperty, value); }
+
+        private static readonly Image image = new();
+
+        private static readonly MediaElement mediaElement = new() { UnloadedBehavior = MediaState.Manual, ScrubbingEnabled = true };
+
+        private static readonly ToolTip tooltip = new();
+
+        private static bool dragging;
+
+        private static DispatcherTimer timer;
 
         [HandleProcessCorruptedStateExceptions]
         [SecurityCritical]

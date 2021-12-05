@@ -31,8 +31,6 @@ namespace TwainWpf
             ProductName = "TwainDotNet",
         };
 
-        private Event _eventMessage;
-
         public DataSourceManager(Identity applicationId, IWindowsMessageHook messageHook)
         {
             // Make a copy of the identity in case it gets modified
@@ -67,11 +65,6 @@ namespace TwainWpf
             {
                 throw new TwainException("Error initialising DSM: " + result, result);
             }
-        }
-
-        ~DataSourceManager()
-        {
-            Dispose(false);
         }
 
         /// <summary>
@@ -345,6 +338,13 @@ namespace TwainWpf
                     Message.Reset,
                     pendingTransfer);
             }
+        }
+
+        private Event _eventMessage;
+
+        ~DataSourceManager()
+        {
+            Dispose(false);
         }
     }
 }

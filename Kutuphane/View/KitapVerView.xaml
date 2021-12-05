@@ -1,15 +1,17 @@
-﻿<UserControl x:Class="Kutuphane.View.KitapVerView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="Kutuphane.View.KitapVerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:Kutuphane="clr-namespace:Kutuphane" xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:TwainControl="clr-namespace:TwainControl;assembly=TwainControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:Extensions;assembly=Extensions"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:model="clr-namespace:Kutuphane.Model"
-    xmlns:view="clr-namespace:Kutuphane.View" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:view="clr-namespace:Kutuphane.View"
+    xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:KitapVerViewModel}}"
-    d:DesignHeight="800" d:DesignWidth="1280" Loaded="UserControl_Loaded"
-    UseLayoutRounding="True" mc:Ignorable="d">
+    d:DesignHeight="800" d:DesignWidth="1280" Loaded="UserControl_Loaded" UseLayoutRounding="True"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="Kişiler" Source="{Binding Kütüphane.Kişiler, Source={StaticResource MainViewModel}}" />
@@ -31,7 +33,8 @@
                         <StackPanel>
                             <TextBlock HorizontalAlignment="Center" Text="MEVCUT KİTAPLAR" />
                             <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="Red" />
+                                <Rectangle Width="16" Height="16"
+                                    Fill="Red" />
                                 <TextBlock Text="KİTAP VERİLMEZ" />
                             </StackPanel>
                         </StackPanel>
@@ -57,19 +60,23 @@
                         </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="170" extensions:GridViewSort.PropertyName="Ad"
+                                <GridViewColumn Width="170"
+                                    extensions:GridViewSort.PropertyName="Ad"
                                     CellTemplate="{StaticResource KitapTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;ADI" />
-                                        <TextBox Width="55" VerticalContentAlignment="Center"
+                                        <TextBox Width="55"
+                                            VerticalContentAlignment="Center"
                                             Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </GridViewColumn>
-                                <GridViewColumn Width="130" extensions:GridViewSort.PropertyName="Barkod"
+                                <GridViewColumn Width="130"
+                                    extensions:GridViewSort.PropertyName="Barkod"
                                     DisplayMemberBinding="{Binding Barkod}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                        <TextBox Width="55" VerticalContentAlignment="Center"
+                                        <TextBox Width="55"
+                                            VerticalContentAlignment="Center"
                                             Text="{Binding Kişi.KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </GridViewColumn>
@@ -132,7 +139,8 @@
                         <StackPanel>
                             <TextBlock HorizontalAlignment="Center" Text="KİŞİLER" />
                             <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="Red" />
+                                <Rectangle Width="16" Height="16"
+                                    Fill="Red" />
                                 <TextBlock Text="KİTAP ALAMAZ" />
                             </StackPanel>
                         </StackPanel>
@@ -170,21 +178,24 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;ADI" />
-                                            <TextBox Width="55" VerticalContentAlignment="Center"
+                                            <TextBox Width="55"
+                                                VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
                                     </GridViewColumn>
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                            <TextBox Width="55" VerticalContentAlignment="Center"
+                                            <TextBox Width="55"
+                                                VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
                                     </GridViewColumn>
                                     <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;TC" />
-                                            <TextBox Width="85" VerticalContentAlignment="Center"
+                                            <TextBox Width="85"
+                                                VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
                                     </GridViewColumn>
@@ -193,7 +204,8 @@
                                             <DataTemplate>
                                                 <extensions:ContentToggleButton OverContent="EVRAK">
                                                     <extensions:ContentToggleButton.Content>
-                                                        <GroupBox Width="720" Height="480" Header="EVRAK">
+                                                        <GroupBox Width="720" Height="480"
+                                                            Header="EVRAK">
                                                             <ListBox ItemTemplateSelector="{StaticResource ViewerSelector}" ItemsSource="{Binding TutanakYolu}">
                                                                 <ListBox.ItemsPanel>
                                                                     <ItemsPanelTemplate>
@@ -285,16 +297,19 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ProgressBar Grid.RowSpan="3" Grid.Column="2" Width="16"
-                            Background="Green" BorderBrush="Transparent" Foreground="Red"
-                            Maximum="100" Orientation="Vertical"
+                        <ProgressBar Grid.RowSpan="3" Grid.Column="2"
+                            Width="16"
+                            Background="Green" BorderBrush="Transparent" Foreground="Red" Maximum="100"
+                            Orientation="Vertical"
                             Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
                             Value="{Binding SelectedItem.KitapCezasıOranı, ElementName=listViewKişi}" />
                         <view:İşlemView Grid.Row="1" DataContext="{Binding İşlem}" />
                         <TwainControl:TwainCtrl x:Name="twainCtrl"
-                            Grid.Row="1" Grid.Column="1" MaxHeight="290"
+                            Grid.Row="1" Grid.Column="1"
+                            MaxHeight="290"
                             Bw="True" />
-                        <UniformGrid Grid.Row="2" Grid.Column="1" Columns="2">
+                        <UniformGrid Grid.Row="2" Grid.Column="1"
+                            Columns="2">
                             <Button Command="{Binding KitapTarananEvrakAktar, Mode=OneWay}" CommandParameter="{Binding SeçiliResimler, ElementName=twainCtrl, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="32" Height="32">

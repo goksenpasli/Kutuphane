@@ -11,16 +11,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapKontrolViewModel : InpcBase
     {
-        private string kişiKitapAdArama;
-
-        private string kitapBarkodArama;
-
-        private bool okunanKitapRenkGöster;
-
-        private Kişi seçiliKişi;
-
-        private Kitap seçiliKitap;
-
         public KitapKontrolViewModel()
         {
             KitapGüncelle = new RelayCommand<object>(parameter =>
@@ -134,6 +124,16 @@ namespace Kutuphane.ViewModel
         {
             return "KİTAP KONTROL";
         }
+
+        private string kişiKitapAdArama;
+
+        private string kitapBarkodArama;
+
+        private bool okunanKitapRenkGöster;
+
+        private Kişi seçiliKişi;
+
+        private Kitap seçiliKitap;
 
         private void KitapKontrolViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

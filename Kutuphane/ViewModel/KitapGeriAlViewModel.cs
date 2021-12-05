@@ -9,8 +9,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapGeriAlViewModel : InpcBase
     {
-        private Kişi kişi;
-
         public KitapGeriAlViewModel()
         {
             Kişi = new Kişi();
@@ -69,6 +67,8 @@ namespace Kutuphane.ViewModel
         {
             return "KİTAP GERİ AL";
         }
+
+        private Kişi kişi;
 
         private void Kişi_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

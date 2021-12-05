@@ -15,16 +15,6 @@ namespace Kutuphane.View
     /// </summary>
     public partial class CameraUserControl : UserControl, INotifyPropertyChanged
     {
-        private CapDevice device;
-
-        private FilterInfo[] liste = CapDevice.DeviceMonikers;
-
-        private byte[] resimData;
-
-        private double rotation = 180;
-
-        private FilterInfo seçiliKamera;
-
         public CameraUserControl()
         {
             InitializeComponent();
@@ -138,6 +128,16 @@ namespace Kutuphane.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private CapDevice device;
+
+        private FilterInfo[] liste = CapDevice.DeviceMonikers;
+
+        private byte[] resimData;
+
+        private double rotation = 180;
+
+        private FilterInfo seçiliKamera;
 
         private void CameraUserControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

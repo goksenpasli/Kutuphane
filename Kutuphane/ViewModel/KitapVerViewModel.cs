@@ -16,12 +16,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapVerViewModel : InpcBase
     {
-        private İşlem işlem;
-
-        private Kişi kişi;
-
-        private Kişi seçiliKişi;
-
         public KitapVerViewModel()
         {
             Kişi = new Kişi();
@@ -182,6 +176,17 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public override string ToString()
+        {
+            return "KİTAP VER";
+        }
+
+        private İşlem işlem;
+
+        private Kişi kişi;
+
+        private Kişi seçiliKişi;
+
         private void İşlem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "BaşlangıçTarihi" or "KitapGün")
@@ -216,11 +221,6 @@ namespace Kutuphane.ViewModel
             {
                 KitapVerView.cvskişi.Filter += (s, e) => e.Accepted &= (e.Item as Kişi)?.TC.Contains(Kişi.KişiTcArama) == true;
             }
-        }
-
-        public override string ToString()
-        {
-            return "KİTAP VER";
         }
     }
 }

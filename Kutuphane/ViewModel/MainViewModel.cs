@@ -18,12 +18,6 @@ namespace Kutuphane.ViewModel
     {
         public static readonly string xmldatapath = Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath) + @"\Data.xml";
 
-        private string arşivYolu;
-
-        private bool compress;
-
-        private InpcBase currentView;
-
         static MainViewModel()
         {
             Yıllar = Enumerable.Range(DateTime.Now.Year - 50, 100);
@@ -303,5 +297,11 @@ namespace Kutuphane.ViewModel
         public ICommand WebAdreseGit { get; }
 
         public ICommand Yedekle { get; }
+
+        private string arşivYolu;
+
+        private bool compress;
+
+        private InpcBase currentView;
     }
 }

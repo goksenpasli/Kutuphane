@@ -6,20 +6,11 @@ namespace TwainWpf
 {
     public class DataSource : IDisposable
     {
-        private readonly Identity _applicationId;
-
-        private readonly IWindowsMessageHook _messageHook;
-
         public DataSource(Identity applicationId, Identity sourceId, IWindowsMessageHook messageHook)
         {
             _applicationId = applicationId;
             SourceId = sourceId.Clone();
             _messageHook = messageHook;
-        }
-
-        ~DataSource()
-        {
-            Dispose(false);
         }
 
         public bool PaperDetectable
@@ -570,6 +561,15 @@ namespace TwainWpf
             {
                 Close();
             }
+        }
+
+        private readonly Identity _applicationId;
+
+        private readonly IWindowsMessageHook _messageHook;
+
+        ~DataSource()
+        {
+            Dispose(false);
         }
 
         private bool NegotiateArea(ScanSettings scanSettings)

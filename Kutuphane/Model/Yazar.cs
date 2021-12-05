@@ -6,10 +6,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Yazar")]
     public class Yazar : InpcBase
     {
-        private string ad;
-
-        private int ıd;
-
         [XmlAttribute(AttributeName = "Ad")]
         public string Ad
         {
@@ -39,5 +35,9 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        private string ad;
+
+        private int ıd;
     }
 }

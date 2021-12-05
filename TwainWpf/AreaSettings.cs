@@ -7,16 +7,6 @@ namespace TwainWpf
 {
     public class AreaSettings : INotifyPropertyChanged
     {
-        private float _bottom;
-
-        private float _left;
-
-        private float _right;
-
-        private float _top;
-
-        private Units _units;
-
         public AreaSettings(Units units, float top, float left, float bottom, float right)
         {
             _units = units;
@@ -80,6 +70,16 @@ namespace TwainWpf
                 OnPropertyChanged(nameof(Units));
             }
         }
+
+        private float _bottom;
+
+        private float _left;
+
+        private float _right;
+
+        private float _top;
+
+        private Units _units;
 
         #region INotifyPropertyChanged Members
 

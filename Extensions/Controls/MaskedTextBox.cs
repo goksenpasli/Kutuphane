@@ -27,15 +27,6 @@ namespace Extensions
 
         public static readonly DependencyProperty ValueTypeProperty = DependencyProperty.Register("ValueType", typeof(Type), typeof(MaskedTextBox), new UIPropertyMetadata(typeof(string), OnValueTypeChanged));
 
-        private bool _convertExceptionOccurred;
-
-        private bool _isInitialized;
-
-        /// <summary>
-        ///     Flags if the Text and Value properties are in the process of being sync'd
-        /// </summary>
-        private bool _isSyncingTextAndValueProperties;
-
         static MaskedTextBox()
         {
             TextProperty.OverrideMetadata(typeof(MaskedTextBox), new FrameworkPropertyMetadata(OnTextChanged));
@@ -72,14 +63,14 @@ namespace Extensions
 
         public Type ValueType { get => (Type)GetValue(ValueTypeProperty); set => SetValue(ValueTypeProperty, value); }
 
-        protected MaskedTextProvider MaskProvider { get; set; }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             UpdateMaskProvider(Mask);
             UpdateText(0);
         }
+
+        protected MaskedTextProvider MaskProvider { get; set; }
 
         protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
@@ -173,6 +164,15 @@ namespace Extensions
                 SyncTextAndValueProperties(TextProperty, Text);
             }
         }
+
+        private bool _convertExceptionOccurred;
+
+        private bool _isInitialized;
+
+        /// <summary>
+        ///     Flags if the Text and Value properties are in the process of being sync'd
+        /// </summary>
+        private bool _isSyncingTextAndValueProperties;
 
         private static void OnIncludeLiteralsPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {

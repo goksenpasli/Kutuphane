@@ -12,8 +12,6 @@ namespace Kutuphane.ViewModel
 {
     public class KişiGirişViewModel : InpcBase
     {
-        private Kişi kişi;
-
         public KişiGirişViewModel()
         {
             Kişi = new Kişi();
@@ -99,6 +97,8 @@ namespace Kutuphane.ViewModel
         {
             return "KİŞİ GİRİŞ";
         }
+
+        private Kişi kişi;
 
         private void KişiGirişViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

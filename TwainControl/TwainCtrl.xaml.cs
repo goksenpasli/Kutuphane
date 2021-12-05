@@ -19,44 +19,6 @@ namespace TwainControl
 {
     public partial class TwainCtrl : UserControl, INotifyPropertyChanged, IDisposable
     {
-        private ScanSettings _settings;
-
-        private bool adf;
-
-        private bool arayüzetkin = true;
-
-        private bool autoRotate;
-
-        private bool borderDetect;
-
-        private bool? bw = false;
-
-        private bool deskew;
-
-        private bool disposedValue;
-
-        private bool duplex;
-
-        private double eşik = 160d;
-
-        private ObservableCollection<BitmapFrame> resimler = new();
-
-        private ImageSource seçiliResim;
-
-        private IList seçiliresimler = new ObservableCollection<BitmapFrame>();
-
-        private string seçiliTarayıcı;
-
-        private bool seperateSave;
-
-        private bool showProgress;
-
-        private bool showUi;
-
-        private IList<string> tarayıcılar;
-
-        private Twain twain;
-
         public TwainCtrl()
         {
             InitializeComponent();
@@ -373,6 +335,44 @@ namespace TwainControl
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private ScanSettings _settings;
+
+        private bool adf;
+
+        private bool arayüzetkin = true;
+
+        private bool autoRotate;
+
+        private bool borderDetect;
+
+        private bool? bw = false;
+
+        private bool deskew;
+
+        private bool disposedValue;
+
+        private bool duplex;
+
+        private double eşik = 160d;
+
+        private ObservableCollection<BitmapFrame> resimler = new();
+
+        private ImageSource seçiliResim;
+
+        private IList seçiliresimler = new ObservableCollection<BitmapFrame>();
+
+        private string seçiliTarayıcı;
+
+        private bool seperateSave;
+
+        private bool showProgress;
+
+        private bool showUi;
+
+        private IList<string> tarayıcılar;
+
+        private Twain twain;
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

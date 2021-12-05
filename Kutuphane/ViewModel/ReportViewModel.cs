@@ -64,6 +64,17 @@ namespace Kutuphane.ViewModel
 
         public ICommand KitapTutanakRaporu { get; }
 
+        internal class Data : Kişi
+        {
+            public double Ceza { get; internal set; }
+
+            public double Gün { get; internal set; }
+
+            public string KitapAdı { get; internal set; }
+
+            public DateTime Tarih { get; internal set; }
+        }
+
         private static string ExeFolder { get; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
         private static Data GenerateData(Kişi kişi, İşlem işlem)
@@ -88,17 +99,6 @@ namespace Kutuphane.ViewModel
                 data.Add(new Data() { Ad = kişi.Ad, Soyad = kişi.Soyad, KitapAdı = kitap.Ad });
             }
             return data;
-        }
-
-        internal class Data : Kişi
-        {
-            public double Ceza { get; internal set; }
-
-            public double Gün { get; internal set; }
-
-            public string KitapAdı { get; internal set; }
-
-            public DateTime Tarih { get; internal set; }
         }
     }
 }

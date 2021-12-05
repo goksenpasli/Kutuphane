@@ -16,8 +16,6 @@ namespace Kutuphane.ViewModel
 
         public static readonly DependencyProperty ShowShadowProperty = DependencyProperty.Register("ShowShadow", typeof(bool), typeof(ShadowedImage), new PropertyMetadata(false));
 
-        private readonly Pen pen = new() { Thickness = 3 };
-
         public ShadowedImage()
         {
             pen.Brush = OverlayColor;
@@ -69,5 +67,7 @@ namespace Kutuphane.ViewModel
                 dc.DrawLine(pen, new Point(0, 0), new Point(ActualWidth, ActualHeight));
             }
         }
+
+        private readonly Pen pen = new() { Thickness = 3 };
     }
 }

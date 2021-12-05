@@ -3,13 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Kutuphane.ViewModel
 {
-    internal struct LASTINPUTINFO
-    {
-        public uint cbSize;
-
-        public uint dwTime;
-    }
-
     public static class IdleTimeFinder
     {
         public static long GetLastInputTime()
@@ -37,5 +30,12 @@ namespace Kutuphane.ViewModel
 
         [DllImport("User32.dll")]
         private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+    }
+
+    internal struct LASTINPUTINFO
+    {
+        public uint cbSize;
+
+        public uint dwTime;
     }
 }

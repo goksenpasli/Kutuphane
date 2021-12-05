@@ -16,8 +16,6 @@ namespace Kutuphane.ViewModel
 {
     public class AppSettingsViewModel : InpcBase
     {
-        private static readonly SpeechSynthesizer synthesizer = new() { Volume = 100 };
-
         static AppSettingsViewModel()
         {
             TtsDilleri = synthesizer.GetInstalledVoices().Select(z => z.VoiceInfo.Name);
@@ -105,5 +103,7 @@ namespace Kutuphane.ViewModel
                 timer.Start();
             }
         }
+
+        private static readonly SpeechSynthesizer synthesizer = new() { Volume = 100 };
     }
 }

@@ -11,10 +11,6 @@ namespace Kutuphane.View
     /// </summary>
     public partial class KimlikKartıMultipleView : UserControl, INotifyPropertyChanged
     {
-        private ICommand imzaSil;
-
-        private ICommand kareKodYazdır;
-
         public KimlikKartıMultipleView()
         {
             InitializeComponent();
@@ -71,5 +67,9 @@ namespace Kutuphane.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private ICommand imzaSil;
+
+        private ICommand kareKodYazdır;
     }
 }

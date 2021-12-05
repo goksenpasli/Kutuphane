@@ -10,8 +10,6 @@ namespace Kutuphane.ViewModel
 {
     public class GecikenKitaplarSimpleViewModel : InpcBase
     {
-        private ObservableCollection<Kişi> yaklaşanİşlemler;
-
         public ObservableCollection<Kişi> Yaklaşanİşlemler
         {
             get
@@ -37,5 +35,7 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private ObservableCollection<Kişi> yaklaşanİşlemler;
     }
 }

@@ -9,14 +9,6 @@ namespace TwainWpf
     /// </summary>
     public class RotationSettings : INotifyPropertyChanged
     {
-        private bool _automaticBorderDetection;
-
-        private bool _automaticDeskew;
-
-        private bool _automaticRotate;
-
-        private FlipRotation _flipSideRotation;
-
         /// <summary>
         /// Gets or sets a value indicating whether [automatic border detection].
         /// </summary>
@@ -90,6 +82,14 @@ namespace TwainWpf
                 }
             }
         }
+
+        private bool _automaticBorderDetection;
+
+        private bool _automaticDeskew;
+
+        private bool _automaticRotate;
+
+        private FlipRotation _flipSideRotation;
 
         #region INotifyPropertyChanged Members
 

@@ -7,10 +7,6 @@ namespace Kutuphane.ViewModel
 {
     public class ViewerTemplateSelector : DataTemplateSelector
     {
-        private readonly string[] imageext = new string[] { ".jpg", ".jpeg", ".tif", ".tiff", ".png" };
-
-        private readonly string[] videoext = new string[] { ".mp4", ".wmv", ".avi", ".mpg", ".3gp" };
-
         public DataTemplate Empty { get; set; }
 
         public DataTemplate Image { get; set; }
@@ -55,5 +51,9 @@ namespace Kutuphane.ViewModel
             }
             return Empty;
         }
+
+        private readonly string[] imageext = new string[] { ".jpg", ".jpeg", ".tif", ".tiff", ".png" };
+
+        private readonly string[] videoext = new string[] { ".mp4", ".wmv", ".avi", ".mpg", ".3gp" };
     }
 }

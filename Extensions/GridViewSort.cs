@@ -263,12 +263,6 @@ namespace Extensions
 
         private class SortGlyphAdorner : Adorner
         {
-            private readonly GridViewColumnHeader _columnHeader;
-
-            private readonly ListSortDirection _direction;
-
-            private readonly ImageSource _sortGlyph;
-
             public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
                 : base(columnHeader)
             {
@@ -293,6 +287,12 @@ namespace Extensions
                     drawingContext.DrawGeometry(Brushes.LightGray, new Pen(Brushes.Gray, 1.0), GetDefaultGlyph());
                 }
             }
+
+            private readonly GridViewColumnHeader _columnHeader;
+
+            private readonly ListSortDirection _direction;
+
+            private readonly ImageSource _sortGlyph;
 
             private Geometry GetDefaultGlyph()
             {

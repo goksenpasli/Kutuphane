@@ -37,38 +37,38 @@
             <Button x:Name="Play"
                 Grid.Column="0"
                 Width="24" Height="24"
-                Click="Play_Click" Content="4" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="Play_Click" Content="4" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Button x:Name="Pause"
                 Grid.Column="1"
                 Width="24" Height="24"
-                Click="Pause_Click" Content=";" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="Pause_Click" Content=";" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Button x:Name="Stop"
                 Grid.Column="2"
                 Width="24" Height="24"
-                Click="Stop_Click" Content="&lt;" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="Stop_Click" Content="&lt;" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Button x:Name="Back"
                 Grid.Column="3"
                 Width="24" Height="24"
-                Click="Back_Click" Content="7" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="Back_Click" Content="7" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Button x:Name="Forward"
                 Grid.Column="4"
                 Width="24" Height="24"
-                Click="Forward_Click" Content="8" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="Forward_Click" Content="8" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Button x:Name="SlowBackward"
                 Grid.Column="5"
                 Width="24" Height="24"
-                Click="SlowBackward_Click" Content="9" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="SlowBackward_Click" Content="9" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Button x:Name="SlowForward"
                 Grid.Column="6"
                 Width="24" Height="24"
-                Click="SlowForward_Click" Content=":" FontFamily="Webdings"
-                FontSize="18" Foreground="Blue" />
+                Click="SlowForward_Click" Content=":" FontFamily="Webdings" FontSize="18"
+                Foreground="Blue" />
             <Slider x:Name="Sld"
                 Grid.Column="7"
                 VerticalAlignment="Center"
@@ -82,8 +82,8 @@
                 Grid.Column="8"
                 Width="24" Height="24"
                 Margin="1,0,1,0"
-                Checked="Mute_Checked" FontSize="18" Foreground="Blue"
-                IsThreeState="False" Unchecked="Mute_Unchecked">
+                Checked="Mute_Checked" FontSize="18" Foreground="Blue" IsThreeState="False"
+                Unchecked="Mute_Unchecked">
                 <ToggleButton.Style>
                     <Style TargetType="ToggleButton">
                         <Style.Triggers>
@@ -122,8 +122,8 @@
                 Grid.Column="11"
                 Width="24" Height="24"
                 VerticalContentAlignment="Center"
-                Click="Capture_Click" Content="N" FontFamily="Webdings"
-                FontSize="20" Foreground="Blue" ToolTip="Ekran Yakala Resimlerim Klasörüne Kaydedilir." />
+                Click="Capture_Click" Content="N" FontFamily="Webdings" FontSize="20"
+                Foreground="Blue" ToolTip="Ekran Yakala Resimlerim Klasörüne Kaydedilir." />
         </Grid>
     </Grid>
 </UserControl>

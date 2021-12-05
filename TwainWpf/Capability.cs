@@ -5,14 +5,6 @@ namespace TwainWpf
 {
     public class Capability
     {
-        private readonly Identity _applicationId;
-
-        private readonly Capabilities _capability;
-
-        private readonly Identity _sourceId;
-
-        private readonly TwainType _twainType;
-
         public Capability(Capabilities capability, TwainType twainType, Identity applicationId, Identity sourceId)
         {
             _capability = capability;
@@ -183,5 +175,13 @@ namespace TwainWpf
                 throw new TwainException("Failed to set capability.", result);
             }
         }
+
+        private readonly Identity _applicationId;
+
+        private readonly Capabilities _capability;
+
+        private readonly Identity _sourceId;
+
+        private readonly TwainType _twainType;
     }
 }

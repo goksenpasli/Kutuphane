@@ -16,36 +16,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapGüncelleViewModel : InpcBase
     {
-        private string kişiKitapAdArama;
-
-        private string kişiKitapBarkodArama;
-
-        private int kişiKitapKonumArama = 4;
-
-        private string kişiKitapRenkArama;
-
-        private int kişiKitapYılArama;
-
-        private string kitapTopluAd;
-
-        private string kitapTopluBarkod;
-
-        private int? kitapTopluBasımYılı;
-
-        private bool? kitapTopluDemirbaş;
-
-        private int? kitapTopluDolapId;
-
-        private bool? kitapTopluÖdünç;
-
-        private string kitapTopluRenk;
-
-        private ObservableCollection<Dolap> seçiliDolaplar = new();
-
-        private Kitap seçiliKitap;
-
-        private ObservableCollection<Kitap> seçiliKitaplar = new();
-
         public KitapGüncelleViewModel()
         {
             KitapGüncelle = new RelayCommand<object>(parameter =>
@@ -61,7 +31,7 @@ namespace Kutuphane.ViewModel
                         MessageBox.Show("Hatalı Girişleri Düzeltin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
-            }, parameter => true);
+            }, parameter => parameter is ObservableCollection<Kitap> kitaplar && kitaplar?.Any() == true);
 
             KitapGit = new RelayCommand<object>(parameter =>
             {
@@ -311,6 +281,36 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private string kişiKitapAdArama;
+
+        private string kişiKitapBarkodArama;
+
+        private int kişiKitapKonumArama = 4;
+
+        private string kişiKitapRenkArama;
+
+        private int kişiKitapYılArama;
+
+        private string kitapTopluAd;
+
+        private string kitapTopluBarkod;
+
+        private int? kitapTopluBasımYılı;
+
+        private bool? kitapTopluDemirbaş;
+
+        private int? kitapTopluDolapId;
+
+        private bool? kitapTopluÖdünç;
+
+        private string kitapTopluRenk;
+
+        private ObservableCollection<Dolap> seçiliDolaplar = new();
+
+        private Kitap seçiliKitap;
+
+        private ObservableCollection<Kitap> seçiliKitaplar = new();
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

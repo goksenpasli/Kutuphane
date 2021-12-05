@@ -12,20 +12,6 @@ namespace Kutuphane.View
     /// </summary>
     public partial class KimlikKartıView : UserControl, INotifyPropertyChanged
     {
-        private Brush _BirleşikRenk;
-
-        private bool _RadialBrush;
-
-        private string _Renk = "Transparent";
-
-        private string _Renk1 = "Maroon";
-
-        private string _Renk2 = "Blue";
-
-        private string _YazıRenk = "Black";
-
-        private ICommand imzaSil;
-
         public KimlikKartıView()
         {
             InitializeComponent();
@@ -148,5 +134,19 @@ namespace Kutuphane.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private Brush _BirleşikRenk;
+
+        private bool _RadialBrush;
+
+        private string _Renk = "Transparent";
+
+        private string _Renk1 = "Maroon";
+
+        private string _Renk2 = "Blue";
+
+        private string _YazıRenk = "Black";
+
+        private ICommand imzaSil;
     }
 }

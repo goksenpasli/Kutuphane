@@ -6,12 +6,6 @@ namespace Extensions
     {
         public class Chart : InpcBase
         {
-            private Brush chartBrush = Brushes.Gray;
-
-            private double chartValue;
-
-            private string description;
-
             public Brush ChartBrush
             {
                 get => chartBrush;
@@ -53,6 +47,12 @@ namespace Extensions
                     }
                 }
             }
+
+            private Brush chartBrush = Brushes.Gray;
+
+            private double chartValue;
+
+            private string description;
         }
     }
 }

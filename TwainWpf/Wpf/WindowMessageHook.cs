@@ -6,12 +6,6 @@ namespace TwainWpf.Wpf
 {
     public class WindowMessageHook : IWindowsMessageHook
     {
-        private readonly WindowInteropHelper _interopHelper;
-
-        private readonly HwndSource _source;
-
-        private bool _usingFilter;
-
         public WindowMessageHook(Window window)
         {
             _source = (HwndSource)PresentationSource.FromDependencyObject(window);
@@ -49,5 +43,11 @@ namespace TwainWpf.Wpf
             }
             return FilterMessageCallback(hwnd, msg, wParam, lParam, ref handled);
         }
+
+        private readonly WindowInteropHelper _interopHelper;
+
+        private readonly HwndSource _source;
+
+        private bool _usingFilter;
     }
 }

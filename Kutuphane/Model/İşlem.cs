@@ -7,32 +7,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "İşlem")]
     public class İşlem : InpcBase
     {
-        private DateTime başlangıçTarihi = DateTime.Today;
-
-        private bool ceza;
-
-        private DateTime cezaÖdemeTarihi;
-
-        private double cezaTutar;
-
-        private DateTime geriGetirmeTarihi = DateTime.Today;
-
-        private int ıd;
-
-        private bool işlemBitti;
-
-        private int kişiId;
-
-        private double kitapGün = 1;
-
-        private int kitapId;
-
-        private Kitap seçiliKitap;
-
-        private bool uzatıldı;
-
-        private int uzatmaSayısı;
-
         [XmlAttribute(AttributeName = "BaşlangıçTarihi")]
         public DateTime BaşlangıçTarihi
         {
@@ -229,5 +203,31 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        private DateTime başlangıçTarihi = DateTime.Today;
+
+        private bool ceza;
+
+        private DateTime cezaÖdemeTarihi;
+
+        private double cezaTutar;
+
+        private DateTime geriGetirmeTarihi = DateTime.Today;
+
+        private int ıd;
+
+        private bool işlemBitti;
+
+        private int kişiId;
+
+        private double kitapGün = 1;
+
+        private int kitapId;
+
+        private Kitap seçiliKitap;
+
+        private bool uzatıldı;
+
+        private int uzatmaSayısı;
     }
 }

@@ -14,18 +14,6 @@ namespace Kutuphane.ViewModel
 {
     public class QrCodeMultipleViewModel : InpcBase
     {
-        private Barkod barkod;
-
-        private ObservableCollection<BitmapSource> barkodResimler = new();
-
-        private int boy = 4;
-
-        private int en = 4;
-
-        private bool kitapRenkKullan;
-
-        private bool pureBarcode;
-
         public QrCodeMultipleViewModel()
         {
             Barkod = new Barkod();
@@ -152,6 +140,18 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private Barkod barkod;
+
+        private ObservableCollection<BitmapSource> barkodResimler = new();
+
+        private int boy = 4;
+
+        private int en = 4;
+
+        private bool kitapRenkKullan;
+
+        private bool pureBarcode;
 
         private void Barkod_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

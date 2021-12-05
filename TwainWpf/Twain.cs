@@ -7,8 +7,6 @@ namespace TwainWpf
 {
     public class Twain
     {
-        private readonly DataSourceManager _dataSourceManager;
-
         public Twain(IWindowsMessageHook messageHook)
         {
             ScanningComplete += delegate { };
@@ -91,5 +89,7 @@ namespace TwainWpf
         {
             _dataSourceManager.StartScan(settings);
         }
+
+        private readonly DataSourceManager _dataSourceManager;
     }
 }

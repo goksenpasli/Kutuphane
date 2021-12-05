@@ -101,10 +101,6 @@ namespace Extensions
 
     public class RelayCommand : ICommand
     {
-        protected readonly Func<bool> canExecute;
-
-        protected readonly Action execute;
-
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
@@ -144,5 +140,9 @@ namespace Extensions
         {
             execute();
         }
+
+        protected readonly Func<bool> canExecute;
+
+        protected readonly Action execute;
     }
 }

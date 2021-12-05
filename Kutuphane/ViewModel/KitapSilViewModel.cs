@@ -8,8 +8,6 @@ namespace Kutuphane.ViewModel
 {
     public class KitapSilViewModel : InpcBase
     {
-        private ObservableCollection<Kitap> seçiliKitaplar = new();
-
         public KitapSilViewModel()
         {
             KitapSil = new RelayCommand<object>(parameter =>
@@ -53,5 +51,7 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private ObservableCollection<Kitap> seçiliKitaplar = new();
     }
 }

@@ -6,16 +6,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "Dolap")]
     public class Dolap : InpcBase
     {
-        private string açıklama;
-
-        private bool etkin = true;
-
-        private int ıd;
-
-        private double kod = 1;
-
-        private bool seçili = true;
-
         [XmlAttribute(AttributeName = "Açıklama")]
         public string Açıklama
         {
@@ -90,5 +80,15 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        private string açıklama;
+
+        private bool etkin = true;
+
+        private int ıd;
+
+        private double kod = 1;
+
+        private bool seçili = true;
     }
 }

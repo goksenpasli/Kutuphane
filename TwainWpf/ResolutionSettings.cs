@@ -40,10 +40,6 @@ namespace TwainWpf
             ColourSetting = ColourSetting.GreyScale
         };
 
-        private ColourSetting _colourSettings;
-
-        private int? _dpi;
-
         /// <summary>
         /// The colour settings to use.
         /// </summary>
@@ -77,6 +73,10 @@ namespace TwainWpf
                 }
             }
         }
+
+        private ColourSetting _colourSettings;
+
+        private int? _dpi;
 
         #region INotifyPropertyChanged Members
 

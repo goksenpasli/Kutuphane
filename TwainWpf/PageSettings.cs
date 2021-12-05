@@ -18,10 +18,6 @@ namespace TwainWpf
             Orientation = Orientation.Default
         };
 
-        private Orientation _orientation;
-
-        private PageType _size;
-
         public PageSettings()
         {
             Size = PageType.UsLetter;
@@ -63,6 +59,10 @@ namespace TwainWpf
                 }
             }
         }
+
+        private Orientation _orientation;
+
+        private PageType _size;
 
         #region INotifyPropertyChanged Members
 

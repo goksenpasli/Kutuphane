@@ -101,8 +101,8 @@
             </Grid.RowDefinitions>
             <FlowDocumentScrollViewer x:Name="Fd" VerticalScrollBarVisibility="Disabled">
                 <FlowDocument Background="{Binding ElementName=Cb, Path=SelectedItem.Background}"
-                    Block.LineHeight="1" FontFamily="Times New Roman" FontSize="16"
-                    Language="tr-tr" PagePadding="0">
+                    Block.LineHeight="1" FontFamily="Times New Roman" FontSize="16" Language="tr-tr"
+                    PagePadding="0">
                     <FlowDocument.Resources>
                         <Style TargetType="Run">
                             <Setter Property="Foreground" Value="{Binding YazıRenk, ElementName=UserControl}" />

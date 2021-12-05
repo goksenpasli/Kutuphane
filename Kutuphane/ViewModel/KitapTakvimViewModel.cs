@@ -42,8 +42,6 @@ namespace Kutuphane.ViewModel
 
     public class KitapTakvimViewModel : InpcBase
     {
-        private DateTime? seçiliGün;
-
         public KitapTakvimViewModel()
         {
             PropertyChanged += KitapTakvimViewModel_PropertyChanged;
@@ -62,6 +60,8 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private DateTime? seçiliGün;
 
         private void KitapTakvimViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

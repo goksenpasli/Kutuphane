@@ -7,10 +7,6 @@ namespace Kutuphane.ViewModel
 {
     public class DolapDüzenViewModel : InpcBase
     {
-        private string dolapAdı;
-
-        private Dolap seçiliDolap;
-
         public DolapDüzenViewModel()
         {
             DolapGüncelle = new RelayCommand<object>(parameter => MainViewModel.DatabaseSave.Execute(null), parameter => parameter is Dolap dolap && !string.IsNullOrWhiteSpace(dolap.Açıklama) && !double.IsNaN(dolap.Kod));
@@ -47,6 +43,10 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private string dolapAdı;
+
+        private Dolap seçiliDolap;
 
         private void DolapDüzenViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

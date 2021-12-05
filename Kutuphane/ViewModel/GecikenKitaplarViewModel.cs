@@ -10,14 +10,6 @@ namespace Kutuphane.ViewModel
 {
     public class GecikenKitaplarViewModel : InpcBase
     {
-        private İşlem işlem;
-
-        private Kişi kişi;
-
-        private bool tarihEtkin = true;
-
-        private DateTime uzatılmaTarihi = DateTime.Today;
-
         public GecikenKitaplarViewModel()
         {
             Kişi = new Kişi();
@@ -96,6 +88,14 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand UzatmaGir { get; }
+
+        private İşlem işlem;
+
+        private Kişi kişi;
+
+        private bool tarihEtkin = true;
+
+        private DateTime uzatılmaTarihi = DateTime.Today;
 
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

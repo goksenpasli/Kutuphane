@@ -11,8 +11,6 @@ namespace Extensions
     {
         public static readonly DependencyProperty SeriesProperty = DependencyProperty.Register("Series", typeof(ObservableCollection<Chart>), typeof(GraphControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        private Visibility seriesListVisibility;
-
         static GraphControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GraphControl), new FrameworkPropertyMetadata(typeof(GraphControl)));
@@ -52,6 +50,8 @@ namespace Extensions
                 DrawGraph(drawingContext, Series);
             }
         }
+
+        private Visibility seriesListVisibility;
 
         private DrawingContext DrawGraph(DrawingContext drawingContext, ObservableCollection<Chart> Series)
         {

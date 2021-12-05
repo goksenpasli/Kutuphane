@@ -31,8 +31,8 @@
                         <Button Command="{Binding Durdur}" Content="DURDUR" />
                         <Button Command="{Binding Oynat}" Content="OYNAT" />
                         <Button Command="{Binding Kaydet}" Content="KAYDET" />
-                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="360"
-                            Minimum="0" SmallChange="1" Ticks="0,90,180,270,360"
+                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="360" Minimum="0"
+                            SmallChange="1" Ticks="0,90,180,270,360"
                             Value="{Binding Rotation}" />
                     </UniformGrid>
                 </StackPanel>

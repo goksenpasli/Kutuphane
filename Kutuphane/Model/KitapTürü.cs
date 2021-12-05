@@ -6,10 +6,6 @@ namespace Kutuphane.Model
     [XmlRoot(ElementName = "KitapTürü")]
     public class KitapTürü : InpcBase
     {
-        private string açıklama;
-
-        private int ıd;
-
         [XmlAttribute(AttributeName = "Açıklama")]
         public string Açıklama
         {
@@ -39,5 +35,9 @@ namespace Kutuphane.Model
                 }
             }
         }
+
+        private string açıklama;
+
+        private int ıd;
     }
 }

@@ -32,8 +32,6 @@ namespace Extensions
 
         public const uint SHGFI_USEFILEATTRIBUTES = 0x000000010;
 
-        private static readonly IntPtr hwnd = Process.GetCurrentProcess().Handle;
-
         public enum FolderType
         {
             Closed = 0,
@@ -439,5 +437,7 @@ namespace Extensions
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
             public string szTypeName;
         }
+
+        private static readonly IntPtr hwnd = Process.GetCurrentProcess().Handle;
     }
 }

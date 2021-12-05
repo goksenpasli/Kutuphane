@@ -33,24 +33,6 @@ namespace Extensions
 
         public static readonly DependencyProperty ZoomProperty = DependencyProperty.Register("Zoom", typeof(double), typeof(ImageViewer), new PropertyMetadata(1.0));
 
-        private TiffBitmapDecoder decoder;
-
-        private FitImageOrientation fitImageOrientation;
-
-        private Visibility openButtonVisibility = Visibility.Collapsed;
-
-        private Visibility orijinalResimDosyaAçButtonVisibility;
-
-        private IEnumerable<int> pages;
-
-        private Visibility printButtonVisibility = Visibility.Collapsed;
-
-        private int sayfa = 1;
-
-        private Visibility tifNavigasyonButtonEtkin = Visibility.Collapsed;
-
-        private Visibility toolBarVisibility;
-
         static ImageViewer()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageViewer), new FrameworkPropertyMetadata(typeof(ImageViewer)));
@@ -328,6 +310,24 @@ namespace Extensions
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private TiffBitmapDecoder decoder;
+
+        private FitImageOrientation fitImageOrientation;
+
+        private Visibility openButtonVisibility = Visibility.Collapsed;
+
+        private Visibility orijinalResimDosyaAçButtonVisibility;
+
+        private IEnumerable<int> pages;
+
+        private Visibility printButtonVisibility = Visibility.Collapsed;
+
+        private int sayfa = 1;
+
+        private Visibility tifNavigasyonButtonEtkin = Visibility.Collapsed;
+
+        private Visibility toolBarVisibility;
 
         private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
