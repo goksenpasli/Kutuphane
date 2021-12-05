@@ -333,7 +333,7 @@
                                 Content="KİTAP RESİM YÜKLE" />
                         </GroupBox.Header>
                         <Extensions:ImageViewer FitImageOrientation="Height"
-                            ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}, ElementName=listView}"
+                            ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource FilePathMergeConverter}, ElementName=listView}"
                             OrijinalResimDosyaAçButtonVisibility="Collapsed" PrintButtonVisibility="Visible" />
                     </GroupBox>
                     <UniformGrid Grid.Row="1"

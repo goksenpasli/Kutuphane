@@ -49,7 +49,12 @@ namespace Extensions.Controls
 
         private static readonly MediaElement mediaElement = new() { UnloadedBehavior = MediaState.Manual, ScrubbingEnabled = true };
 
-        private static readonly ToolTip tooltip = new();
+        private static readonly ToolTip tooltip = new()
+        {
+            Width = 96 * SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight,
+            Height = 96,
+            Placement = PlacementMode.Mouse
+        };
 
         private static bool dragging;
 
@@ -198,19 +203,18 @@ namespace Extensions.Controls
                       {
                           _ = Dispatcher.BeginInvoke(() =>
                           {
-                              double oran = SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight;
-                              tooltip.Width = 96 * oran;
-                              tooltip.Height = 96;
                               tooltip.PlacementTarget = Sld;
-                              tooltip.Placement = PlacementMode.Mouse;
-                              double predictedValue = PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth);
                               mediaElement.IsMuted = true;
                               mediaElement.Source = Player.Source;
                               mediaElement.Height = tooltip.Height;
                               mediaElement.Width = tooltip.Width;
                               mediaElement.Pause();
-                              mediaElement.Position = TimeSpan.FromSeconds(predictedValue);
+                              mediaElement.Position = TimeSpan.FromSeconds((double)PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth));
                               image.Source = mediaElement.ToRenderTargetBitmap();
+                              if (image.Source.CanFreeze)
+                              {
+                                  image.Source.Freeze();
+                              }
                               tooltip.Content = image;
                               if (!tooltip.IsOpen)
                               {

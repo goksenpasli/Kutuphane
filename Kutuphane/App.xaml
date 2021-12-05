@@ -31,7 +31,6 @@
             <Extensions:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <Kutuphane:CloneConverter x:Key="CloneConverter" />
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ImageFilePathToBitmapImageConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
-            <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="ScannedImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="150" />
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="120" />
             <Kutuphane:FilePathMergeConverter x:Key="FilePathMergeConverter" />
             <Kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />

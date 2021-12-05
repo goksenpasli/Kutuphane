@@ -120,7 +120,7 @@
                     <Button Command="{Binding TtsRegImport, Mode=OneWay}" ToolTip="Türkçe TTS Seçimi İçin Registry Ayarı Yalnızca Aşağıda Comboboxda Micro$oft Tolga Yoksa Kullanın">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="32" Height="32">
+                                <Image Width="16" Height="16">
                                     <Image.Source>
                                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                             <Binding Source="User32.dll" />
@@ -139,9 +139,35 @@
                     ToolTip="TTS Dilini Seçin." />
             </HeaderedContentControl>
             <HeaderedContentControl Header="{Binding Path=KimlikArkaPlanResim, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" ToolTip="Kimliklerin Arkaplanına Belirtilen Resmi Yerleştirin.">
-                <Button Command="{Binding KimlikArkaplanResimGüncelle, Mode=OneWay}" Content="KİMLİK ARKAPLAN RESİM YÜKLE" />
+                <Button Command="{Binding KimlikArkaplanResimGüncelle, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16">
+                            <Image.Source>
+                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                    <Binding Source="Shell32.dll" />
+                                    <Binding Source="97" />
+                                </MultiBinding>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock VerticalAlignment="Center" Text="KİMLİK ARKAPLAN RESİM YÜKLE" />
+                    </StackPanel>
+                </Button>
             </HeaderedContentControl>
-            <Button Command="{Binding AyarlarıSıfırla}" Content="AYARLARI SIFIRLA" />
+            <Button Command="{Binding AyarlarıSıfırla}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="32" Height="32">
+                            <Image.Source>
+                                <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                    <Binding Source="Shell32.dll" />
+                                    <Binding Source="234" />
+                                </MultiBinding>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock VerticalAlignment="Center" Text="AYARLARI SIFIRLA" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
         </StackPanel>
     </GroupBox>
 
