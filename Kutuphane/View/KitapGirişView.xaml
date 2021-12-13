@@ -5,7 +5,8 @@
     xmlns:Kutuphane="clr-namespace:Kutuphane" xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     d:DataContext="{d:DesignInstance Type={x:Type ViewModel:KitapGirişViewModel}}"
     d:DesignHeight="600" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -164,7 +165,7 @@
                         <Extensions:NumericUpDownControl Maximum="100000" Minimum="1" ShowMode="CurrencyMode"
                             Value="{Binding Kitap.Fiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
-                    <StackPanel Grid.Row="9">
+                    <UniformGrid Grid.Row="9" Columns="2">
                         <CheckBox IsChecked="{Binding Kitap.Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="16" Height="16">
@@ -204,7 +205,20 @@
                                 <TextBlock VerticalAlignment="Center" Text="ÖDÜNÇ VERİLEBİLİR" />
                             </StackPanel>
                         </CheckBox>
-                    </StackPanel>
+                        <CheckBox IsChecked="{Binding Path=ResimKüçült, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="159" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock VerticalAlignment="Center" Text="KİTAP RESİM KÜÇÜLT" />
+                            </StackPanel>
+                        </CheckBox>
+                    </UniformGrid>
                     <Grid Grid.Row="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -214,7 +228,7 @@
                             <Run Text="AÇIKLAMA" />
                             <Run Text="{Binding Kitap.Açıklama.Length, Mode=OneWay, StringFormat={}{0}/500, FallbackValue=0}" />
                         </TextBlock>
-                        <TextBox Grid.Row="1"
+                        <TextBox Grid.Row="1" SpellCheck.IsEnabled="True"
                             d:Text="Buraya açıklama yazabilirsiniz." AcceptsReturn="True" MaxLength="500"
                             Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="Wrap" />

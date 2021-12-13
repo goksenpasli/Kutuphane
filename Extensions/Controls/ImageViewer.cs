@@ -25,7 +25,7 @@ namespace Extensions
     {
         public static readonly DependencyProperty AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(ImageViewer), new PropertyMetadata(0.0));
 
-        public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.Register("DecodeHeight", typeof(int), typeof(ImageViewer), new PropertyMetadata(300));
+        public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.Register("DecodeHeight", typeof(int), typeof(ImageViewer), new PropertyMetadata(300, DecodeHeightChanged));
 
         public static readonly DependencyProperty ImageFilePathProperty = DependencyProperty.Register("ImageFilePath", typeof(string), typeof(ImageViewer), new PropertyMetadata(null, ImageFilePathChanged));
 
@@ -329,54 +329,69 @@ namespace Extensions
 
         private Visibility toolBarVisibility;
 
-        private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void DecodeHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ImageViewer imageViewer)
             {
-                if (e.NewValue is not null)
+                string path = imageViewer.ImageFilePath;
+                imageViewer.DecodeHeight = (int)e.NewValue;
+                LoadImage(path, imageViewer);
+            }
+        }
+
+        private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ImageViewer imageViewer && e.NewValue is string filepath)
+            {
+                LoadImage(filepath, imageViewer);
+            }
+        }
+
+        private static void LoadImage(string filepath, ImageViewer imageViewer)
+        {
+            if (filepath is not null)
+            {
+                if (Path.GetExtension(filepath).ToLower() is ".tiff" or ".tif")
                 {
-                    if (Path.GetExtension(e.NewValue as string).ToLower() is ".tiff" or ".tif")
+                    imageViewer.Sayfa = 1;
+                    imageViewer.Decoder = new TiffBitmapDecoder(new Uri(filepath), BitmapCreateOptions.None, BitmapCacheOption.None);
+                    imageViewer.TifNavigasyonButtonEtkin = Visibility.Visible;
+                    imageViewer.Source = imageViewer.Decoder.Frames[0];
+                    imageViewer.Pages = Enumerable.Range(1, imageViewer.Decoder.Frames.Count);
+                }
+                else if (Path.GetExtension(filepath).ToLower() is ".png" or ".jpg" or ".jpeg")
+                {
+                    imageViewer.TifNavigasyonButtonEtkin = Visibility.Collapsed;
+                    BitmapImage image = new();
+                    image.BeginInit();
+                    image.DecodePixelHeight = imageViewer.DecodeHeight;
+                    image.CacheOption = BitmapCacheOption.None;
+                    image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                    image.UriSource = new Uri(filepath);
+                    image.EndInit();
+                    if (!image.IsFrozen && image.CanFreeze)
                     {
-                        imageViewer.Sayfa = 1;
-                        imageViewer.Decoder = new TiffBitmapDecoder(new Uri(e.NewValue as string), BitmapCreateOptions.None, BitmapCacheOption.None);
-                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Visible;
-                        imageViewer.Source = imageViewer.Decoder.Frames[0];
-                        imageViewer.Pages = Enumerable.Range(1, imageViewer.Decoder.Frames.Count);
+                        image.Freeze();
                     }
-                    else if (Path.GetExtension(e.NewValue as string).ToLower() is ".png" or ".jpg" or ".jpeg")
-                    {
-                        imageViewer.TifNavigasyonButtonEtkin = Visibility.Collapsed;
-                        BitmapImage image = new();
-                        image.BeginInit();
-                        image.DecodePixelHeight = imageViewer.DecodeHeight;
-                        image.CacheOption = BitmapCacheOption.None;
-                        image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                        image.UriSource = new Uri(e.NewValue as string);
-                        image.EndInit();
-                        if (!image.IsFrozen && image.CanFreeze)
-                        {
-                            image.Freeze();
-                        }
-                        imageViewer.Source = image;
-                    }
-                    else
-                    {
-                        FormattedText formattedText = new("ÖNİZLEME YOK EVRAKI DİREKT AÇIN", CultureInfo.GetCultureInfo("tr-TR"), FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Red) { TextAlignment = TextAlignment.Left };
-                        DrawingVisual dv = new();
-                        using (DrawingContext dc = dv.RenderOpen())
-                        {
-                            dc.DrawText(formattedText, new Point(10, 200));
-                        }
-                        RenderTargetBitmap rtb = new(315, 445, 96, 96, PixelFormats.Default);
-                        rtb.Render(dv);
-                        rtb.Freeze();
-                        imageViewer.Source = rtb;
-                    }
+                    imageViewer.Source = image;
                 }
                 else
                 {
-                    imageViewer.Source = null;
+                    FormattedText formattedText = new("ÖNİZLEME YOK EVRAKI DİREKT AÇIN", CultureInfo.GetCultureInfo("tr-TR"), FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Red) { TextAlignment = TextAlignment.Left };
+                    DrawingVisual dv = new();
+                    using (DrawingContext dc = dv.RenderOpen())
+                    {
+                        dc.DrawText(formattedText, new Point(10, 200));
+                    }
+                    RenderTargetBitmap rtb = new(315, 445, 96, 96, PixelFormats.Default);
+                    rtb.Render(dv);
+                    rtb.Freeze();
+                    imageViewer.Source = rtb;
                 }
+            }
+            else
+            {
+                imageViewer.ImageFilePath = null;
             }
         }
 

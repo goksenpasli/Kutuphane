@@ -208,6 +208,20 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public bool? KitapTopluFavori
+        {
+            get => kitapTopluFavori;
+
+            set
+            {
+                if (kitapTopluFavori != value)
+                {
+                    kitapTopluFavori = value;
+                    OnPropertyChanged(nameof(KitapTopluFavori));
+                }
+            }
+        }
+
         public bool? KitapTopluÖdünç
         {
             get => kitapTopluÖdünç;
@@ -302,6 +316,8 @@ namespace Kutuphane.ViewModel
 
         private int? kitapTopluDolapId;
 
+        private bool? kitapTopluFavori;
+
         private bool? kitapTopluÖdünç;
 
         private string kitapTopluRenk;
@@ -372,6 +388,13 @@ namespace Kutuphane.ViewModel
                     foreach (Kitap kitap in Kitaplar)
                     {
                         kitap.Demirbaş = KitapTopluDemirbaş == true;
+                    }
+                    break;
+
+                case "KitapTopluFavori":
+                    foreach (Kitap kitap in Kitaplar)
+                    {
+                        kitap.Favori = KitapTopluFavori == true;
                     }
                     break;
 

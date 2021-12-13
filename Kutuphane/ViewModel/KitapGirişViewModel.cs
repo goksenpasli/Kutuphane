@@ -21,35 +21,38 @@ namespace Kutuphane.ViewModel
 
             KitapEkle = new RelayCommand<object>(parameter =>
             {
-                Kitap kitap = KitapOluştur();
-                if (Kitap.TopluKitapGirişi)
+                if (parameter is Kütüphane kütüphane)
                 {
-                    for (int i = 0; i < Kitap.TopluKitapSayısı; i++)
+                    Kitap kitap = KitapOluştur();
+                    if (Kitap.TopluKitapGirişi)
                     {
-                        kitap = KitapOluştur();
-                        if (Kitap.OtomatikBarkod)
+                        for (int i = 0; i < Kitap.TopluKitapSayısı; i++)
                         {
-                            kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                            kitap = KitapOluştur();
+                            if (Kitap.OtomatikBarkod)
+                            {
+                                kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                            }
+                            kütüphane?.Kitaplar.Add(kitap);
                         }
-                        (parameter as Kütüphane)?.Kitaplar.Add(kitap);
                     }
-                }
-                else
-                {
-                    (parameter as Kütüphane)?.Kitaplar.Add(kitap);
-                }
+                    else
+                    {
+                        kütüphane?.Kitaplar.Add(kitap);
+                    }
 
-                if (Kitap.KitapSayıOtomatikArttır)
-                {
-                    kitap.DolapAltKod = Kitap.DolapAltKod++;
-                }
+                    if (Kitap.KitapSayıOtomatikArttır)
+                    {
+                        kitap.DolapAltKod = Kitap.DolapAltKod++;
+                    }
 
-                MainViewModel.DatabaseSave.Execute(null);
-                ResetKitap();
+                    MainViewModel.DatabaseSave.Execute(null);
+                    ResetKitap();
 
-                if (Kitap.OtomatikBarkod)
-                {
-                    Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                    if (Kitap.OtomatikBarkod)
+                    {
+                        Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                    }
                 }
             }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad) && !string.IsNullOrWhiteSpace(Kitap?.Barkod));
 
@@ -192,13 +195,13 @@ namespace Kutuphane.ViewModel
                 KitapDili = Kitap.KitapDili,
                 Renk = Kitap.Renk
             };
-            foreach (Yazar item in Kitap.SeçiliYazarlar)
+            foreach (Yazar yazar in Kitap.SeçiliYazarlar)
             {
-                kitap.Yazarlar.Add(item);
+                kitap.Yazarlar.Add(yazar);
             }
-            foreach (KitapTürü item in Kitap.SeçiliKitapTürleri)
+            foreach (KitapTürü kitaptürü in Kitap.SeçiliKitapTürleri)
             {
-                kitap.Türler.Add(item);
+                kitap.Türler.Add(kitaptürü);
             }
             return kitap;
         }

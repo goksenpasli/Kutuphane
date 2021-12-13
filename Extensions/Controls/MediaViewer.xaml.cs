@@ -28,6 +28,7 @@ namespace Extensions.Controls
         public MediaViewer()
         {
             InitializeComponent();
+            mediaElement.Pause();
             DataContext = this;
         }
 
@@ -47,7 +48,14 @@ namespace Extensions.Controls
 
         private static readonly Image image = new();
 
-        private static readonly MediaElement mediaElement = new() { UnloadedBehavior = MediaState.Manual, ScrubbingEnabled = true };
+        private static readonly MediaElement mediaElement = new()
+        {
+            UnloadedBehavior = MediaState.Manual,
+            ScrubbingEnabled = true,
+            IsMuted = true,
+            Height = 96,
+            Width = 96 * SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight,
+        };
 
         private static readonly ToolTip tooltip = new()
         {
@@ -86,7 +94,7 @@ namespace Extensions.Controls
                 }
                 catch (Exception ex)
                 {
-                    _ = MessageBox.Show(ex.Message, "EBYS", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(ex.Message, Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -203,12 +211,8 @@ namespace Extensions.Controls
                       {
                           _ = Dispatcher.BeginInvoke(() =>
                           {
-                              tooltip.PlacementTarget = Sld;
-                              mediaElement.IsMuted = true;
                               mediaElement.Source = Player.Source;
-                              mediaElement.Height = tooltip.Height;
-                              mediaElement.Width = tooltip.Width;
-                              mediaElement.Pause();
+                              tooltip.PlacementTarget = Sld;
                               mediaElement.Position = TimeSpan.FromSeconds((double)PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth));
                               image.Source = mediaElement.ToRenderTargetBitmap();
                               if (image.Source.CanFreeze)

@@ -56,12 +56,9 @@
             </HeaderedContentControl>
             <HeaderedContentControl>
                 <HeaderedContentControl.Header>
-                    <CheckBox Content="KİTAP RESİM KÜÇÜLT"
-                        IsChecked="{Binding Path=ResimKüçült, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"
-                        ToolTip="Bu İşaretlenirse Kitap Resmi Belirtilen Oranda Küçültülür." />
+                    <TextBlock Text="KİTAP RESİM KÜÇÜLT" ToolTip="Kitap Resmi Belirtilen Oranda Küçültülür." />
                 </HeaderedContentControl.Header>
-                <Extensions:NumericUpDownControl IsEnabled="{Binding Path=ResimKüçült, Mode=OneWay, Source={x:Static properties:Settings.Default}}"
-                    Maximum="1" Minimum="0.10" SmallChange="0.01" ToolTip="Kitap Resim Küçültme Oranı"
+                <Extensions:NumericUpDownControl Maximum="1" Minimum="0.10" SmallChange="0.01" ToolTip="Kitap Resim Küçültme Oranı"
                     Value="{Binding Path=ResimKüçültmeOranı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
             </HeaderedContentControl>
             <HeaderedContentControl>

@@ -24,10 +24,11 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <ListView x:Name="listView"
                     Extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKitaplar}"
@@ -38,14 +39,14 @@
                     SelectionMode="Extended" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="Favori">
+                            <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Favori">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ToggleButton Content="{StaticResource Favori}" IsChecked="{Binding Favori}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="100">
+                            <GridViewColumn Width="65">
                                 <GridViewColumn.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock>
@@ -102,7 +103,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="BasımYılı">
+                            <GridViewColumn Width="95" Extensions:GridViewSort.PropertyName="BasımYılı">
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock>
@@ -131,14 +132,16 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="Demirbaş" Header="DEMİRBAŞ">
+                            <GridViewColumn Width="80"
+                                Extensions:GridViewSort.PropertyName="Demirbaş" Header="DEMİRBAŞ">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ToggleButton Content="{StaticResource DemirbaşImage}" IsChecked="{Binding Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="ÖdünçVerilebilir" Header="ÖDÜNÇ&#xA;VERİLEBİLİR">
+                            <GridViewColumn Width="80"
+                                Extensions:GridViewSort.PropertyName="ÖdünçVerilebilir" Header="ÖDÜNÇ&#xA;VERİLEBİLİR">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ToggleButton Content="{StaticResource ÖdünçVerilebilir}" IsChecked="{Binding ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -209,7 +212,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="KitapDurumId">
+                            <GridViewColumn Width="130" Extensions:GridViewSort.PropertyName="KitapDurumId">
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock HorizontalAlignment="Center" Text="KİTAP DURUM" />
@@ -258,7 +261,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="SistemKayıtTarihi"
+                            <GridViewColumn Width="70"
+                                Extensions:GridViewSort.PropertyName="SistemKayıtTarihi"
                                 DisplayMemberBinding="{Binding SistemKayıtTarihi, Mode=OneWay, StringFormat=\{0:d\}}"
                                 Header="KİTAP&#xA;GİRİŞ&#xA;TARİHİ" />
                         </GridView>
@@ -306,7 +310,105 @@
                             TextWrapping="Wrap" />
                     </GroupBox>
                 </Grid>
-                <Button Grid.Row="2"
+                <Grid Grid.Row="2" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="155.2" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0">
+                        <GroupBox.Header>
+                            <TextBlock Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItems.Count, StringFormat={}{0} SEÇİLİ KİTAP TOPLU İŞLEM}" />
+                        </GroupBox.Header>
+                        <Grid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="AD DEĞİŞTİR" />
+                            <TextBox Grid.Column="1" Text="{Binding KitapTopluAd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="0" Grid.Column="2"
+                                Text="BASIM YILI DEĞİŞTİR" />
+                            <ComboBox Grid.Row="0" Grid.Column="3"
+                                ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}"
+                                SelectedItem="{Binding KitapTopluBasımYılı}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <CheckBox Grid.Row="2" Grid.Column="0"
+                                Content="FAVORİ"
+                                IsChecked="{Binding KitapTopluFavori}" />
+                            <CheckBox Grid.Row="2" Grid.Column="1"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Content="DEMİRBAŞ"
+                                IsChecked="{Binding KitapTopluDemirbaş}" />
+                            <CheckBox Grid.Row="2" Grid.Column="2"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Content="ÖDÜNÇ VERİLEBİLİR"
+                                IsChecked="{Binding KitapTopluÖdünç}" />
+                            <TextBlock Grid.Row="4" Text="DOLAP DEĞİŞTİR" />
+                            <ComboBox Grid.Row="4" Grid.Column="1"
+                                DisplayMemberPath="Açıklama"
+                                ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
+                                ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                                SelectedValue="{Binding KitapTopluDolapId}"
+                                SelectedValuePath="Id">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <TextBlock Grid.Row="3" Grid.Column="2"
+                                Text="BARKOD DEĞİŞTİR" />
+                            <TextBox Grid.Row="3" Grid.Column="3"
+                                Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="3" Text="RENK DEĞİŞTİR" />
+                            <ComboBox Grid.Row="3" Grid.Column="1"
+                                ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
+                                ItemTemplate="{StaticResource ColorItemTemplate}"
+                                ItemsPanel="{StaticResource ColorPanelTemplate}"
+                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                                SelectedValue="{Binding KitapTopluRenk}"
+                                SelectedValuePath="Name" />
+                            <TextBlock Grid.Row="4" Grid.Column="2"
+                                Text="RESİM DEĞİŞTİR" />
+                            <Button Grid.Row="4" Grid.Column="3"
+                                Command="{Binding KitapTopluResimGüncelle}"
+                                Content="TOPLU RESİM YÜKLE" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1">
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="BARKOD" />
+                                <TextBox Width="100" Text="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <Extensions:ContentToggleButton Width="96" Height="96"
+                            Background="{StaticResource QrCode}"
+                            IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                            <local:QrCodeMultipleView SeçiliKitaplarBarkod="{Binding Path=SelectedItems, ElementName=listView, Mode=OneWay}" TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
+                        </Extensions:ContentToggleButton>
+                    </GroupBox>
+                </Grid>
+                <Button Grid.Row="3"
                     Command="{Binding KitapGüncelleViewModel.KitapGüncelle, Mode=OneWay, Source={StaticResource MainViewModel}}"
                     CommandParameter="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}">
                     <StackPanel Orientation="Horizontal">
@@ -321,113 +423,28 @@
                         <TextBlock VerticalAlignment="Center" Text="GÜNCELLE" />
                     </StackPanel>
                 </Button>
-                <Grid Grid.RowSpan="3" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                        <GroupBox.Header>
-                            <Button Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                                CommandParameter="{Binding SeçiliKitap}"
-                                Content="KİTAP RESİM YÜKLE" />
-                        </GroupBox.Header>
-                        <Extensions:ImageViewer FitImageOrientation="Height"
+                <GroupBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
+                    <GroupBox.Header>
+                        <Button Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                            CommandParameter="{Binding SeçiliKitap}"
+                            Content="KİTAP RESİM YÜKLE" />
+                    </GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Extensions:ImageViewer x:Name="Img"
+                            FitImageOrientation="Height"
                             ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource FilePathMergeConverter}, ElementName=listView}"
                             OrijinalResimDosyaAçButtonVisibility="Collapsed" PrintButtonVisibility="Visible" />
-                    </GroupBox>
-                    <UniformGrid Grid.Row="1"
-                        Columns="2"
-                        IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                        <GroupBox>
-                            <GroupBox.Header>
-                                <TextBlock Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItems.Count, StringFormat={}{0} SEÇİLİ KİTAP TOPLU İŞLEM}" />
-                            </GroupBox.Header>
-                            <Grid IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                                <Grid.Resources>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="AD DEĞİŞTİR" />
-                                <TextBox Grid.Column="1" Text="{Binding KitapTopluAd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="1" Text="BASIM YILI DEĞİŞTİR" />
-                                <ComboBox Grid.Row="1" Grid.Column="1"
-                                    ItemsSource="{Binding Yıllar, Source={StaticResource MainViewModel}}"
-                                    SelectedItem="{Binding KitapTopluBasımYılı}">
-                                    <ComboBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel />
-                                        </ItemsPanelTemplate>
-                                    </ComboBox.ItemsPanel>
-                                </ComboBox>
-                                <TextBlock Grid.Row="2" Text="DEMİRBAŞ" />
-                                <CheckBox Grid.Row="2" Grid.Column="1"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    IsChecked="{Binding KitapTopluDemirbaş}" />
-                                <TextBlock Grid.Row="3" Text="ÖDÜNÇ VERİLEBİLİR" />
-                                <CheckBox Grid.Row="3" Grid.Column="1"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    IsChecked="{Binding KitapTopluÖdünç}" />
-                                <TextBlock Grid.Row="4" Text="DOLAP DEĞİŞTİR" />
-                                <ComboBox Grid.Row="4" Grid.Column="1"
-                                    DisplayMemberPath="Açıklama"
-                                    ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
-                                    ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                                    SelectedValue="{Binding KitapTopluDolapId}"
-                                    SelectedValuePath="Id">
-                                    <ComboBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel />
-                                        </ItemsPanelTemplate>
-                                    </ComboBox.ItemsPanel>
-                                </ComboBox>
-                                <TextBlock Grid.Row="5" Text="BARKOD DEĞİŞTİR" />
-                                <TextBox Grid.Row="5" Grid.Column="1"
-                                    Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="6" Text="RENK DEĞİŞTİR" />
-                                <ComboBox Grid.Row="6" Grid.Column="1"
-                                    ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
-                                    ItemTemplate="{StaticResource ColorItemTemplate}"
-                                    ItemsPanel="{StaticResource ColorPanelTemplate}"
-                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
-                                    SelectedValue="{Binding KitapTopluRenk}"
-                                    SelectedValuePath="Name" />
-                                <TextBlock Grid.Row="7" Text="RESİM DEĞİŞTİR" />
-                                <Button Grid.Row="7" Grid.Column="1"
-                                    Command="{Binding KitapTopluResimGüncelle}"
-                                    Content="TOPLU RESİM YÜKLE" />
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Grid.Row="2">
-                            <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" Text="BARKOD" />
-                                    <TextBox Width="100" Text="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                            </GroupBox.Header>
-                            <Extensions:ContentToggleButton Width="96" Height="96"
-                                Background="{StaticResource QrCode}"
-                                IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                                <local:QrCodeMultipleView SeçiliKitaplarBarkod="{Binding Path=SelectedItems, ElementName=listView, Mode=OneWay}" TopluBarkodMetin="{Binding Path=SelectedItem.Barkod, ElementName=listView}" />
-                            </Extensions:ContentToggleButton>
-                        </GroupBox>
-                    </UniformGrid>
-                </Grid>
+                        <Slider Grid.Column="1"
+                            AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" Orientation="Vertical"
+                            SmallChange="1"
+                            Value="{Binding ElementName=Img, Path=DecodeHeight, Delay=250}" />
+                    </Grid>
+                </GroupBox>
             </Grid>
         </GroupBox>
     </Grid>

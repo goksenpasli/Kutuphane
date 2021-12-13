@@ -209,7 +209,7 @@
                                                             <ListBox ItemTemplateSelector="{StaticResource ViewerSelector}" ItemsSource="{Binding TutanakYolu}">
                                                                 <ListBox.ItemsPanel>
                                                                     <ItemsPanelTemplate>
-                                                                        <extensions:VirtualizingWrapPanel VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" />
+                                                                        <extensions:VirtualizingWrapPanel VirtualizingPanel.ScrollUnit="Pixel" />
                                                                     </ItemsPanelTemplate>
                                                                 </ListBox.ItemsPanel>
                                                             </ListBox>
@@ -320,7 +320,7 @@
                                             </MultiBinding>
                                         </Image.Source>
                                     </Image>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding SeçiliResimler.Count, ElementName=twainCtrl, Mode=OneWay, StringFormat=TARANAN \{0\} BELGEYİ SEÇİLİ KİŞİYE EKLE}" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding SeçiliResimler.Count, ElementName=twainCtrl, Mode=OneWay, StringFormat=TARANAN \{0\} BELGEYİ \&#x0a; SEÇİLİ KİŞİYE EKLE}" />
                                 </StackPanel>
                             </Button>
                             <Button Command="{Binding KitapSeçiliEvrakAktar, Mode=OneWay}">
