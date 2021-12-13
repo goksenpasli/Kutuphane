@@ -25,6 +25,11 @@ namespace Extensions.Controls
 
         public static readonly DependencyProperty ThumbnailsVisibleProperty = DependencyProperty.Register("ThumbnailsVisible", typeof(bool), typeof(MediaViewer), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        static MediaViewer()
+        {
+            task = new TaskFactory();
+        }
+
         public MediaViewer()
         {
             InitializeComponent();
@@ -57,6 +62,8 @@ namespace Extensions.Controls
             Width = 96 * SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight,
         };
 
+        private static readonly TaskFactory task;
+
         private static readonly ToolTip tooltip = new()
         {
             Width = 96 * SystemParameters.PrimaryScreenWidth / SystemParameters.PrimaryScreenHeight,
@@ -72,11 +79,7 @@ namespace Extensions.Controls
         [SecurityCritical]
         private static void MediaDataFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-            {
-                return;
-            }
-            if (d is MediaViewer viewer && e.NewValue != null)
+            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()) && d is MediaViewer viewer && e.NewValue != null)
             {
                 try
                 {
@@ -207,25 +210,25 @@ namespace Extensions.Controls
             {
                 try
                 {
-                    _ = Task.Factory.StartNew(() =>
-                      {
-                          _ = Dispatcher.BeginInvoke(() =>
-                          {
-                              mediaElement.Source = Player.Source;
-                              tooltip.PlacementTarget = Sld;
-                              mediaElement.Position = TimeSpan.FromSeconds((double)PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth));
-                              image.Source = mediaElement.ToRenderTargetBitmap();
-                              if (image.Source.CanFreeze)
-                              {
-                                  image.Source.Freeze();
-                              }
-                              tooltip.Content = image;
-                              if (!tooltip.IsOpen)
-                              {
-                                  tooltip.IsOpen = true;
-                              }
-                          });
-                      }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+                    task.StartNew(() =>
+                       {
+                           _ = Dispatcher.BeginInvoke(() =>
+                           {
+                               mediaElement.Source = Player.Source;
+                               tooltip.PlacementTarget = Sld;
+                               mediaElement.Position = TimeSpan.FromSeconds(PixelsToValue(e.GetPosition(Sld).X, Sld.Minimum, Sld.Maximum, Sld.ActualWidth));
+                               image.Source = mediaElement.ToRenderTargetBitmap();
+                               if (image.Source.CanFreeze)
+                               {
+                                   image.Source.Freeze();
+                               }
+                               tooltip.Content = image;
+                               if (!tooltip.IsOpen)
+                               {
+                                   tooltip.IsOpen = true;
+                               }
+                           });
+                       }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
                 }
                 catch (Exception ex)
                 {

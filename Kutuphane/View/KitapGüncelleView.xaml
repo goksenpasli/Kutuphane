@@ -46,7 +46,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="65">
+                            <GridViewColumn Width="72">
                                 <GridViewColumn.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock>
@@ -352,16 +352,49 @@
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
                             <CheckBox Grid.Row="2" Grid.Column="0"
-                                Content="FAVORİ"
-                                IsChecked="{Binding KitapTopluFavori}" />
+                                IsChecked="{Binding KitapTopluFavori}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="208" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Text="FAVORİ" />
+                                </StackPanel>
+                            </CheckBox>
                             <CheckBox Grid.Row="2" Grid.Column="1"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Content="DEMİRBAŞ"
-                                IsChecked="{Binding KitapTopluDemirbaş}" />
+                                IsChecked="{Binding KitapTopluDemirbaş}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Moricons.dll" />
+                                                <Binding Source="65" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Text="DEMİRBAŞ" />
+                                </StackPanel>
+                            </CheckBox>
                             <CheckBox Grid.Row="2" Grid.Column="2"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Content="ÖDÜNÇ VERİLEBİLİR"
-                                IsChecked="{Binding KitapTopluÖdünç}" />
+                                IsChecked="{Binding KitapTopluÖdünç}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16">
+                                        <Image.Source>
+                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                                <Binding Source="Shell32.dll" />
+                                                <Binding Source="28" />
+                                            </MultiBinding>
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Text="ÖDÜNÇ VERİLEBİLİR" />
+                                </StackPanel>
+                            </CheckBox>
                             <TextBlock Grid.Row="4" Text="DOLAP DEĞİŞTİR" />
                             <ComboBox Grid.Row="4" Grid.Column="1"
                                 DisplayMemberPath="Açıklama"
@@ -442,6 +475,7 @@
                         <Slider Grid.Column="1"
                             AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" Orientation="Vertical"
                             SmallChange="1"
+                            Style="{StaticResource Slider}"
                             Value="{Binding ElementName=Img, Path=DecodeHeight, Delay=250}" />
                     </Grid>
                 </GroupBox>

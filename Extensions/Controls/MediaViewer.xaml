@@ -75,7 +75,7 @@
                 IsMoveToPointEnabled="True"
                 Maximum="{Binding EndTimeSpan, Mode=OneWay, Converter={StaticResource TimespanToSecondsConverter}}"
                 MouseLeave="Sld_MouseLeave" MouseMove="Sld_MouseMove"
-                Style="{StaticResource Horizontal_Slider}"
+                Style="{StaticResource Slider}"
                 Thumb.DragCompleted="Sld_DragCompleted" Thumb.DragStarted="Sld_DragStarted"
                 Value="{Binding MediaPosition, Converter={StaticResource TimespanToSecondsConverter}, Mode=TwoWay}" />
             <ToggleButton x:Name="Mute"
@@ -110,7 +110,7 @@
                 Width="60"
                 VerticalAlignment="Center"
                 IsMoveToPointEnabled="True" Maximum="1"
-                Style="{StaticResource Horizontal_Slider}"
+                Style="{StaticResource Slider}"
                 Value="{Binding MediaVolume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Grid.Column="10"
                 Margin="1,0,1,0" VerticalAlignment="Center"
