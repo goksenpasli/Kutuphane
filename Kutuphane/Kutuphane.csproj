@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\TakvimGünİşlemCountConverter.cs" />
     <Compile Include="Converter\CloneConverter.cs" />
     <Compile Include="Converter\ImageFilePathToBitmapImageConverter.cs" />
     <Compile Include="Converter\DatePassedConverter.cs" />

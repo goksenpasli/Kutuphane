@@ -34,6 +34,7 @@
             <Kutuphane:ImageFilePathToBitmapImageConverter x:Key="PictureImageFilePathImageUriConverter" Kutuphane:ImageFilePathToBitmapImageConverter.DecodeHeight="120" />
             <Kutuphane:FilePathMergeConverter x:Key="FilePathMergeConverter" />
             <Kutuphane:KitapBarkodToBarCodeImageConverter x:Key="KitapBarkodToBarCodeImageConverter" />
+            <Kutuphane:TakvimGünİşlemCountConverter x:Key="TakvimGünİşlemCountConverter" />
             <ObjectDataProvider x:Key="ColorList"
                 MethodName="GetProperties"
                 ObjectInstance="{x:Type Colors}" />

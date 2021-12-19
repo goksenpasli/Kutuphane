@@ -107,7 +107,7 @@
                             CommandParameter="{Binding SeçiliKişi}"
                             Gesture="LeftClick" />
                     </GroupBox.InputBindings>
-                    <viewmodel:ShadowedImage ShowOverlayColor="{Binding SeçiliKişi.KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    <viewmodel:ShadowedImage ShowOverlayColor="{Binding SeçiliKişi.KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                         ShowShadow="True"
                         Source="{Binding SeçiliKişi.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
                 </GroupBox>

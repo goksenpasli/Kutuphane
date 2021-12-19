@@ -144,7 +144,7 @@
                             <StackPanel>
                                 <TextBlock Text="{Binding Barkod}" />
                                 <viewmodel:ShadowedImage Width="210" Height="297"
-                                    ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                     ShowShadow="True"
                                     Source="{Binding Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
                             </StackPanel>

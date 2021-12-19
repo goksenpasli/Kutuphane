@@ -22,21 +22,6 @@ namespace Kutuphane.Model
             }
         }
 
-        [XmlIgnore]
-        public ObservableCollection<İşlem> İşlemler
-        {
-            get => işlemler;
-
-            set
-            {
-                if (işlemler != value)
-                {
-                    işlemler = value;
-                    OnPropertyChanged(nameof(İşlemler));
-                }
-            }
-        }
-
         [XmlElement(ElementName = "Kişi")]
         public ObservableCollection<Kişi> Kişiler
         {
@@ -98,8 +83,6 @@ namespace Kutuphane.Model
         }
 
         private ObservableCollection<Dolap> dolaplar = new();
-
-        private ObservableCollection<İşlem> işlemler = new();
 
         private ObservableCollection<Kişi> kişiler = new();
 

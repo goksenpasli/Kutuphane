@@ -150,6 +150,7 @@ namespace Extensions
             set => SetValue(DecodeHeightProperty, value);
         }
 
+        [Browsable(false)]
         public TiffBitmapDecoder Decoder
         {
             get => decoder;
@@ -216,6 +217,7 @@ namespace Extensions
             }
         }
 
+        [Browsable(false)]
         public IEnumerable<int> Pages
         {
             get => pages;
