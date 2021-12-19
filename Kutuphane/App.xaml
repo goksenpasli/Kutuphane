@@ -453,8 +453,15 @@
                 <UniformGrid Columns="8" />
             </ItemsPanelTemplate>
             <DataTemplate x:Key="ColorItemTemplate">
-                <Rectangle Width="32" Height="32"
-                    Fill="{Binding Name}" />
+                <Canvas Width="32" Height="32">
+                    <Rectangle Width="32" Height="32"
+                        Fill="{Binding Name}" />
+                    <TextBlock Width="32" Height="32"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        FontSize="8"
+                        Text="{Binding Name}"
+                        TextWrapping="Wrap" />
+                </Canvas>
             </DataTemplate>
             <Image x:Key="DemirbaşImage"
                 Width="16" Height="16"
@@ -619,14 +626,14 @@
                             AutoToolTipPlacement="TopLeft"
                             IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
                             Minimum="0.01" SmallChange="1"
-                            Style="{StaticResource Horizontal_Slider}"
+                            Style="{StaticResource Slider}"
                             Value="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}}" />
                         <Slider Grid.Column="5"
                             Margin="2"
                             AutoToolTipPlacement="TopLeft"
                             IsEnabled="{Binding Source, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableToBooleanConverter}}"
                             IsSnapToTickEnabled="False" Maximum="360" SmallChange="1"
-                            Style="{StaticResource Horizontal_Slider}"
+                            Style="{StaticResource Slider}"
                             Value="{Binding Angle, RelativeSource={RelativeSource TemplatedParent}}" />
                         <ComboBox Grid.Column="6"
                             ItemStringFormat="{}{0} Dpi"
