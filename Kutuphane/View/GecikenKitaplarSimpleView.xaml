@@ -41,23 +41,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListBox Grid.Column="1"
+        <ListView Grid.Column="1"
             d:ItemsSource="{d:SampleData ItemCount=5}"
             IsSynchronizedWithCurrentItem="False"
+            ItemContainerStyle="{StaticResource ListViewItemContainerGeriGetirmeTarihiStyle}"
             ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
-                            <Setter Property="Background" Value="Red" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock FontWeight="Bold" Text="{Binding GeriGetirmeTarihi}" />
@@ -69,7 +58,7 @@
                             Template="{StaticResource ComboBoxSimpleTemplate}" />
                     </StackPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

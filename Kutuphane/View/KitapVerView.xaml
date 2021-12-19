@@ -42,22 +42,9 @@
                     <ListView x:Name="listViewKitap"
                         d:ItemsSource="{d:SampleData ItemCount=5}"
                         IsSynchronizedWithCurrentItem="False"
+                        ItemContainerStyle="{StaticResource ListViewItemContainerÖdünçVerilebilirStyle}"
                         ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                         SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="false">
-                                        <Setter Property="Foreground" Value="Red" />
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                        <Setter Property="IsSelected" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="170"
@@ -226,20 +213,9 @@
                             Grid.Column="1"
                             d:ItemsSource="{d:SampleData ItemCount=5}"
                             IsSynchronizedWithCurrentItem="False"
+                            ItemContainerStyle="{StaticResource ListViewItemContainerGeriGetirmeTarihiStyle}"
                             ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}"
                             SelectionMode="Single">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding GeriGetirmeTarihi, Converter={StaticResource DatePassedConverter}}" Value="true">
-                                            <Setter Property="Background" Value="Red" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding İşlemBitti}" Value="true">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn extensions:GridViewSort.PropertyName="KitapId" Header="KİTAP">

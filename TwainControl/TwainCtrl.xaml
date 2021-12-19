@@ -8,8 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:TwainControl.Properties"
     d:DataContext="{d:DesignInstance Type=local:TwainCtrl}"
-    d:DesignHeight="320" d:DesignWidth="600" Loaded="UserControl_Loaded"
-    UseLayoutRounding="True"
+    d:DesignHeight="320" d:DesignWidth="600" Loaded="UserControl_Loaded" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Extensions:SystemFileIconConverter x:Key="SystemFileIconConverter" />
@@ -53,12 +52,11 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                             </Style>
                         </UniformGrid.Resources>
-                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="600"
-                            Minimum="72" SmallChange="1" Ticks="72,96,120,150,200,300,450,600"
-                            ToolTip="ÇÖZÜNÜRLÜK"
+                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="600" Minimum="72"
+                            SmallChange="1" Ticks="72,96,120,150,200,300,450,600" ToolTip="ÇÖZÜNÜRLÜK"
                             Value="{Binding Path=Çözünürlük, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
-                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="255"
-                            Minimum="1" SmallChange="1" ToolTip="SİYAH BEYAZ EŞİK DEĞERİ"
+                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="255" Minimum="1"
+                            SmallChange="1" ToolTip="SİYAH BEYAZ EŞİK DEĞERİ"
                             Value="{Binding Eşik, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <CheckBox Content="BESLEYİCİ" IsChecked="{Binding Adf}" />
                         <CheckBox Content="SİYAH BEYAZ TARA"
@@ -128,8 +126,9 @@
             Margin="1,0,0,0"
             Header="EVRAK">
             <Extensions:ImageViewer Grid.Column="1"
+                OrijinalResimDosyaAçButtonVisibility="Collapsed"
                 Source="{Binding SeçiliResim, Mode=TwoWay}"
-                ToolBarVisibility="Collapsed" />
+                ToolBarVisibility="Visible" />
         </GroupBox>
     </Grid>
 </UserControl>

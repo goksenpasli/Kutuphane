@@ -228,8 +228,9 @@
                             <Run Text="AÇIKLAMA" />
                             <Run Text="{Binding Kitap.Açıklama.Length, Mode=OneWay, StringFormat={}{0}/500, FallbackValue=0}" />
                         </TextBlock>
-                        <TextBox Grid.Row="1" SpellCheck.IsEnabled="True"
+                        <TextBox Grid.Row="1"
                             d:Text="Buraya açıklama yazabilirsiniz." AcceptsReturn="True" MaxLength="500"
+                            SpellCheck.IsEnabled="True"
                             Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="Wrap" />
                     </Grid>

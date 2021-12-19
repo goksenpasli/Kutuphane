@@ -169,37 +169,9 @@
                                     ToolTip="Ayarlardan Gün Değiştirilebilir." />
                                 <Run Text="Gün Sonrasına Seçili Kitabı Vermek İçin Kitap Seçin Ve Soldaki Buttona Tıklayın." />
                             </TextBlock>
-                            <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Kişi.SonKaydedilenKişi.İşlem}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel d:Visibility="Visible" Orientation="Horizontal"
-                                            Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=BtnGeriAl}">
-                                            <ComboBox IsEnabled="False"
-                                                ItemTemplate="{StaticResource KitapTemplate}"
-                                                ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                                SelectedItem="{Binding SeçiliKitap}"
-                                                SelectedValue="{Binding KitapId}"
-                                                SelectedValuePath="Id"
-                                                Template="{StaticResource ComboBoxSimpleTemplate}" />
-                                            <Button x:Name="BtnGeriAl"
-                                                Command="{Binding KitapGeriAlViewModel.KitapGeriAl, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                                                CommandParameter="{Binding Mode=OneWay}">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Width="16" Height="16">
-                                                        <Image.Source>
-                                                            <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                                <Binding Source="Shell32.dll" />
-                                                                <Binding Source="146" />
-                                                            </MultiBinding>
-                                                        </Image.Source>
-                                                    </Image>
-                                                    <TextBlock VerticalAlignment="Center" Text="KİTAP GERİ AL" />
-                                                </StackPanel>
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                            <ListBox d:ItemsSource="{d:SampleData ItemCount=5}"
+                                ItemTemplate="{StaticResource ListBoxItemKitapGeriAlTemplate}"
+                                ItemsSource="{Binding Kişi.SonKaydedilenKişi.İşlem}" />
                         </UniformGrid>
                     </GroupBox>
                 </Grid>
@@ -219,22 +191,9 @@
             <ListView x:Name="listViewKitap"
                 d:ItemsSource="{d:SampleData ItemCount=5}"
                 IsSynchronizedWithCurrentItem="False"
+                ItemContainerStyle="{StaticResource ListViewItemContainerÖdünçVerilebilirStyle}"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                 SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ÖdünçVerilebilir}" Value="false">
-                                <Setter Property="Foreground" Value="Red" />
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding KitapDurumId}" Value="1">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Setter Property="IsSelected" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="170"

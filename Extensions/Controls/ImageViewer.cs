@@ -341,9 +341,16 @@ namespace Extensions
 
         private static void ImageFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ImageViewer imageViewer && e.NewValue is string filepath)
+            if (d is ImageViewer imageViewer)
             {
-                LoadImage(filepath, imageViewer);
+                if (e.NewValue is string filepath)
+                {
+                    LoadImage(filepath, imageViewer);
+                }
+                else
+                {
+                    imageViewer.Source = null;
+                }
             }
         }
 
@@ -388,10 +395,6 @@ namespace Extensions
                     rtb.Freeze();
                     imageViewer.Source = rtb;
                 }
-            }
-            else
-            {
-                imageViewer.ImageFilePath = null;
             }
         }
 

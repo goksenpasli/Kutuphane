@@ -114,33 +114,8 @@
                 <GroupBox Grid.Column="1" Header="İŞLEM">
                     <ListBox d:ItemsSource="{d:SampleData ItemCount=5}"
                         IsSynchronizedWithCurrentItem="False"
+                        ItemTemplate="{StaticResource ListBoxItemKitapGeriAlTemplate}"
                         ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <Button Command="{Binding KitapGeriAlViewModel.KitapGeriAl, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding Mode=OneWay}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Width="16" Height="16">
-                                                <Image.Source>
-                                                    <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                                        <Binding Source="Shell32.dll" />
-                                                        <Binding Source="146" />
-                                                    </MultiBinding>
-                                                </Image.Source>
-                                            </Image>
-                                            <TextBlock VerticalAlignment="Center" Text="KİTAP GERİ AL" />
-                                        </StackPanel>
-                                    </Button>
-                                    <ComboBox IsEnabled="False"
-                                        ItemTemplate="{StaticResource KitapTemplate}"
-                                        ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                        SelectedItem="{Binding SeçiliKitap}"
-                                        SelectedValue="{Binding KitapId}"
-                                        SelectedValuePath="Id"
-                                        Template="{StaticResource ComboBoxSimpleTemplate}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <Style.Triggers>
