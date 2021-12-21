@@ -12,9 +12,6 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
-        <Style x:Key="ComboBoxItemDolapEtkinStyle" TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="IsEnabled" Value="{Binding Etkin}" />
-        </Style>
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="KİTAP GÜNCELLE">
@@ -35,10 +32,34 @@
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                     SelectedItem="{Binding SeçiliKitap}"
-                    SelectionMode="Extended" VirtualizingPanel.VirtualizationMode="Recycling">
+                    VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListView.InputBindings>
+                        <KeyBinding Key="A"
+                            Command="ApplicationCommands.NotACommand" Modifiers="Ctrl" />
+                    </ListView.InputBindings>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding KitapDurumId}" Value="0">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="true">
+                                    <Setter Property="IsSelected" Value="{Binding Seçili, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="32" Extensions:GridViewSort.PropertyName="Favori">
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Seçili}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="50" Extensions:GridViewSort.PropertyName="Favori">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ToggleButton Content="{StaticResource Favori}" IsChecked="{Binding Favori}" />
@@ -188,16 +209,6 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <StackPanel.Style>
-                                                <Style TargetType="StackPanel">
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding KitapDurumId}" Value="0">
-                                                            <Setter Property="IsEnabled" Value="True" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </StackPanel.Style>
                                             <ComboBox Width="70"
                                                 DisplayMemberPath="Açıklama"
                                                 ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"

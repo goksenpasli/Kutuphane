@@ -18,6 +18,8 @@ namespace Extensions
         static NumericUpDownControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDownControl), new FrameworkPropertyMetadata(typeof(NumericUpDownControl)));
+            MaximumProperty.OverrideMetadata(typeof(NumericUpDownControl), new FrameworkPropertyMetadata(double.MaxValue));
+            MinimumProperty.OverrideMetadata(typeof(NumericUpDownControl), new FrameworkPropertyMetadata(double.MinValue));
         }
 
         public NumericUpDownControl()
@@ -66,6 +68,7 @@ namespace Extensions
                 {
                     e.Handled = true;
                 }
+
                 if (e.Key == Key.Up)
                 {
                     if (ShowMode == Mode.DateTimeMode && DateValue.HasValue)

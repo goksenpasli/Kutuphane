@@ -309,6 +309,21 @@ namespace Kutuphane.Model
         }
 
         [XmlIgnore]
+        public bool Seçili
+        {
+            get { return seçili; }
+
+            set
+            {
+                if (seçili != value)
+                {
+                    seçili = value;
+                    OnPropertyChanged(nameof(Seçili));
+                }
+            }
+        }
+
+        [XmlIgnore]
         public ObservableCollection<KitapTürü> SeçiliKitapTürleri
         {
             get => seçiliKitapTürleri;
@@ -503,6 +518,8 @@ namespace Kutuphane.Model
         private string renk = "Transparent";
 
         private string resim;
+
+        private bool seçili;
 
         private ObservableCollection<KitapTürü> seçiliKitapTürleri = new();
 

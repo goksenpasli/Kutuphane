@@ -330,7 +330,7 @@ namespace Kutuphane.ViewModel
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            List<Kitap> Kitaplar = SeçiliKitaplar.ToList();
+            List<Kitap> Kitaplar = SeçiliKitaplar.Where(z => z.Seçili).ToList();
             switch (e.PropertyName)
             {
                 case "KişiKitapAdArama":

@@ -42,6 +42,9 @@
                                 <FlowDocumentScrollViewer Margin="4" VerticalScrollBarVisibility="Disabled">
                                     <FlowDocument Block.LineHeight="1" FontFamily="Times New Roman" FontSize="16" Language="tr-tr">
                                         <FlowDocument.Resources>
+                                            <Style TargetType="Paragraph">
+                                                <Setter Property="Margin" Value="3,0,0,0" />
+                                            </Style>
                                             <Style TargetType="Run">
                                                 <Setter Property="Foreground" Value="Black" />
                                             </Style>
@@ -128,7 +131,7 @@
                                                 <TableRow>
                                                     <TableCell>
                                                         <BlockUIContainer Padding="0,5,0,0">
-                                                            <TextBlock>
+                                                            <TextBlock Margin="3,0,0,0">
                                                                 <Hyperlink Command="{Binding İmzaSil, ElementName=UserControl, Mode=OneWay}"
                                                                     CommandParameter="{Binding ElementName=Ink}"
                                                                     FontWeight="Bold" TextDecorations="None">

@@ -2,22 +2,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
-    xmlns:Kutuphane="clr-namespace:Kutuphane" xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
+    xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     d:DataContext="{d:DesignInstance Type={x:Type ViewModel:KitapGirişViewModel}}"
-    d:DesignHeight="600" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="650" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Diller" Source="{Binding Kitap.Diller}" />
         <CollectionViewSource x:Key="Dolaplar" Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="Yazarlar" Source="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}" />
         <CollectionViewSource x:Key="KitapTürleri" Source="{Binding Kütüphane.KitapTürleri, Source={StaticResource MainViewModel}}" />
-        <Style x:Key="ListViewItemStretchStyle" TargetType="{x:Type ListViewItem}">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        </Style>
     </UserControl.Resources>
     <GroupBox Header="KİTAP GİRİŞİ">
         <Grid>
@@ -158,7 +155,6 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </Grid>
-
                         </Extensions:ContentToggleButton>
                     </HeaderedContentControl>
                     <HeaderedContentControl Grid.Row="8" Header="KİTAP FİYATI">
@@ -168,7 +164,7 @@
                     <UniformGrid Grid.Row="9" Columns="2">
                         <CheckBox IsChecked="{Binding Kitap.Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="16" Height="16">
+                                <Image Width="32" Height="32">
                                     <Image.Source>
                                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                             <Binding Source="Moricons.dll" />
@@ -181,7 +177,7 @@
                         </CheckBox>
                         <CheckBox IsChecked="{Binding Kitap.Favori, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="16" Height="16">
+                                <Image Width="32" Height="32">
                                     <Image.Source>
                                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                             <Binding Source="Shell32.dll" />
@@ -194,7 +190,7 @@
                         </CheckBox>
                         <CheckBox IsChecked="{Binding Kitap.ÖdünçVerilebilir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="16" Height="16">
+                                <Image Width="32" Height="32">
                                     <Image.Source>
                                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                             <Binding Source="Shell32.dll" />
@@ -207,7 +203,7 @@
                         </CheckBox>
                         <CheckBox IsChecked="{Binding Path=ResimKüçült, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="16" Height="16">
+                                <Image Width="32" Height="32">
                                     <Image.Source>
                                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                             <Binding Source="Shell32.dll" />
@@ -222,17 +218,21 @@
                     <Grid Grid.Row="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition />
+                            <RowDefinition Height="237.6" />
                         </Grid.RowDefinitions>
                         <TextBlock HorizontalAlignment="Center">
                             <Run Text="AÇIKLAMA" />
                             <Run Text="{Binding Kitap.Açıklama.Length, Mode=OneWay, StringFormat={}{0}/500, FallbackValue=0}" />
                         </TextBlock>
-                        <TextBox Grid.Row="1"
-                            d:Text="Buraya açıklama yazabilirsiniz." AcceptsReturn="True" MaxLength="500"
-                            SpellCheck.IsEnabled="True"
-                            Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            TextWrapping="Wrap" />
+                        <UniformGrid Grid.Row="1" Columns="2">
+                            <TextBox d:Text="Buraya açıklama yazabilirsiniz." AcceptsReturn="True" MaxLength="500"
+                                SpellCheck.IsEnabled="True"
+                                Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+                            <GroupBox Header="KİTAP RESİM">
+                                <ViewModel:ShadowedImage ShowShadow="True" Source="{Binding Kitap.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
+                            </GroupBox>
+                        </UniformGrid>
                     </Grid>
                     <UniformGrid Grid.Row="11" Columns="2">
                         <CheckBox VerticalAlignment="Center"

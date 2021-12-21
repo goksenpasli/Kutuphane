@@ -5,7 +5,6 @@
     xmlns:extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="clr-namespace:Kutuphane.Model" xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:KişiGüncelleViewModel}"
     d:DesignHeight="650" d:DesignWidth="1280" UseLayoutRounding="True"
@@ -29,8 +28,7 @@
                 extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKişiler}"
                 extensions:ListBoxHelper.SelectedItemsMaxCount="10"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
-                SelectedItem="{Binding SeçiliKişi}"
-                SelectionMode="Extended">
+                SelectedItem="{Binding SeçiliKişi}">            
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">

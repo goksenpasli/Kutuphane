@@ -123,6 +123,7 @@ namespace Kutuphane.ViewModel
                 [2] = KitapKontrolViewModel,
                 [3] = KişiGüncelleViewModel,
                 [4] = KitapGeriAlViewModel,
+                [5] = KitapTakvimViewModel,
             };
 
             if (Settings.Default.KişiGirişEkranıVarsayılan)

@@ -61,6 +61,11 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public override string ToString()
+        {
+            return "TAKVİM EKRANI";
+        }
+
         private DateTime? seçiliGün;
 
         private void KitapTakvimViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

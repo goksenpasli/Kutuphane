@@ -683,6 +683,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style TargetType="local:NumericUpDownControl">
+        <Setter Property="ContextMenuService.IsEnabled" Value="False" />
         <Setter Property="Background" Value="White" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">

@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
@@ -107,6 +106,9 @@
                         <Style TargetType="Run">
                             <Setter Property="Foreground" Value="{Binding YazıRenk, ElementName=UserControl}" />
                         </Style>
+                        <Style TargetType="Paragraph">
+                            <Setter Property="Margin" Value="3,0,0,0" />
+                        </Style>
                         <Style TargetType="{x:Type TableCell}">
                             <Setter Property="BorderBrush" Value="Black" />
                             <Setter Property="BorderThickness" Value="0.5pt" />
@@ -190,7 +192,7 @@
                             <TableRow>
                                 <TableCell>
                                     <BlockUIContainer Padding="0,5,0,0">
-                                        <TextBlock>
+                                        <TextBlock Margin="3,0,0,0">
                                             <Hyperlink Command="{Binding İmzaSil, ElementName=UserControl, Mode=OneWay}"
                                                 CommandParameter="{Binding ElementName=Ink}"
                                                 FontWeight="Bold" TextDecorations="None">
