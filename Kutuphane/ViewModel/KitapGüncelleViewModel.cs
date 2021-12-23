@@ -31,7 +31,7 @@ namespace Kutuphane.ViewModel
                         MessageBox.Show("Hatalı Girişleri Düzeltin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
-            }, parameter => parameter is ObservableCollection<Kitap> kitaplar && kitaplar?.Any() == true);
+            }, parameter => parameter is ObservableCollection<Kitap> kitaplar && kitaplar?.Any(z=>z.Seçili) == true);
 
             KitapGit = new RelayCommand<object>(parameter =>
             {

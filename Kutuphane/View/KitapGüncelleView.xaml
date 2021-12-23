@@ -34,10 +34,10 @@
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
                     SelectedItem="{Binding SeçiliKitap}"
                     VirtualizingPanel.VirtualizationMode="Recycling">
-                    <ListView.InputBindings>
+                    <!--<ListView.InputBindings>
                         <KeyBinding Key="A"
                             Command="ApplicationCommands.NotACommand" Modifiers="Ctrl" />
-                    </ListView.InputBindings>
+                    </ListView.InputBindings>-->
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="IsEnabled" Value="False" />
@@ -316,7 +316,7 @@
                                 </Button>
                             </StackPanel>
                         </GroupBox.Header>
-                        <TextBox AcceptsReturn="True"
+                        <TextBox AcceptsReturn="True" SpellCheck.IsEnabled="True"
                             Text="{Binding ElementName=listView, Path=SelectedItem.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="Wrap" />
                     </GroupBox>

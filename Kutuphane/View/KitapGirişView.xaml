@@ -39,8 +39,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -93,72 +91,11 @@
                             </ComboBox.ItemsPanel>
                         </ComboBox>
                     </HeaderedContentControl>
-                    <HeaderedContentControl Grid.Row="6"
-                        Header="KİTAP YAZARI" IsTabStop="False">
-                        <Extensions:ContentToggleButton OverContent="KİTAP YAZARI">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="222.4" />
-                                </Grid.RowDefinitions>
-                                <UniformGrid Columns="2">
-                                    <TextBox Text="{Binding Kitap.Yazar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <Button Grid.Row="1"
-                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                        Command="{Binding KitapYazarEkle}"
-                                        CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}"
-                                        Content="KİTAP YAZAR EKLE" />
-                                </UniformGrid>
-                                <ListView Grid.Row="1"
-                                    Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliYazarlar}"
-                                    ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                                    ItemsSource="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox HorizontalAlignment="Stretch"
-                                                Content="{Binding Ad}"
-                                                IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Grid>
-                        </Extensions:ContentToggleButton>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Grid.Row="7"
-                        Header="KİTAP TÜRÜ" IsTabStop="False">
-                        <Extensions:ContentToggleButton OverContent="KİTAP TÜRÜ">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="222.4" />
-                                </Grid.RowDefinitions>
-                                <UniformGrid Grid.Row="0" Columns="2">
-                                    <TextBox Text="{Binding Kitap.Tür, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                        Command="{Binding KitapTürEkle}"
-                                        CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}"
-                                        Content="KİTAP TÜR EKLE" />
-                                </UniformGrid>
-                                <ListView Grid.Row="1"
-                                    Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliKitapTürleri}"
-                                    ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                                    ItemsSource="{Binding Kütüphane.KitapTürleri, Mode=OneWay, Source={StaticResource MainViewModel}}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox HorizontalAlignment="Stretch"
-                                                Content="{Binding Açıklama}"
-                                                IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Grid>
-                        </Extensions:ContentToggleButton>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Grid.Row="8" Header="KİTAP FİYATI">
+                    <HeaderedContentControl Grid.Row="6" Header="KİTAP FİYATI">
                         <Extensions:NumericUpDownControl Maximum="100000" Minimum="1" ShowMode="CurrencyMode"
                             Value="{Binding Kitap.Fiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </HeaderedContentControl>
-                    <UniformGrid Grid.Row="9" Columns="2">
+                    <UniformGrid Grid.Row="7" Columns="2">
                         <CheckBox IsChecked="{Binding Kitap.Demirbaş, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Width="32" Height="32">
@@ -212,7 +149,7 @@
                             </StackPanel>
                         </CheckBox>
                     </UniformGrid>
-                    <Grid Grid.Row="10">
+                    <Grid Grid.Row="8">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="237.6" />
@@ -236,7 +173,7 @@
                             </GroupBox>
                         </UniformGrid>
                     </Grid>
-                    <UniformGrid Grid.Row="11" Columns="2">
+                    <UniformGrid Grid.Row="9" Columns="2">
                         <CheckBox VerticalAlignment="Center"
                             Content="RAF OTOMATİK ARTIR"
                             IsChecked="{Binding Kitap.KitapSayıOtomatikArttır, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -245,7 +182,7 @@
                                 Value="{Binding Kitap.DolapAltKod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </HeaderedContentControl>
                     </UniformGrid>
-                    <UniformGrid Grid.Row="12" Columns="2">
+                    <UniformGrid Grid.Row="10" Columns="2">
                         <CheckBox VerticalAlignment="Center"
                             Content="TOPLU KİTAP GİRİŞİ YAP"
                             IsChecked="{Binding Kitap.TopluKitapGirişi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -256,7 +193,7 @@
                             Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                             Value="{Binding Kitap.TopluKitapSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </UniformGrid>
-                    <Button Grid.Row="13"
+                    <Button Grid.Row="11"
                         HorizontalAlignment="Stretch"
                         Command="{Binding KitapResimEkle, Mode=OneWay}"
                         CommandParameter="{Binding Kitap}"
@@ -273,7 +210,7 @@
                             <TextBlock VerticalAlignment="Center" Text="KİTAP RESİM EKLE" />
                         </StackPanel>
                     </Button>
-                    <UniformGrid Grid.Row="15" Columns="2">
+                    <UniformGrid Grid.Row="13" Columns="2">
                         <Button HorizontalAlignment="Stretch"
                             Command="{Binding KitapEkle}"
                             CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}">
@@ -331,12 +268,73 @@
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="160" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <ContentControl>
                     <ViewModel:DolapGirişViewModel />
                 </ContentControl>
-                <GroupBox Grid.Row="1" Header="DOLAPLAR">
+                <UniformGrid Grid.Row="1" Columns="2">
+                    <GroupBox Header="KİTAP YAZARLARI">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <UniformGrid Columns="2">
+                                <TextBox Text="{Binding Kitap.Yazar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Button Grid.Row="1"
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Command="{Binding KitapYazarEkle}"
+                                    CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}"
+                                    Content="KİTAP YAZAR EKLE" />
+                            </UniformGrid>
+                            <ListView Grid.Row="1"
+                                Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliYazarlar}"
+                                d:ItemsSource="{d:SampleData ItemCount=5}"
+                                ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                                ItemsSource="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox HorizontalAlignment="Stretch"
+                                            Content="{Binding Ad}"
+                                            IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+
+                    </GroupBox>
+                    <GroupBox Header="KİTAP TÜRLERİ">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <UniformGrid Grid.Row="0" Columns="2">
+                                <TextBox Text="{Binding Kitap.Tür, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Command="{Binding KitapTürEkle}"
+                                    CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}"
+                                    Content="KİTAP TÜR EKLE" />
+                            </UniformGrid>
+                            <ListView Grid.Row="1"
+                                Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliKitapTürleri}"
+                                d:ItemsSource="{d:SampleData ItemCount=5}"
+                                ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                                ItemsSource="{Binding Kütüphane.KitapTürleri, Mode=OneWay, Source={StaticResource MainViewModel}}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox HorizontalAlignment="Stretch"
+                                            Content="{Binding Açıklama}"
+                                            IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </GroupBox>
+                </UniformGrid>
+                <GroupBox Grid.Row="2" Header="DOLAPLAR">
                     <ListView d:ItemsSource="{d:SampleData ItemCount=5}"
                         ItemTemplate="{StaticResource ListViewDolapTemplate}"
                         ItemsSource="{Binding Mode=OneWay, Source={StaticResource Dolaplar}}"
