@@ -11,10 +11,7 @@
     d:DesignHeight="650" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Diller" Source="{Binding Kitap.Diller}" />
         <CollectionViewSource x:Key="Dolaplar" Source="{Binding Kütüphane.Dolaplar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="Yazarlar" Source="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}" />
-        <CollectionViewSource x:Key="KitapTürleri" Source="{Binding Kütüphane.KitapTürleri, Source={StaticResource MainViewModel}}" />
     </UserControl.Resources>
     <GroupBox Header="KİTAP GİRİŞİ">
         <Grid>
@@ -86,7 +83,7 @@
                             <ComboBox.ItemsSource>
                                 <CompositeCollection>
                                     <x:Static Member="system:String.Empty" />
-                                    <CollectionContainer Collection="{Binding Source={StaticResource Diller}}" />
+                                    <CollectionContainer Collection="{Binding KitapGirişViewModel.Kitap.Diller, Source={StaticResource MainViewModel}}" />
                                 </CompositeCollection>
                             </ComboBox.ItemsSource>
                             <ComboBox.ItemsPanel>
@@ -115,7 +112,7 @@
                                 <ListView Grid.Row="1"
                                     Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliYazarlar}"
                                     ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Yazarlar}}">
+                                    ItemsSource="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <CheckBox HorizontalAlignment="Stretch"
@@ -145,7 +142,7 @@
                                 <ListView Grid.Row="1"
                                     Extensions:ListBoxHelper.SelectedItems="{Binding Kitap.SeçiliKitapTürleri}"
                                     ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapTürleri}}">
+                                    ItemsSource="{Binding Kütüphane.KitapTürleri, Mode=OneWay, Source={StaticResource MainViewModel}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <CheckBox HorizontalAlignment="Stretch"
@@ -229,7 +226,12 @@
                                 SpellCheck.IsEnabled="True"
                                 Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 TextWrapping="Wrap" />
-                            <GroupBox Header="KİTAP RESİM">
+                            <GroupBox>
+                                <GroupBox.Header>
+                                    <Button Command="{Binding KitapResimSil}"
+                                        CommandParameter="{Binding Kitap}"
+                                        Content="KİTAP RESİM SİL" />
+                                </GroupBox.Header>
                                 <ViewModel:ShadowedImage ShowShadow="True" Source="{Binding Kitap.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
                             </GroupBox>
                         </UniformGrid>

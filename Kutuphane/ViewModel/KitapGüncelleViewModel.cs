@@ -3,7 +3,6 @@ using Kutuphane.Model;
 using Kutuphane.View;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Collections.Specialized;
 
 namespace Kutuphane.ViewModel
 {
@@ -60,6 +60,8 @@ namespace Kutuphane.ViewModel
             }, parameter => true);
 
             PropertyChanged += KitapGüncelleViewModel_PropertyChanged;
+            KitapTopluYazarlar.CollectionChanged += KitapTopluYazarlar_CollectionChanged;
+            KitapTopluTürler.CollectionChanged += KitapTopluTürler_CollectionChanged;
         }
 
         public ICommand DolapAra { get; }
@@ -194,6 +196,20 @@ namespace Kutuphane.ViewModel
             }
         }
 
+        public string KitapTopluDili
+        {
+            get => kitapTopluDili;
+
+            set
+            {
+                if (kitapTopluDili != value)
+                {
+                    kitapTopluDili = value;
+                    OnPropertyChanged(nameof(KitapTopluDili));
+                }
+            }
+        }
+
         public int? KitapTopluDolapId
         {
             get => kitapTopluDolapId;
@@ -218,6 +234,20 @@ namespace Kutuphane.ViewModel
                 {
                     kitapTopluFavori = value;
                     OnPropertyChanged(nameof(KitapTopluFavori));
+                }
+            }
+        }
+
+        public double KitapTopluFiyat
+        {
+            get => kitapTopluFiyat;
+
+            set
+            {
+                if (kitapTopluFiyat != value)
+                {
+                    kitapTopluFiyat = value;
+                    OnPropertyChanged(nameof(KitapTopluFiyat));
                 }
             }
         }
@@ -251,6 +281,34 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand KitapTopluResimGüncelle { get; }
+
+        public ObservableCollection<KitapTürü> KitapTopluTürler
+        {
+            get => kitapTopluTürler;
+
+            set
+            {
+                if (kitapTopluTürler != value)
+                {
+                    kitapTopluTürler = value;
+                    OnPropertyChanged(nameof(KitapTopluTürler));
+                }
+            }
+        }
+
+        public ObservableCollection<Yazar> KitapTopluYazarlar
+        {
+            get => kitapTopluYazarlar;
+
+            set
+            {
+                if (kitapTopluYazarlar != value)
+                {
+                    kitapTopluYazarlar = value;
+                    OnPropertyChanged(nameof(KitapTopluYazarlar));
+                }
+            }
+        }
 
         public ICommand ResetFilter { get; }
 
@@ -314,13 +372,21 @@ namespace Kutuphane.ViewModel
 
         private bool? kitapTopluDemirbaş;
 
+        private string kitapTopluDili;
+
         private int? kitapTopluDolapId;
 
         private bool? kitapTopluFavori;
 
+        private double kitapTopluFiyat;
+
         private bool? kitapTopluÖdünç;
 
         private string kitapTopluRenk;
+
+        private ObservableCollection<KitapTürü> kitapTopluTürler = new();
+
+        private ObservableCollection<Yazar> kitapTopluYazarlar = new();
 
         private ObservableCollection<Dolap> seçiliDolaplar = new();
 
@@ -330,7 +396,6 @@ namespace Kutuphane.ViewModel
 
         private void KitapGüncelleViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            List<Kitap> Kitaplar = SeçiliKitaplar.Where(z => z.Seçili).ToList();
             switch (e.PropertyName)
             {
                 case "KişiKitapAdArama":
@@ -361,21 +426,21 @@ namespace Kutuphane.ViewModel
                     break;
 
                 case "KitapTopluAd":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.Ad = KitapTopluAd;
                     }
                     break;
 
                 case "KitapTopluBarkod":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.Barkod = KitapTopluBarkod;
                     }
                     break;
 
                 case "KitapTopluBasımYılı":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         if (KitapTopluBasımYılı is not null)
                         {
@@ -384,29 +449,39 @@ namespace Kutuphane.ViewModel
                     }
                     break;
 
+                case "KitapTopluFiyat":
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
+                    {
+                        if (KitapTopluFiyat is not 0)
+                        {
+                            kitap.Fiyat = KitapTopluFiyat;
+                        }
+                    }
+                    break;
+
                 case "KitapTopluDemirbaş":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.Demirbaş = KitapTopluDemirbaş == true;
                     }
                     break;
 
                 case "KitapTopluFavori":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.Favori = KitapTopluFavori == true;
                     }
                     break;
 
                 case "KitapTopluÖdünç":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.ÖdünçVerilebilir = KitapTopluÖdünç == true;
                     }
                     break;
 
                 case "KitapTopluDolapId":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         if (KitapTopluDolapId is not null)
                         {
@@ -416,11 +491,56 @@ namespace Kutuphane.ViewModel
                     break;
 
                 case "KitapTopluRenk":
-                    foreach (Kitap kitap in Kitaplar)
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.Renk = KitapTopluRenk;
                     }
                     break;
+
+                case "KitapTopluDili":
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
+                    {
+                        kitap.KitapDili = KitapTopluDili;
+                    }
+                    break;
+            }
+        }
+
+        private void KitapTopluTürler_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action is NotifyCollectionChangedAction.Add && e.NewItems is not null)
+            {
+                foreach ((Kitap kitap, KitapTürü tür) in from Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList() from KitapTürü tür in e.NewItems select (kitap, tür))
+                {
+                    kitap.Türler.Add(tür);
+                }
+            }
+
+            if (e.Action is NotifyCollectionChangedAction.Reset)
+            {
+                foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
+                {
+                    kitap.Türler.Clear();
+                }
+            }
+        }
+
+        private void KitapTopluYazarlar_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action is NotifyCollectionChangedAction.Add && e.NewItems is not null)
+            {
+                foreach ((Kitap kitap, Yazar yazar) in from Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList() from Yazar yazar in e.NewItems select (kitap, yazar))
+                {
+                    kitap.Yazarlar.Add(yazar);
+                }
+            }
+
+            if (e.Action is NotifyCollectionChangedAction.Reset)
+            {
+                foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
+                {
+                    kitap.Yazarlar.Clear();
+                }
             }
         }
     }

@@ -311,7 +311,7 @@ namespace Kutuphane.Model
         [XmlIgnore]
         public bool Seçili
         {
-            get { return seçili; }
+            get => seçili;
 
             set
             {

@@ -99,6 +99,14 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => true);
 
+            KitapResimSil = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is Kitap kitap)
+                {
+                    kitap.Resim = null;
+                }
+            }, parameter => parameter is Kitap && kitap.Resim is not null);
+
             TopluKitapEkle = new RelayCommand<object>(parameter =>
             {
                 if (parameter is Kütüphane kütüphane)
@@ -153,6 +161,8 @@ namespace Kutuphane.ViewModel
         public ICommand KitapEkle { get; }
 
         public ICommand KitapResimEkle { get; }
+
+        public ICommand KitapResimSil { get; }
 
         public ICommand KitapTürEkle { get; }
 

@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     d:DataContext="{d:DesignInstance Type=ViewModel:KitapGüncelleViewModel}"
     d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -361,7 +362,7 @@
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
-                            <CheckBox Grid.Row="2" Grid.Column="0"
+                            <CheckBox Grid.Row="1" Grid.Column="0"
                                 IsChecked="{Binding KitapTopluFavori}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="16" Height="16">
@@ -375,7 +376,7 @@
                                     <TextBlock VerticalAlignment="Center" Text="FAVORİ" />
                                 </StackPanel>
                             </CheckBox>
-                            <CheckBox Grid.Row="2" Grid.Column="1"
+                            <CheckBox Grid.Row="1" Grid.Column="1"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 IsChecked="{Binding KitapTopluDemirbaş}">
                                 <StackPanel Orientation="Horizontal">
@@ -390,7 +391,7 @@
                                     <TextBlock VerticalAlignment="Center" Text="DEMİRBAŞ" />
                                 </StackPanel>
                             </CheckBox>
-                            <CheckBox Grid.Row="2" Grid.Column="2"
+                            <CheckBox Grid.Row="1" Grid.Column="2"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 IsChecked="{Binding KitapTopluÖdünç}">
                                 <StackPanel Orientation="Horizontal">
@@ -405,8 +406,35 @@
                                     <TextBlock VerticalAlignment="Center" Text="ÖDÜNÇ VERİLEBİLİR" />
                                 </StackPanel>
                             </CheckBox>
-                            <TextBlock Grid.Row="4" Text="DOLAP DEĞİŞTİR" />
-                            <ComboBox Grid.Row="4" Grid.Column="1"
+                            <ComboBox Grid.Row="1" Grid.Column="3"
+                                HorizontalAlignment="Stretch"
+                                SelectedItem="{Binding KitapTopluDili}">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <x:Static Member="system:String.Empty" />
+                                        <CollectionContainer Collection="{Binding KitapGirişViewModel.Kitap.Diller, Source={StaticResource MainViewModel}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <TextBlock Grid.Row="2" Text="RENK DEĞİŞTİR" />
+                            <ComboBox Grid.Row="2" Grid.Column="1"
+                                ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
+                                ItemTemplate="{StaticResource ColorItemTemplate}"
+                                ItemsPanel="{StaticResource ColorPanelTemplate}"
+                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
+                                SelectedValue="{Binding KitapTopluRenk}"
+                                SelectedValuePath="Name" />
+                            <TextBlock Grid.Row="2" Grid.Column="2"
+                                Text="BARKOD DEĞİŞTİR" />
+                            <TextBox Grid.Row="2" Grid.Column="3"
+                                Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="3" Text="DOLAP DEĞİŞTİR" />
+                            <ComboBox Grid.Row="3" Grid.Column="1"
                                 DisplayMemberPath="Açıklama"
                                 ItemContainerStyle="{StaticResource ComboBoxItemDolapEtkinStyle}"
                                 ItemsSource="{Binding Kütüphane.Dolaplar, Mode=OneWay, Source={StaticResource MainViewModel}}"
@@ -419,22 +447,44 @@
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
                             <TextBlock Grid.Row="3" Grid.Column="2"
-                                Text="BARKOD DEĞİŞTİR" />
-                            <TextBox Grid.Row="3" Grid.Column="3"
-                                Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock Grid.Row="3" Text="RENK DEĞİŞTİR" />
-                            <ComboBox Grid.Row="3" Grid.Column="1"
-                                ItemContainerStyle="{StaticResource ComboBoxBlockedColorItemContainerStyle}"
-                                ItemTemplate="{StaticResource ColorItemTemplate}"
-                                ItemsPanel="{StaticResource ColorPanelTemplate}"
-                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource ColorList}}"
-                                SelectedValue="{Binding KitapTopluRenk}"
-                                SelectedValuePath="Name" />
-                            <TextBlock Grid.Row="4" Grid.Column="2"
                                 Text="RESİM DEĞİŞTİR" />
-                            <Button Grid.Row="4" Grid.Column="3"
+                            <Button Grid.Row="3" Grid.Column="3"
                                 Command="{Binding KitapTopluResimGüncelle}"
                                 Content="TOPLU RESİM YÜKLE" />
+                            <TextBlock Grid.Row="4" Grid.Column="0"
+                                Text="FİYAT DEĞİŞTİR" />
+                            <Extensions:NumericUpDownControl Grid.Row="4" Grid.Column="1"
+                                Maximum="100000" Minimum="0" ShowMode="CurrencyMode"
+                                Value="{Binding KitapTopluFiyat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Extensions:ContentToggleButton Grid.Row="4" Grid.Column="2"
+                                OverContent="KİTAP TÜRLER">
+                                <ListView Grid.Row="1"
+                                    Extensions:ListBoxHelper.SelectedItems="{Binding KitapTopluTürler}"
+                                    ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                                    ItemsSource="{Binding Kütüphane.KitapTürleri, Mode=OneWay, Source={StaticResource MainViewModel}}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox HorizontalAlignment="Stretch"
+                                                Content="{Binding Açıklama}"
+                                                IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Extensions:ContentToggleButton>
+                            <Extensions:ContentToggleButton Grid.Row="4" Grid.Column="3"
+                                OverContent="KİTAP YAZARLAR">
+                                <ListView Extensions:ListBoxHelper.SelectedItems="{Binding KitapTopluYazarlar}"
+                                    ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                                    ItemsSource="{Binding Kütüphane.Yazarlar, Source={StaticResource MainViewModel}}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox HorizontalAlignment="Stretch"
+                                                Content="{Binding Ad}"
+                                                IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" />
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Extensions:ContentToggleButton>
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="1">
