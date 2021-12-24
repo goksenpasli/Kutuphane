@@ -105,7 +105,7 @@ namespace Kutuphane.ViewModel
                 {
                     kitap.Resim = null;
                 }
-            }, parameter => parameter is Kitap && kitap.Resim is not null);
+            }, parameter => parameter is Kitap kitap && kitap.Resim is not null);
 
             TopluKitapEkle = new RelayCommand<object>(parameter =>
             {

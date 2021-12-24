@@ -13,14 +13,14 @@
         Header="İŞLEM">
         <StackPanel>
             <HeaderedContentControl Header="GÜN SAYISI">
-                <extensions:NumericUpDownControl Maximum="365" Minimum="1" SmallChange="1"
+                <extensions:NumericUpDownControl Maximum="365" Minimum="0" SmallChange="1"
                     Value="{Binding KitapGün}" />
             </HeaderedContentControl>
             <HeaderedContentControl Header="BAŞLANGIÇ TARİHİ">
                 <DatePicker DisplayDateStart="{Binding Mode=OneWay, Source={x:Static System:DateTime.Today}}" SelectedDate="{Binding BaşlangıçTarihi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </HeaderedContentControl>
             <TextBlock FontSize="16" Foreground="Red">
-                <Run Text="GETİRME TARİHİ" />
+                <Run Text="GERİ GETİRME TARİHİ" />
                 <LineBreak />
                 <Run Language="tr-tr" Text="{Binding GeriGetirmeTarihi, StringFormat=\{0:D\}}" />
             </TextBlock>

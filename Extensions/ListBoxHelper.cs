@@ -34,15 +34,16 @@ namespace Extensions
         {
             if (d is ListBox listBox)
             {
+                IList selectedItems = GetSelectedItems(listBox);
+                int maxitem = GetSelectedItemsMaxCount(listBox);
                 listBox.SelectionChanged += delegate
                 {
-                    if (listBox.SelectedItems.Count > GetSelectedItemsMaxCount(listBox))
+                    if (listBox.SelectedItems.Count > maxitem)
                     {
                         listBox.SelectedItems.Clear();
-                        MessageBox.Show($"En Fazla {GetSelectedItemsMaxCount(listBox)} Adet Seçim Yapabilirsiniz.", Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show($"En Fazla {maxitem} Adet Seçim Yapabilirsiniz.", Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
 
-                    IList selectedItems = GetSelectedItems(listBox);
                     selectedItems?.Clear();
                     foreach (object item in listBox.SelectedItems)
                     {

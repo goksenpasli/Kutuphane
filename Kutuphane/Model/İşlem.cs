@@ -220,7 +220,7 @@ namespace Kutuphane.Model
 
         private int kişiId;
 
-        private double kitapGün = 1;
+        private double kitapGün;
 
         private int kitapId;
 

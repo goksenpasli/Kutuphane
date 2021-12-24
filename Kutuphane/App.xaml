@@ -14,7 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Extensions;component/Themes/Generic.xaml" />
-				<ResourceDictionary Source="/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="/Resources/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Kutuphane:StringToBrushConverter x:Key="StringToBrushConverter" />
             <ViewModel:MainViewModel x:Key="MainViewModel" />
@@ -239,7 +239,7 @@
                         <Setter Property="IsSelected" Value="False" />
                     </DataTrigger>
                 </Style.Triggers>
-            </Style>           
+            </Style>
             <DataTemplate x:Key="ListViewDolapTemplate">
                 <StackPanel Orientation="Horizontal">
                     <ViewModel:ShadowedImage Width="32" Height="32"
@@ -399,7 +399,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-            </DataTemplate>           
+            </DataTemplate>
             <ControlTemplate x:Key="PdfViewerControlTemplate">
                 <Grid>
                     <Grid.RowDefinitions>

@@ -4,13 +4,13 @@ using Kutuphane.View;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Collections.Specialized;
 
 namespace Kutuphane.ViewModel
 {
@@ -31,7 +31,7 @@ namespace Kutuphane.ViewModel
                         MessageBox.Show("Hatalı Girişleri Düzeltin.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
-            }, parameter => parameter is ObservableCollection<Kitap> kitaplar && kitaplar?.Any(z=>z.Seçili) == true);
+            }, parameter => parameter is ObservableCollection<Kitap> kitaplar && kitaplar?.Any(z => z.Seçili) == true);
 
             KitapGit = new RelayCommand<object>(parameter =>
             {
@@ -52,7 +52,7 @@ namespace Kutuphane.ViewModel
                 {
                     string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                     File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
-                    foreach (Kitap kitap in SeçiliKitaplar.ToList())
+                    foreach (Kitap kitap in SeçiliKitaplar.Where(z => z.Seçili).ToList())
                     {
                         kitap.Resim = filename;
                     }

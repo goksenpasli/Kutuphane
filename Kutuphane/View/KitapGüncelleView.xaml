@@ -287,10 +287,12 @@
                     <StackPanel Grid.Column="0">
                         <TextBlock VerticalAlignment="Center">
                             <Hyperlink Command="{Binding KitapGit}" CommandParameter="{Binding ElementName=listView}">
-                                <Run Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItem.Barkod}" />
+                                <Run d:Text="BARKOD" Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItem.Barkod}" />
                             </Hyperlink>
                             <Run Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItems.Count, StringFormat={}{0} Seçili Kitap}" />
-                            <Run Language="tr-tr" Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItem.SistemKayıtTarihi, StringFormat=\{0:d\}}" />
+                            <LineBreak />
+                            <Run d:Text="KAYIT TARİHİ" Language="tr-tr"
+                                Text="{Binding ElementName=listView, Mode=OneWay, Path=SelectedItem.SistemKayıtTarihi, StringFormat=\{0:d\}}" />
                         </TextBlock>
                         <ComboBox IsEnabled="False"
                             ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"

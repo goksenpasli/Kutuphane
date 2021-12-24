@@ -23,8 +23,22 @@ namespace Kutuphane.ViewModel
             }, parameter => parameter is Kütüphane kütüphane && kütüphane.Dolaplar?.Any(z => z.Kod == Dolap.Kod) == false && !string.IsNullOrWhiteSpace(Dolap.Açıklama) && !double.IsNaN(Dolap.Kod));
         }
 
-        public Dolap Dolap { get; set; }
+        public Dolap Dolap
+        {
+            get => dolap;
+
+            set
+            {
+                if (dolap != value)
+                {
+                    dolap = value;
+                    OnPropertyChanged(nameof(Dolap));
+                }
+            }
+        }
 
         public ICommand DolapEkle { get; }
+
+        private Dolap dolap;
     }
 }

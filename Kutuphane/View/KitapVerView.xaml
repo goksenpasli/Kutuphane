@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:Kutuphane.View" xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type={x:Type viewmodel:KitapVerViewModel}}"
-    d:DesignHeight="800" d:DesignWidth="1280" Loaded="UserControl_Loaded" UseLayoutRounding="True"
+    d:DesignHeight="800" d:DesignWidth="1280"
+    FocusManager.FocusedElement="{Binding ElementName=TbKitapBarkodArama}"
+    Loaded="UserControl_Loaded" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Kitaplar" Source="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}" />
@@ -49,7 +51,7 @@
                                     CellTemplate="{StaticResource KitapTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;ADI" />
-                                        <TextBox Width="55"
+                                        <TextBox Width="55" IsTabStop="False"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
@@ -59,7 +61,8 @@
                                     DisplayMemberBinding="{Binding Barkod}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                        <TextBox Width="55"
+                                        <TextBox x:Name="TbKitapBarkodArama"
+                                            Width="55"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding Kişi.KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
@@ -99,10 +102,10 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox IsReadOnly="True"
+                    <TextBox IsReadOnly="True" IsTabStop="False"
                         Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}"
                         TextWrapping="Wrap" />
-                    <Button Grid.Column="1"
+                    <Button Grid.Column="1" IsTabStop="False"
                         Command="{Binding AppSettingsViewModel.MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}"
                         CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}">
                         <StackPanel Orientation="Horizontal">

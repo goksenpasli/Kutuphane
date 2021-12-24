@@ -2,7 +2,6 @@
     x:Class="Kutuphane.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:Controls="clr-namespace:Extensions.Controls;assembly=Extensions"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:TwainControl="clr-namespace:TwainControl;assembly=TwainControl"
@@ -12,7 +11,6 @@
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DesignHeight="578" d:DesignWidth="1280"
     DataContext="{Binding Mode=OneWay, Source={StaticResource MainViewModel}}"
-    FocusManager.FocusedElement="{Binding CurrentView}"
     UseLayoutRounding="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
     mc:Ignorable="d">
     <Window.InputBindings>

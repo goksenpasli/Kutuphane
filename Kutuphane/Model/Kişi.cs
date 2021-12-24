@@ -42,7 +42,19 @@ namespace Kutuphane.Model
         }
 
         [XmlIgnore]
-        public string AktarmaTC { get; set; }
+        public string AktarmaTC
+        {
+            get => aktarmaTC;
+
+            set
+            {
+                if (aktarmaTC != value)
+                {
+                    aktarmaTC = value;
+                    OnPropertyChanged(nameof(AktarmaTC));
+                }
+            }
+        }
 
         [XmlAttribute(AttributeName = "Cinsiyet")]
         public int Cinsiyet
@@ -352,6 +364,8 @@ namespace Kutuphane.Model
         private string ad;
 
         private string adres;
+
+        private string aktarmaTC;
 
         private int cinsiyet = -1;
 
