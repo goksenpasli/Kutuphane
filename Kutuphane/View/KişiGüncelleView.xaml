@@ -28,7 +28,7 @@
                 extensions:ListBoxHelper.SelectedItems="{Binding SeçiliKişiler}"
                 extensions:ListBoxHelper.SelectedItemsMaxCount="10"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kişiler}}"
-                SelectedItem="{Binding SeçiliKişi}">            
+                SelectedItem="{Binding SeçiliKişi}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
@@ -58,7 +58,9 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="KitapAlabilir" Header="KİTAP ALABİLİR">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding KitapAlabilir}" />
+                                    <CheckBox Command="{Binding KişiGüncelleViewModel.KişiKitapKontrol, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                                        CommandParameter="{Binding Mode=OneWay}"
+                                        IsChecked="{Binding KitapAlabilir}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

@@ -71,6 +71,7 @@
             <ListView x:Name="listViewİşlem"
                 Grid.RowSpan="2" Grid.Column="1"
                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                IsSynchronizedWithCurrentItem="False"
                 ItemContainerStyle="{StaticResource ListViewItemContainerGeriGetirmeTarihiStyle}"
                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource İşlemler}}"
                 SelectionMode="Single">

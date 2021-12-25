@@ -55,9 +55,9 @@ namespace Kutuphane.ViewModel
 
             HızlıKitapVer = new RelayCommand<object>(parameter =>
             {
-                if (parameter is object[] data && data[0] is Kişi kişi && data[1] is Kitap kitap)
+                if (parameter is object[] data && data[0] is Kişi sonkaydedilenkişi && data[1] is Kitap kitap)
                 {
-                    if (!Settings.Default.KişiKitapKritikKontrol || kişi.KitapCezasıOranı <= Settings.Default.KişiKitapKritikOran || MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Yine De Bu Kişiye Kitap Vermek İstiyormusunuz?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    if (!Settings.Default.KişiKitapKritikKontrol || sonkaydedilenkişi.KitapCezasıOranı <= Settings.Default.KişiKitapKritikOran || MessageBox.Show("Bu Kişinin Kitap Geri Verme Durumu Problemli Yine De Bu Kişiye Kitap Vermek İstiyormusunuz?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
                         İşlem işlem = new()
                         {
@@ -65,17 +65,17 @@ namespace Kutuphane.ViewModel
                             KitapGün = Settings.Default.HızlıKitapGirişGünSüresi,
                             GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? DateTime.Today.İşGünüEkle(Settings.Default.HızlıKitapGirişGünSüresi) : DateTime.Today.AddDays(Settings.Default.HızlıKitapGirişGünSüresi),
                             KitapId = kitap.Id,
-                            KişiId = kişi.Id,
+                            KişiId = sonkaydedilenkişi.Id,
                             BaşlangıçTarihi = DateTime.Today,
                         };
-                        kişi.İşlem.Add(işlem);
+                        sonkaydedilenkişi.İşlem.Add(işlem);
                         kitap.KitapDurumId = (int)KitapDurumu.Okuyucuda;
                         MainViewModel.DatabaseSave.Execute(null);
 
                         if (Settings.Default.OtomatikTutanak)
                         {
                             işlem.SeçiliKitap = kitap;
-                            new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { kişi, işlem });
+                            new ReportViewModel().KitapTutanakRaporu.Execute(new object[] { sonkaydedilenkişi, işlem });
                         }
                     }
                 }

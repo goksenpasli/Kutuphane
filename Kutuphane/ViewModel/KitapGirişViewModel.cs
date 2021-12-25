@@ -1,9 +1,9 @@
-﻿using ExcelDataReader;
-using Extensions;
+﻿using Extensions;
 using Kutuphane.Model;
 using Kutuphane.Properties;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -111,27 +111,30 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is Kütüphane kütüphane)
                 {
-                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Excel Dosyaları (*.xls;*.xlsx)|*.xls;*.xlsx" };
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Microsoft Excel Virgülle Ayrılmış Değerler Dosyası (*.csv)|*.csv" };
                     if (openFileDialog.ShowDialog() == true)
                     {
                         try
                         {
-                            using FileStream stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                            using IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
-                            do
+                            IEnumerable<Kitap> kitaplistesi = openFileDialog.FileName.CsvKitapListesi();
+                            if (kitaplistesi != null)
                             {
-                                while (reader.Read())
+                                foreach (Kitap kitap in kitaplistesi)
                                 {
                                     kütüphane.Kitaplar.Add(new Kitap
                                     {
                                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
-                                        Ad = reader.GetValue(0).ToString(),
-                                        Barkod = reader.GetValue(1).ToString(),
+                                        Ad = kitap.Ad,
+                                        Barkod = kitap.Barkod,
                                         DolapId = Kitap.DolapId
                                     });
                                 }
-                            } while (reader.NextResult());
-                            MainViewModel.DatabaseSave.Execute(null);
+                                MainViewModel.DatabaseSave.Execute(null);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Dosya Boş Görünüyor.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            }
                         }
                         catch (Exception ex)
                         {

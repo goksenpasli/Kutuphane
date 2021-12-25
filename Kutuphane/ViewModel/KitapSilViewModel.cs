@@ -12,31 +12,37 @@ namespace Kutuphane.ViewModel
         {
             KitapSil = new RelayCommand<object>(parameter =>
             {
-                if (parameter is object[] data && data[0] is Kitap seçilikitap && data[1] is ObservableCollection<Kitap> liste && MessageBox.Show($"{seçilikitap.Ad} Adlı Seçili {(KitapDurumu)seçilikitap.KitapDurumId} Kitabı Silmek İstiyor Musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (parameter is ObservableCollection<Kitap> liste && MessageBox.Show($"{SeçiliKitap?.Ad} Adlı Seçili {(KitapDurumu)SeçiliKitap?.KitapDurumId} Kitabı Silmek İstiyor Musun?", "KÜTÜPHANE", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
-                    _ = liste.Remove(seçilikitap);
+                    _ = liste.Remove(SeçiliKitap);
                     MainViewModel.DatabaseSave.Execute(null);
                 }
             }, parameter =>
             {
-                if (parameter is object[] data && data[0] is Kitap seçilikitap)
+                return (SeçiliKitap?.KitapDurumId) switch
                 {
-                    switch (seçilikitap.KitapDurumId)
-                    {
-                        case (int)KitapDurumu.Okuyucuda:
-                        case (int)KitapDurumu.Kütüphanede:
-                            return false;
-
-                        case (int)KitapDurumu.Kayıp:
-                        case (int)KitapDurumu.Yıpranmış:
-                            return true;
-                    }
-                }
-                return false;
+                    (int)KitapDurumu.Okuyucuda or (int)KitapDurumu.Kütüphanede => false,
+                    (int)KitapDurumu.Kayıp or (int)KitapDurumu.Yıpranmış => true,
+                    _ => false,
+                };
             });
         }
 
         public ICommand KitapSil { get; }
+
+        public Kitap SeçiliKitap
+        {
+            get => seçiliKitap;
+
+            set
+            {
+                if (seçiliKitap != value)
+                {
+                    seçiliKitap = value;
+                    OnPropertyChanged(nameof(SeçiliKitap));
+                }
+            }
+        }
 
         public ObservableCollection<Kitap> SeçiliKitaplar
         {
@@ -51,6 +57,8 @@ namespace Kutuphane.ViewModel
                 }
             }
         }
+
+        private Kitap seçiliKitap;
 
         private ObservableCollection<Kitap> seçiliKitaplar = new();
     }

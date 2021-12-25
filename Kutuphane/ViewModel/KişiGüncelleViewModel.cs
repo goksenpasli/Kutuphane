@@ -5,6 +5,8 @@ using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Kutuphane.ViewModel
@@ -19,17 +21,26 @@ namespace Kutuphane.ViewModel
 
             KişiResimGüncelle = new RelayCommand<object>(parameter =>
             {
-                if (parameter is Kişi kişi)
+                if (parameter is Kişi seçilikişi)
                 {
                     OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Resim Dosyaları (*.jpg;*.jpeg;*.tif;*.tiff;*.png)|*.jpg;*.jpeg;*.tif;*.tiff;*.png" };
                     if (openFileDialog.ShowDialog() == true)
                     {
                         string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                         File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
-                        kişi.Resim = filename;
+                        seçilikişi.Resim = filename;
                     }
                 }
             }, parameter => true);
+
+            KişiKitapKontrol = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is Kişi seçiliKişi && !seçiliKişi.KitapAlabilir && seçiliKişi.İşlem.Any(z => !z.İşlemBitti))
+                {
+                    MessageBox.Show($"Dikkat {seçiliKişi.Ad} {seçiliKişi.Soyad} Adlı Kişinin Bitmemiş İşlemi Var.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }, parameter => true);
+
             Kişi.PropertyChanged += Kişi_PropertyChanged;
         }
 
@@ -48,6 +59,8 @@ namespace Kutuphane.ViewModel
         }
 
         public ICommand KişiGüncelle { get; }
+
+        public ICommand KişiKitapKontrol { get; }
 
         public ICommand KişiResimGüncelle { get; }
 

@@ -1,10 +1,13 @@
 ﻿using Kutuphane.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
@@ -15,6 +18,30 @@ namespace Kutuphane.ViewModel
 {
     public static class ExtensionMethods
     {
+        public static IEnumerable<Kitap> CsvKitapListesi(this string csvfile)
+        {
+            try
+            {
+                string[] satırlar = File.ReadAllLines(csvfile, Encoding.Default);
+                if (satırlar.Length != 0)
+                {
+                    CultureInfo culture = new(CultureInfo.CurrentCulture.Name);
+                    return satırlar.Select(satır =>
+                    {
+                        string[] veri = satır.Split(culture.TextInfo.ListSeparator.ToCharArray());
+                        return new Kitap { Ad = veri[0], Barkod = veri[1] };
+                    });
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
+        }
+
         public static T DeSerialize<T>(this string xmldatapath) where T : class, new()
         {
             XmlSerializer serializer = new(typeof(T));

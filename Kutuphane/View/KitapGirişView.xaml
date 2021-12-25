@@ -247,7 +247,7 @@
                                         <Rectangle Width="200" Height="18"
                                             Fill="#800000" Stroke="Black" />
                                     </UniformGrid>
-                                    <TextBlock Text="Birinci Sütun Kitap Adı İkinci Sütun Barkod Olmalıdır Başlık Olmamalıdır." />
+                                    <TextBlock Text="Csv Dosyasında Birinci Sütun Kitap Adı İkinci Sütun Barkod Olmalıdır Başlık Olmamalıdır." />
                                 </StackPanel>
                             </Button.ToolTip>
                             <StackPanel Orientation="Horizontal">

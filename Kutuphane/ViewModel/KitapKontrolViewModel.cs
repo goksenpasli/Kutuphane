@@ -21,7 +21,7 @@ namespace Kutuphane.ViewModel
                     kitap.KitapDurumId = (int)KitapDurumu.Kayıp;
                     MainViewModel.DatabaseSave.Execute(null);
                 }
-            }, parameter => parameter is Kitap kitap && kitap.Tutanak);
+            }, parameter => parameter is Kitap kitap && kitap.Tutanak && kitap.KitapDurumId != (int)KitapDurumu.Kayıp);
 
             KitapKayıpTutanakOluştur = new RelayCommand<object>(parameter =>
             {

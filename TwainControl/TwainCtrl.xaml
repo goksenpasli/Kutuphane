@@ -52,11 +52,17 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                             </Style>
                         </UniformGrid.Resources>
-                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="600" Minimum="72"
-                            SmallChange="1" Ticks="72,96,120,150,200,300,450,600" ToolTip="ÇÖZÜNÜRLÜK"
+                        <Slider Margin="0,0,1,0"
+                            AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="600" Minimum="72"
+                            SmallChange="1"
+                            Style="{StaticResource Slider}"
+                            Ticks="72,96,120,150,200,300,450,600" ToolTip="ÇÖZÜNÜRLÜK"
                             Value="{Binding Path=Çözünürlük, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
-                        <Slider AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="255" Minimum="1"
-                            SmallChange="1" ToolTip="SİYAH BEYAZ EŞİK DEĞERİ"
+                        <Slider Margin="1,0,0,0"
+                            AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True" Maximum="255" Minimum="1"
+                            SmallChange="1"
+                            Style="{StaticResource Slider}"
+                            ToolTip="SİYAH BEYAZ EŞİK DEĞERİ"
                             Value="{Binding Eşik, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <CheckBox Content="BESLEYİCİ" IsChecked="{Binding Adf}" />
                         <CheckBox Content="SİYAH BEYAZ TARA"

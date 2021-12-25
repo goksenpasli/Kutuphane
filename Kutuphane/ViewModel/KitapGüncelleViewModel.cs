@@ -25,6 +25,7 @@ namespace Kutuphane.ViewModel
                     if (kitaplar.All(z => !string.IsNullOrWhiteSpace(z.Barkod) && !string.IsNullOrWhiteSpace(z.Ad)))
                     {
                         MainViewModel.DatabaseSave.Execute(null);
+                        KitapTopluFiyat = 0;
                     }
                     else
                     {

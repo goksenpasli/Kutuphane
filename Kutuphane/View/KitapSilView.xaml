@@ -24,6 +24,7 @@
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     IsSynchronizedWithCurrentItem="False"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                    SelectedItem="{Binding SeçiliKitap}"
                     VirtualizingPanel.VirtualizationMode="Recycling">
                     <ListView.View>
                         <GridView>
@@ -114,13 +115,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
-                                            <Hyperlink Command="{Binding KitapSilViewModel.KitapSil, Mode=OneWay, Source={StaticResource MainViewModel}}">
-                                                <Hyperlink.CommandParameter>
-                                                    <MultiBinding Converter="{StaticResource CloneConverter}">
-                                                        <Binding Mode="OneWay" />
-                                                        <Binding Path="Kütüphane.Kitaplar" Source="{StaticResource MainViewModel}" />
-                                                    </MultiBinding>
-                                                </Hyperlink.CommandParameter>
+                                            <Hyperlink Command="{Binding KitapSilViewModel.KitapSil, Mode=OneWay, Source={StaticResource MainViewModel}}" CommandParameter="{Binding Path=Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}">
                                                 <Run Text="SİL" />
                                             </Hyperlink>
                                         </TextBlock>
