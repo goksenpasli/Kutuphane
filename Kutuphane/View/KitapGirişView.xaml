@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:view="clr-namespace:Kutuphane.View"
     d:DataContext="{d:DesignInstance Type={x:Type ViewModel:KitapGirişViewModel}}"
     d:DesignHeight="650" d:DesignWidth="1280" UseLayoutRounding="True"
     mc:Ignorable="d">
@@ -226,7 +226,7 @@
                                 <TextBlock VerticalAlignment="Center" Text="KİTAP GİRİŞİ" />
                             </StackPanel>
                         </Button>
-                        <Button HorizontalAlignment="Stretch"
+                        <Extensions:SplitButton HorizontalAlignment="Stretch"
                             Command="{Binding TopluKitapEkle}"
                             CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}">
                             <Button.ToolTip>
@@ -247,7 +247,7 @@
                                         <Rectangle Width="200" Height="18"
                                             Fill="#800000" Stroke="Black" />
                                     </UniformGrid>
-                                    <TextBlock Text="Csv Dosyasında Birinci Sütun Kitap Adı İkinci Sütun Barkod Olmalıdır Başlık Olmamalıdır." />
+                                    <TextBlock Text="Birinci Sütun Kitap Adı İkinci Sütun Barkod Olmalıdır Başlık Olmamalıdır." />
                                 </StackPanel>
                             </Button.ToolTip>
                             <StackPanel Orientation="Horizontal">
@@ -261,7 +261,10 @@
                                 </Image>
                                 <TextBlock VerticalAlignment="Center" Text="TOPLU KİTAP GİRİŞİ" />
                             </StackPanel>
-                        </Button>
+                            <Extensions:SplitButton.InternalContent>
+                                <view:CsvImportSettingsView />
+                            </Extensions:SplitButton.InternalContent>
+                        </Extensions:SplitButton>
                     </UniformGrid>
                 </Grid>
             </ScrollViewer>

@@ -116,18 +116,22 @@ namespace Kutuphane.ViewModel
                     {
                         try
                         {
-                            IEnumerable<Kitap> kitaplistesi = openFileDialog.FileName.CsvKitapListesi();
+                            IEnumerable<Kitap> kitaplistesi = openFileDialog.FileName.CsvKitapListesi(XlsFiyat, XlsYıl);
                             if (kitaplistesi != null)
                             {
-                                foreach (Kitap kitap in kitaplistesi)
+                                foreach (Kitap xlskitap in kitaplistesi)
                                 {
-                                    kütüphane.Kitaplar.Add(new Kitap
+                                    Kitap kitap = new Kitap
                                     {
                                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
-                                        Ad = kitap.Ad,
-                                        Barkod = kitap.Barkod,
-                                        DolapId = Kitap.DolapId
-                                    });
+                                        Ad = xlskitap.Ad,
+                                        Barkod = xlskitap.Barkod,
+                                        DolapId = Kitap.DolapId,
+                                        Fiyat = xlskitap.Fiyat,
+                                        BasımYılı = xlskitap.BasımYılı
+                                    };
+
+                                    kütüphane.Kitaplar.Add(kitap);
                                 }
                                 MainViewModel.DatabaseSave.Execute(null);
                             }
@@ -173,7 +177,38 @@ namespace Kutuphane.ViewModel
 
         public ICommand TopluKitapEkle { get; }
 
+        public bool XlsFiyat
+        {
+            get => xlsFiyat;
+
+            set
+            {
+                if (xlsFiyat != value)
+                {
+                    xlsFiyat = value;
+                    OnPropertyChanged(nameof(XlsFiyat));
+                }
+            }
+        }
+
+        public bool XlsYıl
+        {
+            get => xlsYıl; set
+
+            {
+                if (xlsYıl != value)
+                {
+                    xlsYıl = value;
+                    OnPropertyChanged(nameof(XlsYıl));
+                }
+            }
+        }
+
         private Kitap kitap;
+
+        private bool xlsFiyat;
+
+        private bool xlsYıl;
 
         private void Kitap_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

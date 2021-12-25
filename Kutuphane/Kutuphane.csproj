@@ -141,6 +141,9 @@
     <Compile Include="View\CameraUserControl.xaml.cs">
       <DependentUpon>CameraUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CsvImportSettingsView.xaml.cs">
+      <DependentUpon>CsvImportSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DolapDüzenView.xaml.cs">
       <DependentUpon>DolapDüzenView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CameraUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CsvImportSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
