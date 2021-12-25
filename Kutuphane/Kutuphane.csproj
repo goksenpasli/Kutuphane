@@ -108,6 +108,7 @@
     <Compile Include="Model\KitapTürü.cs" />
     <Compile Include="Model\Kişi.cs" />
     <Compile Include="Model\Kütüphane.cs" />
+    <Compile Include="Model\CsvData.cs" />
     <Compile Include="Model\Yazar.cs" />
     <Compile Include="Model\İşlem.cs" />
     <Compile Include="Model\Barkod.cs" />

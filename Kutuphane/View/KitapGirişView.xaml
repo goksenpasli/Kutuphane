@@ -231,23 +231,18 @@
                             CommandParameter="{Binding Kütüphane, Source={StaticResource MainViewModel}}">
                             <Button.ToolTip>
                                 <StackPanel Width="400">
-                                    <UniformGrid Columns="2" Rows="4">
-                                        <TextBlock Text="Kitap Adı" />
-                                        <TextBlock Text="Kitap Barkod" />
-                                        <Rectangle Width="200" Height="18"
-                                            Fill="#800000" Stroke="Black" />
-                                        <Rectangle Width="200" Height="18"
-                                            Fill="#800000" Stroke="Black" />
-                                        <Rectangle Width="200" Height="18"
-                                            Fill="Blue" Stroke="Black" />
-                                        <Rectangle Width="200" Height="18"
-                                            Fill="Blue" Stroke="Black" />
-                                        <Rectangle Width="200" Height="18"
-                                            Fill="#800000" Stroke="Black" />
-                                        <Rectangle Width="200" Height="18"
-                                            Fill="#800000" Stroke="Black" />
-                                    </UniformGrid>
                                     <TextBlock Text="Birinci Sütun Kitap Adı İkinci Sütun Barkod Olmalıdır Başlık Olmamalıdır." />
+                                    <ListView ItemsSource="{Binding CsvData.SampleData}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Ad}" Header="AD" />
+                                                <GridViewColumn DisplayMemberBinding="{Binding Barkod}" Header="BARKOD" />
+                                                <GridViewColumn DisplayMemberBinding="{Binding Fiyat}" Header="FİYAT" />
+                                                <GridViewColumn DisplayMemberBinding="{Binding BasımYılı}" Header="YIL" />
+                                                <GridViewColumn DisplayMemberBinding="{Binding KitapDili}" Header="DİL" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
                                 </StackPanel>
                             </Button.ToolTip>
                             <StackPanel Orientation="Horizontal">

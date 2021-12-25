@@ -18,7 +18,7 @@ namespace Kutuphane.ViewModel
         public KitapGirişViewModel()
         {
             Kitap = new Kitap();
-
+            CsvData = new CsvData();
             KitapEkle = new RelayCommand<object>(parameter =>
             {
                 if (parameter is Kütüphane kütüphane)
@@ -116,19 +116,20 @@ namespace Kutuphane.ViewModel
                     {
                         try
                         {
-                            IEnumerable<Kitap> kitaplistesi = openFileDialog.FileName.CsvKitapListesi(XlsFiyat, XlsYıl);
+                            IEnumerable<Kitap> kitaplistesi = openFileDialog.FileName.CsvKitapListesi(CsvData.Fiyat, CsvData.Yıl, CsvData.Dil);
                             if (kitaplistesi != null)
                             {
                                 foreach (Kitap xlskitap in kitaplistesi)
                                 {
-                                    Kitap kitap = new Kitap
+                                    Kitap kitap = new()
                                     {
                                         Id = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue),
                                         Ad = xlskitap.Ad,
                                         Barkod = xlskitap.Barkod,
                                         DolapId = Kitap.DolapId,
                                         Fiyat = xlskitap.Fiyat,
-                                        BasımYılı = xlskitap.BasımYılı
+                                        BasımYılı = xlskitap.BasımYılı,
+                                        KitapDili = xlskitap.KitapDili
                                     };
 
                                     kütüphane.Kitaplar.Add(kitap);
@@ -149,6 +150,20 @@ namespace Kutuphane.ViewModel
             }, parameter => Kitap.DolapId != 0);
 
             Kitap.PropertyChanged += Kitap_PropertyChanged;
+        }
+
+        public CsvData CsvData
+        {
+            get => csvData;
+
+            set
+            {
+                if (csvData != value)
+                {
+                    csvData = value;
+                    OnPropertyChanged(nameof(CsvData));
+                }
+            }
         }
 
         public Kitap Kitap
@@ -177,38 +192,9 @@ namespace Kutuphane.ViewModel
 
         public ICommand TopluKitapEkle { get; }
 
-        public bool XlsFiyat
-        {
-            get => xlsFiyat;
-
-            set
-            {
-                if (xlsFiyat != value)
-                {
-                    xlsFiyat = value;
-                    OnPropertyChanged(nameof(XlsFiyat));
-                }
-            }
-        }
-
-        public bool XlsYıl
-        {
-            get => xlsYıl; set
-
-            {
-                if (xlsYıl != value)
-                {
-                    xlsYıl = value;
-                    OnPropertyChanged(nameof(XlsYıl));
-                }
-            }
-        }
+        private CsvData csvData;
 
         private Kitap kitap;
-
-        private bool xlsFiyat;
-
-        private bool xlsYıl;
 
         private void Kitap_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

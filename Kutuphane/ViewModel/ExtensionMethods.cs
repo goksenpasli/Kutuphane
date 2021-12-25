@@ -18,7 +18,7 @@ namespace Kutuphane.ViewModel
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<Kitap> CsvKitapListesi(this string csvfile, bool fiyat, bool basımyılı)
+        public static IEnumerable<Kitap> CsvKitapListesi(this string csvfile, bool fiyat, bool basımyılı, bool dil)
         {
             try
             {
@@ -41,6 +41,10 @@ namespace Kutuphane.ViewModel
                         if (basımyılı)
                         {
                             kitap.BasımYılı = int.Parse(veri[3]);
+                        }
+                        if (dil)
+                        {
+                            kitap.KitapDili = veri[4];
                         }
                         return kitap;
                     });
