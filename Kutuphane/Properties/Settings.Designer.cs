@@ -322,5 +322,41 @@ namespace Kutuphane.Properties {
                 this["VarsayılanEkran"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Biçim {
+            get {
+                return ((int)(this["Biçim"]));
+            }
+            set {
+                this["Biçim"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("110")]
+        public double En {
+            get {
+                return ((double)(this["En"]));
+            }
+            set {
+                this["En"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("145")]
+        public double Boy {
+            get {
+                return ((double)(this["Boy"]));
+            }
+            set {
+                this["Boy"] = value;
+            }
+        }
     }
 }

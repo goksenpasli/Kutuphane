@@ -21,6 +21,7 @@
             </HeaderedContentControl>
             <HeaderedContentControl Header="RESİM ÇÖZÜNÜRLÜK AYARI">
                 <Slider AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" SmallChange="1"
+                    Style="{StaticResource Slider}"
                     TickFrequency="32"
                     ToolTip="Resim Çözünürlük Ayarı Yüksek Ayarlarda Daha Net Görüntü Oluşturulur. Ancak Bellek Kullanımı Artar."
                     Value="{Binding Path=DecodeHeight, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
@@ -55,10 +56,57 @@
             </HeaderedContentControl>
             <HeaderedContentControl>
                 <HeaderedContentControl.Header>
-                    <TextBlock Text="KİTAP RESİM KÜÇÜLT" ToolTip="Kitap Resmi Belirtilen Oranda Küçültülür." />
+                    <CheckBox Content="KİTAP RESİM KÜÇÜLT"
+                        IsChecked="{Binding Path=ResimKüçült, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}"
+                        ToolTip="Bu İşaretlenirse Kitap Resmi Belirtilen Oranda Küçültülür." />
                 </HeaderedContentControl.Header>
-                <Extensions:NumericUpDownControl Maximum="1" Minimum="0.10" SmallChange="0.01" ToolTip="Kitap Resim Küçültme Oranı"
-                    Value="{Binding Path=ResimKüçültmeOranı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                <ListBox Height="25"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    IsEnabled="{Binding Path=ResimKüçült, Mode=OneWay, Source={x:Static properties:Settings.Default}}"
+                    SelectedIndex="{Binding Path=Biçim, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}">
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <RadioButton VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                            Content="{TemplateBinding ContentPresenter.Content}"
+                                            IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Resources>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem VerticalAlignment="Center" VerticalContentAlignment="Center"
+                        IsSelected="True">
+                        <ListBoxItem.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="ORAN" />
+                                <Extensions:NumericUpDownControl IsEnabled="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=TwoWay}"
+                                    Maximum="1" Minimum="0.10" SmallChange="0.01" ToolTip="Kitap Resim Küçültme Oranı"
+                                    Value="{Binding Path=ResimKüçültmeOranı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                            </StackPanel>
+                        </ListBoxItem.Content>
+                    </ListBoxItem>
+                    <ListBoxItem VerticalAlignment="Center" VerticalContentAlignment="Center">
+                        <ListBoxItem.Content>
+                            <StackPanel IsEnabled="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=TwoWay}" Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="EN" />
+                                <Extensions:NumericUpDownControl Maximum="1024" Minimum="110" SmallChange="1"
+                                    Value="{Binding Path=En, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                                <TextBlock VerticalAlignment="Center" Text="BOY" />
+                                <Extensions:NumericUpDownControl Maximum="768" Minimum="145" SmallChange="1"
+                                    Value="{Binding Path=Boy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={x:Static properties:Settings.Default}}" />
+                            </StackPanel>
+                        </ListBoxItem.Content>
+                    </ListBoxItem>
+                </ListBox>
             </HeaderedContentControl>
             <HeaderedContentControl>
                 <HeaderedContentControl.Header>

@@ -18,4 +18,11 @@ namespace Kutuphane.Model
         [XmlEnum(Name = "Yıpranmış")]
         Yıpranmış = 3,
     }
+
+    public enum YenidenBoyutlandırma
+    {
+        Oran = 0,
+
+        Boyut = 1
+    }
 }

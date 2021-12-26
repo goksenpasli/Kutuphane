@@ -12,7 +12,7 @@
     <GroupBox>
         <GroupBox.Header>
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="Tb"
+                <Extensions:ButtonedTextBox  x:Name="Tb"
                     Width="200"
                     CharacterCasing="Upper" />
                 <Button Command="{Binding KareKodYazdır, ElementName=UserControl, Mode=OneWay}" CommandParameter="{Binding ElementName=ItemsCtrl}">

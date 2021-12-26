@@ -71,36 +71,30 @@ namespace Extensions
 
                 if (e.Key == Key.Up)
                 {
-                    if (ShowMode == Mode.DateTimeMode && DateValue.HasValue)
+                    if (ShowMode == Mode.DateTimeMode && DateValue.HasValue && DateValue < DateTime.MaxValue)
                     {
-                        try
-                        {
-                            DateValue = DateValue.Value.AddDays(1);
-                        }
-                        catch (Exception)
-                        {
-                        }
+                        DateValue = DateValue.Value.AddDays(1);
                     }
                     else
                     {
-                        Value++;
+                        if (Value < Maximum)
+                        {
+                            Value++;
+                        }
                     }
                 }
                 else if (e.Key == Key.Down)
                 {
-                    if (ShowMode == Mode.DateTimeMode && DateValue.HasValue)
+                    if (ShowMode == Mode.DateTimeMode && DateValue.HasValue && DateValue > DateTime.MinValue)
                     {
-                        try
-                        {
-                            DateValue = DateValue.Value.AddDays(-1);
-                        }
-                        catch (Exception)
-                        {
-                        }
+                        DateValue = DateValue.Value.AddDays(-1);
                     }
                     else
                     {
-                        Value--;
+                        if (Value > Minimum)
+                        {
+                            Value--;
+                        }
                     }
                 }
             }
@@ -122,12 +116,13 @@ namespace Extensions
         {
             if (ShowMode == Mode.DateTimeMode && DateValue.HasValue)
             {
-                try
+                if (e.NewValue > e.OldValue && DateValue < DateTime.MaxValue)
                 {
-                    DateValue = e.NewValue > e.OldValue ? DateValue.Value.AddDays(1) : DateValue.Value.AddDays(-1);
+                    DateValue = DateValue.Value.AddDays(1);
                 }
-                catch (Exception)
+                else if (e.NewValue < e.OldValue && DateValue > DateTime.MinValue)
                 {
+                    DateValue = DateValue.Value.AddDays(-1);
                 }
             }
         }

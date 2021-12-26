@@ -86,8 +86,22 @@ namespace Kutuphane.ViewModel
                         string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
                         if (Settings.Default.ResimKüçült)
                         {
-                            BitmapSource image = new BitmapImage(new Uri(openFileDialog.FileName));
-                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", image.Resize(Settings.Default.ResimKüçültmeOranı).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                            BitmapSource image;
+                            switch (Settings.Default.Biçim)
+                            {
+                                case (int)YenidenBoyutlandırma.Oran:
+                                    {
+                                        image = new BitmapImage(new Uri(openFileDialog.FileName));
+                                        File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", image.Resize(Settings.Default.ResimKüçültmeOranı).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                                        break;
+                                    }
+                                case (int)YenidenBoyutlandırma.Boyut:
+                                    {
+                                        image = new BitmapImage(new Uri(openFileDialog.FileName));
+                                        File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", image.Resize(Settings.Default.En, Settings.Default.Boy).ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                                        break;
+                                    }
+                            }
                         }
                         else
                         {

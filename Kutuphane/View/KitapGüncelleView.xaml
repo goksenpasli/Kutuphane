@@ -98,7 +98,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP ADI" />
-                                        <TextBox Width="160"
+                                        <Extensions:ButtonedTextBox  Width="160"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
@@ -113,7 +113,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP BARKOD" />
-                                        <TextBox Width="110"
+                                        <Extensions:ButtonedTextBox  Width="110"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>

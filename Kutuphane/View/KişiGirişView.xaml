@@ -43,7 +43,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="281.6" />
-                        <RowDefinition Height="199.2" />
+                        <RowDefinition Height="225" />
                     </Grid.RowDefinitions>
                     <HeaderedContentControl Header="AD">
                         <TextBox Text="{Binding Kişi.Ad, UpdateSourceTrigger=PropertyChanged}" />
@@ -121,7 +121,7 @@
                         Header="SON KAYIT EDİLEN KİŞİ"
                         Visibility="{Binding Kişi.SonKaydedilenKişi, Converter={StaticResource NullToVisibilityConverter}}">
                         <UniformGrid Columns="3">
-                            <Button Width="150" Height="170"
+                            <Button Width="150" Height="195"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
                                 Command="{Binding KitapVerViewModel.HızlıKitapVer, Mode=OneWay, Source={StaticResource MainViewModel}}"
                                 ToolTip="Son Kişiye Kitap Girişi Yap">
@@ -189,7 +189,7 @@
                             CellTemplate="{StaticResource KitapTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİTAP&#xA;ADI" />
-                                <TextBox Width="55"
+                                <extensions:ButtonedTextBox  Width="55"
                                     VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
@@ -199,7 +199,7 @@
                             DisplayMemberBinding="{Binding Barkod}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                <TextBox Width="55"
+                                <extensions:ButtonedTextBox  Width="55"
                                     VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiKitapBarkodArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>

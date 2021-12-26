@@ -2,6 +2,7 @@
     x:Class="Kutuphane.View.KimlikKartıView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:Kutuphane.Model" xmlns:properties="clr-namespace:Kutuphane.Properties"
@@ -12,7 +13,7 @@
     <GroupBox Grid.Row="1" Grid.Column="1">
         <GroupBox.Header>
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="Tb"
+                <Extensions:ButtonedTextBox x:Name="Tb"
                     Width="80"
                     VerticalAlignment="Center"
                     d:Text="KURUM ADI" CharacterCasing="Upper"

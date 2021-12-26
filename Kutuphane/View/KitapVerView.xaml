@@ -51,8 +51,9 @@
                                     CellTemplate="{StaticResource KitapTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;ADI" />
-                                        <TextBox Width="55" IsTabStop="False"
+                                        <extensions:ButtonedTextBox  Width="55"
                                             VerticalContentAlignment="Center"
+                                            IsTabStop="False"
                                             Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </GridViewColumn>
@@ -61,7 +62,7 @@
                                     DisplayMemberBinding="{Binding Barkod}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                        <TextBox x:Name="TbKitapBarkodArama"
+                                        <extensions:ButtonedTextBox x:Name="TbKitapBarkodArama"
                                             Width="55"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding Kişi.KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
@@ -105,9 +106,10 @@
                     <TextBox IsReadOnly="True" IsTabStop="False"
                         Text="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}"
                         TextWrapping="Wrap" />
-                    <Button Grid.Column="1" IsTabStop="False"
+                    <Button Grid.Column="1"
                         Command="{Binding AppSettingsViewModel.MetinOku, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                        CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}">
+                        CommandParameter="{Binding ElementName=listViewKitap, Path=SelectedItem.Açıklama}"
+                        IsTabStop="False">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="32" Height="32">
                                 <Image.Source>
@@ -165,7 +167,7 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;ADI" />
-                                            <TextBox Width="55"
+                                            <extensions:ButtonedTextBox  Width="55"
                                                 VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
@@ -173,7 +175,7 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                            <TextBox Width="55"
+                                            <extensions:ButtonedTextBox  Width="55"
                                                 VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
@@ -181,7 +183,7 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;TC" />
-                                            <TextBox Width="85"
+                                            <extensions:ButtonedTextBox  Width="85"
                                                 VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
