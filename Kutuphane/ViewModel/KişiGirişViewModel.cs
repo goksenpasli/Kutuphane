@@ -109,7 +109,7 @@ namespace Kutuphane.ViewModel
 
             if (e.PropertyName is "KişiKitapBarkodArama")
             {
-                KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.Contains(Kişi.KişiKitapBarkodArama) == true;
+                KişiGirişView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.ToString().Contains(Kişi.KişiKitapBarkodArama) == true;
             }
         }
 

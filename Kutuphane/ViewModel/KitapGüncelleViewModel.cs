@@ -22,7 +22,7 @@ namespace Kutuphane.ViewModel
             {
                 if (parameter is ObservableCollection<Kitap> kitaplar)
                 {
-                    if (kitaplar.All(z => !string.IsNullOrWhiteSpace(z.Barkod) && !string.IsNullOrWhiteSpace(z.Ad)))
+                    if (kitaplar.All(z => z.Barkod != 0 && !string.IsNullOrWhiteSpace(z.Ad)))
                     {
                         MainViewModel.DatabaseSave.Execute(null);
                         KitapTopluFiyat = 0;
@@ -155,7 +155,7 @@ namespace Kutuphane.ViewModel
             }
         }
 
-        public string KitapTopluBarkod
+        public int KitapTopluBarkod
         {
             get => kitapTopluBarkod;
 
@@ -367,7 +367,7 @@ namespace Kutuphane.ViewModel
 
         private string kitapTopluAd;
 
-        private string kitapTopluBarkod;
+        private int kitapTopluBarkod;
 
         private int? kitapTopluBasımYılı;
 
@@ -404,7 +404,7 @@ namespace Kutuphane.ViewModel
                     break;
 
                 case "KişiKitapBarkodArama":
-                    KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.Contains(KişiKitapBarkodArama) == true;
+                    KitapGüncelleView.cvs.Filter += (s, e) => e.Accepted &= (e.Item as Kitap)?.Barkod.ToString().Contains(KişiKitapBarkodArama) == true;
                     break;
 
                 case "KişiKitapYılArama":

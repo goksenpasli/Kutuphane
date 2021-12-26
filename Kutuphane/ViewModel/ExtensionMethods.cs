@@ -32,7 +32,7 @@ namespace Kutuphane.ViewModel
                         Kitap kitap = new()
                         {
                             Ad = veri[0],
-                            Barkod = veri[1]
+                            Barkod =int.Parse(veri[1])
                         };
                         if (fiyat)
                         {

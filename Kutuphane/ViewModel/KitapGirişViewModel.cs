@@ -31,7 +31,7 @@ namespace Kutuphane.ViewModel
                             kitap = KitapOluştur();
                             if (Kitap.OtomatikBarkod)
                             {
-                                kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                                kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue);
                             }
                             kütüphane?.Kitaplar.Add(kitap);
                         }
@@ -51,10 +51,10 @@ namespace Kutuphane.ViewModel
 
                     if (Kitap.OtomatikBarkod)
                     {
-                        Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                        Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue);
                     }
                 }
-            }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad) && !string.IsNullOrWhiteSpace(Kitap?.Barkod));
+            }, parameter => Kitap.DolapId != 0 && !string.IsNullOrWhiteSpace(Kitap?.Ad) && Kitap?.Barkod != 0);
 
             KitapTürEkle = new RelayCommand<object>(parameter =>
             {
@@ -218,7 +218,7 @@ namespace Kutuphane.ViewModel
             }
             if (e.PropertyName is "OtomatikBarkod" && Kitap.OtomatikBarkod)
             {
-                Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue).ToString();
+                Kitap.Barkod = new Random(Guid.NewGuid().GetHashCode()).Next(1, int.MaxValue);
             }
         }
 
@@ -258,7 +258,7 @@ namespace Kutuphane.ViewModel
         {
             Kitap.Ad = null;
             Kitap.Resim = null;
-            Kitap.Barkod = null;
+            Kitap.Barkod = 0;
             Kitap.Açıklama = null;
             Kitap.Renk = "Transparent";
             Kitap.TopluKitapSayısı = 1;

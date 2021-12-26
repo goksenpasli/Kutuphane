@@ -52,7 +52,7 @@ namespace Kutuphane.Model
         }
 
         [XmlAttribute(AttributeName = "Barkod")]
-        public string Barkod
+        public int Barkod
         {
             get => barkod;
 
@@ -477,7 +477,7 @@ namespace Kutuphane.Model
         public string this[string columnName] => columnName switch
         {
             "Ad" when string.IsNullOrWhiteSpace(Ad) => "Adı Boş Geçmeyin.",
-            "Barkod" when string.IsNullOrWhiteSpace(Barkod) => "Barkod Boş Geçmeyin.",
+            "Barkod" when Barkod==0 => "Barkod Boş Geçmeyin.",
             _ => null
         };
 
@@ -487,7 +487,7 @@ namespace Kutuphane.Model
 
         private string ad;
 
-        private string barkod;
+        private int barkod;
 
         private int basımYılı = DateTime.Now.Year;
 

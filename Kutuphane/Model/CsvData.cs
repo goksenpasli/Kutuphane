@@ -8,7 +8,7 @@ namespace Kutuphane.Model
     {
         public CsvData()
         {
-            SampleData = new List<Kitap> { new Kitap() { Ad = "Kitap Adı", Barkod = "Kitap Barkod", Fiyat = 35, BasımYılı = DateTime.Now.Year, KitapDili = "Türkçe" } };
+            SampleData = new List<Kitap> { new Kitap() { Ad = "Kitap Adı", Barkod = 100, Fiyat = 100, BasımYılı = DateTime.Now.Year, KitapDili = "Türkçe" } };
         }
 
         public bool Dil

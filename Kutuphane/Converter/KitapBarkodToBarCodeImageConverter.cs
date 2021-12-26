@@ -15,7 +15,7 @@ namespace Kutuphane
             {
                 Barkod Barkod = new()
                 {
-                    Metin = kitap.Barkod,
+                    Metin = kitap.Barkod.ToString(),
                 };
                 return Barkod.GenerateBarCodeImage(barcodeFormat, pure);
             }

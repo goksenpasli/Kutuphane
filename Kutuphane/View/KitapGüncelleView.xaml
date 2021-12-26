@@ -98,7 +98,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP ADI" />
-                                        <Extensions:ButtonedTextBox  Width="160"
+                                        <Extensions:ButtonedTextBox Width="160"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
@@ -113,7 +113,7 @@
                                 <GridViewColumn.Header>
                                     <StackPanel>
                                         <TextBlock Text="KİTAP BARKOD" />
-                                        <Extensions:ButtonedTextBox  Width="110"
+                                        <Extensions:ButtonedTextBox Width="110"
                                             VerticalContentAlignment="Center"
                                             Text="{Binding KişiKitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
@@ -433,8 +433,10 @@
                                 SelectedValuePath="Name" />
                             <TextBlock Grid.Row="2" Grid.Column="2"
                                 Text="BARKOD DEĞİŞTİR" />
-                            <TextBox Grid.Row="2" Grid.Column="3"
-                                Text="{Binding KitapTopluBarkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Extensions:NumericUpDownControl Grid.Row="2" Grid.Column="3"
+                                Maximum="2147483647" Minimum="0" SmallChange="1"
+                                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                                Value="{Binding KitapTopluBarkod, Mode=TwoWay, ValidatesOnDataErrors=True, TargetNullValue=0, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock Grid.Row="3" Text="DOLAP DEĞİŞTİR" />
                             <ComboBox Grid.Row="3" Grid.Column="1"
                                 DisplayMemberPath="Açıklama"
@@ -493,7 +495,10 @@
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" Text="BARKOD" />
-                                <TextBox Width="100" Text="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Extensions:NumericUpDownControl Width="100"
+                                    Maximum="2147483647" Minimum="0" SmallChange="1"
+                                    Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                                    Value="{Binding ElementName=listView, ValidatesOnDataErrors=True, Path=SelectedItem.Barkod, TargetNullValue=0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </GroupBox.Header>
                         <Extensions:ContentToggleButton Width="96" Height="96"

@@ -145,7 +145,7 @@ namespace Kutuphane.ViewModel
 
             if (e.PropertyName is "KitapBarkodArama")
             {
-                KitapKontrolView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.Barkod.Contains(KitapBarkodArama) ?? false;
+                KitapKontrolView.cvs.Filter += (s, e) => e.Accepted = (e.Item as Kitap)?.Barkod.ToString().Contains(KitapBarkodArama) ?? false;
             }
 
             if (e.PropertyName is "SeçiliKitap" && SeçiliKitap is not null)
