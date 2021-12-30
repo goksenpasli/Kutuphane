@@ -390,8 +390,8 @@
                             <Image Width="16" Height="16">
                                 <Image.Source>
                                     <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                        <Binding Source="Shell32.dll" />
-                                        <Binding Source="146" />
+                                        <Binding Source="Comres.dll" />
+                                        <Binding Source="4" />
                                     </MultiBinding>
                                 </Image.Source>
                             </Image>

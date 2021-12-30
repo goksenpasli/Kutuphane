@@ -80,14 +80,14 @@
                         KeyTip="S" Label="Kişi Gir">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="160" />
+                                <Binding Source="Imageres.dll" />
+                                <Binding Source="208" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                         <RibbonButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="160" />
+                                <Binding Source="Imageres.dll" />
+                                <Binding Source="208" />
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
@@ -174,8 +174,8 @@
                         KeyTip="V" Label="Kitap Ver">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="28" />
+                                <Binding Source="imageres.dll" />
+                                <Binding Source="124" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                     </RibbonButton>
@@ -198,14 +198,14 @@
                         KeyTip="Z" Label="Kitap Geri Al">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="146" />
+                                <Binding Source="Comres.dll" />
+                                <Binding Source="4" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                         <RibbonButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="146" />
+                                <Binding Source="Comres.dll" />
+                                <Binding Source="4" />
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
@@ -227,14 +227,14 @@
                     <RibbonToggleButton KeyTip="TR" Label="Tarayıcı">
                         <RibbonToggleButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="201" />
+                                <Binding Source="Imageres.dll" />
+                                <Binding Source="90" />
                             </MultiBinding>
                         </RibbonToggleButton.LargeImageSource>
                         <RibbonToggleButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Shell32.dll" />
-                                <Binding Source="201" />
+                                <Binding Source="Imageres.dll" />
+                                <Binding Source="90" />
                             </MultiBinding>
                         </RibbonToggleButton.SmallImageSource>
                         <Popup IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}"

@@ -158,6 +158,10 @@ namespace Kutuphane.ViewModel
                 };
                 if (saveFileDialog.ShowDialog() == true)
                 {
+                    if (File.Exists(saveFileDialog.FileName))
+                    {
+                        File.Delete(saveFileDialog.FileName);
+                    }
                     if (Compress)
                     {
                         ZipFile.CreateFromDirectory(Path.GetDirectoryName(xmldatapath), saveFileDialog.FileName, CompressionLevel.Fastest, false);

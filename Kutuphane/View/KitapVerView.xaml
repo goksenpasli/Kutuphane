@@ -51,7 +51,7 @@
                                     CellTemplate="{StaticResource KitapTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="KİTAP&#xA;ADI" />
-                                        <extensions:ButtonedTextBox  Width="55"
+                                        <extensions:ButtonedTextBox Width="55"
                                             VerticalContentAlignment="Center"
                                             IsTabStop="False"
                                             Text="{Binding Kişi.KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
@@ -167,7 +167,7 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;ADI" />
-                                            <extensions:ButtonedTextBox  Width="55"
+                                            <extensions:ButtonedTextBox Width="55"
                                                 VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
@@ -175,7 +175,7 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                            <extensions:ButtonedTextBox  Width="55"
+                                            <extensions:ButtonedTextBox Width="55"
                                                 VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
@@ -183,7 +183,7 @@
                                     <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="KİŞİ&#xA;TC" />
-                                            <extensions:ButtonedTextBox  Width="85"
+                                            <extensions:ButtonedTextBox Width="85"
                                                 VerticalContentAlignment="Center"
                                                 Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
@@ -322,8 +322,8 @@
                                 <Image Width="32" Height="32">
                                     <Image.Source>
                                         <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                            <Binding Source="Shell32.dll" />
-                                            <Binding Source="28" />
+                                            <Binding Source="imageres.dll" />
+                                            <Binding Source="124" />
                                         </MultiBinding>
                                     </Image.Source>
                                 </Image>

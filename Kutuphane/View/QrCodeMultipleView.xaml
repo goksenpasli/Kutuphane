@@ -55,7 +55,7 @@
                         <Viewbox Grid.Row="1" Grid.Column="1"
                             Width="{Binding Barkod.QrWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Height="{Binding Barkod.QrHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <Image Source="{Binding Barkod.BarkodImage}">
+                            <Image d:Source="{Binding Source='11111111110', Converter={StaticResource StringToBarCodeImageConverter}}" Source="{Binding Barkod.BarkodImage}">
                                 <Image.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="{Binding KareKodSakla, Mode=OneWay}"
@@ -130,7 +130,9 @@
                                         <DataTemplate>
                                             <Viewbox>
                                                 <Border BorderBrush="Black" BorderThickness="{Binding QrMultipleBorderThickness, Source={x:Static properties:Settings.Default}, Converter={StaticResource DoubleToThicknessConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                    <Image Margin="2" Source="{Binding}" />
+                                                    <Image Margin="2"
+                                                        d:Source="{Binding Source='11111111110', Converter={StaticResource StringToBarCodeImageConverter}}"
+                                                        Source="{Binding}" />
                                                 </Border>
                                             </Viewbox>
                                         </DataTemplate>
@@ -188,7 +190,7 @@
                                                             </Style.Triggers>
                                                         </Style>
                                                     </Border.Style>
-                                                    <Image Margin="2">
+                                                    <Image Margin="2" d:Source="{Binding Source='11111111110', Converter={StaticResource StringToBarCodeImageConverter}}">
                                                         <Image.Source>
                                                             <MultiBinding Converter="{StaticResource KitapBarkodToBarCodeImageConverter}">
                                                                 <Binding Mode="OneWay" />
