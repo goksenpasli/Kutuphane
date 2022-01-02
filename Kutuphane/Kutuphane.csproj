@@ -116,6 +116,7 @@
     <Compile Include="ViewModel\DolapDüzenViewModel.cs" />
     <Compile Include="ViewModel\DolapGirişViewModel.cs" />
     <Compile Include="ViewModel\ExtensionMethods.cs" />
+    <Compile Include="ViewModel\FoldEffect.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
     <Compile Include="ViewModel\IdleTimeFinder.cs" />
     <Compile Include="ViewModel\PdfViewer.cs" />
@@ -333,6 +334,7 @@
     <None Include="Raporlar\TUTANAK.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Resource Include="Resources\FoldEffect.ps" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

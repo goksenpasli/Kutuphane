@@ -444,6 +444,21 @@ namespace Kutuphane.Model
             }
         }
 
+        [XmlAttribute(AttributeName = "Video")]
+        public string Video
+        {
+            get => video;
+
+            set
+            {
+                if (video != value)
+                {
+                    video = value;
+                    OnPropertyChanged(nameof(Video));
+                }
+            }
+        }
+
         [XmlIgnore]
         public string Yazar
         {
@@ -477,7 +492,7 @@ namespace Kutuphane.Model
         public string this[string columnName] => columnName switch
         {
             "Ad" when string.IsNullOrWhiteSpace(Ad) => "Adı Boş Geçmeyin.",
-            "Barkod" when Barkod==0 => "Barkod Boş Geçmeyin.",
+            "Barkod" when Barkod == 0 => "Barkod Boş Geçmeyin.",
             _ => null
         };
 
@@ -536,6 +551,8 @@ namespace Kutuphane.Model
         private string tür;
 
         private ObservableCollection<KitapTürü> türler = new();
+
+        private string video;
 
         private string yazar;
 

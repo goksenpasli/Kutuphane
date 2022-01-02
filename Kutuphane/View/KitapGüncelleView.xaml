@@ -4,6 +4,7 @@
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:control="clr-namespace:Extensions.Controls;assembly=Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Kutuphane.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -523,29 +524,36 @@
                         <TextBlock VerticalAlignment="Center" Text="GÜNCELLE" />
                     </StackPanel>
                 </Button>
-                <GroupBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1"
+                <TabControl Grid.RowSpan="4" Grid.Column="1"
                     IsEnabled="{Binding SelectedItem, Converter={StaticResource NullableToBooleanConverter}, ElementName=listView}">
-                    <GroupBox.Header>
-                        <Button Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                            CommandParameter="{Binding SeçiliKitap}"
-                            Content="KİTAP RESİM YÜKLE" />
-                    </GroupBox.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Extensions:ImageViewer x:Name="Img"
-                            FitImageOrientation="Height"
-                            ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource FilePathMergeConverter}, ElementName=listView}"
-                            OrijinalResimDosyaAçButtonVisibility="Collapsed" PrintButtonVisibility="Visible" />
-                        <Slider Grid.Column="1"
-                            AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" Orientation="Vertical"
-                            SmallChange="1"
-                            Style="{StaticResource Slider}"
-                            Value="{Binding ElementName=Img, Path=DecodeHeight, Delay=250}" />
-                    </Grid>
-                </GroupBox>
+                    <TabItem Header="RESİM">
+                        <GroupBox>
+                            <GroupBox.Header>
+                                <Button Command="{Binding KitapGirişViewModel.KitapResimEkle, Mode=OneWay, Source={StaticResource MainViewModel}}"
+                                    CommandParameter="{Binding SeçiliKitap}"
+                                    Content="KİTAP RESİM YÜKLE" />
+                            </GroupBox.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Extensions:ImageViewer x:Name="Img"
+                                    FitImageOrientation="Height"
+                                    ImageFilePath="{Binding SelectedItem.Resim, Converter={StaticResource FilePathMergeConverter}, ElementName=listView}"
+                                    OrijinalResimDosyaAçButtonVisibility="Collapsed" PrintButtonVisibility="Visible" />
+                                <Slider Grid.Column="1"
+                                    AutoToolTipPlacement="TopLeft" Maximum="1080" Minimum="96" Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{StaticResource Slider}"
+                                    Value="{Binding DecodeHeight, Delay=250, ElementName=Img}" />
+                            </Grid>
+                        </GroupBox>
+                    </TabItem>
+                    <TabItem Header="VİDEO">
+                        <control:MediaViewer MediaDataFilePath="{Binding SelectedItem.Video, Converter={StaticResource FilePathMergeConverter}, ElementName=listView}" />
+                    </TabItem>
+                </TabControl>
             </Grid>
         </GroupBox>
     </Grid>

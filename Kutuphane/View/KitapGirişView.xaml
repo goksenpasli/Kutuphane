@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Extensions="clr-namespace:Extensions;assembly=Extensions"
     xmlns:ViewModel="clr-namespace:Kutuphane.ViewModel"
+    xmlns:control="clr-namespace:Extensions.Controls;assembly=Extensions"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kutuphane.Properties"
@@ -165,12 +166,30 @@
                                 Text="{Binding Kitap.Açıklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 TextWrapping="Wrap" />
                             <GroupBox>
-                                <GroupBox.Header>
-                                    <Button Command="{Binding KitapResimSil}"
-                                        CommandParameter="{Binding Kitap}"
-                                        Content="KİTAP RESİM SİL" />
-                                </GroupBox.Header>
-                                <ViewModel:ShadowedImage ShowShadow="True" Source="{Binding Kitap.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
+                                <TabControl>
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock VerticalAlignment="Center" Text="RESİM" />
+                                                <Button Command="{Binding KitapResimSil}"
+                                                    CommandParameter="{Binding Kitap}"
+                                                    Content="KİTAP RESİM SİL" />
+                                            </StackPanel>
+                                        </TabItem.Header>
+                                        <ViewModel:ShadowedImage ShowShadow="True" Source="{Binding Kitap.Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
+                                    </TabItem>
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock VerticalAlignment="Center" Text="VİDEO" />
+                                                <Button Command="{Binding KitapVideoSil}"
+                                                    CommandParameter="{Binding Kitap}"
+                                                    Content="KİTAP VİDEO SİL" />
+                                            </StackPanel>
+                                        </TabItem.Header>
+                                        <control:MediaViewer MediaDataFilePath="{Binding Parent.DataContext.Kitap.Video, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource FilePathMergeConverter}}" />
+                                    </TabItem>
+                                </TabControl>
                             </GroupBox>
                         </UniformGrid>
                     </Grid>
@@ -194,23 +213,38 @@
                             Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                             Value="{Binding Kitap.TopluKitapSayısı, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </UniformGrid>
-                    <Button Grid.Row="11"
-                        HorizontalAlignment="Stretch"
-                        Command="{Binding KitapResimEkle, Mode=OneWay}"
-                        CommandParameter="{Binding Kitap}"
-                        IsTabStop="False">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="32" Height="32">
-                                <Image.Source>
-                                    <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                        <Binding Source="Shell32.dll" />
-                                        <Binding Source="117" />
-                                    </MultiBinding>
-                                </Image.Source>
-                            </Image>
-                            <TextBlock VerticalAlignment="Center" Text="KİTAP RESİM EKLE" />
-                        </StackPanel>
-                    </Button>
+                    <UniformGrid Grid.Row="11" Columns="2">
+                        <Button Command="{Binding KitapResimEkle, Mode=OneWay}"
+                            CommandParameter="{Binding Kitap}"
+                            IsTabStop="False">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="32" Height="32">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Shell32.dll" />
+                                            <Binding Source="117" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock VerticalAlignment="Center" Text="KİTAP RESİM EKLE" />
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding KitapVideoEkle, Mode=OneWay}"
+                            CommandParameter="{Binding Kitap}"
+                            IsTabStop="False">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="32" Height="32">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
+                                            <Binding Source="Imageres.dll" />
+                                            <Binding Source="41" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                                <TextBlock VerticalAlignment="Center" Text="KİTAP VİDEO EKLE" />
+                            </StackPanel>
+                        </Button>
+                    </UniformGrid>
                     <UniformGrid Grid.Row="13" Columns="2">
                         <Button HorizontalAlignment="Stretch"
                             Command="{Binding KitapEkle}"

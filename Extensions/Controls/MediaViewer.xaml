@@ -12,6 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="24" />
         </Grid.RowDefinitions>
         <MediaElement x:Name="Player"
@@ -19,7 +20,16 @@
             MinWidth="352" MinHeight="288"
             LoadedBehavior="Manual" UnloadedBehavior="Close"
             Volume="{Binding MediaVolume, UpdateSourceTrigger=PropertyChanged}" />
-        <Grid Grid.Row="1" Background="Transparent">
+        <Slider x:Name="Sld"
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            IsMoveToPointEnabled="True"
+            Maximum="{Binding EndTimeSpan, Mode=OneWay, Converter={StaticResource TimespanToSecondsConverter}}"
+            MouseLeave="Sld_MouseLeave" MouseMove="Sld_MouseMove"
+            Style="{StaticResource Slider}"
+            Thumb.DragCompleted="Sld_DragCompleted" Thumb.DragStarted="Sld_DragStarted"
+            Value="{Binding MediaPosition, Converter={StaticResource TimespanToSecondsConverter}, Mode=TwoWay}" />
+        <Grid Grid.Row="2" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -28,7 +38,6 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -69,17 +78,8 @@
                 Width="24" Height="24"
                 Click="SlowForward_Click" Content=":" FontFamily="Webdings" FontSize="18"
                 Foreground="Blue" />
-            <Slider x:Name="Sld"
-                Grid.Column="7"
-                VerticalAlignment="Center"
-                IsMoveToPointEnabled="True"
-                Maximum="{Binding EndTimeSpan, Mode=OneWay, Converter={StaticResource TimespanToSecondsConverter}}"
-                MouseLeave="Sld_MouseLeave" MouseMove="Sld_MouseMove"
-                Style="{StaticResource Slider}"
-                Thumb.DragCompleted="Sld_DragCompleted" Thumb.DragStarted="Sld_DragStarted"
-                Value="{Binding MediaPosition, Converter={StaticResource TimespanToSecondsConverter}, Mode=TwoWay}" />
             <ToggleButton x:Name="Mute"
-                Grid.Column="8"
+                Grid.Column="7"
                 Width="24" Height="24"
                 Margin="1,0,1,0"
                 Checked="Mute_Checked" FontSize="18" Foreground="Blue" IsThreeState="False"
@@ -106,20 +106,20 @@
                 </ToggleButton.Style>
             </ToggleButton>
             <Slider x:Name="Volume"
-                Grid.Column="9"
+                Grid.Column="8"
                 Width="60"
                 VerticalAlignment="Center"
                 IsMoveToPointEnabled="True" Maximum="1"
                 Style="{StaticResource Slider}"
                 Value="{Binding MediaVolume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Grid.Column="10"
+            <TextBlock Grid.Column="9"
                 Margin="1,0,1,0" VerticalAlignment="Center"
                 Foreground="Black">
                 <Run Text="{Binding MediaPosition, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" />
                 <Run Text="{Binding EndTimeSpan, Mode=OneWay, Converter={StaticResource TimeSpanToStringConverter}}" />
             </TextBlock>
             <Button x:Name="Capture"
-                Grid.Column="11"
+                Grid.Column="10"
                 Width="24" Height="24"
                 VerticalContentAlignment="Center"
                 Click="Capture_Click" Content="N" FontFamily="Webdings" FontSize="20"

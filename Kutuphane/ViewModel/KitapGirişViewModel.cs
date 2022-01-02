@@ -113,6 +113,20 @@ namespace Kutuphane.ViewModel
                 }
             }, parameter => true);
 
+            KitapVideoEkle = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is Kitap kitap)
+                {
+                    OpenFileDialog openFileDialog = new() { Multiselect = false, Filter = "Video Dosyaları (*.mp4;*.mpeg;*.mpg;*.wmv;*.avi)|*.mp4;*.mpeg;*.mpg;*.wmv;*.avi" };
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        string filename = Guid.NewGuid() + Path.GetExtension(openFileDialog.FileName);
+                        File.Copy(openFileDialog.FileName, $"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}");
+                        kitap.Video = filename;
+                    }
+                }
+            }, parameter => true);
+
             KitapResimSil = new RelayCommand<object>(parameter =>
             {
                 if (parameter is Kitap kitap)
@@ -120,6 +134,14 @@ namespace Kutuphane.ViewModel
                     kitap.Resim = null;
                 }
             }, parameter => parameter is Kitap kitap && kitap.Resim is not null);
+
+            KitapVideoSil = new RelayCommand<object>(parameter =>
+            {
+                if (parameter is Kitap kitap)
+                {
+                    kitap.Video = null;
+                }
+            }, parameter => parameter is Kitap kitap && kitap.Video is not null);
 
             TopluKitapEkle = new RelayCommand<object>(parameter =>
             {
@@ -202,6 +224,10 @@ namespace Kutuphane.ViewModel
 
         public ICommand KitapTürEkle { get; }
 
+        public ICommand KitapVideoEkle { get; }
+
+        public ICommand KitapVideoSil { get; }
+
         public ICommand KitapYazarEkle { get; }
 
         public ICommand TopluKitapEkle { get; }
@@ -241,7 +267,8 @@ namespace Kutuphane.ViewModel
                 Resim = Kitap.Resim,
                 ÖdünçVerilebilir = Kitap.ÖdünçVerilebilir,
                 KitapDili = Kitap.KitapDili,
-                Renk = Kitap.Renk
+                Renk = Kitap.Renk,
+                Video = Kitap.Video,
             };
             foreach (Yazar yazar in Kitap.SeçiliYazarlar)
             {

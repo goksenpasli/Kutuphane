@@ -11,6 +11,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Kutuphane.ViewModel
 {
@@ -128,6 +129,7 @@ namespace Kutuphane.ViewModel
 
             if (Settings.Default.KişiGirişEkranıVarsayılan)
             {
+                Fold = 0;
                 CurrentView = DefaultScreen[Settings.Default.VarsayılanEkran];
             }
 
@@ -181,6 +183,8 @@ namespace Kutuphane.ViewModel
                 }
                 Settings.Default.Save();
             };
+
+            PropertyChanged += MainViewModel_PropertyChanged;
         }
 
         public static ICommand DatabaseSave { get; set; }
@@ -253,6 +257,20 @@ namespace Kutuphane.ViewModel
 
         public DolapGirişViewModel DolapGirişViewModel { get; set; }
 
+        public double Fold
+        {
+            get => fold;
+
+            set
+            {
+                if (fold != value)
+                {
+                    fold = value;
+                    OnPropertyChanged(nameof(Fold));
+                }
+            }
+        }
+
         public ICommand GecikenKitaplarEkranı { get; }
 
         public GecikenKitaplarSimpleViewModel GecikenKitaplarSimpleViewModel { get; set; }
@@ -308,5 +326,28 @@ namespace Kutuphane.ViewModel
         private bool compress;
 
         private InpcBase currentView;
+
+        private double fold = 0.5;
+
+        private DispatcherTimer timer;
+
+        private void MainViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "CurrentView")
+            {
+                timer = new(DispatcherPriority.Normal) { Interval = TimeSpan.FromMilliseconds(15) };
+                Fold = 0.5;
+                timer.Tick += (s, e) =>
+                {
+                    Fold -= 0.01;
+                    if (Fold <= 0)
+                    {
+                        Fold = 0;
+                        timer.Stop();
+                    }
+                };
+                timer.Start();
+            }
+        }
     }
 }
