@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Kutuphane
 {
-    public class ImageFilePathToBitmapImageConverter : DependencyObject, IValueConverter
+    public sealed class ImageFilePathToBitmapImageConverter : DependencyObject, IValueConverter
     {
         public static readonly DependencyProperty DecodeHeightProperty = DependencyProperty.RegisterAttached("DecodeHeight", typeof(int), typeof(ImageFilePathToBitmapImageConverter), new PropertyMetadata(96));
 

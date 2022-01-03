@@ -59,7 +59,7 @@
     </Compile>
     <Compile Include="Controls\ButtonedTextBox.cs" />
     <Compile Include="Controls\Chart.cs" />
-    <Compile Include="Controls\CircularProgress.cs" />
+    <Compile Include="Shader\ColorEffect.cs" />
     <Compile Include="Controls\ImageViewer.cs" />
     <Compile Include="Controls\MaskedTextBlock.cs" />
     <Compile Include="Controls\MediaViewer.xaml.cs">
@@ -118,6 +118,8 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Shader\ColorEffect.ps" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,6 +15,8 @@ namespace Extensions.Controls
 {
     public partial class MediaViewer : UserControl
     {
+        public static readonly DependencyProperty AutoPlayProperty = DependencyProperty.Register("AutoPlay", typeof(bool), typeof(MediaViewer), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty EndTimeSpanProperty = DependencyProperty.Register("EndTimeSpan", typeof(TimeSpan), typeof(MediaViewer), new PropertyMetadata(TimeSpan.Zero));
 
         public static readonly DependencyProperty MediaDataFilePathProperty = DependencyProperty.Register("MediaDataFilePath", typeof(string), typeof(MediaViewer), new PropertyMetadata(null, MediaDataFilePathChanged));
@@ -35,6 +37,12 @@ namespace Extensions.Controls
             InitializeComponent();
             mediaElement.Pause();
             DataContext = this;
+        }
+
+        public bool AutoPlay
+        {
+            get => (bool)GetValue(AutoPlayProperty);
+            set => SetValue(AutoPlayProperty, value);
         }
 
         public TimeSpan EndTimeSpan { get => (TimeSpan)GetValue(EndTimeSpanProperty); set => SetValue(EndTimeSpanProperty, value); }
@@ -85,6 +93,10 @@ namespace Extensions.Controls
                 {
                     string uriString = (string)e.NewValue;
                     viewer.Player.Source = new Uri(uriString);
+                    if (viewer.AutoPlay)
+                    {
+                        viewer.Player.Play();
+                    }
                     viewer.Player.MediaOpened += (f, g) =>
                     {
                         if (f is MediaElement mediaelement && mediaelement.NaturalDuration.HasTimeSpan)
@@ -167,6 +179,10 @@ namespace Extensions.Controls
         {
             if (MediaDataFilePath != null)
             {
+                if (Player.Position == Player.NaturalDuration)
+                {
+                    Player.Stop();
+                }
                 Player.Play();
             }
         }

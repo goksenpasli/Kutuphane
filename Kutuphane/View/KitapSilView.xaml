@@ -52,15 +52,6 @@
                             <GridViewColumn Extensions:GridViewSort.PropertyName="BasımYılı"
                                 DisplayMemberBinding="{Binding BasımYılı}"
                                 Header="KİTAP BASIM&#xA;YILI" />
-                            <GridViewColumn Extensions:GridViewSort.PropertyName="Demirbaş" Header="DEMİRBAŞ">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ToggleButton Content="{StaticResource DemirbaşImage}"
-                                            IsChecked="{Binding Demirbaş}"
-                                            IsEnabled="False" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
                             <GridViewColumn Extensions:GridViewSort.PropertyName="DolapAltKod" Header="DOLAP">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -127,41 +118,13 @@
                 </ListView>
                 <ItemsControl Grid.Column="1"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
+                    ItemTemplate="{StaticResource KitapDetayTemplate}"
                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource SeçiliKitaplar}}"
-                    ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.IsDeferredScrollingEnabled="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Style="{StaticResource VirtualizingWrapPanelItemsControl}"
                     VirtualizingPanel.CacheLengthUnit="Item" VirtualizingPanel.ScrollUnit="Pixel"
-                    VirtualizingPanel.VirtualizationMode="Recycling">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock HorizontalAlignment="Center">
-                                    <Hyperlink Command="{Binding KitapSilViewModel.KitapSil, Mode=OneWay, Source={StaticResource MainViewModel}}"
-                                        CommandParameter="{Binding Path=Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                        TextDecorations="">
-                                        <Run Text="{Binding Barkod}" />
-                                    </Hyperlink>
-                                </TextBlock>
-                                <viewmodel:ShadowedImage Width="210" Height="297"
-                                    ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ShowShadow="True"
-                                    Source="{Binding Resim, Converter={StaticResource ImageFilePathToBitmapImageConverter}}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Extensions:VirtualizingWrapPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.Template>
-                        <ControlTemplate TargetType="ItemsControl">
-                            <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
-                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                            </ScrollViewer>
-                        </ControlTemplate>
-                    </ItemsControl.Template>
-                </ItemsControl>
+                    VirtualizingPanel.VirtualizationMode="Recycling" />
             </Grid>
         </GroupBox>
     </Grid>

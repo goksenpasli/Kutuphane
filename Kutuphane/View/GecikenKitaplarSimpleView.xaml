@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:Kutuphane.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:GecikenKitaplarSimpleViewModel}"
-    d:DesignHeight="450" d:DesignWidth="1280" UseLayoutRounding="True"
+    d:DesignHeight="360" d:DesignWidth="640" UseLayoutRounding="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <CollectionViewSource x:Key="İşlemler" Source="{Binding ElementName=Lv, Path=SelectedItem.İşlem}">
@@ -19,7 +19,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <ListView x:Name="Lv"
             d:ItemsSource="{d:SampleData ItemCount=5}"
@@ -50,7 +50,7 @@
                     <StackPanel>
                         <TextBlock FontWeight="Bold" Text="{Binding GeriGetirmeTarihi}" />
                         <ComboBox IsEnabled="False"
-                            ItemTemplate="{StaticResource KitapTemplate}"
+                            ItemTemplate="{StaticResource KitapDetayTemplate}"
                             ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
                             SelectedValue="{Binding KitapId}"
                             SelectedValuePath="Id"

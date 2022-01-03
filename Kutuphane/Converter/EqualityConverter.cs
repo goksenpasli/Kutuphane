@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Kutuphane
 {
-    public class EqualityConverter : IMultiValueConverter
+    public sealed class EqualityConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

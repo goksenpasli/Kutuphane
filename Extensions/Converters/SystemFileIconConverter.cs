@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Extensions
 {
-    public class SystemFileIconConverter : IMultiValueConverter
+    public sealed class SystemFileIconConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

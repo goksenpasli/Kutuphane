@@ -211,6 +211,25 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
+            <Style x:Key="VirtualizingWrapPanelItemsControl" TargetType="ItemsControl">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <Extensions:VirtualizingWrapPanel />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ItemsControl">
+                            <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <ControlTemplate x:Key="HorizontalHeaderedContentControlControlTemplate" TargetType="{x:Type HeaderedContentControl}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -323,6 +342,46 @@
                     </GroupBox>
                 </StackPanel>
             </DataTemplate>
+            <DataTemplate x:Key="KitapDetayTemplate">
+                <UniformGrid Columns="2">
+                    <ViewModel:ShadowedImage MaxWidth="170" MaxHeight="270"
+                        Margin="5" VerticalAlignment="Top"
+                        ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
+                        ShowShadow="True">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding KitapResimGöster, Mode=OneWay, Source={x:Static properties:Settings.Default}}" Value="true">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <Binding Converter="{StaticResource PictureImageFilePathImageUriConverter}" Path="Resim" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </ViewModel:ShadowedImage>
+                    <StackPanel Margin="5" Background="{Binding Renk, Converter={StaticResource StringToBrushConverter}}">
+                        <ToggleButton Content="{StaticResource Favori}"
+                            IsChecked="{Binding Favori}"
+                            IsEnabled="False" />
+                        <ToggleButton Content="{StaticResource DemirbaşImage}"
+                            IsChecked="{Binding Demirbaş}"
+                            IsEnabled="False" />
+                        <ToggleButton Content="{StaticResource ÖdünçVerilebilir}"
+                            IsChecked="{Binding ÖdünçVerilebilir}"
+                            IsEnabled="False" />
+                        <TextBlock Text="{Binding Ad, StringFormat=AD: \{0\}}" />
+                        <TextBlock Text="{Binding Barkod, StringFormat=BARKOD: \{0\}}" />
+                        <TextBlock Text="{Binding BasımYılı, StringFormat=YIL: \{0\}}" />
+                        <TextBlock Text="{Binding Fiyat, StringFormat=FİYAT: \{0:c\}}" />
+                        <TextBlock Text="{Binding SistemKayıtTarihi, StringFormat=KAYIT\&#x0a;TARİHİ: \{0:g\}}" />
+                        <TextBlock Text="{Binding KitapDili, StringFormat=DİL: \{0\}}" />
+                        <TextBlock Text="{Binding Açıklama, StringFormat=AÇIKLAMA: \{0\}}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </UniformGrid>
+            </DataTemplate>
             <DataTemplate x:Key="KitapTemplate">
                 <Border BorderBrush="{Binding Renk, Converter={StaticResource StringToBrushConverter}}" BorderThickness="2">
                     <StackPanel>
@@ -350,12 +409,14 @@
             <ControlTemplate x:Key="ComboBoxSimpleTemplate" TargetType="{x:Type ComboBox}">
                 <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
                     ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                    ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                     IsHitTestVisible="False" />
             </ControlTemplate>
             <DataTemplate x:Key="KitapComboBoxTemplate">
                 <ComboBox IsEnabled="False"
                     ItemTemplate="{StaticResource KitapTemplate}"
                     ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
+                    SelectedItem="{Binding SeçiliKitap}"
                     SelectedValue="{Binding KitapId}"
                     SelectedValuePath="Id"
                     Template="{StaticResource ComboBoxSimpleTemplate}" />

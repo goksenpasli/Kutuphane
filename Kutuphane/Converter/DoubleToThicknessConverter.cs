@@ -3,11 +3,11 @@ using System.Windows.Data;
 
 namespace Kutuphane
 {
-    public class DoubleToThicknessConverter : IValueConverter
+    public sealed class DoubleToThicknessConverter : IValueConverter
     {
         public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return new Thickness(System.Convert.ToDouble(value));
+            return new Thickness((double)value);
         }
 
         public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)

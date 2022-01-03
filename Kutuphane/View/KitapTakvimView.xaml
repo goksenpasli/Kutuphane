@@ -201,7 +201,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <ComboBox IsEnabled="False"
-                                    ItemTemplate="{StaticResource KitapTemplate}"
+                                    ItemTemplate="{StaticResource KitapDetayTemplate}"
                                     ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
                                     SelectedItem="{Binding SeçiliKitap}"
                                     SelectedValue="{Binding KitapId}"

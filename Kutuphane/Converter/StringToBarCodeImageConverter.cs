@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Kutuphane
 {
-    public class StringToBarCodeImageConverter : IValueConverter
+    public sealed class StringToBarCodeImageConverter : IValueConverter
     {
         public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

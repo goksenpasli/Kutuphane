@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace Kutuphane
 {
-    public class StringToBrushConverter : IValueConverter
+    public sealed class StringToBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

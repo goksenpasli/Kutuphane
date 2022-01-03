@@ -5,7 +5,7 @@ using static Extensions.ExtensionMethods;
 
 namespace Extensions
 {
-    public class FilePathToIconConverter : IValueConverter
+    public sealed class FilePathToIconConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

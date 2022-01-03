@@ -33,7 +33,7 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ad" CellTemplate="{StaticResource KişiTemplate}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;ADI" />
-                                <extensions:ButtonedTextBox  Width="55"
+                                <extensions:ButtonedTextBox Width="55"
                                     VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
@@ -41,7 +41,7 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="Soyad" DisplayMemberBinding="{Binding Soyad}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;SOYADI" />
-                                <extensions:ButtonedTextBox  Width="55"
+                                <extensions:ButtonedTextBox Width="55"
                                     VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiSoyadArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
@@ -49,7 +49,7 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="TC" DisplayMemberBinding="{Binding TC}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KİŞİ&#xA;TC" />
-                                <extensions:ButtonedTextBox  Width="55"
+                                <extensions:ButtonedTextBox Width="55"
                                     VerticalContentAlignment="Center"
                                     Text="{Binding Kişi.KişiTcArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
@@ -77,19 +77,10 @@
                 SelectionMode="Single">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn extensions:GridViewSort.PropertyName="KitapId" Header="KİTAP">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox IsEnabled="False"
-                                        ItemTemplate="{StaticResource KitapTemplate}"
-                                        ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                        SelectedItem="{Binding SeçiliKitap}"
-                                        SelectedValue="{Binding KitapId}"
-                                        SelectedValuePath="Id"
-                                        Template="{StaticResource ComboBoxSimpleTemplate}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn d:DisplayMemberBinding="{Binding Ad}"
+                            extensions:GridViewSort.PropertyName="KitapId"
+                            CellTemplate="{StaticResource KitapComboBoxTemplate}"
+                            Header="KİTAP" />
                         <GridViewColumn extensions:GridViewSort.PropertyName="Ceza" Header="CEZA">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

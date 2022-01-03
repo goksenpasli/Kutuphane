@@ -220,19 +220,10 @@
                             SelectionMode="Single">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn extensions:GridViewSort.PropertyName="KitapId" Header="KİTAP">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <ComboBox IsEnabled="False"
-                                                    ItemTemplate="{StaticResource KitapTemplate}"
-                                                    ItemsSource="{Binding Kütüphane.Kitaplar, Source={StaticResource MainViewModel}}"
-                                                    SelectedItem="{Binding SeçiliKitap}"
-                                                    SelectedValue="{Binding KitapId}"
-                                                    SelectedValuePath="Id"
-                                                    Template="{StaticResource ComboBoxSimpleTemplate}" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                    <GridViewColumn d:DisplayMemberBinding="{Binding Ad}"
+                                        extensions:GridViewSort.PropertyName="KitapId"
+                                        CellTemplate="{StaticResource KitapComboBoxTemplate}"
+                                        Header="KİTAP" />
                                     <GridViewColumn extensions:GridViewSort.PropertyName="Ceza" Header="CEZA">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>

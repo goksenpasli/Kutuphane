@@ -384,7 +384,7 @@
         </Ribbon>
         <Grid Grid.Row="1">
             <Grid.Effect>
-                <viewmodel:FoldEffect FoldAmount="{Binding Fold}"/>
+                <viewmodel:FoldEffect FoldAmount="{Binding Fold}" />
             </Grid.Effect>
             <ContentPresenter Content="{Binding CurrentView}" />
         </Grid>
@@ -412,7 +412,7 @@
                             </Image>
                         </Extensions:ContentToggleButton.OverContent>
                         <Extensions:ContentToggleButton.Content>
-                            <GroupBox Width="480" Height="360"
+                            <GroupBox Width="640" Height="360"
                                 Header="SÜRESİ YAKLAŞAN KİTAPLAR">
                                 <viewmodel:GecikenKitaplarSimpleViewModel />
                             </GroupBox>

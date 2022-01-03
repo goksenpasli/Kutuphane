@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Extensions
 {
-    public class StringNullableToBooleanConverter : IValueConverter
+    public sealed class StringNullableToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

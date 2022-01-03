@@ -337,16 +337,19 @@ namespace Kutuphane.ViewModel
             {
                 timer = new(DispatcherPriority.Normal) { Interval = TimeSpan.FromMilliseconds(15) };
                 Fold = 0.5;
-                timer.Tick += (s, e) =>
-                {
-                    Fold -= 0.01;
-                    if (Fold <= 0)
-                    {
-                        Fold = 0;
-                        timer.Stop();
-                    }
-                };
+                timer.Tick += OnTick;
                 timer.Start();
+            }
+
+            void OnTick(object sender, EventArgs e)
+            {
+                Fold -= 0.01;
+                if (Fold <= 0)
+                {
+                    Fold = 0;
+                    timer.Stop();
+                    timer.Tick -= OnTick;
+                }
             }
         }
     }

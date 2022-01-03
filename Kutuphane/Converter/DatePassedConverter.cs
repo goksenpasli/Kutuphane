@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Kutuphane
 {
-    public class DatePassedConverter : IValueConverter
+    public sealed class DatePassedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

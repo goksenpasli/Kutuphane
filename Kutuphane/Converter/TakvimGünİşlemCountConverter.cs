@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace Kutuphane
 {
-    public class TakvimGünİşlemCountConverter : IMultiValueConverter
+    public sealed class TakvimGünİşlemCountConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

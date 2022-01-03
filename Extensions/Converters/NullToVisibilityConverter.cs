@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Extensions
 {
-    public class NullToVisibilityConverter : IValueConverter
+    public sealed class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

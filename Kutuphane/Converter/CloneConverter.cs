@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Kutuphane
 {
-    public class CloneConverter : IMultiValueConverter
+    public sealed class CloneConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

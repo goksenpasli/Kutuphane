@@ -7,7 +7,7 @@ using ZXing;
 
 namespace Kutuphane
 {
-    public class KitapBarkodToBarCodeImageConverter : IMultiValueConverter
+    public sealed class KitapBarkodToBarCodeImageConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

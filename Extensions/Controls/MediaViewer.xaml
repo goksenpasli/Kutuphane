@@ -19,7 +19,11 @@
             Grid.Row="0"
             MinWidth="352" MinHeight="288"
             LoadedBehavior="Manual" UnloadedBehavior="Close"
-            Volume="{Binding MediaVolume, UpdateSourceTrigger=PropertyChanged}" />
+            Volume="{Binding MediaVolume, UpdateSourceTrigger=PropertyChanged}">
+            <MediaElement.Effect>
+                <local:ColorEffect x:Name="Color" />
+            </MediaElement.Effect>
+        </MediaElement>
         <Slider x:Name="Sld"
             Grid.Row="1"
             VerticalAlignment="Center"
@@ -31,6 +35,7 @@
             Value="{Binding MediaPosition, Converter={StaticResource TimespanToSecondsConverter}, Mode=TwoWay}" />
         <Grid Grid.Row="2" Background="Transparent">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -124,6 +129,44 @@
                 VerticalContentAlignment="Center"
                 Click="Capture_Click" Content="N" FontFamily="Webdings" FontSize="20"
                 Foreground="Blue" ToolTip="Ekran Yakala Resimlerim Klasörüne Kaydedilir." />
+            <local:ContentToggleButton Grid.Column="11"
+                FontFamily="Webdings" FontSize="20" Foreground="Blue" OverContent="·"
+                PlacementMode="Top">
+                <local:ContentToggleButton.Content>
+                    <GroupBox>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="Slider">
+                                    <Setter Property="Height" Value="64" />
+                                    <Setter Property="Orientation" Value="Vertical" />
+                                    <Setter Property="Maximum" Value="1" />
+                                    <Setter Property="Minimum" Value="0" />
+                                    <Setter Property="BorderThickness" Value="3" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <Slider BorderBrush="Red" Value="{Binding ElementName=Color, Path=Red}" />
+                            <Slider BorderBrush="Green" Value="{Binding ElementName=Color, Path=Green}" />
+                            <Slider BorderBrush="Blue" Value="{Binding ElementName=Color, Path=Blue}" />
+                            <Slider Value="{Binding ElementName=Color, Path=Brightness}">
+                                <Slider.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="Black" />
+                                        <GradientStop Offset="1" Color="White" />
+                                    </LinearGradientBrush>
+                                </Slider.BorderBrush>
+                            </Slider>
+                            <Slider Value="{Binding ElementName=Color, Path=Contrast}">
+                                <Slider.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="White" />
+                                        <GradientStop Offset="1" Color="Black" />
+                                    </LinearGradientBrush>
+                                </Slider.BorderBrush>
+                            </Slider>
+                        </StackPanel>
+                    </GroupBox>
+                </local:ContentToggleButton.Content>
+            </local:ContentToggleButton>
         </Grid>
     </Grid>
 </UserControl>

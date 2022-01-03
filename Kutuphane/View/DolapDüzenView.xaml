@@ -74,32 +74,36 @@
                     </StackPanel>
                 </Button>
                 <GroupBox Grid.Row="4" Header="DOLAPTAKİ TÜM KİTAPLAR">
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}"
-                        IsSynchronizedWithCurrentItem="False"
-                        ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
-                        SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Extensions:GridViewSort.PropertyName="Ad"
-                                    DisplayMemberBinding="{Binding Ad}"
-                                    Header="KİTAP ADI" />
-                                <GridViewColumn Extensions:GridViewSort.PropertyName="KitapDurumId" Header="KİTAP DURUM">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ComboBox Width="100"
-                                                IsEnabled="False"
-                                                ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
-                                                SelectedIndex="{Binding KitapDurumId}"
-                                                Template="{StaticResource ComboBoxSimpleTemplate}" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Extensions:GridViewSort.PropertyName="DolapAltKod"
-                                    DisplayMemberBinding="{Binding DolapAltKod}"
-                                    Header="RAF NO" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <UniformGrid Columns="2">
+                        <ListView x:Name="LvKitap"
+                            d:ItemsSource="{d:SampleData ItemCount=5}"
+                            IsSynchronizedWithCurrentItem="False"
+                            ItemsSource="{Binding Mode=OneWay, Source={StaticResource Kitaplar}}"
+                            SelectionMode="Single" VirtualizingPanel.VirtualizationMode="Recycling">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Extensions:GridViewSort.PropertyName="Ad"
+                                        DisplayMemberBinding="{Binding Ad}"
+                                        Header="KİTAP ADI" />
+                                    <GridViewColumn Extensions:GridViewSort.PropertyName="KitapDurumId" Header="KİTAP DURUM">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox Width="100"
+                                                    IsEnabled="False"
+                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource KitapDurumu}}"
+                                                    SelectedIndex="{Binding KitapDurumId}"
+                                                    Template="{StaticResource ComboBoxSimpleTemplate}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Extensions:GridViewSort.PropertyName="DolapAltKod"
+                                        DisplayMemberBinding="{Binding DolapAltKod}"
+                                        Header="RAF NO" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ContentPresenter Content="{Binding ElementName=LvKitap, Path=SelectedItem}" ContentTemplate="{StaticResource KitapDetayTemplate}" />
+                    </UniformGrid>
                 </GroupBox>
             </Grid>
         </Grid>

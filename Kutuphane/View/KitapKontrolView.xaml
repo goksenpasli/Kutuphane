@@ -41,7 +41,7 @@
                             <GridViewColumn.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="KİTAP&#xA;ADI" />
-                                    <Extensions:ButtonedTextBox  Width="55"
+                                    <Extensions:ButtonedTextBox Width="55"
                                         VerticalContentAlignment="Center"
                                         Text="{Binding KişiKitapAdArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
@@ -53,7 +53,7 @@
                             <GridViewColumn.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="KİTAP&#xA;BARKOD" />
-                                    <Extensions:ButtonedTextBox  Width="55"
+                                    <Extensions:ButtonedTextBox Width="55"
                                         VerticalContentAlignment="Center"
                                         Text="{Binding KitapBarkodArama, Delay=500, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
