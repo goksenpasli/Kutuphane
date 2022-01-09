@@ -80,14 +80,14 @@
                         KeyTip="S" Label="Kişi Gir">
                         <RibbonButton.LargeImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Imageres.dll" />
-                                <Binding Source="208" />
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="160" />
                             </MultiBinding>
                         </RibbonButton.LargeImageSource>
                         <RibbonButton.SmallImageSource>
                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
-                                <Binding Source="Imageres.dll" />
-                                <Binding Source="208" />
+                                <Binding Source="Shell32.dll" />
+                                <Binding Source="160" />
                             </MultiBinding>
                         </RibbonButton.SmallImageSource>
                     </RibbonButton>
