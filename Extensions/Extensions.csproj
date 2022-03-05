@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Controls\ButtonedTextBox.cs" />
     <Compile Include="Controls\Chart.cs" />
+    <Compile Include="Controls\HourControl.cs" />
     <Compile Include="Shader\ColorEffect.cs" />
     <Compile Include="Controls\ImageViewer.cs" />
     <Compile Include="Controls\MaskedTextBlock.cs" />

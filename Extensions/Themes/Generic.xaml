@@ -134,6 +134,17 @@
             </Track>
         </Grid>
     </ControlTemplate>
+    <Style x:Key="NumericUpDownTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Text" Value="{Binding Text, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="CurrencyMode">
+                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:C\}, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="DateTimeMode">
+                <Setter Property="Text" Value="{Binding DateValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="Slider" TargetType="Slider">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -152,19 +163,6 @@
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.56" />
             </Trigger>
-        </Style.Triggers>
-    </Style>
-    <Style x:Key="NumericUpdownTextBoxStyle" TargetType="{x:Type TextBox}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="CurrencyMode">
-                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:C\}, UpdateSourceTrigger=PropertyChanged}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="DateTimeMode">
-                <Setter Property="Text" Value="{Binding DateValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ShowMode, RelativeSource={RelativeSource TemplatedParent}}" Value="NumberMode">
-                <Setter Property="Text" Value="{Binding Value, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
-            </DataTrigger>
         </Style.Triggers>
     </Style>
     <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
@@ -261,7 +259,7 @@
                                         <Image.Source>
                                             <MultiBinding Converter="{StaticResource SystemFileIconConverter}">
                                                 <Binding Source="Shell32.dll" />
-                                                <Binding Source="122" />
+                                                <Binding Source="159" />
                                             </MultiBinding>
                                         </Image.Source>
                                     </Image>
@@ -549,65 +547,17 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="local:TimePicker">
+    <Style TargetType="local:HourControl">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <ComboBox IsEditable="True"
-                        ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                        ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                        ItemTemplate="{TemplateBinding ItemTemplate}"
-                        ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                        ItemsPanel="{TemplateBinding ItemsPanel}"
-                        ItemsSource="{Binding Saatler, RelativeSource={RelativeSource TemplatedParent}}"
-                        Text="{Binding TimeValue, RelativeSource={RelativeSource TemplatedParent}}">
-                        <ComboBox.Template>
-                            <ControlTemplate TargetType="{x:Type ComboBox}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
-                                    </Grid.ColumnDefinitions>
-                                    <ToggleButton Grid.Column="2"
-                                        ClickMode="Press" Focusable="false"
-                                        IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                        <Path HorizontalAlignment="Center" VerticalAlignment="Center"
-                                            Data="{StaticResource ArrowGeometry}"
-                                            Fill="Black" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform />
-                                                    <SkewTransform />
-                                                    <RotateTransform Angle="-90" />
-                                                    <TranslateTransform />
-                                                </TransformGroup>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </ToggleButton>
-                                    <Popup x:Name="PART_Popup"
-                                        Grid.ColumnSpan="2"
-                                        Focusable="False"
-                                        IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Placement="Right" PopupAnimation="Slide">
-                                        <Border Height="{TemplateBinding MaxDropDownHeight}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="1">
-                                            <ScrollViewer>
-                                                <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                            </ScrollViewer>
-                                        </Border>
-                                    </Popup>
-                                    <local:MaskedTextBox x:Name="PART_EditableTextBox"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        ClearButtonVisibility="{Binding ClearButtonVisible, RelativeSource={RelativeSource AncestorType={x:Type local:TimePicker}}}"
-                                        IncludePrompt="False" Mask="00:00" PromptChar="_" />
-                                </Grid>
-                            </ControlTemplate>
-                        </ComboBox.Template>
-                    </ComboBox>
+                <ControlTemplate TargetType="Control">
+                    <local:MaskedTextBox x:Name="PART_EditableTextBox"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        IncludePrompt="False" Mask="00:00" PromptChar="_"
+                        Value="{Binding Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -629,7 +579,7 @@
                 Background="{TemplateBinding Background}"
                 BorderThickness="1"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                Style="{StaticResource NumericUpdownTextBoxStyle}" />
+                Style="{StaticResource NumericUpDownTextBoxStyle}" />
             <RepeatButton x:Name="PART_LineUpButton"
                 Grid.Row="0" Grid.Column="0"
                 Command="{x:Static ScrollBar.LineLeftCommand}"
@@ -696,7 +646,7 @@
                 Background="{TemplateBinding Background}"
                 BorderThickness="1"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                Style="{StaticResource NumericUpdownTextBoxStyle}" />
+                Style="{StaticResource NumericUpDownTextBoxStyle}" />
             <RepeatButton x:Name="PART_LineUpButton"
                 Grid.Row="0" Grid.Column="1"
                 Command="{x:Static ScrollBar.LineDownCommand}"
