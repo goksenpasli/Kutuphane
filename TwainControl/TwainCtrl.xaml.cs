@@ -470,6 +470,20 @@ namespace TwainControl
 
         public ICommand TümününİşaretiniKaldır { get; }
 
+        public GridLength TwainGuiControlLength
+        {
+            get => twainGuiControlLength;
+
+            set
+            {
+                if (twainGuiControlLength != value)
+                {
+                    twainGuiControlLength = value;
+                    OnPropertyChanged(nameof(TwainGuiControlLength));
+                }
+            }
+        }
+
         public ICommand WebAdreseGit { get; }
 
         public static PdfDocument MergePdf(string[] pdffiles)
@@ -552,6 +566,8 @@ namespace TwainControl
         private Scanner scanner;
 
         private Twain twain;
+
+        private GridLength twainGuiControlLength = new(4, GridUnitType.Star);
 
         private double width;
 
@@ -712,6 +728,12 @@ namespace TwainControl
                 _ = Directory.CreateDirectory(datefolder);
             }
             return datefolder;
+        }
+
+        private void GridSplitter_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            TwainGuiControlLength = new(4, GridUnitType.Star);
+            DocumentGridLength = new(5, GridUnitType.Star);
         }
 
         private void ImgViewer_MouseDown(object sender, MouseButtonEventArgs e)
