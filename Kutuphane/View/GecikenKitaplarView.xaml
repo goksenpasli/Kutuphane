@@ -62,7 +62,7 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="Telefon" Header="TELEFON">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <extensions:MaskedTextBlock InputMask="(000) 000 00 00" UnmaskedText="{Binding Telefon, Mode=OneWay}" />
+                                    <extensions:MaskedTextBlock Mask="(000) 000 00 00" UnmaskedText="{Binding Telefon, Mode=OneWay}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

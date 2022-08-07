@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using TwainControl;
 
 namespace Kutuphane.ViewModel
 {
@@ -26,6 +28,8 @@ namespace Kutuphane.ViewModel
 
         public MainViewModel()
         {
+            TranslationSource.Instance.CurrentCulture = CultureInfo.GetCultureInfo("tr-TR");
+
             Kütüphane = new Kütüphane
             {
                 Kitaplar = ExtensionMethods.KitaplarıYükle(),

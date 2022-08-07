@@ -57,10 +57,9 @@
                         <GridViewColumn extensions:GridViewSort.PropertyName="KitapCezasıAdeti">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ProgressBar Width="48"
+                                    <ProgressBar Width="48" Height="12"
                                         Background="Green" BorderBrush="Transparent" Foreground="Red"
                                         Maximum="{Binding İşlem.Count, Mode=OneWay}"
-                                        Style="{Binding Mode=OneWay, Source={StaticResource ProgressBarStyle}}"
                                         Value="{Binding KitapCezasıAdeti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

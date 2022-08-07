@@ -128,10 +128,10 @@
             <ControlTemplate x:Key="ValidationErrorTemplate">
                 <Grid Focusable="False">
                     <Canvas x:Name="Cnv"
+                        DataContext="{Binding ElementName=Adorner, Mode=OneWay}"
                         Width="18" Height="18"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         Background="{StaticResource Dur}"
-                        DataContext="{Binding ElementName=Adorner, Mode=OneWay}"
                         RenderTransformOrigin="0.5,0.5" UseLayoutRounding="True">
                         <Canvas.ToolTip>
                             <ToolTip Background="{x:Null}"
@@ -139,7 +139,7 @@
                                 Foreground="{x:Null}">
                                 <Border Padding="4"
                                     Background="Red" BorderBrush="White" BorderThickness="1">
-                                    <TextBlock Foreground="White" Text="{Binding AdornedElement.(Validation.Errors)/ErrorContent, Mode=OneWay}" />
+                                    <TextBlock Text="{Binding AdornedElement.(Validation.Errors)/ErrorContent, Mode=OneWay}" Foreground="White" />
                                 </Border>
                             </ToolTip>
                         </Canvas.ToolTip>
@@ -236,13 +236,13 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <ContentPresenter VerticalAlignment="Center"
-                        Content="{TemplateBinding Header}"
+                    <ContentPresenter Content="{TemplateBinding Header}"
+                        VerticalAlignment="Center"
                         ContentSource="Header"
                         ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                         ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                    <ContentPresenter Grid.Column="1"
-                        Content="{TemplateBinding Content}"
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                        Grid.Column="1"
                         ContentStringFormat="{TemplateBinding ContentStringFormat}"
                         ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Grid>
@@ -271,10 +271,10 @@
                         </ViewModel:ShadowedImage.Source>
                     </ViewModel:ShadowedImage>
                     <TextBlock VerticalAlignment="Center">
-                        <Run FontStyle="Italic" Foreground="Blue"
-                            Text="{Binding Açıklama}" />
-                        <Run FontWeight="Bold" Foreground="Red"
-                            Text="{Binding Kod, StringFormat=\{0:000\}}" />
+                        <Run Text="{Binding Açıklama}"
+                            FontStyle="Italic" Foreground="Blue" />
+                        <Run Text="{Binding Kod, StringFormat=\{0:000\}}"
+                            FontWeight="Bold" Foreground="Red" />
                     </TextBlock>
                 </StackPanel>
             </DataTemplate>
@@ -282,14 +282,17 @@
                 <TextBlock Text="{Binding Açıklama}" />
             </DataTemplate>
             <Style TargetType="ListView">
+                <Setter Property="VirtualizingPanel.CacheLength" Value="2,2" />
                 <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Item" />
                 <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
+                <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+                <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
                 <Setter Property="Extensions:GridViewSort.AutoSort" Value="True" />
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
             </Style>
             <DataTemplate x:Key="KişiTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <ViewModel:ShadowedImage MaxWidth="72" MaxHeight="72"
+                    <ViewModel:ShadowedImage Width="72" Height="72"
                         ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                         ShowShadow="True">
                         <Image.Style>
@@ -306,12 +309,12 @@
                             </Style>
                         </Image.Style>
                     </ViewModel:ShadowedImage>
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Ad}" />
+                    <TextBlock Text="{Binding Ad}" VerticalAlignment="Center" />
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="KişiDetayTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <ViewModel:ShadowedImage MaxWidth="120" MaxHeight="120"
+                    <ViewModel:ShadowedImage Width="120" Height="120"
                         ShowOverlayColor="{Binding KitapAlabilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                         ShowShadow="True">
                         <Image.Style>
@@ -334,9 +337,9 @@
                                 <Run Text="{Binding Ad}" />
                                 <Run Text="{Binding Soyad}" />
                             </TextBlock>
-                            <TextBlock FontSize="24" FontStyle="Italic"
-                                Text="{Binding TC}" />
-                            <Extensions:MaskedTextBlock FontSize="18" InputMask="(000) 000 00 00"
+                            <TextBlock Text="{Binding TC}"
+                                FontSize="24" FontStyle="Italic" />
+                            <Extensions:MaskedTextBlock FontSize="18"  Mask="(000) 000 00 00"
                                 UnmaskedText="{Binding Telefon}" />
                         </StackPanel>
                     </GroupBox>
@@ -344,7 +347,7 @@
             </DataTemplate>
             <DataTemplate x:Key="KitapDetayTemplate">
                 <UniformGrid Columns="2">
-                    <ViewModel:ShadowedImage MaxWidth="170" MaxHeight="270"
+                    <ViewModel:ShadowedImage Width="170" Height="270"
                         Margin="5" VerticalAlignment="Top"
                         ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                         ShowShadow="True">
@@ -386,7 +389,7 @@
                 <Border BorderBrush="{Binding Renk, Converter={StaticResource StringToBrushConverter}}" BorderThickness="2">
                     <StackPanel>
                         <TextBlock Text="{Binding Ad}" />
-                        <ViewModel:ShadowedImage MaxWidth="110" MaxHeight="145"
+                        <ViewModel:ShadowedImage Width="110" Height="145"
                             ShowOverlayColor="{Binding ÖdünçVerilebilir, Converter={StaticResource ReverseBooleanConverter}, Mode=OneWay}"
                             ShowShadow="True">
                             <Image.Style>
@@ -428,11 +431,10 @@
                 <Canvas Width="32" Height="32">
                     <Rectangle Width="32" Height="32"
                         Fill="{Binding Name}" />
-                    <TextBlock Width="32" Height="32"
+                    <TextBlock Text="{Binding Name}"
+                        Width="32" Height="32"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
-                        FontSize="8"
-                        Text="{Binding Name}"
-                        TextWrapping="Wrap" />
+                        FontSize="8" TextWrapping="Wrap" />
                 </Canvas>
             </DataTemplate>
             <DataTemplate x:Key="ListBoxItemKitapGeriAlTemplate">
@@ -456,7 +458,7 @@
                                     </MultiBinding>
                                 </Image.Source>
                             </Image>
-                            <TextBlock VerticalAlignment="Center" Text="KİTAP GERİ AL" />
+                            <TextBlock Text="KİTAP GERİ AL" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </StackPanel>

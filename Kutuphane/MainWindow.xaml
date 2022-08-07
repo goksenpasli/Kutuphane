@@ -240,8 +240,8 @@
                         <Popup IsOpen="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}"
                             Placement="Bottom"
                             PlacementTarget="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType=RibbonToggleButton}}">
-                            <Extensions:ResizablePanel Width="600" Height="320" MinWidth="600" MinHeight="320">
-                                <TwainControl:TwainCtrl />
+                            <Extensions:ResizablePanel Width="800" Height="600" MinWidth="640" MinHeight="480">
+                                <TwainControl:TwainCtrl/>
                             </Extensions:ResizablePanel>
                         </Popup>
                     </RibbonToggleButton>

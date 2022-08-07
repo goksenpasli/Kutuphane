@@ -1,19 +1,33 @@
-﻿using Extensions;
-using Microsoft.Win32;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Extensions;
+using Microsoft.Win32;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
+using PdfSharp.Pdf.Security;
+using TwainControl.Properties;
 using TwainWpf;
 using TwainWpf.Wpf;
+using static Extensions.ExtensionMethods;
+using Path = System.IO.Path;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace TwainControl
 {
@@ -23,298 +37,481 @@ namespace TwainControl
         {
             InitializeComponent();
             DataContext = this;
+            Scanner = new Scanner();
 
             ScanImage = new RelayCommand<object>(parameter =>
             {
-                ArayüzEtkin = false;
-                _settings = new ScanSettings
-                {
-                    UseDocumentFeeder = Adf,
-                    ShowTwainUi = ShowUi,
-                    ShowProgressIndicatorUi = ShowProgress,
-                    UseDuplex = Duplex,
-                    ShouldTransferAllPages = true,
-                    Resolution = new ResolutionSettings { ColourSetting = Bw ?? false ? ColourSetting.BlackAndWhite : ColourSetting.Colour, Dpi = (int)Properties.Settings.Default.Çözünürlük },
-                    Rotation = new RotationSettings { AutomaticDeskew = Deskew, AutomaticRotate = AutoRotate, AutomaticBorderDetection = BorderDetect }
-                };
-                if (Tarayıcılar.Count > 0)
-                {
-                    twain.SelectSource(SeçiliTarayıcı);
-                    twain.StartScanning(_settings);
-                }
-            }, parameter => !Environment.Is64BitProcess);
+                ScanCommonSettings();
+                twain.SelectSource(Scanner.SeçiliTarayıcı);
+                twain.StartScanning(_settings);
+            }, parameter => !Environment.Is64BitProcess && Scanner?.Tarayıcılar?.Count > 0);
 
-            ResimSil = new RelayCommand<object>(parameter => Resimler?.Remove(parameter as BitmapFrame), parameter => true);
+            FastScanImage = new RelayCommand<object>(parameter =>
+            {
+                ScanCommonSettings();
+                Scanner.Resimler = new ObservableCollection<ScannedImage>();
+                twain.SelectSource(Scanner.SeçiliTarayıcı);
+                twain.StartScanning(_settings);
+
+                twain.ScanningComplete += Fastscan;
+            }, parameter => !Environment.Is64BitProcess && Scanner.AutoSave && !Scanner.SeperateSave && Scanner?.FileName?.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 && Scanner?.Tarayıcılar?.Count > 0);
+
+            ResimSil = new RelayCommand<object>(parameter =>
+            {
+                _ = (Scanner.Resimler?.Remove(parameter as ScannedImage));
+                ResetCropMargin();
+            }, parameter => true);
+
+            ExploreFile = new RelayCommand<object>(parameter => OpenFolderAndSelectItem(Path.GetDirectoryName(parameter as string), Path.GetFileName(parameter as string)), parameter => true);
 
             Kaydet = new RelayCommand<object>(parameter =>
             {
-                if (parameter is BitmapFrame resim)
+                if (parameter is ScannedImage scannedImage)
                 {
-                    SaveFileDialog saveFileDialog = new() { Filter = "Tif Resmi (*.tif)|*.tif|Jpg Resmi(*.jpg)|*.jpg" };
+                    SaveFileDialog saveFileDialog = new()
+                    {
+                        Filter = "Tif Resmi (*.tif)|*.tif|Jpg Resmi(*.jpg)|*.jpg|Pdf Dosyası(*.pdf)|*.pdf|Siyah Beyaz Pdf Dosyası(*.pdf)|*.pdf",
+                        FileName = Scanner.SaveFileName
+                    };
                     if (saveFileDialog.ShowDialog() == true)
                     {
-                        switch (saveFileDialog.FilterIndex)
+                        if (saveFileDialog.FilterIndex == 1)
                         {
-                            case 1:
-                                switch (Bw)
-                                {
-                                    case true:
-                                        File.WriteAllBytes(saveFileDialog.FileName, resim.ToTiffJpegByteArray(ExtensionMethods.Format.Tiff));
-                                        break;
-
-                                    case null:
-                                    case false:
-                                        File.WriteAllBytes(saveFileDialog.FileName, resim.ToTiffJpegByteArray(ExtensionMethods.Format.TiffRenkli));
-                                        break;
-                                }
-                                break;
-
-                            case 2:
-                                File.WriteAllBytes(saveFileDialog.FileName, resim.ToTiffJpegByteArray(ExtensionMethods.Format.Jpg));
-                                break;
+                            if ((ColourSetting)Settings.Default.Mode == ColourSetting.BlackAndWhite)
+                            {
+                                File.WriteAllBytes(saveFileDialog.FileName, scannedImage.Resim.ToTiffJpegByteArray(Format.Tiff));
+                                return;
+                            }
+                            if ((ColourSetting)Settings.Default.Mode is ColourSetting.Colour or ColourSetting.GreyScale)
+                            {
+                                File.WriteAllBytes(saveFileDialog.FileName, scannedImage.Resim.ToTiffJpegByteArray(Format.TiffRenkli));
+                                return;
+                            }
                         }
+                        if (saveFileDialog.FilterIndex == 2)
+                        {
+                            File.WriteAllBytes(saveFileDialog.FileName, scannedImage.Resim.ToTiffJpegByteArray(Format.Jpg));
+                            return;
+                        }
+                        if (saveFileDialog.FilterIndex == 3)
+                        {
+                            if (Scanner.RotateAngle is not 0 or 360)
+                            {
+                                if (MessageBox.Show(Translation.GetResStringValue("ROTSAVE"), Application.Current?.MainWindow?.Title, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                                {
+                                    GeneratePdf(scannedImage.Resim, Format.Jpg, true).Save(saveFileDialog.FileName);
+                                    return;
+                                }
+                                GeneratePdf(scannedImage.Resim, Format.Jpg).Save(saveFileDialog.FileName);
+                                return;
+                            }
+                            GeneratePdf(scannedImage.Resim, Format.Jpg).Save(saveFileDialog.FileName);
+                            return;
+                        }
+                        if (saveFileDialog.FilterIndex == 4)
+                        {
+                            if (Scanner.RotateAngle is not 0 or 360)
+                            {
+                                if (MessageBox.Show(Translation.GetResStringValue("ROTSAVE"), Application.Current?.MainWindow?.Title, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                                {
+                                    GeneratePdf(scannedImage.Resim, Format.Tiff, true).Save(saveFileDialog.FileName);
+                                    return;
+                                }
+                                GeneratePdf(scannedImage.Resim, Format.Tiff).Save(saveFileDialog.FileName);
+                                return;
+                            }
+                            GeneratePdf(scannedImage.Resim, Format.Tiff).Save(saveFileDialog.FileName);
+                        }
+                    }
+                }
+            }, parameter => !string.IsNullOrWhiteSpace(Scanner?.FileName) && Scanner?.FileName?.IndexOfAny(Path.GetInvalidFileNameChars()) < 0);
+
+            Tümünüİşaretle = new RelayCommand<object>(parameter =>
+            {
+                foreach (ScannedImage item in Scanner.Resimler.ToList())
+                {
+                    item.Seçili = true;
+                }
+            }, parameter => Scanner?.Resimler?.Count > 0);
+
+            TümününİşaretiniKaldır = new RelayCommand<object>(parameter =>
+            {
+                foreach (ScannedImage item in Scanner.Resimler.ToList())
+                {
+                    item.Seçili = false;
+                }
+            }, parameter => Scanner?.Resimler?.Count > 0);
+
+            Tersiniİşaretle = new RelayCommand<object>(parameter =>
+            {
+                foreach (ScannedImage item in Scanner.Resimler.ToList())
+                {
+                    item.Seçili = !item.Seçili;
+                }
+            }, parameter => Scanner?.Resimler?.Count > 0);
+
+            KayıtYoluBelirle = new RelayCommand<object>(parameter =>
+            {
+                System.Windows.Forms.FolderBrowserDialog dialog = new()
+                {
+                    Description = Translation.GetResStringValue("AUTOFOLDER"),
+                    SelectedPath = Settings.Default.AutoFolder
+                };
+                string oldpath = Settings.Default.AutoFolder;
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.AutoFolder = dialog.SelectedPath;
+                    Scanner.LocalizedPath = GetDisplayName(dialog.SelectedPath);
+                }
+                if (!string.IsNullOrWhiteSpace(oldpath) && oldpath != Settings.Default.AutoFolder)
+                {
+                    _ = MessageBox.Show(Translation.GetResStringValue("AUTOFOLDERCHANGE"), Application.Current?.MainWindow?.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }, parameter => true);
+
+            Seçilikaydet = new RelayCommand<object>(parameter =>
+            {
+                SaveFileDialog saveFileDialog = new()
+                {
+                    Filter = "Pdf Dosyası(*.pdf)|*.pdf|Siyah Beyaz Pdf Dosyası(*.pdf)|*.pdf|Zip Dosyası(*.zip)|*.zip",
+                    FileName = Scanner.SaveFileName
+                };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    if (saveFileDialog.FilterIndex == 1)
+                    {
+                        GeneratePdf(Scanner.Resimler.Where(z => z.Seçili).ToArray(), Format.Jpg).Save(saveFileDialog.FileName);
+                    }
+                    if (saveFileDialog.FilterIndex == 2)
+                    {
+                        GeneratePdf(Scanner.Resimler.Where(z => z.Seçili).ToArray(), Format.Tiff).Save(saveFileDialog.FileName);
+                    }
+                    if (saveFileDialog.FilterIndex == 3)
+                    {
+                        string dosyayolu = $"{Path.GetTempPath()}{Guid.NewGuid()}.pdf";
+                        GeneratePdf(Scanner.Resimler.Where(z => z.Seçili).ToArray(), Format.Jpg).Save(dosyayolu);
+                        using ZipArchive archive = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Create);
+                        _ = archive.CreateEntryFromFile(dosyayolu, $"{Scanner.SaveFileName}.pdf", CompressionLevel.Optimal);
+                        File.Delete(dosyayolu);
+                    }
+                    if (Path.GetDirectoryName(saveFileDialog.FileName).Contains(Settings.Default.AutoFolder))
+                    {
+                        OnPropertyChanged(nameof(Scanner.Tarandı));
+                    }
+                }
+            }, parameter =>
+            {
+                Scanner.SeçiliResimSayısı = Scanner.Resimler.Count(z => z.Seçili);
+                return !string.IsNullOrWhiteSpace(Scanner?.FileName) && Scanner.SeçiliResimSayısı > 0 && Scanner?.FileName?.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
+            });
+
+            ListeTemizle = new RelayCommand<object>(parameter =>
+            {
+                if (MessageBox.Show(Translation.GetResStringValue("LISTREMOVEWARN"), Application.Current.MainWindow.Title, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    Scanner.Resimler?.Clear();
+                    ResetCropMargin();
+                }
+            }, parameter => Scanner?.Resimler?.Count > 0);
+
+            SaveProfile = new RelayCommand<object>(parameter =>
+            {
+                StringBuilder sb = new();
+                string profile = sb
+                    .Append(Scanner.ProfileName)
+                    .Append("|")
+                    .Append(Settings.Default.Çözünürlük)
+                    .Append("|")
+                    .Append(Settings.Default.Adf)
+                    .Append("|")
+                    .Append(Settings.Default.Mode)
+                    .Append("|")
+                    .Append(Scanner.Duplex)
+                    .Append("|")
+                    .Append(Scanner.ShowUi)
+                    .Append("|")
+                    .Append(Scanner.SeperateSave)
+                    .Append("|")
+                    .Append(Settings.Default.ShowFile)
+                    .Append("|")
+                    .Append(true)//Settings.Default.DateGroupFolder
+                    .Append("|")
+                    .Append(Scanner.FileName)
+                    .ToString();
+                _ = Settings.Default.Profile.Add(profile);
+                Settings.Default.Save();
+                Settings.Default.Reload();
+                Scanner.ProfileName = "";
+            }, parameter => !string.IsNullOrWhiteSpace(Scanner?.ProfileName) && !Settings.Default.Profile.Cast<string>().Select(z => z.Split('|')[0]).Contains(Scanner?.ProfileName) && Scanner?.FileName?.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 && Scanner?.ProfileName?.IndexOfAny(Path.GetInvalidFileNameChars()) < 0);
+
+            RemoveProfile = new RelayCommand<object>(parameter =>
+            {
+                Settings.Default.Profile.Remove(parameter as string);
+                Settings.Default.DefaultProfile = null;
+                Settings.Default.Save();
+                Settings.Default.Reload();
+            }, parameter => true);
+
+            InsertFileNamePlaceHolder = new RelayCommand<object>(parameter =>
+            {
+                string placeholder = parameter as string;
+                Scanner.FileName = $"{Scanner.FileName.Substring(0, Scanner.CaretPosition)}{placeholder}{Scanner.FileName.Substring(Scanner.CaretPosition, Scanner.FileName.Length - Scanner.CaretPosition)}";
+            }, parameter => true);
+
+            SaveCroppedImage = new RelayCommand<object>(parameter =>
+            {
+                SaveFileDialog saveFileDialog = new()
+                {
+                    Filter = "Pdf Dosyası(*.pdf)|*.pdf|Siyah Beyaz Pdf Dosyası(*.pdf)|*.pdf|Jpg Dosyası(*.jpg)|*.jpg",
+                    FileName = Scanner.FileName
+                };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    if (saveFileDialog.FilterIndex == 1)
+                    {
+                        GeneratePdf((BitmapSource)Scanner.CroppedImage, Format.Jpg).Save(saveFileDialog.FileName);
+                        return;
+                    }
+                    if (saveFileDialog.FilterIndex == 2)
+                    {
+                        GeneratePdf((BitmapSource)Scanner.CroppedImage, Format.Tiff).Save(saveFileDialog.FileName);
+                        return;
+                    }
+                    if (saveFileDialog.FilterIndex == 3)
+                    {
+                        File.WriteAllBytes(saveFileDialog.FileName, Scanner.CroppedImage.ToTiffJpegByteArray(Format.Jpg));
+                    }
+                }
+            }, parameter => Scanner.CroppedImage is not null && (Scanner.CropRight != 0 || Scanner.CropTop != 0 || Scanner.CropBottom != 0 || Scanner.CropLeft != 0));
+
+            SplitImage = new RelayCommand<object>(parameter =>
+            {
+                BitmapSource image = (BitmapSource)Scanner.CroppedImage;
+                _ = Directory.CreateDirectory($@"{Settings.Default.AutoFolder}\Parçalanmış");
+                for (int i = 0; i < Scanner.EnAdet; i++)
+                {
+                    for (int j = 0; j < Scanner.BoyAdet; j++)
+                    {
+                        int x = i * image.PixelWidth / Scanner.EnAdet;
+                        int y = j * image.PixelHeight / Scanner.BoyAdet;
+                        int width = image.PixelWidth / Scanner.EnAdet;
+                        int height = image.PixelHeight / Scanner.BoyAdet;
+                        Int32Rect sourceRect = new(x, y, width, height);
+                        if (sourceRect.HasArea)
+                        {
+                            CroppedBitmap croppedBitmap = new(image, sourceRect);
+                            File.WriteAllBytes($@"{Settings.Default.AutoFolder}\Parçalanmış".SetUniqueFile("Parçalanmış", "jpg"), croppedBitmap.ToTiffJpegByteArray(Format.Jpg));
+                        }
+                    }
+                }
+                WebAdreseGit.Execute($@"{Settings.Default.AutoFolder}\Parçalanmış");
+            }, parameter => Scanner.AutoSave && Scanner.CroppedImage is not null && (Scanner.EnAdet > 1 || Scanner.BoyAdet > 1));
+
+            ResetCroppedImage = new RelayCommand<object>(parameter => ResetCropMargin(), parameter => Scanner.CroppedImage is not null);
+
+            WebAdreseGit = new RelayCommand<object>(parameter =>
+            {
+                try
+                {
+                    _ = Process.Start(parameter as string);
+                }
+                catch (Exception ex)
+                {
+                    _ = MessageBox.Show(ex.Message);
+                }
+            }, parameter => true);
+
+            SetWatermark = new RelayCommand<object>(parameter => Scanner.CroppedImage = ÜstüneResimÇiz(Scanner.CroppedImage, new System.Windows.Point(Scanner.CroppedImage.Width / 2, Scanner.CroppedImage.Height / 2), System.Windows.Media.Brushes.Red, Scanner.WatermarkTextSize, Scanner.Watermark, Scanner.WatermarkAngle, Scanner.WatermarkFont), parameter => Scanner.CroppedImage is not null && !string.IsNullOrWhiteSpace(Scanner?.Watermark));
+
+            DeskewImage = new RelayCommand<object>(parameter =>
+            {
+                Deskew sk = new((BitmapSource)Scanner.CroppedImage);
+                double skewAngle = -1 * sk.GetSkewAngle(true);
+                Scanner.CroppedImage = RotateImage(Scanner.CroppedImage, skewAngle);
+            }, parameter => Scanner.CroppedImage is not null);
+
+            SaveWatermarkedPdf = new RelayCommand<object>(parameter => SaveCroppedImage.Execute(null), parameter => Scanner.CroppedImage is not null && !string.IsNullOrWhiteSpace(Scanner?.Watermark));
+
+            PdfBirleştir = new RelayCommand<object>(parameter =>
+            {
+                OpenFileDialog openFileDialog = new()
+                {
+                    Filter = "Pdf Dosyası(*.pdf)|*.pdf",
+                    Multiselect = true
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string[] files = openFileDialog.FileNames;
+                    if (files.Length > 0)
+                    {
+                        SavePdfFiles(files);
                     }
                 }
             }, parameter => true);
 
-            Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
+            Scanner.PropertyChanged += Scanner_PropertyChanged;
+
+            Settings.Default.PropertyChanged += Default_PropertyChanged;
+
+            Scanner.SelectedProfile = Settings.Default.DefaultProfile;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool Adf
+        public CroppedBitmap CroppedOcrBitmap
         {
-            get => adf;
+            get => croppedOcrBitmap;
 
             set
             {
-                if (adf != value)
+                if (croppedOcrBitmap != value)
                 {
-                    adf = value;
-                    OnPropertyChanged(nameof(Adf));
+                    croppedOcrBitmap = value;
+                    OnPropertyChanged(nameof(CroppedOcrBitmap));
                 }
             }
         }
 
-        public bool ArayüzEtkin
+        public ICommand DeskewImage { get; }
+
+        public GridLength DocumentGridLength
         {
-            get => arayüzetkin;
+            get => documentGridLength;
 
             set
             {
-                if (arayüzetkin != value)
+                if (documentGridLength != value)
                 {
-                    arayüzetkin = value;
-                    OnPropertyChanged(nameof(ArayüzEtkin));
+                    documentGridLength = value;
+                    OnPropertyChanged(nameof(DocumentGridLength));
                 }
             }
         }
 
-        public bool AutoRotate
+        public bool DocumentPreviewIsExpanded
         {
-            get => autoRotate;
+            get => documentPreviewIsExpanded;
 
             set
             {
-                if (autoRotate != value)
+                if (documentPreviewIsExpanded != value)
                 {
-                    autoRotate = value;
-                    OnPropertyChanged(nameof(AutoRotate));
+                    documentPreviewIsExpanded = value;
+                    OnPropertyChanged(nameof(DocumentPreviewIsExpanded));
                 }
             }
         }
 
-        public bool BorderDetect
+        public ICommand ExploreFile { get; }
+
+        public ICommand FastScanImage { get; }
+
+        public byte[] ImgData
         {
-            get => borderDetect;
+            get => ımgData;
 
             set
             {
-                if (borderDetect != value)
+                if (ımgData != value)
                 {
-                    borderDetect = value;
-                    OnPropertyChanged(nameof(BorderDetect));
+                    ımgData = value;
+                    OnPropertyChanged(nameof(ImgData));
                 }
             }
         }
 
-        public bool? Bw
-        {
-            get => bw;
-
-            set
-            {
-                if (bw != value)
-                {
-                    bw = value;
-                    OnPropertyChanged(nameof(Bw));
-                }
-            }
-        }
-
-        public bool Deskew
-        {
-            get => deskew;
-
-            set
-            {
-                if (deskew != value)
-                {
-                    deskew = value;
-                    OnPropertyChanged(nameof(Deskew));
-                }
-            }
-        }
-
-        public bool Duplex
-        {
-            get => duplex;
-
-            set
-            {
-                if (duplex != value)
-                {
-                    duplex = value;
-                    OnPropertyChanged(nameof(Duplex));
-                }
-            }
-        }
-
-        public double Eşik
-        {
-            get => eşik;
-
-            set
-            {
-                if (eşik != value)
-                {
-                    eşik = value;
-                    OnPropertyChanged(nameof(Eşik));
-                }
-            }
-        }
+        public ICommand InsertFileNamePlaceHolder { get; }
 
         public ICommand Kaydet { get; }
 
-        public ObservableCollection<BitmapFrame> Resimler
-        {
-            get => resimler;
+        public ICommand KayıtYoluBelirle { get; }
 
-            set
-            {
-                if (resimler != value)
-                {
-                    resimler = value;
-                    OnPropertyChanged(nameof(Resimler));
-                }
-            }
-        }
+        public ICommand ListeTemizle { get; }
+
+        public ICommand PdfBirleştir { get; }
+
+        public ICommand RemoveProfile { get; }
+
+        public ICommand ResetCroppedImage { get; }
 
         public ICommand ResimSil { get; }
 
+        public ICommand SaveCroppedImage { get; }
+
+        public ICommand SaveProfile { get; }
+
+        public ICommand SaveWatermarkedPdf { get; }
+
         public ICommand ScanImage { get; }
 
-        public ImageSource SeçiliResim
+        public Scanner Scanner
         {
-            get => seçiliResim;
+            get => scanner;
 
             set
             {
-                if (seçiliResim != value)
+                if (scanner != value)
                 {
-                    seçiliResim = value;
-                    OnPropertyChanged(nameof(SeçiliResim));
+                    scanner = value;
+                    OnPropertyChanged(nameof(Scanner));
                 }
             }
         }
 
-        public IList SeçiliResimler
-        {
-            get => seçiliresimler;
+        public ICommand Seçilikaydet { get; }
 
-            set
+        public ICommand SetWatermark { get; }
+
+        public ICommand SplitImage { get; }
+
+        public ICommand Tersiniİşaretle { get; }
+
+        public ICommand Tümünüİşaretle { get; }
+
+        public ICommand TümününİşaretiniKaldır { get; }
+
+        public ICommand WebAdreseGit { get; }
+
+        public static PdfDocument MergePdf(string[] pdffiles)
+        {
+            using PdfDocument outputDocument = new();
+            foreach (string file in pdffiles)
             {
-                if (seçiliresimler != value)
+                PdfDocument inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
+                int count = inputDocument.PageCount;
+                for (int idx = 0; idx < count; idx++)
                 {
-                    seçiliresimler = value;
-                    OnPropertyChanged(nameof(SeçiliResimler));
+                    PdfPage page = inputDocument.Pages[idx];
+                    _ = outputDocument.AddPage(page);
                 }
             }
-        }
-
-        public string SeçiliTarayıcı
-        {
-            get => seçiliTarayıcı;
-
-            set
-            {
-                if (seçiliTarayıcı != value)
-                {
-                    seçiliTarayıcı = value;
-                    OnPropertyChanged(nameof(SeçiliTarayıcı));
-                }
-            }
-        }
-
-        public bool SeperateSave
-        {
-            get => seperateSave;
-
-            set
-            {
-                if (seperateSave != value)
-                {
-                    seperateSave = value;
-                    OnPropertyChanged(nameof(SeperateSave));
-                }
-            }
-        }
-
-        public bool ShowProgress
-        {
-            get => showProgress;
-
-            set
-            {
-                if (showProgress != value)
-                {
-                    showProgress = value;
-                    OnPropertyChanged(nameof(ShowProgress));
-                }
-            }
-        }
-
-        public bool ShowUi
-        {
-            get => showUi;
-
-            set
-            {
-                if (showUi != value)
-                {
-                    showUi = value;
-                    OnPropertyChanged(nameof(ShowUi));
-                }
-            }
-        }
-
-        public IList<string> Tarayıcılar
-        {
-            get => tarayıcılar;
-
-            set
-            {
-                if (tarayıcılar != value)
-                {
-                    tarayıcılar = value;
-                    OnPropertyChanged(nameof(Tarayıcılar));
-                }
-            }
+            return outputDocument;
         }
 
         public void Dispose()
         {
             Dispose(true);
+        }
+
+        public PdfDocument GeneratePdf(BitmapSource bitmapframe, Format format, bool rotate = false)
+        {
+            using PdfDocument document = new();
+            PdfPage page = document.AddPage();
+            if (rotate)
+            {
+                page.Rotate = (int)Scanner.RotateAngle;
+            }
+            if (Scanner.PasswordProtect)
+            {
+                ApplyPdfSecurity(document);
+            }
+            using XGraphics gfx = XGraphics.FromPdfPage(page);
+            using MemoryStream ms = new(bitmapframe.ToTiffJpegByteArray(format));
+            using XImage xImage = XImage.FromStream(ms);
+            XSize size = PageSizeConverter.ToSize(PageSize.A4);
+            gfx.DrawImage(xImage, 0, 0, size.Width, size.Height);
+            DefaultPdfCompression(document);
+            return document;
         }
 
         protected virtual void Dispose(bool disposing)
@@ -323,7 +520,7 @@ namespace TwainControl
             {
                 if (disposing)
                 {
-                    Resimler = null;
+                    Scanner.Resimler = null;
                     twain = null;
                 }
 
@@ -338,45 +535,400 @@ namespace TwainControl
 
         private ScanSettings _settings;
 
-        private bool adf;
-
-        private bool arayüzetkin = true;
-
-        private bool autoRotate;
-
-        private bool borderDetect;
-
-        private bool? bw = false;
-
-        private bool deskew;
+        private CroppedBitmap croppedOcrBitmap;
 
         private bool disposedValue;
 
-        private bool duplex;
+        private GridLength documentGridLength = new(5, GridUnitType.Star);
 
-        private double eşik = 160d;
+        private bool documentPreviewIsExpanded = true;
 
-        private ObservableCollection<BitmapFrame> resimler = new();
+        private double height;
 
-        private ImageSource seçiliResim;
+        private byte[] ımgData;
 
-        private IList seçiliresimler = new ObservableCollection<BitmapFrame>();
+        private bool isMouseDown;
 
-        private string seçiliTarayıcı;
-
-        private bool seperateSave;
-
-        private bool showProgress;
-
-        private bool showUi;
-
-        private IList<string> tarayıcılar;
+        private Scanner scanner;
 
         private Twain twain;
 
+        private double width;
+
+        private double x;
+
+        private double y;
+
+        private void ApplyPdfSecurity(PdfDocument document)
+        {
+            PdfSecuritySettings securitySettings = document.SecuritySettings;
+            if (Scanner.PdfPassword is not null)
+            {
+                securitySettings.OwnerPassword = Scanner.PdfPassword.ToString();
+                securitySettings.PermitModifyDocument = Scanner.AllowEdit;
+                securitySettings.PermitPrint = Scanner.AllowPrint;
+                securitySettings.PermitExtractContent = Scanner.AllowCopy;
+            }
+        }
+
+        private void ButtonedTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Scanner.CaretPosition = (sender as ButtonedTextBox)?.CaretIndex ?? 0;
+        }
+
+        private byte[] CaptureScreen(double x, double y, double width, double height)
+        {
+            try
+            {
+                double widthmultiply = Scanner.SeçiliResim.Resim.PixelWidth / ImgViewer.RenderSize.Width;
+                double heightmultiply = Scanner.SeçiliResim.Resim.PixelHeight / ImgViewer.RenderSize.Height;
+                Int32Rect ınt32Rect = new((int)(x * widthmultiply), (int)(y * heightmultiply), (int)(width * widthmultiply), (int)(height * heightmultiply));
+                CroppedOcrBitmap = new CroppedBitmap(Scanner.SeçiliResim.Resim, ınt32Rect);
+                CroppedOcrBitmap.Freeze();
+                return CroppedOcrBitmap.ToTiffJpegByteArray(Format.Png);
+            }
+            catch (Exception)
+            {
+                CroppedOcrBitmap = null;
+                return null;
+            }
+        }
+
+        private Int32Rect CropImageRect(ImageSource ımageSource)
+        {
+            int height = ((BitmapSource)ımageSource).PixelHeight - (int)Scanner.CropBottom - (int)Scanner.CropTop;
+            int width = ((BitmapSource)ımageSource).PixelWidth - (int)Scanner.CropRight - (int)Scanner.CropLeft;
+            return (width < 0 || height < 0) ? default : new((int)Scanner.CropLeft, (int)Scanner.CropTop, width, height);
+        }
+
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Properties.Settings.Default.Save();
+            if (e.PropertyName is "AutoFolder")
+            {
+                Scanner.AutoSave = Directory.Exists(Settings.Default.AutoFolder);
+            }
+            Settings.Default.Save();
+        }
+
+        private void DefaultPdfCompression(PdfDocument doc)
+        {
+            doc.Options.FlateEncodeMode = PdfFlateEncodeMode.BestCompression;
+            doc.Options.CompressContentStreams = true;
+            doc.Options.UseFlateDecoderForJpegImages = PdfUseFlateDecoderForJpegImages.Automatic;
+            doc.Options.NoCompression = false;
+            doc.Options.EnableCcittCompressionForBilevelImages = true;
+        }
+
+        private ScanSettings DefaultScanSettings()
+        {
+            return new()
+            {
+                UseDocumentFeeder = Settings.Default.Adf,
+                ShowTwainUi = Scanner.ShowUi,
+                ShowProgressIndicatorUi = Scanner.ShowProgress,
+                UseDuplex = Scanner.Duplex,
+                ShouldTransferAllPages = true,
+                Resolution = new ResolutionSettings()
+            };
+        }
+
+        private BitmapSource EvrakOluştur(Bitmap bitmap)
+        {
+            const float mmpi = 25.4f;
+            double dpi = Settings.Default.Çözünürlük;
+            return (ColourSetting)Settings.Default.Mode == ColourSetting.BlackAndWhite
+                ? bitmap.ConvertBlackAndWhite(Scanner.Eşik).ToBitmapImage(ImageFormat.Tiff, SystemParameters.PrimaryScreenHeight).Resize(210 / mmpi * dpi, 297 / mmpi * dpi)
+                : (ColourSetting)Settings.Default.Mode == ColourSetting.GreyScale
+                ? bitmap.ConvertBlackAndWhite(Scanner.Eşik, true).ToBitmapImage(ImageFormat.Jpeg, SystemParameters.PrimaryScreenHeight).Resize(210 / mmpi * dpi, 297 / mmpi * dpi)
+                : (ColourSetting)Settings.Default.Mode == ColourSetting.Colour
+                ? bitmap.ToBitmapImage(ImageFormat.Jpeg, SystemParameters.PrimaryScreenHeight).Resize(210 / mmpi * dpi, 297 / mmpi * dpi)
+                : null;
+        }
+
+        private void Fastscan(object sender, ScanningCompleteEventArgs e)
+        {
+            string pdffilepath = GetPdfScanPath();
+
+            if ((ColourSetting)Settings.Default.Mode == ColourSetting.BlackAndWhite)
+            {
+                GeneratePdf(Scanner.Resimler, Format.Tiff).Save(pdffilepath);
+            }
+            if ((ColourSetting)Settings.Default.Mode is ColourSetting.Colour or ColourSetting.GreyScale)
+            {
+                GeneratePdf(Scanner.Resimler, Format.Jpg).Save(pdffilepath);
+            }
+            if (Settings.Default.ShowFile)
+            {
+                ExploreFile.Execute(pdffilepath);
+            }
+            switch (Scanner.ShutDownMode)
+            {
+                case 1:
+                    Shutdown.DoExitWin(Shutdown.EWX_SHUTDOWN);
+                    break;
+
+                case 2:
+                    Shutdown.DoExitWin(Shutdown.EWX_REBOOT);
+                    break;
+            }
+            twain.ScanningComplete -= Fastscan;
+            OnPropertyChanged(nameof(Scanner.Tarandı));
+        }
+
+        private PdfDocument GeneratePdf(IList<ScannedImage> bitmapFrames, Format format, bool rotate = false)
+        {
+            using PdfDocument document = new();
+            for (int i = 0; i < bitmapFrames.Count; i++)
+            {
+                PdfPage page = document.AddPage();
+                if (rotate)
+                {
+                    page.Rotate = (int)Scanner.RotateAngle;
+                }
+                if (Scanner.PasswordProtect)
+                {
+                    ApplyPdfSecurity(document);
+                }
+                using XGraphics gfx = XGraphics.FromPdfPage(page);
+                using MemoryStream ms = new(bitmapFrames[i].Resim.ToTiffJpegByteArray(format));
+                using XImage xImage = XImage.FromStream(ms);
+                XSize size = PageSizeConverter.ToSize(PageSize.A4);
+                gfx.DrawImage(xImage, 0, 0, size.Width, size.Height);
+            }
+            DefaultPdfCompression(document);
+            return document;
+        }
+
+        private string GetPdfScanPath()
+        {
+            return GetSaveFolder().SetUniqueFile(Scanner.SaveFileName, "pdf");
+        }
+
+        private string GetSaveFolder()
+        {
+            string datefolder = $@"{Settings.Default.AutoFolder}\{DateTime.Today.ToShortDateString()}";
+            if (!Directory.Exists(datefolder))
+            {
+                _ = Directory.CreateDirectory(datefolder);
+            }
+            return datefolder;
+        }
+
+        private void ImgViewer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is System.Windows.Controls.Image)
+            {
+                isMouseDown = true;
+                Cursor = Cursors.Cross;
+                x = e.GetPosition(ImgViewer).X;
+                y = e.GetPosition(ImgViewer).Y;
+            }
+        }
+
+        private void ImgViewer_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown && e.OriginalSource is System.Windows.Controls.Image)
+            {
+                double curx = e.GetPosition(ImgViewer).X;
+                double cury = e.GetPosition(ImgViewer).Y;
+
+                Rectangle r = new()
+                {
+                    Stroke = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#33FF0000")),
+                    Fill = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#3300FF00")),
+                    StrokeThickness = 2,
+                    StrokeDashArray = new DoubleCollection(new double[] { 4, 2 }),
+                    Width = Math.Abs(curx - x),
+                    Height = Math.Abs(cury - y)
+                };
+                cnv.Children.Clear();
+                _ = cnv.Children.Add(r);
+                if (x < curx && y < cury)
+                {
+                    Canvas.SetLeft(r, x);
+                    Canvas.SetTop(r, y);
+                }
+                if (x > curx && y > cury)
+                {
+                    Canvas.SetLeft(r, curx);
+                    Canvas.SetTop(r, cury);
+                }
+                if (x < curx && y > cury)
+                {
+                    Canvas.SetLeft(r, x);
+                    Canvas.SetTop(r, cury);
+                }
+                if (x > curx && y < cury)
+                {
+                    Canvas.SetLeft(r, curx);
+                    Canvas.SetTop(r, y);
+                }
+                if (e.LeftButton == MouseButtonState.Released)
+                {
+                    cnv.Children.Clear();
+                    width = Math.Abs(e.GetPosition(ImgViewer).X - x);
+                    height = Math.Abs(e.GetPosition(ImgViewer).Y - y);
+                    if (x < curx && y < cury)
+                    {
+                        ImgData = CaptureScreen(x, y, width, height);
+                    }
+                    if (x > curx && y > cury)
+                    {
+                        ImgData = CaptureScreen(curx, cury, width, height);
+                    }
+                    if (x < curx && y > cury)
+                    {
+                        ImgData = CaptureScreen(x, cury, width, height);
+                    }
+                    if (x > curx && y < cury)
+                    {
+                        ImgData = CaptureScreen(curx, y, width, height);
+                    }
+                    x = y = 0;
+                    isMouseDown = false;
+                    Cursor = Cursors.Arrow;
+                    OnPropertyChanged(nameof(ImgData));
+                }
+            }
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            Scanner.PdfPassword = ((PasswordBox)sender).SecurePassword;
+        }
+
+        private void ResetCropMargin()
+        {
+            Scanner.CropBottom = 0;
+            Scanner.CropLeft = 0;
+            Scanner.CropTop = 0;
+            Scanner.CropRight = 0;
+            Scanner.EnAdet = 1;
+            Scanner.BoyAdet = 1;
+            Scanner.CroppedImage = null;
+        }
+
+        private RenderTargetBitmap RotateImage(ImageSource Source, double angle)
+        {
+            DrawingVisual dv = new();
+            using (DrawingContext dc = dv.RenderOpen())
+            {
+                dc.PushTransform(new RotateTransform(angle));
+                dc.DrawImage(Source, new Rect(0, 0, ((BitmapSource)Source).PixelWidth, ((BitmapSource)Source).PixelHeight));
+            }
+            RenderTargetBitmap rtb = new(((BitmapSource)Source).PixelWidth, ((BitmapSource)Source).PixelHeight, 96, 96, PixelFormats.Default);
+            rtb.Render(dv);
+            rtb.Freeze();
+            return rtb;
+        }
+
+        private void SavePdfFiles(string[] files)
+        {
+            SaveFileDialog saveFileDialog = new()
+            {
+                Filter = "Pdf Dosyası(*.pdf)|*.pdf",
+                FileName = Translation.GetResStringValue("MERGE")
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    MergePdf(files).Save(saveFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    _ = MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void ScanCommonSettings()
+        {
+            Scanner.ArayüzEtkin = false;
+            _settings = DefaultScanSettings();
+            _settings.Resolution.ColourSetting = (ColourSetting)Settings.Default.Mode;
+            _settings.Resolution.Dpi = (int)Settings.Default.Çözünürlük;
+            _settings.Rotation = new RotationSettings { AutomaticDeskew = Scanner.Deskew, AutomaticRotate = Scanner.AutoRotate, AutomaticBorderDetection = Scanner.BorderDetect };
+        }
+
+        private void Scanner_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is "CropLeft" or "CropTop" or "CropRight" or "CropBottom" && Scanner.SeçiliResim != null)
+            {
+                Int32Rect sourceRect = CropImageRect(Scanner.SeçiliResim.Resim);
+                if (sourceRect.HasArea)
+                {
+                    Scanner.CroppedImage = new CroppedBitmap(Scanner.SeçiliResim.Resim, sourceRect);
+                    Scanner.CroppedImage.Freeze();
+                    Scanner.CropDialogExpanded = true;
+                }
+            }
+            if (e.PropertyName is "EnAdet")
+            {
+                LineGrid.ColumnDefinitions.Clear();
+                for (int i = 0; i < Scanner.EnAdet; i++)
+                {
+                    LineGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                }
+            }
+            if (e.PropertyName is "BoyAdet")
+            {
+                LineGrid.RowDefinitions.Clear();
+                for (int i = 0; i < Scanner.BoyAdet; i++)
+                {
+                    LineGrid.RowDefinitions.Add(new RowDefinition());
+                }
+            }
+            if (e.PropertyName is "SelectedProfile" && !string.IsNullOrWhiteSpace(Scanner.SelectedProfile))
+            {
+                string[] selectedprofile = Scanner.SelectedProfile.Split('|');
+                Settings.Default.Çözünürlük = double.Parse(selectedprofile[1]);
+                Settings.Default.Adf = bool.Parse(selectedprofile[2]);
+                Settings.Default.Mode = int.Parse(selectedprofile[3]);
+                Scanner.Duplex = bool.Parse(selectedprofile[4]);
+                Scanner.ShowUi = bool.Parse(selectedprofile[5]);
+                Scanner.SeperateSave = bool.Parse(selectedprofile[6]);
+                Settings.Default.ShowFile = bool.Parse(selectedprofile[7]);
+                Settings.Default.DateGroupFolder = true;//bool.Parse(selectedprofile[8])
+                Scanner.FileName = selectedprofile[9];
+                Settings.Default.DefaultProfile = Scanner.SelectedProfile;
+                Settings.Default.Save();
+            }
+        }
+
+        private void Twain_ScanningComplete(object sender, ScanningCompleteEventArgs e)
+        {
+            Scanner.ArayüzEtkin = true;
+        }
+
+        private void Twain_TransferImage(object sender, TransferImageEventArgs e)
+        {
+            if (e.Image != null)
+            {
+                using Bitmap bitmap = e.Image;
+                BitmapSource evrak = EvrakOluştur(bitmap);
+                evrak.Freeze();
+                BitmapSource önizleme = evrak.Resize(Settings.Default.PreviewWidth, Settings.Default.PreviewWidth / 21 * 29.7);
+                önizleme.Freeze();
+                BitmapFrame bitmapFrame = BitmapFrame.Create(evrak, önizleme);
+                bitmapFrame.Freeze();
+                Scanner.Resimler.Add(new ScannedImage() { Resim = bitmapFrame });
+                if (Scanner.SeperateSave && (ColourSetting)Settings.Default.Mode == ColourSetting.BlackAndWhite)
+                {
+                    GeneratePdf(bitmapFrame, Format.Tiff).Save(GetSaveFolder().SetUniqueFile(Scanner.SaveFileName, "pdf"));
+                    OnPropertyChanged(nameof(Scanner.Tarandı));
+                }
+
+                if (Scanner.SeperateSave && ((ColourSetting)Settings.Default.Mode == ColourSetting.GreyScale || (ColourSetting)Settings.Default.Mode == ColourSetting.Colour))
+                {
+                    GeneratePdf(bitmapFrame, Format.Jpg).Save(GetSaveFolder().SetUniqueFile(Scanner.SaveFileName, "pdf"));
+                    OnPropertyChanged(nameof(Scanner.Tarandı));
+                }
+
+                evrak = null;
+                bitmapFrame = null;
+                önizleme = null;
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -384,63 +936,35 @@ namespace TwainControl
             try
             {
                 twain = new Twain(new WindowMessageHook(Window.GetWindow(Parent)));
-                Tarayıcılar = twain.SourceNames;
-                if (twain.SourceNames?.Count > 0)
+                Scanner.Tarayıcılar = twain.SourceNames;
+                if (Scanner.Tarayıcılar?.Count > 0)
                 {
-                    SeçiliTarayıcı = twain.SourceNames[0];
+                    Scanner.SeçiliTarayıcı = Scanner.Tarayıcılar[0];
                 }
-
-                twain.TransferImage += (s, args) =>
-                {
-                    if (args.Image != null)
-                    {
-                        using (System.Drawing.Bitmap bmp = args.Image)
-                        {
-                            BitmapImage evrak = null;
-                            switch (Bw)
-                            {
-                                case true:
-                                    evrak = bmp.ConvertBlackAndWhite((int)Eşik).ToBitmapImage(ImageFormat.Tiff);
-                                    break;
-
-                                case null:
-                                    evrak = bmp.ConvertBlackAndWhite((int)Eşik, true).ToBitmapImage(ImageFormat.Jpeg);
-                                    break;
-
-                                case false:
-                                    evrak = bmp.ToBitmapImage(ImageFormat.Jpeg);
-                                    break;
-                            }
-
-                            evrak.Freeze();
-                            BitmapSource önizleme = evrak.Resize(42, 59);
-                            önizleme.Freeze();
-                            BitmapFrame bitmapFrame = BitmapFrame.Create(evrak, önizleme);
-                            bitmapFrame.Freeze();
-                            Resimler.Add(bitmapFrame);
-                            if (SeperateSave && Bw == true)
-                            {
-                                File.WriteAllBytes(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures).SetUniqueFile($"{DateTime.Now.ToShortDateString()}Tarama", "tif"), evrak.ToTiffJpegByteArray(ExtensionMethods.Format.Tiff));
-                            }
-
-                            if (SeperateSave && Bw == false)
-                            {
-                                File.WriteAllBytes(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures).SetUniqueFile($"{DateTime.Now.ToShortDateString()}Tarama", "jpg"), evrak.ToTiffJpegByteArray(ExtensionMethods.Format.Jpg));
-                            }
-
-                            evrak = null;
-                            bitmapFrame = null;
-                            önizleme = null;
-                        }
-                        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
-                    }
-                };
-                twain.ScanningComplete += delegate { ArayüzEtkin = true; };
+                twain.TransferImage += Twain_TransferImage;
+                twain.ScanningComplete += Twain_ScanningComplete;
             }
             catch (Exception)
             {
-                ArayüzEtkin = false;
+                Scanner.ArayüzEtkin = false;
             }
+        }
+
+        private RenderTargetBitmap ÜstüneResimÇiz(ImageSource Source, System.Windows.Point konum, System.Windows.Media.Brush brushes, double emSize = 64, string metin = null, double angle = 315, string font = "Arial")
+        {
+            FormattedText formattedText = new(metin, CultureInfo.GetCultureInfo("tr-TR"), FlowDirection.LeftToRight, new Typeface(font), emSize, brushes) { TextAlignment = TextAlignment.Center };
+            DrawingVisual dv = new();
+            using (DrawingContext dc = dv.RenderOpen())
+            {
+                dc.DrawImage(Source, new Rect(0, 0, ((BitmapSource)Source).Width, ((BitmapSource)Source).Height));
+                dc.PushTransform(new RotateTransform(angle, konum.X, konum.Y));
+                dc.DrawText(formattedText, new System.Windows.Point(konum.X, konum.Y - (formattedText.Height / 2)));
+            }
+
+            RenderTargetBitmap rtb = new((int)((BitmapSource)Source).Width, (int)((BitmapSource)Source).Height, 96, 96, PixelFormats.Default);
+            rtb.Render(dv);
+            rtb.Freeze();
+            return rtb;
         }
     }
 }

@@ -60,6 +60,8 @@
     <Compile Include="Controls\ButtonedTextBox.cs" />
     <Compile Include="Controls\Chart.cs" />
     <Compile Include="Controls\HourControl.cs" />
+    <Compile Include="Controls\VirtualizingTilePanel.cs" />
+    <Compile Include="Converters\TimespanToTickConverter.cs" />
     <Compile Include="Shader\ColorEffect.cs" />
     <Compile Include="Controls\ImageViewer.cs" />
     <Compile Include="Controls\MaskedTextBlock.cs" />
@@ -82,12 +84,10 @@
     <Compile Include="Controls\ContentToggleButton.cs" />
     <Compile Include="Converters\FilePathToFileDescriptionConverter.cs" />
     <Compile Include="Converters\FilePathToIconConverter.cs" />
-    <Compile Include="Controls\HorizontalListBox.cs" />
     <Compile Include="Controls\MaskedTextBox.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
     <Compile Include="Controls\NumericUpDownControl.cs" />
     <Compile Include="Controls\SplitButton.cs" />
-    <Compile Include="Controls\TimePicker.cs" />
     <Compile Include="Controls\VirtualizingWrapPanel.cs" />
     <Compile Include="Converters\SystemFileIconConverter.cs" />
     <Compile Include="ExtensionMethods.cs" />
@@ -115,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Skin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -6,12 +6,12 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TwainControl")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("GpTwainControl")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Gok$en")]
 [assembly: AssemblyProduct("TwainControl")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © 2021")]
+[assembly: AssemblyTrademark("Gok$en")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -30,11 +30,13 @@ using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
-                                     //(used if a resource is not found in the page,
-                                     // or application resource dictionaries)
+
+    //(used if a resource is not found in the page,
+    // or application resource dictionaries)
     ResourceDictionaryLocation.SourceAssembly //where the generic resource dictionary is located
-                                              //(used if a resource is not found in the page,
-                                              // app, or any theme specific resource dictionaries)
+
+//(used if a resource is not found in the page,
+// app, or any theme specific resource dictionaries)
 )]
 
 // Version information for an assembly consists of the following four values:
@@ -48,4 +50,4 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")] 
+[assembly: AssemblyFileVersion("1.0.0.0")]

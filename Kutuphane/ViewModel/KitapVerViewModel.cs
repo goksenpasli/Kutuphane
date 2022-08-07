@@ -10,7 +10,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using TwainControl;
 
 namespace Kutuphane.ViewModel
 {
@@ -99,20 +99,20 @@ namespace Kutuphane.ViewModel
 
             KitapTarananEvrakAktar = new RelayCommand<object>(parameter =>
             {
-                if (parameter is ObservableCollection<BitmapFrame> seçiliResimler && SeçiliKişi is not null)
+                if (parameter is ObservableCollection<ScannedImage> seçiliResimler && SeçiliKişi is not null)
                 {
-                    foreach (BitmapFrame resim in seçiliResimler)
+                    foreach (ScannedImage scannedimage in seçiliResimler)
                     {
                         string filename = null;
-                        if (resim.Format == PixelFormats.Bgr32)
+                        if (scannedimage.Resim.Format == PixelFormats.Bgr32)
                         {
                             filename = Guid.NewGuid() + ".jpg";
-                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
+                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", scannedimage.Resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Jpg));
                         }
-                        else if (resim.Format == PixelFormats.Bgra32)
+                        else if (scannedimage.Resim.Format == PixelFormats.Bgra32)
                         {
                             filename = Guid.NewGuid() + ".tif";
-                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Tiff));
+                            File.WriteAllBytes($"{Path.GetDirectoryName(MainViewModel.xmldatapath)}\\{filename}", scannedimage.Resim.ToTiffJpegByteArray(Extensions.ExtensionMethods.Format.Tiff));
                         }
 
                         SeçiliKişi.TutanakYolu.Add(filename);
@@ -120,7 +120,7 @@ namespace Kutuphane.ViewModel
                     MainViewModel.DatabaseSave.Execute(null);
                     _ = MessageBox.Show("Taranan Evrak Eklendi.", "KÜTÜPHANE", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }, parameter => parameter is ObservableCollection<BitmapFrame> seçiliResimler && seçiliResimler.Any() && SeçiliKişi is not null);
+            }, parameter => parameter is ObservableCollection<ScannedImage> seçiliResimler && seçiliResimler.Any() && SeçiliKişi is not null);
 
             İşlem.GeriGetirmeTarihi = Settings.Default.KitapVermeİşGünüSay ? İşlem.BaşlangıçTarihi.İşGünüEkle(İşlem.KitapGün) : İşlem.BaşlangıçTarihi.AddDays(İşlem.KitapGün);
             Kişi.PropertyChanged += Kişi_PropertyChanged;
