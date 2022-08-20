@@ -165,7 +165,7 @@
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Extensions:VirtualizingWrapPanel ItemHeight="225" ItemWidth="390" />
+                                <Extensions:VirtualizingWrapPanel ItemSize="390,225" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>

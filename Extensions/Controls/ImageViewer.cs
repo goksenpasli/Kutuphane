@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 
 namespace Extensions
 {
@@ -51,17 +51,9 @@ namespace Extensions
                 }
             });
 
-            ViewerBack = new RelayCommand<object>(parameter =>
-            {
-                Sayfa--;
-                Source = Decoder.Frames[Sayfa - 1];
-            }, parameter => Decoder != null && Sayfa > 1 && Sayfa <= Decoder.Frames.Count);
+            ViewerBack = new RelayCommand<object>(parameter => Sayfa--, parameter => Decoder != null && Sayfa > 1 && Sayfa <= Decoder.Frames.Count);
 
-            ViewerNext = new RelayCommand<object>(parameter =>
-            {
-                Sayfa++;
-                Source = Decoder.Frames[Sayfa - 1];
-            }, parameter => Decoder != null && Sayfa >= 1 && Sayfa < Decoder.Frames.Count);
+            ViewerNext = new RelayCommand<object>(parameter => Sayfa++, parameter => Decoder != null && Sayfa >= 1 && Sayfa < Decoder.Frames.Count);
 
             Resize = new RelayCommand<object>(parameter =>
             {
@@ -70,7 +62,7 @@ namespace Extensions
                     : !double.IsNaN(Height) ? Height == 0 ? 1 : Height / Source.Height : ActualHeight == 0 ? 1 : ActualHeight / Source.Height;
             }, parameter => Source is not null);
 
-            OrijinalResimDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(parameter as string), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && File.Exists(parameter as string));
+            OrijinalDosyaAç = new RelayCommand<object>(parameter => _ = Process.Start(parameter as string), parameter => !DesignerProperties.GetIsInDesignMode(new DependencyObject()) && File.Exists(parameter as string));
 
             Yazdır = new RelayCommand<object>(parameter =>
             {
@@ -162,7 +154,7 @@ namespace Extensions
             }
         }
 
-        public ICommand DosyaAç { get; }
+        public virtual ICommand DosyaAç { get; set; }
 
         public FitImageOrientation FitImageOrientation
         {
@@ -198,7 +190,7 @@ namespace Extensions
             }
         }
 
-        public ICommand OrijinalResimDosyaAç { get; }
+        public virtual ICommand OrijinalDosyaAç { get; set; }
 
         public Visibility OrijinalResimDosyaAçButtonVisibility
         {
@@ -243,7 +235,7 @@ namespace Extensions
             }
         }
 
-        public ICommand Resize { get; }
+        public virtual ICommand Resize { get; set; }
 
         public int Sayfa
         {
@@ -313,9 +305,9 @@ namespace Extensions
             }
         }
 
-        public ICommand ViewerBack { get; }
+        public virtual ICommand ViewerBack { get; set; }
 
-        public ICommand ViewerNext { get; }
+        public virtual ICommand ViewerNext { get; set; }
 
         public ICommand Yazdır { get; }
 
